@@ -10,7 +10,7 @@ from requests.exceptions import HTTPError
 
 
 class LunchMoneyError(Exception):
-    """"
+    """
     Base Exception for Lunch Money
     """
 

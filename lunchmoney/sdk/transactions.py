@@ -22,6 +22,7 @@ class TransactionsObject(BaseModel):
     """
     https://lunchmoney.dev/#transaction-object
     """
+
     id: Optional[int]
     date: str
     amount: float
@@ -43,6 +44,7 @@ class TransactionInsertObject(BaseModel):
     """
     https://lunchmoney.dev/#insert-transactions
     """
+
     date: datetime.date
     amount: float
     category_id: Optional[int]
@@ -60,6 +62,7 @@ class TransactionUpdateObject(BaseModel):
     """
     https://lunchmoney.dev/#update-transaction
     """
+
     date: Optional[datetime.date]
     amount: Optional[float]
     category_id: Optional[int]
@@ -77,6 +80,7 @@ class TransactionParamsGet(BaseModel):
     """
     https://lunchmoney.dev/#get-all-transactions
     """
+
     start_date: Optional[datetime.date]
     end_date: Optional[datetime.date]
 
@@ -85,6 +89,7 @@ class TransactionInsertParamsPost(BaseModel):
     """
     https://lunchmoney.dev/#insert-transactions
     """
+
     transactions: List[TransactionInsertObject]
     apply_rules: bool = False
     skip_duplicates: bool = False
@@ -95,8 +100,9 @@ class TransactionInsertParamsPost(BaseModel):
 
 class TransactionUpdateParamsPut(BaseModel):
     """
-    https://lunchmoney.dev/#insert-transactions
+    https://lunchmoney.dev/#update-transaction
     """
+
     split: Optional[bool]
     transaction: TransactionUpdateObject
     debit_as_negative: bool = False
@@ -200,3 +206,63 @@ class LunchMoneyTransactions(LunchMoneyCore):
                                                      transaction_id],
                                            json=response_data)
         return response_data
+
+    def insert_transactions(
+            self,
+            transactions: Union[TransactionInsertObject, List[TransactionInsertObject]],
+            apply_rules: bool = False,
+            skip_duplicates: bool = True,
+            debit_as_negative: bool = False,
+            check_for_recurring: bool = False,
+            skip_balance_update: bool = True
+    ) -> Dict[str, Any]:
+        """
+        Returns a single Transaction object
+
+        Parameters
+        ----------
+        transactions: Union[TransactionInsertObject, List[TransactionInsertObject]]
+            Transactions to insert. Either a single TransactionInsertObject object or
+            a list of them
+        apply_rules: bool
+            If true, will apply account’s existing rules to the inserted transactions.
+            Defaults to false.
+        skip_duplicates: bool
+            If true, the system will automatically dedupe based on transaction date,
+            payee and amount. Note that deduping by external_id will occur regardless
+            of this flag.
+        check_for_recurring: bool
+            if true, will check new transactions for occurrences of new monthly expenses.
+            Defaults to false.
+        debit_as_negative: bool
+            If true, will assume negative amount values denote expenses and
+            positive amount values denote credits. Defaults to false.
+        skip_balance_update: bool
+            If false, will skip updating balance if an asset_id
+            is present for any of the transactions.
+
+        Returns
+        -------
+        Dict[str, Any]
+        """
+        if isinstance(transactions, TransactionInsertObject):
+            transactions = [transactions]
+        response_data = TransactionInsertParamsPost(transactions=transactions,
+                                                    apply_rules=apply_rules,
+                                                    skip_duplicates=skip_duplicates,
+                                                    check_for_recurring=check_for_recurring,
+                                                    debit_as_negative=debit_as_negative,
+                                                    skip_balance_update=skip_balance_update
+                                                    ).json(exclude_unset=True)
+        response_data = self._make_request(method="POST",
+                                           url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
+                                           data=response_data)
+        return response_data
+
+    def create_transaction_group(self):
+        # TODO: IMPLEMENT THIS
+        pass
+
+    def delete_transaction_group(self):
+        # TODO: IMPLEMENT THIS
+        pass

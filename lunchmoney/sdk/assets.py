@@ -22,6 +22,7 @@ class AssetsObject(BaseModel):
     """
     https://lunchmoney.dev/#assets-object
     """
+
     id: int
     type_name: str
     subtype_name: str

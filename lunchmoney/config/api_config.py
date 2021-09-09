@@ -22,6 +22,7 @@ class APIConfig:
     """
     Configuration Helper Class for Connecting to the Lunchmoney API
     """
+
     LUNCHMONEY_SCHEME: str = "https"
     LUNCHMONEY_NETLOC: str = "dev.lunchmoney.app"
     LUNCHMONEY_API_PATH: str = "v1"
@@ -29,6 +30,7 @@ class APIConfig:
     LUNCHMONEY_TRANSACTIONS: str = "transactions"
     LUNCHMONEY_PLAID_ACCOUNTS: str = "plaid_accounts"
     LUNCH_MONEY_RECURRING_EXPENSES: str = "recurring_expenses"
+    LUNCHMONEY_BUDGET: str = "budgets"
     LUNCHMONEY_ASSETS: str = "assets"
 
     LUNCHMONEY_CONTENT_TYPE_HEADERS: Dict[str, str] = {"Content-Type": "application/json"}

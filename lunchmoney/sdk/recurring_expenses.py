@@ -22,6 +22,7 @@ class RecurringExpensesObject(BaseModel):
     """
     https://lunchmoney.dev/#recurring-expenses-object
     """
+
     id: int
     start_date: Optional[datetime.date]
     end_date: Optional[datetime.date]

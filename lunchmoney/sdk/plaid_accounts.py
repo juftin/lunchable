@@ -5,6 +5,7 @@ Lunch Money - Plaid Accounts
 
 https://lunchmoney.dev/#plaid-accounts
 """
+
 import datetime
 import logging
 from typing import List, Optional
@@ -15,25 +16,6 @@ from lunchmoney.config import APIConfig
 from lunchmoney.sdk.core import LunchMoneyCore
 
 logger = logging.getLogger(__name__)
-
-
-class RecurringExpenseObject(BaseModel):
-    id: int
-    start_date: datetime.datetime
-    end_date: datetime.datetime
-    cadence: str
-    payee: str
-    amount: float
-    currency: str
-    description: str
-    billing_date: datetime.datetime
-    type: str
-    original_name: str
-    source: str
-    plaid_account_id: int
-    asset_id: int
-    transaction_id: int
-    category_id: int
 
 
 class PlaidAccountObject(BaseModel):

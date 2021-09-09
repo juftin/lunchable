@@ -6,5 +6,12 @@
 Lunch Money Python SDK
 """
 
-from .sdk import (AssetsObject, LunchMoney, PlaidAccountObject, RecurringExpensesObject,
-                  TransactionInsertObject, TransactionsObject, TransactionUpdateObject)
+from .sdk import (
+    AssetsObject,
+    LunchMoney,
+    PlaidAccountObject,
+    RecurringExpensesObject,
+    TransactionInsertObject,
+    TransactionsObject,
+    TransactionUpdateObject,
+)

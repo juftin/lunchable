@@ -50,7 +50,8 @@ class LunchMoneyCore:
 
     def _make_request(self, method: str, url_path: Union[List[str], str],
                       params: Optional[dict] = None,
-                      json: Optional[dict] = None) -> Any:
+                      json: Optional[dict] = None,
+                      data: Optional[Any] = None) -> Any:
         """
         Make a Request on the API
 
@@ -64,7 +65,9 @@ class LunchMoneyCore:
         params: Optional[dict]
             Params to pass
         json: Optional[dict]
-            Data to pass
+            json to pass
+        data: Optional[Any]
+            data to pass
 
         Returns
         -------
@@ -73,7 +76,8 @@ class LunchMoneyCore:
         url = APIConfig.make_url(url_path=url_path)
         try:
             response = self.lunch_money_session.request(method=method, url=url,
-                                                        params=params, json=json)
+                                                        params=params, json=json,
+                                                        data=data)
             response.raise_for_status()
         except requests.exceptions.HTTPError as he:
             logger.exception(he)
@@ -88,8 +92,9 @@ class LunchMoneyCore:
         return response.json()
 
     @classmethod
-    def _resolve_date(cls,
-                      date_obj: Union[datetime.date, datetime.datetime, str]) -> datetime.date:
+    def _resolve_date(
+            cls, date_obj: Union[datetime.date, datetime.datetime, str]
+    ) -> datetime.date:
         """
         If date_obj is a datetime.datetime objects, it will be reduced to dates. If a string is
         provided, it will be attempted to be parsed as YYYY-MM-DD format
