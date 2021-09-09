@@ -1,42 +1,28 @@
 # Author::    Justin Flannery  (mailto:juftin@juftin.com)
 
 """
-Lunch Money Python SDK - This Module Leverages Class Inheritance to
-Distribute API Methods in an Organized manner
+Lunch Money Python SDK and Associated Objects
 """
 
-from .assets import AssetsObject, LunchMoneyAssets
-from .budgets import BudgetObject, LunchMoneyBudgets
-from .plaid_accounts import LunchMoneyPlaidAccounts, PlaidAccountObject
-from .recurring_expenses import LunchMoneyRecurringExpenses, RecurringExpensesObject
+from .assets import AssetsObject
+from .budgets import BudgetObject
+from .lunchmoney import LunchMoney
+from .plaid_accounts import PlaidAccountObject
+from .recurring_expenses import RecurringExpensesObject
 from .transactions import (
-    LunchMoneyTransactions,
     TransactionInsertObject,
     TransactionsObject,
     TransactionUpdateObject,
 )
 
-
-class LunchMoney(
-    LunchMoneyTransactions,
-    LunchMoneyPlaidAccounts,
-    LunchMoneyAssets,
-    LunchMoneyRecurringExpenses,
-    LunchMoneyBudgets,
-):
-    """
-    Core Lunch Money SDK.
-    """
-
-    pass
-
-
 __all__ = [
     "LunchMoney",
-    "RecurringExpensesObject",
-    "PlaidAccountObject",
-    "TransactionsObject",
+
     "AssetsObject",
+    "BudgetObject",
+    "PlaidAccountObject",
+    "RecurringExpensesObject",
+    "TransactionsObject",
     "TransactionUpdateObject",
     "TransactionInsertObject",
 ]
