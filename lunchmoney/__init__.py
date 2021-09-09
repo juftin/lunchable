@@ -6,6 +6,7 @@
 Lunch Money Python SDK
 """
 
+from ._version import __version__
 from .sdk import (
     AssetsObject,
     LunchMoney,
@@ -15,3 +16,13 @@ from .sdk import (
     TransactionsObject,
     TransactionUpdateObject,
 )
+
+__all__ = [
+    "AssetsObject",
+    "LunchMoney",
+    "PlaidAccountObject",
+    "RecurringExpensesObject",
+    "TransactionInsertObject",
+    "TransactionsObject",
+    "TransactionUpdateObject",
+]
