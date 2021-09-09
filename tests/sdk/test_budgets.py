@@ -15,6 +15,7 @@ def lunch_money_obj():
     return lunch_money_obj
 
 
+@pytest.mark.vcr()
 def test_budgets(lunch_money_obj):
     budgets = lunch_money_obj.get_budgets(start_date=datetime.date(2021, 7, 1),
                                           end_date=datetime.date(2021, 7, 31))
