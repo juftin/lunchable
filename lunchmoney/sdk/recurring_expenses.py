@@ -41,6 +41,15 @@ class RecurringExpensesObject(BaseModel):
     category_id: Optional[int]
 
 
+class RecurringExpenseParamsGet(BaseModel):
+    """
+    https://lunchmoney.dev/#get-recurring-expenses
+    """
+
+    start_date: datetime.date
+    debit_as_negative: bool
+
+
 class LunchMoneyRecurringExpenses(LunchMoneyCore):
     """
     Lunch Money Recurring Expenses Interactions
@@ -77,8 +86,8 @@ class LunchMoneyRecurringExpenses(LunchMoneyCore):
         """
         if start_date is None:
             start_date = datetime.datetime.now().date().replace(day=1)
-        params = dict(start_date=self._resolve_date(date_obj=start_date),
-                      debit_as_negative=debit_as_negative)
+        params = RecurringExpenseParamsGet(start_date=start_date,
+                                           debit_as_negative=debit_as_negative).dict()
         response_data = self._make_request(method="GET",
                                            url_path=[APIConfig.LUNCH_MONEY_RECURRING_EXPENSES],
                                            params=params)

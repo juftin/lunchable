@@ -28,6 +28,7 @@ class APIConfig:
     LUNCHMONEY_API_PATH: str = "v1"
 
     LUNCHMONEY_TRANSACTIONS: str = "transactions"
+    LUNCHMONEY_TRANSACTION_GROUPS: str = "group"
     LUNCHMONEY_PLAID_ACCOUNTS: str = "plaid_accounts"
     LUNCH_MONEY_RECURRING_EXPENSES: str = "recurring_expenses"
     LUNCHMONEY_BUDGET: str = "budgets"

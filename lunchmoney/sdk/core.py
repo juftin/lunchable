@@ -85,8 +85,12 @@ class LunchMoneyCore:
             logger.error(response.text)
             raise LunchMoneyHTTPError(he)
         returned_data = response.json()
-        if isinstance(returned_data, dict) and "errors" in returned_data.keys():
-            errors = returned_data["errors"]
+        if isinstance(returned_data, dict) and any(["error" in returned_data.keys(),
+                                                    "errors" in returned_data.keys()]):
+            try:
+                errors = returned_data["error"]
+            except KeyError:
+                errors = returned_data["errors"]
             logger.exception(errors)
             raise LunchMoneyHTTPError(errors)
         return response.json()

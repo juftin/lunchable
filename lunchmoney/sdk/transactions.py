@@ -109,6 +109,19 @@ class TransactionUpdateParamsPut(BaseModel):
     skip_balance_update: bool = True
 
 
+class TransactionGroupParamsPost(BaseModel):
+    """
+    https://lunchmoney.dev/#create-transaction-group
+    """
+
+    date: datetime.date
+    payee: str
+    category_id: Optional[int]
+    notes: Optional[str]
+    tags: Optional[List[int]]
+    transactions: Optional[List[int]]
+
+
 class LunchMoneyTransactions(LunchMoneyCore):
     """
     Lunch Money Transactions Interactions
@@ -259,10 +272,64 @@ class LunchMoneyTransactions(LunchMoneyCore):
                                            data=response_data)
         return response_data
 
-    def create_transaction_group(self):
-        # TODO: IMPLEMENT THIS
-        pass
+    def create_transaction_group(self,
+                                 date: datetime.date,
+                                 payee: str,
+                                 category_id: Optional[int] = None,
+                                 notes: Optional[str] = None,
+                                 tags: Optional[List[id]] = None,
+                                 transactions: Optional[List[id]] = None) -> int:
+        """
+        Use this endpoint to create a transaction group of two or more transactions.
 
-    def delete_transaction_group(self):
-        # TODO: IMPLEMENT THIS
-        pass
+        Returns the ID of the newly created transaction group
+
+        Parameters
+        ----------
+        date: datetime.date
+            Date for the grouped transaction
+        payee: str
+            Payee name for the grouped transaction
+        category_id: Optional[int]
+            Category for the grouped transaction
+        notes: Optional[str]
+            Notes for the grouped transaction
+        tags: Optional[List[id]]
+            Array of tag IDs for the grouped transaction
+        transactions: Optional[List[id]]
+            Array of transaction IDs to be part of the transaction group
+
+        Returns
+        -------
+        int
+        """
+        transaction_params = TransactionGroupParamsPost(
+            date=date, payee=payee, category_id=category_id,
+            notes=notes, tags=tags, transactions=transactions).dict(exclude_none=True)
+        response_data = self._make_request(method="POST",
+                                           url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
+                                                     APIConfig.LUNCHMONEY_TRANSACTION_GROUPS],
+                                           params=transaction_params)
+        return response_data
+
+    def delete_transaction_group(self, transaction_group_id: int) -> List[int]:
+        """
+        Use this method to delete a transaction group. The transactions within the
+        group will not be removed.
+
+        Returns the IDs of the transactions that were part of the deleted group
+
+        Parameters
+        ----------
+        transaction_group_id: int
+            Transaction Group Identifier
+
+        Returns
+        -------
+        List[int]
+        """
+        response_data = self._make_request(method="DELETE",
+                                           url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
+                                                     APIConfig.LUNCHMONEY_TRANSACTION_GROUPS,
+                                                     transaction_group_id])
+        return response_data
