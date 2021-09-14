@@ -27,7 +27,7 @@ class AssetsObject(BaseModel):
     type_name: str
     subtype_name: str
     name: str
-    display_name: str
+    display_name: Optional[str]
     balance: float
     balance_as_of: datetime.datetime
     closed_on: Optional[datetime.date]
@@ -44,7 +44,7 @@ class AssetsParamsPut(BaseModel):
     type_name: Optional[str]
     subtype_name: Optional[str]
     name: Optional[str]
-    balance: Optional[float]
+    balance: Optional[str]
     balance_as_of: Optional[datetime.datetime]
     currency: Optional[str]
     institution_name: Optional[str]
@@ -122,6 +122,6 @@ class LunchMoneyAssets(LunchMoneyCore):
         response_data = self._make_request(method="PUT",
                                            url_path=[APIConfig.LUNCHMONEY_ASSETS,
                                                      asset_id],
-                                           params=params)
+                                           json=params)
         asset = AssetsObject(**response_data)
         return asset

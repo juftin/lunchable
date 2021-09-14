@@ -5,6 +5,7 @@ import pytest
 
 from lunchmoney import LunchMoney
 from lunchmoney.sdk.assets import AssetsObject
+from tests.conftest import lunchmoney_cassette
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +28,7 @@ def lunchmoney_asset() -> AssetsObject:
     return splitwise_asset
 
 
-@pytest.mark.vcr()
+@lunchmoney_cassette
 def test_get_assets(lunch_money_obj: LunchMoney):
     """
     Get Assets and Assert that they're assets
@@ -39,12 +40,12 @@ def test_get_assets(lunch_money_obj: LunchMoney):
     logger.info("%s Assets returned", len(assets))
 
 
-@pytest.mark.vcr()
+@lunchmoney_cassette
 def test_update_asset(lunch_money_obj: LunchMoney, lunchmoney_asset: AssetsObject):
     """
     Update an Asset
     """
     response = lunch_money_obj.update_asset(asset_id=lunchmoney_asset.id,
-                                            balance=3)
+                                            balance=5.20)
     assert isinstance(response, AssetsObject)
     logger.info(response)
