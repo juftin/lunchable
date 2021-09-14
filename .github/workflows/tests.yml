@@ -44,5 +44,5 @@ jobs:
                     python -m pip install tox
             -   name: Lint with Flake8
                 run:  |
-                    run: echo "::add-matcher::.github/flake8-problem-matcher.json"
+                    echo "::add-matcher::.github/flake8-problem-matcher.json"
                     tox -e py-lint
