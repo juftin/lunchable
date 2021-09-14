@@ -25,4 +25,5 @@ __all__ = [
     "TransactionInsertObject",
     "TransactionsObject",
     "TransactionUpdateObject",
+    "__version__"
 ]
