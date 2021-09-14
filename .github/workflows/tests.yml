@@ -11,10 +11,10 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    - { name: 'Python 3.9', python: '3.9', os: ubuntu-latest, tox: py39 }
-                    - { name: 'Python 3.8', python: '3.8', os: ubuntu-latest, tox: py38 }
-                    - { name: 'Python 3.7', python: '3.7', os: ubuntu-latest, tox: py37 }
-                    - { name: 'Python 3.6', python: '3.6', os: ubuntu-latest, tox: py36 }
+                    - { name: 'Python 3.9', python: '3.9', tox: py39 }
+                    - { name: 'Python 3.8', python: '3.8', tox: py38 }
+                    - { name: 'Python 3.7', python: '3.7', tox: py37 }
+                    - { name: 'Python 3.6', python: '3.6', tox: py36 }
         env:
             LUNCHMONEY_ACCESS_TOKEN: ${{ secrets.LUNCHMONEY_ACCESS_TOKEN }}
         steps:
