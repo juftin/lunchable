@@ -96,7 +96,7 @@ class LunchMoneyCore:
         return response.json()
 
     @classmethod
-    def _resolve_date(
+    def resolve_date(
             cls, date_obj: Union[datetime.date, datetime.datetime, str]
     ) -> datetime.date:
         """

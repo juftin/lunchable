@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"balance": "5.2"}'
+    body: '{"start_date": "2022-11-01", "category_id": 229137, "amount": 100.0}'
     headers:
       Accept:
       - '*/*'
@@ -9,7 +9,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '18'
+      - '68'
       Content-Type:
       - application/json
       User-Agent:
@@ -17,24 +17,23 @@ interactions:
       authorization:
       - XXXXXXXXXX
     method: PUT
-    uri: https://dev.lunchmoney.app/v1/assets/21845
+    uri: https://dev.lunchmoney.app/v1/budgets
   response:
     body:
-      string: '{"id":21845,"type_name":"cash","subtype_name":"digital wallet (paypal,
-        venmo)","name":"Splitwise Balance","balance":"5.2000","balance_as_of":"2021-09-14T06:11:28.433Z","currency":"usd","institution_name":"Splitwise","created_at":"2021-08-28T16:06:02.701Z"}'
+      string: '{"category_group":null}'
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
       Connection:
       - keep-alive
       Content-Length:
-      - '256'
+      - '23'
       Content-Type:
       - application/json; charset=utf-8
       Date:
       - Tue, 14 Sep 2021 06:11:28 GMT
       Etag:
-      - W/"100-Q9+EGq712vhrFvWKstfXry8vlLg"
+      - W/"17-5ALBl+bKXJaccIUKdwiYXHJOenY"
       Server:
       - Cowboy
       Vary:

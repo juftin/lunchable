@@ -122,7 +122,7 @@ class TransactionGroupParamsPost(BaseModel):
     transactions: Optional[List[int]]
 
 
-class LunchMoneyTransactions(LunchMoneyCore):
+class _LunchMoneyTransactions(LunchMoneyCore):
     """
     Lunch Money Transactions Interactions
     """

@@ -3,14 +3,28 @@ import logging
 from random import choice
 
 from lunchmoney import LunchMoney
-from tests.conftest import lunchmoney_cassette
+from lunchmoney.sdk import BudgetObject
+from tests.conftest import beginning_of_this_month, lunchmoney_cassette, obscure_start_date
 
 logger = logging.getLogger(__name__)
 
 
 @lunchmoney_cassette
-def test_budgets(lunch_money_obj: LunchMoney):
-    budgets = lunch_money_obj.get_budgets(start_date=datetime.date(2021, 7, 1),
-                                          end_date=datetime.date(2021, 7, 31))
+def test_upsert_budget(lunch_money_obj: LunchMoney):
+    # Ride Sharing
+    response = lunch_money_obj.upsert_budget(start_date=obscure_start_date,
+                                             category_id=229137,
+                                             amount=100.00)
+    assert response == dict(category_group=None)
+
+
+@lunchmoney_cassette
+def test_get_budgets(lunch_money_obj: LunchMoney):
+    budgets = lunch_money_obj.get_budgets(
+        start_date=beginning_of_this_month,
+        end_date=beginning_of_this_month + datetime.timedelta(days=28))
+    assert len(budgets) >= 1
+    for budget in budgets:
+        assert isinstance(budget, BudgetObject)
     logger.info("%s Budgets Found", len(budgets))
     logger.info("Example Budget: %s", choice(budgets))

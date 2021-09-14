@@ -1,7 +1,11 @@
+import datetime
+
 import pytest
 
 from lunchmoney import LunchMoney
 
+obscure_start_date = datetime.datetime(year=2022, month=11, day=1)
+beginning_of_this_month = datetime.datetime.now().replace(day=1)
 module_scope = pytest.fixture(scope="module")
 
 

@@ -7,22 +7,22 @@ inherits from the lunchmoney.sdk.core.LunchMoneyCore class which facilitates
 interacting with the API.
 
 For example: to see source code on interactions with the "transactions" API endpoint you
-will refer to the LunchMoneyTransactions object.
+will refer to the _LunchMoneyTransactions object.
 """
 
-from .assets import LunchMoneyAssets
-from .budgets import LunchMoneyBudgets
-from .plaid_accounts import LunchMoneyPlaidAccounts
-from .recurring_expenses import LunchMoneyRecurringExpenses
-from .transactions import LunchMoneyTransactions
+from .assets import _LunchMoneyAssets
+from .budgets import _LunchMoneyBudgets
+from .plaid_accounts import _LunchMoneyPlaidAccounts
+from .recurring_expenses import _LunchMoneyRecurringExpenses
+from .transactions import _LunchMoneyTransactions
 
 
 class LunchMoney(
-    LunchMoneyAssets,
-    LunchMoneyBudgets,
-    LunchMoneyPlaidAccounts,
-    LunchMoneyRecurringExpenses,
-    LunchMoneyTransactions,
+    _LunchMoneyAssets,
+    _LunchMoneyBudgets,
+    _LunchMoneyPlaidAccounts,
+    _LunchMoneyRecurringExpenses,
+    _LunchMoneyTransactions,
 ):
     """
     Core Lunch Money SDK.

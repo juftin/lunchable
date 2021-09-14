@@ -54,7 +54,7 @@ class AssetsParamsPut(BaseModel):
         return round(x, 2)
 
 
-class LunchMoneyAssets(LunchMoneyCore):
+class _LunchMoneyAssets(LunchMoneyCore):
     """
     Lunch Money Assets Interactions
     """

@@ -34,7 +34,7 @@ class PlaidAccountObject(BaseModel):
     limit: Optional[int]
 
 
-class LunchMoneyPlaidAccounts(LunchMoneyCore):
+class _LunchMoneyPlaidAccounts(LunchMoneyCore):
     """
     Lunch Money Plaid Accounts Interactions
     """

@@ -10,7 +10,7 @@ import datetime
 import logging
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 
 from lunchmoney.config import APIConfig
 from lunchmoney.sdk.core import LunchMoneyCore
@@ -67,6 +67,10 @@ class BudgetParamsPut(BaseModel):
     amount: float
     currency: Optional[str]
 
+    @validator("start_date")
+    def result_check(cls, x):
+        return str(x)
+
 
 class BudgetParamsRemove(BaseModel):
     """
@@ -77,7 +81,7 @@ class BudgetParamsRemove(BaseModel):
     category_id: int
 
 
-class LunchMoneyBudgets(LunchMoneyCore):
+class _LunchMoneyBudgets(LunchMoneyCore):
     """
     Lunch Money Budget Interactions
     """
@@ -133,11 +137,11 @@ class LunchMoneyBudgets(LunchMoneyCore):
         -------
         Dict[str, Dict[str, Any]]
         """
-        params = BudgetParamsPut(start_date=start_date, category_id=category_id,
-                                 amount=amount, currency=currency).dict(exclude_none=True)
+        body = BudgetParamsPut(start_date=start_date, category_id=category_id,
+                               amount=amount, currency=currency).dict(exclude_none=True)
         response_data = self._make_request(method="PUT",
                                            url_path=[APIConfig.LUNCHMONEY_BUDGET],
-                                           params=params)
+                                           json=body)
         return response_data
 
     def remove_budget(self,

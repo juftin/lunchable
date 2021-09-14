@@ -50,7 +50,7 @@ class RecurringExpenseParamsGet(BaseModel):
     debit_as_negative: bool
 
 
-class LunchMoneyRecurringExpenses(LunchMoneyCore):
+class _LunchMoneyRecurringExpenses(LunchMoneyCore):
     """
     Lunch Money Recurring Expenses Interactions
     """
