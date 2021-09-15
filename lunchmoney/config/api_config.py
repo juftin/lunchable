@@ -113,6 +113,7 @@ class APIConfig:
                       query: str = "", fragment: str = ""):
         """
         Build a URL
+
         Parameters
         ----------
         scheme: str

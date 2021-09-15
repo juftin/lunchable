@@ -1,0 +1,23 @@
+name: Lint
+
+on:
+    pull_request:
+        branches: [ "**" ]
+
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v2
+            -   name: Set up Python Environment ${{ matrix.python }}
+                uses: actions/setup-python@v2
+                with:
+                    python-version: 3.9
+            -   name: Install Lint Dependencies
+                run: |
+                    python -m pip install --upgrade pip wheel
+                    python -m pip install tox
+            -   name: Lint with Flake8
+                run: |
+                    echo "::add-matcher::${GITHUB_WORKSPACE}/.github/flake8-problem-matcher.json"
+                    tox -e py-lint
