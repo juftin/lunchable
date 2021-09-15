@@ -8,7 +8,8 @@ jobs:
     lint:
         runs-on: ubuntu-latest
         steps:
-            -   uses: actions/checkout@v2
+            -   name: Set up Github Workspace
+                uses: actions/checkout@v2
                 with:
                     fetch-depth: 0
             -   name: Set up Python Environment 3.9
