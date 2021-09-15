@@ -23,7 +23,7 @@ jobs:
                     python -m pip install tox
             -   name: Install Node Dependencies
                 run: |
-                    npm install --save-dev eslint eslint-plugin-markdown
+                    npm i -g eslint eslint-plugin-markdown
             -   name: Lint with Flake8
                 id: flake8
                 continue-on-error: true
@@ -50,7 +50,7 @@ jobs:
                 continue-on-error: true
                 run: |
                     echo "::add-matcher::.github/matchers/eslint.json"
-                    eslint
+                    eslint ${GITHUB_WORKSPACE}
                     echo "::remove-matcher owner=eslint::"
             -   name: Raise Errors For Linting Failures
                 if: |
