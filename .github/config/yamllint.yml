@@ -1,7 +1,7 @@
 extends: default
 rules:
     comments-indentation: disable
-    document-start: disable
+    document-start:       disable
     brackets:
         max-spaces-inside: 1
     braces:
@@ -11,7 +11,7 @@ rules:
     indentation:
         indent-sequences: consistent
     line-length:
-        level: warning
+        level:                               warning
         allow-non-breakable-inline-mappings: true
-ignore: |
-    tests/sdk/cassettes/
+ignore:  |
+         tests/sdk/cassettes/
