@@ -9,11 +9,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v2
-            -   name: Set up Python Environment ${{ matrix.python }}
+            -   name: Set up Python Environment 3.9
                 uses: actions/setup-python@v2
                 with:
                     python-version: 3.9
-            -   name: Install Dependencies
+            -   name: Install PythonDependencies
                 run:  |
                       python -m pip install --upgrade pip wheel
                       python -m pip install tox
@@ -38,9 +38,23 @@ jobs:
                                    echo "::add-matcher::.github/matchers/mypy.json"
                                    tox -e mypy
                                    echo "::remove-matcher owner=mypy::"
-            -   name: Check on Failures
+            -   name: Set up Node Environment 14
+                uses: actions/setup-node@v2
+                with:
+                    node-version: 14
+                run:  |
+                      npm install markdownlint --save-dev
+            -   name:              Lint with MarkdownLint
+                id:                markdownlint
+                continue-on-error: true
+                run:               |
+                                   echo "::add-matcher::.github/matchers/markdownlint.json"
+                                   tox -e markdownlint
+                                   echo "::remove-matcher owner=markdownlint::"
+            -   name: Raise Errors For Linting Failures
                 if:   |
                       steps.flake8.outcome != 'success' ||
                         steps.yamllint.outcome != 'success'  ||
-                        steps.mypy.outcome != 'success'
+                        steps.mypy.outcome != 'success' ||
+                        steps.markdownlint.outcome != 'success'
                 run:  exit 1
