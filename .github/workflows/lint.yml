@@ -63,5 +63,5 @@ jobs:
                     echo "Flake8: ${{ steps.flake8.outcome }}"
                     echo "YAML-Lint: ${{ steps.yamllint.outcome }}"
                     echo "MyPy: ${{ steps.mypy.outcome }}"
-                    echo "ESLint: ${{ steps.mardownlint.outcome }}"
+                    echo "ESLint: ${{ steps.eslint.outcome }}"
                     exit 1
