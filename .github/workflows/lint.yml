@@ -50,7 +50,7 @@ jobs:
                 continue-on-error: true
                 run: |
                     echo "::add-matcher::.github/matchers/eslint.json"
-                    eslint ${GITHUB_WORKSPACE}
+                    eslint **/*.md/*.js
                     echo "::remove-matcher owner=eslint::"
             -   name: Raise Errors For Linting Failures
                 if: |
