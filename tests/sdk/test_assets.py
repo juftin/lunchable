@@ -1,3 +1,7 @@
+"""
+Run Tests on the Assets Endpoint
+"""
+
 import datetime
 import logging
 
@@ -12,6 +16,13 @@ logger = logging.getLogger(__name__)
 
 @pytest.fixture
 def lunchmoney_asset() -> AssetsObject:
+    """
+    Static lunchmoney.AssetsObject
+
+    Returns
+    -------
+    AssetsObject
+    """
     splitwise_asset = AssetsObject(id=21845,
                                    type_name='cash',
                                    subtype_name='digital wallet (paypal, venmo)',

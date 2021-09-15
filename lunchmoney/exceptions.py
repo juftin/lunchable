@@ -25,3 +25,9 @@ class LunchMoneyHTTPError(LunchMoneyError, HTTPError):
     """
     Lunch Money HTTP Error
     """
+
+
+class LunchMoneyImportError(LunchMoneyError, ImportError):
+    """
+    Lunch Money Import Error
+    """

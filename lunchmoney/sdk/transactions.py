@@ -133,6 +133,8 @@ class _LunchMoneyTransactions(LunchMoneyCore):
                          params: Optional[dict] = None
                          ) -> List[TransactionsObject]:
         """
+        Get lunchmoney transactions
+
         Use this to retrieve all transactions between a date range. Returns list of Transaction
         objects. If no query parameters are set, this will return transactions for the
         current calendar month. If either start_date or _end_date are datetime.datetime objects,
@@ -209,15 +211,15 @@ class _LunchMoneyTransactions(LunchMoneyCore):
         -------
         Dict[str, Any]
         """
-        response_data = TransactionUpdateParamsPut(transaction=transaction,
-                                                   split=split,
-                                                   debit_as_negative=debit_as_negative,
-                                                   skip_balance_update=skip_balance_update
-                                                   ).dict(exclude_unset=True)
+        payload = TransactionUpdateParamsPut(transaction=transaction,
+                                             split=split,
+                                             debit_as_negative=debit_as_negative,
+                                             skip_balance_update=skip_balance_update
+                                             ).dict(exclude_unset=True)
         response_data = self._make_request(method="PUT",
                                            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
                                                      transaction_id],
-                                           json=response_data)
+                                           payload=payload)
         return response_data
 
     def insert_transactions(
@@ -260,16 +262,16 @@ class _LunchMoneyTransactions(LunchMoneyCore):
         """
         if isinstance(transactions, TransactionInsertObject):
             transactions = [transactions]
-        response_data = TransactionInsertParamsPost(transactions=transactions,
-                                                    apply_rules=apply_rules,
-                                                    skip_duplicates=skip_duplicates,
-                                                    check_for_recurring=check_for_recurring,
-                                                    debit_as_negative=debit_as_negative,
-                                                    skip_balance_update=skip_balance_update
-                                                    ).json(exclude_unset=True)
+        payload = TransactionInsertParamsPost(transactions=transactions,
+                                              apply_rules=apply_rules,
+                                              skip_duplicates=skip_duplicates,
+                                              check_for_recurring=check_for_recurring,
+                                              debit_as_negative=debit_as_negative,
+                                              skip_balance_update=skip_balance_update
+                                              ).dict(exclude_unset=True)
         response_data = self._make_request(method="POST",
                                            url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
-                                           data=response_data)
+                                           payload=payload)
         return response_data
 
     def create_transaction_group(self,
@@ -277,8 +279,8 @@ class _LunchMoneyTransactions(LunchMoneyCore):
                                  payee: str,
                                  category_id: Optional[int] = None,
                                  notes: Optional[str] = None,
-                                 tags: Optional[List[id]] = None,
-                                 transactions: Optional[List[id]] = None) -> int:
+                                 tags: Optional[List[int]] = None,
+                                 transactions: Optional[List[int]] = None) -> int:
         """
         Use this endpoint to create a transaction group of two or more transactions.
 
@@ -294,9 +296,9 @@ class _LunchMoneyTransactions(LunchMoneyCore):
             Category for the grouped transaction
         notes: Optional[str]
             Notes for the grouped transaction
-        tags: Optional[List[id]]
+        tags: Optional[List[int]]
             Array of tag IDs for the grouped transaction
-        transactions: Optional[List[id]]
+        transactions: Optional[List[int]]
             Array of transaction IDs to be part of the transaction group
 
         Returns
@@ -314,6 +316,8 @@ class _LunchMoneyTransactions(LunchMoneyCore):
 
     def delete_transaction_group(self, transaction_group_id: int) -> List[int]:
         """
+        Delete a Transaction Group
+
         Use this method to delete a transaction group. The transactions within the
         group will not be removed.
 

@@ -1,3 +1,7 @@
+"""
+Run Tests on the Budgets Endpoint
+"""
+
 import datetime
 import logging
 from random import choice
@@ -11,6 +15,17 @@ logger = logging.getLogger(__name__)
 
 @lunchmoney_cassette
 def test_upsert_budget(lunch_money_obj: LunchMoney):
+    """
+    Test upserting some budgets
+
+    Parameters
+    ----------
+    lunch_money_obj: LunchMoney
+
+    Returns
+    -------
+    None
+    """
     # Ride Sharing
     response = lunch_money_obj.upsert_budget(start_date=obscure_start_date,
                                              category_id=229137,
@@ -20,6 +35,17 @@ def test_upsert_budget(lunch_money_obj: LunchMoney):
 
 @lunchmoney_cassette
 def test_get_budgets(lunch_money_obj: LunchMoney):
+    """
+    Test Getting some budgets
+
+    Parameters
+    ----------
+    lunch_money_obj: LunchMoney
+
+    Returns
+    -------
+    None
+    """
     budgets = lunch_money_obj.get_budgets(
         start_date=beginning_of_this_month,
         end_date=beginning_of_this_month + datetime.timedelta(days=28))

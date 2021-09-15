@@ -1,7 +1,9 @@
 # Author::    Justin Flannery  (mailto:juftin@juftin.com)
 
 """
-Lunch Money Python SDK - This Module Leverages Class Inheritance to
+Lunch Money Python SDK
+
+This Module Leverages Class Inheritance to
 Distribute API Methods Across a series of files. Ultimately, everything
 inherits from the lunchmoney.sdk.core.LunchMoneyCore class which facilitates
 interacting with the API.

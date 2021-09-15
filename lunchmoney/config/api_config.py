@@ -83,13 +83,13 @@ class APIConfig:
         return auth_header
 
     @staticmethod
-    def make_url(url_path: Union[List[str], str]):
+    def make_url(url_path: Union[List[Union[str, int]], str, int]):
         """
         Make a Lunch Money API URL using path parts
 
         Parameters
         ----------
-        url_path: Union[List[str]
+        url_path: Union[List[Union[str, int]], str, int]
             API Components, if a list join these sequentially
 
         Returns

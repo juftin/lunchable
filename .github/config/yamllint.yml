@@ -6,6 +6,8 @@ rules:
         max-spaces-inside: 1
     braces:
         max-spaces-inside: 1
+    colons:
+        max-spaces-after: -1
     hyphens:
         max-spaces-after: 3
     indentation:
@@ -13,5 +15,8 @@ rules:
     line-length:
         level:                               warning
         allow-non-breakable-inline-mappings: true
+        max:                                 100
+    truthy:
+        check-keys: false
 ignore:  |
          tests/sdk/cassettes/

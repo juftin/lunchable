@@ -19,6 +19,10 @@ logger = logging.getLogger(__name__)
 
 
 class PlaidAccountObject(BaseModel):
+    """
+    Lunchmoney PLaid Account object
+    """
+
     id: int
     date_linked: datetime.date
     name: str

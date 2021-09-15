@@ -10,7 +10,7 @@ import datetime
 import logging
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel
 
 from lunchmoney.config import APIConfig
 from lunchmoney.sdk.core import LunchMoneyCore
@@ -19,6 +19,10 @@ logger = logging.getLogger(__name__)
 
 
 class BudgetDataObject(BaseModel):
+    """
+    Data Object within a Budget
+    """
+
     budget_amount: Optional[float]
     budget_currency: Optional[str]
     budget_to_base: Optional[float]
@@ -27,6 +31,10 @@ class BudgetDataObject(BaseModel):
 
 
 class BudgetConfigObject(BaseModel):
+    """
+    Budget Configuration Object
+    """
+
     config_id: int
     cadence: str
     amount: Optional[float]
@@ -36,6 +44,10 @@ class BudgetConfigObject(BaseModel):
 
 
 class BudgetObject(BaseModel):
+    """
+    lunchmoney Budget Object
+    """
+
     category_name: str
     category_id: Optional[int]
     category_group_name: Optional[str]
@@ -67,10 +79,6 @@ class BudgetParamsPut(BaseModel):
     amount: float
     currency: Optional[str]
 
-    @validator("start_date")
-    def result_check(cls, x):
-        return str(x)
-
 
 class BudgetParamsRemove(BaseModel):
     """
@@ -89,6 +97,8 @@ class _LunchMoneyBudgets(LunchMoneyCore):
     def get_budgets(self, start_date: datetime.date,
                     end_date: datetime.date) -> List[BudgetObject]:
         """
+        Get lunchmoney budgets
+
         Get full details on the budgets for all categories between a certain time
         period. The budgeted and spending amounts will be an aggregate across this
         time period. (https://lunchmoney.dev/#plaid-accounts-object)
@@ -111,6 +121,8 @@ class _LunchMoneyBudgets(LunchMoneyCore):
                       currency: Optional[str] = None
                       ) -> Dict[str, Dict[str, Any]]:
         """
+        Upsert a budget
+
         Use this method to update an existing budget or insert a new budget for a particular
         category and date.
 
@@ -141,7 +153,7 @@ class _LunchMoneyBudgets(LunchMoneyCore):
                                amount=amount, currency=currency).dict(exclude_none=True)
         response_data = self._make_request(method="PUT",
                                            url_path=[APIConfig.LUNCHMONEY_BUDGET],
-                                           json=body)
+                                           payload=body)
         return response_data
 
     def remove_budget(self,
@@ -149,6 +161,8 @@ class _LunchMoneyBudgets(LunchMoneyCore):
                       category_id: int
                       ) -> bool:
         """
+        Remove a budget
+
         Use this endpoint to unset an existing budget for a particular category in a
         particular month.
 

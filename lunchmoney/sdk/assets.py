@@ -49,8 +49,12 @@ class AssetsParamsPut(BaseModel):
     currency: Optional[str]
     institution_name: Optional[str]
 
+    @classmethod
     @validator("balance", pre=True)
     def result_check(cls, x):
+        """
+        Check a result
+        """
         return round(x, 2)
 
 
@@ -113,15 +117,15 @@ class _LunchMoneyAssets(LunchMoneyCore):
         -------
         AssetsObject
         """
-        params = AssetsParamsPut(type_name=type_name,
-                                 subtype_name=subtype_name,
-                                 name=name, balance=balance,
-                                 balance_as_of=balance_as_of,
-                                 currency=currency,
-                                 institution_name=institution_name).dict(exclude_none=True)
+        payload = AssetsParamsPut(type_name=type_name,
+                                  subtype_name=subtype_name,
+                                  name=name, balance=balance,
+                                  balance_as_of=balance_as_of,
+                                  currency=currency,
+                                  institution_name=institution_name).dict(exclude_none=True)
         response_data = self._make_request(method="PUT",
                                            url_path=[APIConfig.LUNCHMONEY_ASSETS,
                                                      asset_id],
-                                           json=params)
+                                           payload=payload)
         asset = AssetsObject(**response_data)
         return asset

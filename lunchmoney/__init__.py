@@ -6,7 +6,8 @@
 Lunch Money Python SDK
 """
 
-from ._version import __version__
+from ._version import __lunchmoney__, __version__
+from .exceptions import LunchMoneyError
 from .sdk import (
     AssetsObject,
     LunchMoney,
@@ -25,5 +26,7 @@ __all__ = [
     "TransactionInsertObject",
     "TransactionsObject",
     "TransactionUpdateObject",
-    "__version__"
+    "LunchMoneyError",
+    "__version__",
+    "__lunchmoney__"
 ]
