@@ -21,3 +21,9 @@ jobs:
                 run: |
                     echo "::add-matcher::${GITHUB_WORKSPACE}/.github/flake8-problem-matcher.json"
                     tox -e py-lint
+                    echo "::remove-matcher owner=flake8::"
+            -   name: Lint with YAML-Lint
+                run: |
+                    echo "::add-matcher::${GITHUB_WORKSPACE}/.github/yamllint-problem-matcher.json"
+                    tox -e yaml-lint
+                    echo "::remove-matcher owner=yamllint::"
