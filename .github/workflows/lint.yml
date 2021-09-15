@@ -52,7 +52,7 @@ jobs:
                 continue-on-error: true
                 run: |
                     echo "::add-matcher::.github/matchers/eslint.json"
-                    eslint . --config "${GITHUB_WORKSPACE}/.github/config/.eslintrc.js"
+                    eslint . --config "${{ github.workspace }}/.github/config/.eslintrc.js"
                     echo "::remove-matcher owner=eslint::"
             -   name: Raise Errors For Linting Failures
                 if: |
