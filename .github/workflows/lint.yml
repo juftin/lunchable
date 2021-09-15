@@ -42,6 +42,7 @@ jobs:
                 uses: actions/setup-node@v2
                 with:
                     node-version: 14
+            -   name: Install MardownLint Dependencies
                 run:  |
                       npm install markdownlint --save-dev
             -   name:              Lint with MarkdownLint
