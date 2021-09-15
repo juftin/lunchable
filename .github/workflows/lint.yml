@@ -40,22 +40,22 @@ jobs:
                     echo "::add-matcher::.github/matchers/mypy.json"
                     tox -e mypy
                     echo "::remove-matcher owner=mypy::"
-            -   name: Lint Code Base
-                id: superlinter
-                uses: github/super-linter@v4
-                env:
-                    VALIDATE_ALL_CODEBASE: false
-                    DEFAULT_BRANCH: main
-                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            -   name: Raise Errors For Linting Failures
-                if: |
-                    steps.flake8.outcome != 'success' ||
-                      steps.yamllint.outcome != 'success'  ||
-                      steps.mypy.outcome != 'success' ||
-                      steps.superlinter.outcome != 'success'
-                run: |
-                    echo "Flake8: $(steps.flake8.outcome)"
-                    echo "YAML-Lint: $(steps.yamllint.outcome)"
-                    echo "MyPy: $(steps.mypy.outcome)"
-                    echo "Super Linter: $(steps.superlinter.outcome)"
-                    exit 1
+#            -   name: Lint Code Base
+#                id: superlinter
+#                uses: github/super-linter@v4
+#                env:
+#                    VALIDATE_ALL_CODEBASE: false
+#                    DEFAULT_BRANCH: main
+#                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#            -   name: Raise Errors For Linting Failures
+#                if: |
+#                    steps.flake8.outcome != 'success' ||
+#                      steps.yamllint.outcome != 'success'  ||
+#                      steps.mypy.outcome != 'success' ||
+#                      steps.superlinter.outcome != 'success'
+#                run: |
+#                    echo "Flake8: $(steps.flake8.outcome)"
+#                    echo "YAML-Lint: $(steps.yamllint.outcome)"
+#                    echo "MyPy: $(steps.mypy.outcome)"
+#                    echo "Super Linter: $(steps.superlinter.outcome)"
+#                    exit 1
