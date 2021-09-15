@@ -40,7 +40,7 @@ jobs:
                                    echo "::remove-matcher owner=mypy::"
             -   name: Check on Failures
                 if:   |
-                      steps.flake8.outcome != 'success' || \
-                        steps.yamllint.outcome != 'success'  || \
+                      steps.flake8.outcome != 'success' ||
+                        steps.yamllint.outcome != 'success'  ||
                         steps.mypy.outcome != 'success'
                 run:  exit 1
