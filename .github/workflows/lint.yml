@@ -23,7 +23,7 @@ jobs:
                     python -m pip install tox
             -   name: Install Node Dependencies
                 run: |
-                    npm install eslint@latest --save-dev
+                    npm i -g eslint eslint-plugin-markdown
                     npm install eslint-plugin-markdown@latest --save-dev
             -   name: Lint with Flake8
                 id: flake8
