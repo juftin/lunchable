@@ -1,5 +1,3 @@
-# Author::    Justin Flannery  (mailto:juftin@juftin.com)
-
 """
 Lunch Money - Transactions
 

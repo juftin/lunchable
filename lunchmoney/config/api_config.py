@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-
-# Author::    Justin Flannery  (mailto:juftin@juftin.com)
-
 """
 API Configuration Helper
 """
@@ -33,6 +29,7 @@ class APIConfig:
     LUNCH_MONEY_RECURRING_EXPENSES: str = "recurring_expenses"
     LUNCHMONEY_BUDGET: str = "budgets"
     LUNCHMONEY_ASSETS: str = "assets"
+    LUNCHMONEY_CATEGORIES: str = "categories"
 
     LUNCHMONEY_CONTENT_TYPE_HEADERS: Dict[str, str] = {"Content-Type": "application/json"}
 

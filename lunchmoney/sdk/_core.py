@@ -1,5 +1,3 @@
-# Author::    Justin Flannery  (mailto:juftin@juftin.com)
-
 """
 Lunchmoney SDK Core
 """
@@ -36,8 +34,8 @@ class LunchMoneyCore:
         """
         self.access_token = APIConfig.get_access_token(access_token=access_token)
         api_headers = APIConfig.get_header(access_token=self.access_token)
-        default_headers = requests.sessions.default_headers().copy()
-        updated_headers = default_headers.update(**api_headers)
+        default_headers = requests.sessions.default_headers()
+        updated_headers = dict(**default_headers, **api_headers)
         self.lunch_money_session = requests.Session()
         self.lunch_money_session.headers = updated_headers
 

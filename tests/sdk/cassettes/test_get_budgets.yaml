@@ -11,7 +11,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.26.0
+      - python-requests/2.25.1
       authorization:
       - XXXXXXXXXX
     method: GET
@@ -46,7 +46,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Wed, 15 Sep 2021 05:16:26 GMT
+      - Thu, 16 Sep 2021 01:21:06 GMT
       Etag:
       - W/"1bfd-741OLvfminv866t+7G6txnB+SmQ"
       Server:

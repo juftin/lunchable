@@ -20,8 +20,8 @@
 
 ### Categories
 
-- [ ] `GET` `v1/categories`
-    - [ ] Tests
+- [x] `GET` `v1/categories`
+    - [x] Tests
 - [ ] `POST` `v1/categories`
     - [ ] Tests
 

@@ -1,5 +1,3 @@
-# Author::    Justin Flannery  (mailto:juftin@juftin.com)
-
 """
 Splitwise Interactions
 """

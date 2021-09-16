@@ -1,5 +1,3 @@
-# Author::    Justin Flannery  (mailto:juftin@juftin.com)
-
 """
 Lunch Money Python SDK
 
@@ -14,6 +12,7 @@ will refer to the _LunchMoneyTransactions object.
 
 from .assets import _LunchMoneyAssets
 from .budgets import _LunchMoneyBudgets
+from .categories import _LunchMoneyCategories
 from .plaid_accounts import _LunchMoneyPlaidAccounts
 from .recurring_expenses import _LunchMoneyRecurringExpenses
 from .transactions import _LunchMoneyTransactions
@@ -22,6 +21,7 @@ from .transactions import _LunchMoneyTransactions
 class LunchMoney(
     _LunchMoneyAssets,
     _LunchMoneyBudgets,
+    _LunchMoneyCategories,
     _LunchMoneyPlaidAccounts,
     _LunchMoneyRecurringExpenses,
     _LunchMoneyTransactions,
