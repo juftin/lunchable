@@ -7,6 +7,7 @@ from .budgets import BudgetObject
 from .categories import CategoriesObject
 from .plaid_accounts import PlaidAccountObject
 from .recurring_expenses import RecurringExpensesObject
+from .tags import TagsObject
 from .transactions import (
     TransactionInsertObject,
     TransactionsObject,
@@ -19,6 +20,7 @@ __all__ = [
     "CategoriesObject",
     "PlaidAccountObject",
     "RecurringExpensesObject",
+    "TagsObject",
     "TransactionsObject",
     "TransactionUpdateObject",
     "TransactionInsertObject",

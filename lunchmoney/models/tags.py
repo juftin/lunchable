@@ -15,9 +15,11 @@ from lunchmoney.models._core import LunchMoneyAPIClient
 logger = logging.getLogger(__name__)
 
 
-class TagObject(BaseModel):
+class TagsObject(BaseModel):
     """
-    Lunchmoney Tag object
+    Lunchmoney Tags object
+
+    https://lunchmoney.dev/#tags-object
     """
 
     id: int
@@ -30,7 +32,7 @@ class _LunchMoneyTags(LunchMoneyAPIClient):
     Lunch Money Tag Interactions
     """
 
-    def get_tags(self) -> List[TagObject]:
+    def get_tags(self) -> List[TagsObject]:
         """
         Get All Tags
 
@@ -41,9 +43,9 @@ class _LunchMoneyTags(LunchMoneyAPIClient):
 
         Returns
         -------
-        List[TagObject]
+        List[TagsObject]
         """
         response_data = self._make_request(method=self.methods.GET,
                                            url_path=APIConfig.LUNCHMONEY_TAGS)
-        tag_objects = [TagObject(**item) for item in response_data]
+        tag_objects = [TagsObject(**item) for item in response_data]
         return tag_objects
