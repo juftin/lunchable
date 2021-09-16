@@ -31,6 +31,7 @@ class APIConfig:
     LUNCHMONEY_BUDGET: str = "budgets"
     LUNCHMONEY_ASSETS: str = "assets"
     LUNCHMONEY_CATEGORIES: str = "categories"
+    LUNCHMONEY_TAGS: str = "tags"
 
     LUNCHMONEY_CONTENT_TYPE_HEADERS: Dict[str, str] = {"Content-Type": "application/json"}
 

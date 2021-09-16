@@ -20,11 +20,6 @@
 - [ ] `PUT` `v1/crypto/manual/:id`
     - [ ] Tests
 
-#### Tags
-
-- [ ] `GET` `v1/tags`
-    - [ ] Tests
-
 #### Transactions
 
 - [x] `GET` `v1/transactions`
@@ -66,6 +61,11 @@
 #### Recurring Expenses
 
 - [x] `GET` `v1/recurring_expenses`
+    - [x] Tests
+
+#### Tags
+
+- [x] `GET` `v1/tags`
     - [x] Tests
 
 ## Splitwise Plugin Roadmap

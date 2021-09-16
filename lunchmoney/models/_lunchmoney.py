@@ -15,6 +15,7 @@ from .budgets import _LunchMoneyBudgets
 from .categories import _LunchMoneyCategories
 from .plaid_accounts import _LunchMoneyPlaidAccounts
 from .recurring_expenses import _LunchMoneyRecurringExpenses
+from .tags import _LunchMoneyTags
 from .transactions import _LunchMoneyTransactions
 
 
@@ -24,6 +25,7 @@ class LunchMoney(
     _LunchMoneyCategories,
     _LunchMoneyPlaidAccounts,
     _LunchMoneyRecurringExpenses,
+    _LunchMoneyTags,
     _LunchMoneyTransactions,
 ):
     """
