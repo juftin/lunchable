@@ -11,15 +11,27 @@ from typing import Any, List, Optional, Union
 import requests
 
 from lunchmoney.config import APIConfig
-from lunchmoney.exceptions import LunchMoneyError, LunchMoneyHTTPError
+from lunchmoney.exceptions import LunchMoneyHTTPError
 
 logger = logging.getLogger(__name__)
 
 
-class LunchMoneyCore:
+class _Methods:
+    """"
+    Namespace for Request Methods
+    """
+    GET = "GET"
+    POST = "POST"
+    PUT = "PUT"
+    DELETE = "DELETE"
+
+
+class LunchMoneyAPIClient:
     """
     Core SDK Class
     """
+
+    methods = _Methods
 
     def __init__(self, access_token: Optional[str] = None):
         """
@@ -83,7 +95,7 @@ class LunchMoneyCore:
         """
         url = APIConfig.make_url(url_path=url_path)
         if payload is not None:
-            payload = json.dumps(payload, default=LunchMoneyCore._serializer)
+            payload = json.dumps(payload, default=LunchMoneyAPIClient._serializer)
         try:
             response = self.lunch_money_session.request(
                 method=method, url=url, params=params,
@@ -104,32 +116,3 @@ class LunchMoneyCore:
             logger.exception(errors)
             raise LunchMoneyHTTPError(errors)
         return loads(response.content)
-
-    @classmethod
-    def resolve_date(
-            cls, date_obj: Union[datetime.date, datetime.datetime, str]
-    ) -> datetime.date:
-        """
-        Resolve an object to datetime.date
-
-        If date_obj is a datetime.datetime objects, it will be reduced to dates. If a string is
-        provided, it will be attempted to be parsed as YYYY-MM-DD format
-
-        Parameters
-        ----------
-        date_obj: Union[datetime.date, datetime.datetime, str]:
-            date object search
-
-        Returns
-        -------
-        datetime.date
-        """
-        if isinstance(date_obj, datetime.date):
-            return date_obj
-        elif isinstance(date_obj, datetime.datetime):
-            return date_obj.date()
-        elif isinstance(date_obj, str):
-            return datetime.datetime.strptime(date_obj, "%Y-%m-%d").date()
-        else:
-            raise LunchMoneyError("You must provide a datetime.datetime, datetime.date, "
-                                  "or string formatted as YYYY-MM-DD")

@@ -11,7 +11,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 from lunchmoney.config import APIConfig
-from lunchmoney.sdk._core import LunchMoneyCore
+from lunchmoney.sdk._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +48,7 @@ class RecurringExpenseParamsGet(BaseModel):
     debit_as_negative: bool
 
 
-class _LunchMoneyRecurringExpenses(LunchMoneyCore):
+class _LunchMoneyRecurringExpenses(LunchMoneyAPIClient):
     """
     Lunch Money Recurring Expenses Interactions
     """

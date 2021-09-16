@@ -3,7 +3,6 @@ Run Tests on the Categories Endpoint
 """
 
 import logging
-from random import choice
 
 from lunchmoney import LunchMoney
 from lunchmoney.sdk.categories import CategoriesObject
@@ -22,4 +21,16 @@ def test_get_categories(lunch_money_obj: LunchMoney):
     for category in categories:
         assert isinstance(category, CategoriesObject)
     logger.info("%s Categories returned", len(categories))
-    logger.info(choice(categories))
+
+
+@lunchmoney_cassette
+def test_create_category(lunch_money_obj: LunchMoney):
+    """
+    Get Categories and Assert that they're categories
+    """
+    name = "Test Category"
+    category = lunch_money_obj.create_category(name=name,
+                                               description="Test Category Description",
+                                               exclude_from_budget=True)
+    logger.info("Category ID # %s was just created: %s", category, name)
+    assert isinstance(category, int)

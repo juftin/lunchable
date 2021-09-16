@@ -11,7 +11,7 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel
 
 from lunchmoney.config import APIConfig
-from lunchmoney.sdk._core import LunchMoneyCore
+from lunchmoney.sdk._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 
@@ -87,7 +87,7 @@ class BudgetParamsRemove(BaseModel):
     category_id: int
 
 
-class _LunchMoneyBudgets(LunchMoneyCore):
+class _LunchMoneyBudgets(LunchMoneyAPIClient):
     """
     Lunch Money Budget Interactions
     """

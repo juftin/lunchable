@@ -2,14 +2,9 @@
 
 ## API Endpoints Roadmap
 
-### Assets
+### Incomplete
 
-- [x] `GET` `v1/assets`
-    - [x] Tests
-- [x] `PUT` `v1/assets/:id`
-    - [x] Tests
-
-### Budget
+#### Budget
 
 - [x] `GET` `v1/budgets`
     - [ ] Tests
@@ -18,36 +13,19 @@
 - [x] `DELETE` `v1/budgets`
     - [ ] Tests
 
-### Categories
-
-- [x] `GET` `v1/categories`
-    - [x] Tests
-- [ ] `POST` `v1/categories`
-    - [ ] Tests
-
-### Crypto
+#### Crypto
 
 - [ ] `GET` `v1/crypto`
     - [ ] Tests
 - [ ] `PUT` `v1/crypto/manual/:id`
     - [ ] Tests
 
-### Plaid Accounts
-
-- [x] `GET` `v1/plaid_accounts`
-    - [ ] Tests
-
-### Recurring Expenses
-
-- [x] `GET` `v1/recurring_expenses`
-    - [ ] Tests
-
-### Tags
+#### Tags
 
 - [ ] `GET` `v1/tags`
     - [ ] Tests
 
-### Transactions
+#### Transactions
 
 - [x] `GET` `v1/transactions`
     - [ ] Tests
@@ -63,6 +41,32 @@
     - [ ] Tests
 - [x] `DELETE` `v1/transactions/group/:transaction_id`
     - [ ] Tests
+
+### Done
+
+#### Assets
+
+- [x] `GET` `v1/assets`
+    - [x] Tests
+- [x] `PUT` `v1/assets/:id`
+    - [x] Tests
+
+#### Categories
+
+- [x] `GET` `v1/categories`
+    - [x] Tests
+- [x] `POST` `v1/categories`
+    - [x] Tests
+
+#### Plaid Accounts
+
+- [x] `GET` `v1/plaid_accounts`
+    - [x] Tests
+
+#### Recurring Expenses
+
+- [x] `GET` `v1/recurring_expenses`
+    - [x] Tests
 
 ## Splitwise Plugin Roadmap
 

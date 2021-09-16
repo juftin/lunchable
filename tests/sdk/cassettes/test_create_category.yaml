@@ -1,0 +1,49 @@
+interactions:
+- request:
+    body: '{"name": "Test Category", "description": "Test Category Description", "is_income":
+      false, "exclude_from_budget": true, "exclude_from_totals": false}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '148'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.26.0
+      authorization:
+      - XXXXXXXXXX
+    method: POST
+    uri: https://dev.lunchmoney.app/v1/categories
+  response:
+    body:
+      string: '{"category_id":250066}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '22'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 16 Sep 2021 02:52:10 GMT
+      Etag:
+      - W/"16-4HUONhO61CUpP/0GWPZOADZM9TQ"
+      Server:
+      - Cowboy
+      Vary:
+      - Origin, Accept-Encoding
+      Via:
+      - 1.1 vegur
+      X-Powered-By:
+      - Express
+    status:
+      code: 200
+      message: OK
+version: 1

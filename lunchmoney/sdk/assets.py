@@ -11,7 +11,7 @@ from typing import List, Optional
 from pydantic import BaseModel, validator
 
 from lunchmoney.config import APIConfig
-from lunchmoney.sdk._core import LunchMoneyCore
+from lunchmoney.sdk._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +56,7 @@ class AssetsParamsPut(BaseModel):
         return round(x, 2)
 
 
-class _LunchMoneyAssets(LunchMoneyCore):
+class _LunchMoneyAssets(LunchMoneyAPIClient):
     """
     Lunch Money Assets Interactions
     """

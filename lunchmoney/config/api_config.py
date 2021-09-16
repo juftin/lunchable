@@ -1,6 +1,7 @@
 """
 API Configuration Helper
 """
+
 import logging
 from os import getenv
 from typing import Dict, List, Optional, Union

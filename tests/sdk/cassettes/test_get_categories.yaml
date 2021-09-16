@@ -1,0 +1,60 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+      authorization:
+      - XXXXXXXXXX
+    method: GET
+    uri: https://dev.lunchmoney.app/v1/categories
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA82XX2+bMBTFvwryM8nAYPPnre3WbQ+TqiVSpU1T5IIhVglGxmSrqn73kRBhOqXD
+        VjbBY+Ij4Z/Oudf3PoOESJpzwWgN4u/PgKUghjByPWiDkuwoiMFVkfAtL2zrmoga2CCldSJYJRkv
+        QVw2RWEDVm9YmfCDPCNFTW1AfyVFk9JNJvhu89CkOZXnzySX7b/9WVOl7YXSDWnlADrQXTjBAsK1
+        A2MniF13ifzwW3uJRFAtXXuzXPCm6j9w/LU5YB6u/mIPkL0e+ZqUj9YtpTPARVgPt9MZ4GJf4bKi
+        mBLVR7HjLl0HjqC+0pk4q1BveJZRaq22vJqBudjTM7fTmRCjnvhDKamQhJU7WsrpkQNHD7nTGSD7
+        To98y3lqvacF21PxNDkydpAW8kln4jLukT+S2rbWgpR1xVu3j6hTg6NQM96hcbxDBc4yOYNKjjTb
+        dGTapr1IoQqe0ONLPTUudvSq+KQzqWK3x/3UotjWVSP5DHgjTd7IlFfZ+7mDGWOVonkL9cyRMSn2
+        9Ug7nQmpqtk78nR4jE4NK6PiIoP/Qt0djUMjvZnypDOBVmP0HRU1L0lh3RAx7vJ/T7Sr17BOOhNk
+        b4A8g9aM4dhY+UqnS+rDKFCkXynbPTSiphMNWeECRmsXxW4QQ7TEwVt5PqszWRrQALmU1jvrSztu
+        5CS/LNGXlLAfxo639MaXh6HOJM/+ALmWpGl71ixiHWjGOjCdOAIFzFrILRGszCcHRpHm5hAZzxwq
+        1CtaZAu2qwTfT1XKf9jn6c3QJ50JtVoeDttwNQePsacZas801Fj16tWOP075APvOofe2O8xYwxrq
+        TIxV9dvOV3taTG8r0nyCkWlzRmrpv2dymwryk1zG+w+mSay5LGCtZeHHy290y/LApRUAAA==
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 16 Sep 2021 01:21:06 GMT
+      Etag:
+      - W/"15a5-0e1YNBDA9CSok8rJyYwxcAdBDC4"
+      Server:
+      - Cowboy
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin, Accept-Encoding
+      Via:
+      - 1.1 vegur
+      X-Powered-By:
+      - Express
+    status:
+      code: 200
+      message: OK
+version: 1

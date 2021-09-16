@@ -4,7 +4,6 @@ Run Tests on the Budgets Endpoint
 
 import datetime
 import logging
-from random import choice
 
 from lunchmoney import LunchMoney
 from lunchmoney.sdk import BudgetObject
@@ -53,4 +52,3 @@ def test_get_budgets(lunch_money_obj: LunchMoney):
     for budget in budgets:
         assert isinstance(budget, BudgetObject)
     logger.info("%s Budgets Found", len(budgets))
-    logger.info("Example Budget: %s", choice(budgets))

@@ -11,7 +11,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 from lunchmoney.config import APIConfig
-from lunchmoney.sdk._core import LunchMoneyCore
+from lunchmoney.sdk._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +36,7 @@ class PlaidAccountObject(BaseModel):
     limit: Optional[int]
 
 
-class _LunchMoneyPlaidAccounts(LunchMoneyCore):
+class _LunchMoneyPlaidAccounts(LunchMoneyAPIClient):
     """
     Lunch Money Plaid Accounts Interactions
     """
@@ -53,8 +53,8 @@ class _LunchMoneyPlaidAccounts(LunchMoneyCore):
         -------
         List[PlaidAccountObject]
         """
-        response_data = self._make_request(method="GET",
-                                           url_path=[APIConfig.LUNCHMONEY_PLAID_ACCOUNTS])
+        response_data = self._make_request(method=self.methods.GET,
+                                           url_path=APIConfig.LUNCHMONEY_PLAID_ACCOUNTS)
         accounts = response_data.get(APIConfig.LUNCHMONEY_PLAID_ACCOUNTS)
         account_objects = [PlaidAccountObject(**item) for item in accounts]
         return account_objects

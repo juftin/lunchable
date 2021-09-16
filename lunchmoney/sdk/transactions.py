@@ -11,7 +11,7 @@ from typing import Any, Dict, List, Optional, Union
 from pydantic import BaseModel
 
 from lunchmoney.config import APIConfig
-from lunchmoney.sdk._core import LunchMoneyCore
+from lunchmoney.sdk._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 
@@ -120,7 +120,7 @@ class TransactionGroupParamsPost(BaseModel):
     transactions: Optional[List[int]]
 
 
-class _LunchMoneyTransactions(LunchMoneyCore):
+class _LunchMoneyTransactions(LunchMoneyAPIClient):
     """
     Lunch Money Transactions Interactions
     """
