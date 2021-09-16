@@ -13,7 +13,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 from lunchmoney.config import APIConfig
-from lunchmoney.sdk.core import LunchMoneyCore
+from lunchmoney.sdk._core import LunchMoneyCore
 
 logger = logging.getLogger(__name__)
 
