@@ -37,6 +37,7 @@ class TransactionsObject(BaseModel):
     tags: Optional[List[str]]
     notes: Optional[str]
 
+
 class TransactionInsertObject(BaseModel):
     """
     https://lunchmoney.dev/#insert-transactions

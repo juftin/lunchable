@@ -2,7 +2,7 @@
 Lunch Money Python SDK
 """
 
-from ._version import __version__, __lunchmoney__
+from ._version import __lunchmoney__, __version__
 from .exceptions import LunchMoneyError
 from .models import (
     AssetsObject,
@@ -27,4 +27,5 @@ __all__ = [
 
     "LunchMoneyError",
     "__version__",
+    "__lunchmoney__"
 ]
