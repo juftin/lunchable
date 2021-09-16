@@ -6,7 +6,7 @@ import datetime
 import logging
 
 from lunchmoney import LunchMoney
-from lunchmoney.sdk import BudgetObject
+from lunchmoney.models import BudgetObject
 from tests.conftest import beginning_of_this_month, lunchmoney_cassette, obscure_start_date
 
 logger = logging.getLogger(__name__)

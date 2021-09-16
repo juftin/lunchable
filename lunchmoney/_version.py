@@ -1,5 +1,5 @@
 """
-LunchMoney Version
+LunchMoney Version File
 """
 
 __lunchmoney__ = "lunchmoney-python"

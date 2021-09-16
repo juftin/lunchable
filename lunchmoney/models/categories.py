@@ -11,7 +11,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 from lunchmoney.config import APIConfig
-from lunchmoney.sdk._core import LunchMoneyAPIClient
+from lunchmoney.models._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 
@@ -73,7 +73,7 @@ class _LunchMoneyCategories(LunchMoneyAPIClient):
                         exclude_from_budget: Optional[bool] = False,
                         exclude_from_totals: Optional[bool] = False) -> int:
         """
-        Create Category
+        Create a Category
 
         Use this to create a single category
         https://lunchmoney.dev/#create-category
@@ -99,7 +99,6 @@ class _LunchMoneyCategories(LunchMoneyAPIClient):
         int
             ID of the newly created category
         """
-
         category_body = ModelCreateCategory(
             name=name,
             description=description,

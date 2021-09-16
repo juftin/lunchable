@@ -17,9 +17,10 @@ logger = logging.getLogger(__name__)
 
 
 class _Methods:
-    """"
+    """
     Namespace for Request Methods
     """
+
     GET = "GET"
     POST = "POST"
     PUT = "PUT"
@@ -28,7 +29,7 @@ class _Methods:
 
 class LunchMoneyAPIClient:
     """
-    Core SDK Class
+    Core API Client Class
     """
 
     methods = _Methods

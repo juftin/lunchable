@@ -2,27 +2,29 @@
 Lunch Money Python SDK
 """
 
-from ._version import __lunchmoney__, __version__
+from ._version import __version__, __lunchmoney__
 from .exceptions import LunchMoneyError
-from .sdk import (
+from .models import (
     AssetsObject,
-    LunchMoney,
     PlaidAccountObject,
     RecurringExpensesObject,
     TransactionInsertObject,
     TransactionsObject,
     TransactionUpdateObject,
 )
+# noinspection PyProtectedMember
+from .models._lunchmoney import LunchMoney
 
 __all__ = [
-    "AssetsObject",
     "LunchMoney",
+
+    "AssetsObject",
     "PlaidAccountObject",
     "RecurringExpensesObject",
     "TransactionInsertObject",
     "TransactionsObject",
     "TransactionUpdateObject",
+
     "LunchMoneyError",
     "__version__",
-    "__lunchmoney__"
 ]

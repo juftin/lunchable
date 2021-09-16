@@ -3,7 +3,7 @@ Lunch Money Python SDK
 
 This Module Leverages Class Inheritance to
 Distribute API Methods Across a series of files. Ultimately, everything
-inherits from the lunchmoney.sdk.core.LunchMoneyAPIClient class which facilitates
+inherits from the lunchmoney.models.core.LunchMoneyAPIClient class which facilitates
 interacting with the API.
 
 For example: to see source code on interactions with the "transactions" API endpoint you

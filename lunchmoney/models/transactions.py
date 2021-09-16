@@ -8,10 +8,10 @@ import datetime
 import logging
 from typing import Any, Dict, List, Optional, Union
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from lunchmoney.config import APIConfig
-from lunchmoney.sdk._core import LunchMoneyAPIClient
+from lunchmoney.models._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +21,7 @@ class TransactionsObject(BaseModel):
     https://lunchmoney.dev/#transaction-object
     """
 
-    id: Optional[int]
+    id: Optional[int] = Field(description="some_thing")
     date: str
     amount: float
     payee: Optional[str]
@@ -36,7 +36,6 @@ class TransactionsObject(BaseModel):
     external_id: Optional[str]
     tags: Optional[List[str]]
     notes: Optional[str]
-
 
 class TransactionInsertObject(BaseModel):
     """

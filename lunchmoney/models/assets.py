@@ -11,7 +11,7 @@ from typing import List, Optional
 from pydantic import BaseModel, validator
 
 from lunchmoney.config import APIConfig
-from lunchmoney.sdk._core import LunchMoneyAPIClient
+from lunchmoney.models._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 

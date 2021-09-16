@@ -5,7 +5,7 @@ Run Tests on the Plaid Accounts Endpoint
 import logging
 
 from lunchmoney import LunchMoney
-from lunchmoney.sdk.plaid_accounts import PlaidAccountObject
+from lunchmoney.models.plaid_accounts import PlaidAccountObject
 from tests.conftest import lunchmoney_cassette
 
 logger = logging.getLogger(__name__)

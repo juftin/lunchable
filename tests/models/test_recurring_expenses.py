@@ -5,7 +5,7 @@ Run Tests on the Recurring Expenses Endpoint
 import logging
 
 from lunchmoney import LunchMoney
-from lunchmoney.sdk.recurring_expenses import RecurringExpensesObject
+from lunchmoney.models.recurring_expenses import RecurringExpensesObject
 from tests.conftest import lunchmoney_cassette
 
 logger = logging.getLogger(__name__)

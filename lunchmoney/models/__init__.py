@@ -2,7 +2,6 @@
 Lunch Money Python SDK and Associated Objects
 """
 
-from ._lunchmoney import LunchMoney
 from .assets import AssetsObject
 from .budgets import BudgetObject
 from .categories import CategoriesObject
@@ -15,8 +14,6 @@ from .transactions import (
 )
 
 __all__ = [
-    "LunchMoney",
-
     "AssetsObject",
     "BudgetObject",
     "CategoriesObject",

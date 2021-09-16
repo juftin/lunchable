@@ -5,7 +5,7 @@ Run Tests on the Categories Endpoint
 import logging
 
 from lunchmoney import LunchMoney
-from lunchmoney.sdk.categories import CategoriesObject
+from lunchmoney.models.categories import CategoriesObject
 from tests.conftest import lunchmoney_cassette
 
 logger = logging.getLogger(__name__)

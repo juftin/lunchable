@@ -8,7 +8,7 @@ import logging
 import pytest
 
 from lunchmoney import LunchMoney
-from lunchmoney.sdk.assets import AssetsObject
+from lunchmoney.models.assets import AssetsObject
 from tests.conftest import lunchmoney_cassette
 
 logger = logging.getLogger(__name__)

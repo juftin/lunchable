@@ -19,4 +19,4 @@ rules:
     truthy:
         check-keys: false
 ignore:  |
-         tests/sdk/cassettes/
+         tests/models/cassettes/
