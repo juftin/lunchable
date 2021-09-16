@@ -13,13 +13,6 @@
 - [x] `DELETE` `v1/budgets`
     - [ ] Tests
 
-#### Crypto
-
-- [ ] `GET` `v1/crypto`
-    - [ ] Tests
-- [ ] `PUT` `v1/crypto/manual/:id`
-    - [ ] Tests
-
 #### Transactions
 
 - [x] `GET` `v1/transactions`
@@ -51,6 +44,13 @@
 - [x] `GET` `v1/categories`
     - [x] Tests
 - [x] `POST` `v1/categories`
+    - [x] Tests
+
+#### Crypto
+
+- [x] `GET` `v1/crypto`
+    - [x] Tests
+- [x] `PUT` `v1/crypto/manual/:id`
     - [x] Tests
 
 #### Plaid Accounts
