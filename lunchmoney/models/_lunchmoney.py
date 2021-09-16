@@ -13,6 +13,7 @@ will refer to the _LunchMoneyTransactions object.
 from .assets import _LunchMoneyAssets
 from .budgets import _LunchMoneyBudgets
 from .categories import _LunchMoneyCategories
+from .crypto import _LunchMoneyCrypto
 from .plaid_accounts import _LunchMoneyPlaidAccounts
 from .recurring_expenses import _LunchMoneyRecurringExpenses
 from .tags import _LunchMoneyTags
@@ -23,6 +24,7 @@ class LunchMoney(
     _LunchMoneyAssets,
     _LunchMoneyBudgets,
     _LunchMoneyCategories,
+    _LunchMoneyCrypto,
     _LunchMoneyPlaidAccounts,
     _LunchMoneyRecurringExpenses,
     _LunchMoneyTags,
