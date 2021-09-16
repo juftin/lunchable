@@ -36,8 +36,9 @@ class LunchMoneyCore:
         api_headers = APIConfig.get_header(access_token=self.access_token)
         default_headers = requests.sessions.default_headers()
         updated_headers = dict(**default_headers, **api_headers)
+        typed_headers = requests.models.CaseInsensitiveDict(updated_headers)
         self.lunch_money_session = requests.Session()
-        self.lunch_money_session.headers = updated_headers
+        self.lunch_money_session.headers = typed_headers
 
     def __repr__(self) -> str:
         """
