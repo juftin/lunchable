@@ -1,0 +1,63 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.26.0
+      authorization:
+      - XXXXXXXXXX
+    method: GET
+    uri: https://dev.lunchmoney.app/v1/plaid_accounts
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA+WXXW/aMBSG/0qUq3Wike18544CbaMx6CDlotOE3MRqLYKDEgcJVf3vO+kYDStQ
+        l0KlbVyhE59zkkevz8eDPkspT8Y0jrNSyEIPvj/oPNEDC9u+1dATKtk45WLCwKYTRPAp8k+xozd0
+        QacMbGd5NmE5vWPaqdb5HOU0YfAw4QUEXoyXh+DBoNnuaOdcUBFzmmqhSPicJyX8rUXA2CLgLRez
+        youLOSvklAkJtqK8XZpvf58H65QWEzAt/bgoJJel5JnYmrkKJaks4VN1Gks+r8KktJBjPp1ludQD
+        UaZpQ7+lKThUIZCB4Aen4jLPmYgXYCuLRF+dGT+5l7MKVp2SFSEnMFFgYsMi1k2Vh0/5MsNjYwXa
+        tVVAt+iMS8DVFxXqEVAp8w2o68eeDy3RxTlL+DrNXyYtpnnyzNPHGG3mWQv/Osk6CoIC7FYoHOLd
+        6HW+2HSIAQn3Q7yMiwzPt3cg9lQQd4ZXVy+JvirIQmbxRAMXUSfoeZsJnvOEpVwu6vhAnB8kRdNw
+        HG8HJ6TC6TIrC6YN6ZyLu2IXsITNsoLLLF+sA1t5Lml5CG25v800XWhnVEyU1eadEi/CdmB6AbYM
+        x7TX1Wa5yDYQeR9FZJhkF0VfhWLYa4ejsH3d7O6huQ1F8G2SUxMcdm0bGbZ1XNERJVxCshxQaK17
+        Fk9AP3sIL352XSmP4EMpD97XjDB8rxvYxPB9sq484pjEIO5xleeqoOyGo37voq9ddprd6HIP9VkI
+        T2oMXdf+G2sdVmH1lRcxSyEhg6J32Jq3rcfupTwcIZDdU4cl6I8OayJCTAN7x5We0rj4reTxpODp
+        nOW7IKoOKqbjWgcYVA6ovdo8QrbD8pT67KAzjAZhK+q0tWHUb33RrnthNPy/JxRHqbcO7ynI5bCt
+        giBrS5nbeGG3EVMbU2zPPnqvMN9A8oCFz4eB/4OGPdsy0HEh+kq72/Dp/l1BRljdona/9ZLjyxW5
+        5vSp8jlR3I83XfajLsimRTA2PPuoS7Kn1K0rTtqn7uiif6INhtc79frv10rXUWLW6TYBW0MLey3j
+        3cOg5RD30FsIQb4HA/U7b/JGWD8efwKcXGuVAxMAAA==
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 16 Sep 2021 03:20:06 GMT
+      Etag:
+      - W/"1303-QMY8tCQKn1bNi5mPfmRnRDhnFVk"
+      Server:
+      - Cowboy
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin, Accept-Encoding
+      Via:
+      - 1.1 vegur
+      X-Powered-By:
+      - Express
+    status:
+      code: 200
+      message: OK
+version: 1

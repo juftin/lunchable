@@ -1,0 +1,48 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+      authorization:
+      - XXXXXXXXXX
+    method: GET
+    uri: https://dev.lunchmoney.app/v1/assets
+  response:
+    body:
+      string: '{"assets":[{"id":21966,"type_name":"cash","subtype_name":"checking","name":"Ally
+        Checking Import","display_name":"Ally Checking Import","balance":"1459.8200","balance_as_of":"2021-08-31T05:29:46.069Z","currency":"usd","closed_on":null,"institution_name":null,"created_at":"2021-08-31T05:24:33.936Z"},{"id":21845,"type_name":"cash","subtype_name":"digital
+        wallet (paypal, venmo)","name":"Splitwise Balance","display_name":"Splitwise","balance":"5.2000","balance_as_of":"2021-09-15T05:16:25.063Z","currency":"usd","closed_on":null,"institution_name":"Splitwise","created_at":"2021-08-28T16:06:02.701Z"}]}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '602'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 16 Sep 2021 01:21:04 GMT
+      Etag:
+      - W/"25a-yMYkDVtf4KJxm2tbldfWqaudbhU"
+      Server:
+      - Cowboy
+      Vary:
+      - Origin, Accept-Encoding
+      Via:
+      - 1.1 vegur
+      X-Powered-By:
+      - Express
+    status:
+      code: 200
+      message: OK
+version: 1

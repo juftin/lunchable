@@ -1,0 +1,51 @@
+interactions:
+- request:
+    body: '{"transactions": [{"date": "2021-09-16", "amount": 3.5, "payee": "Test",
+      "notes": "Test Description"}], "apply_rules": false, "skip_duplicates": true,
+      "check_for_recurring": false, "debit_as_negative": false, "skip_balance_update":
+      true}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '237'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.26.0
+      authorization:
+      - XXXXXXXXXX
+    method: POST
+    uri: https://dev.lunchmoney.app/v1/transactions
+  response:
+    body:
+      string: '{"ids":[55335002]}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '18'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 16 Sep 2021 22:33:55 GMT
+      Etag:
+      - W/"12-66DTo/oaEeV6Eb7gkPnvJrhrhdg"
+      Server:
+      - Cowboy
+      Vary:
+      - Origin, Accept-Encoding
+      Via:
+      - 1.1 vegur
+      X-Powered-By:
+      - Express
+    status:
+      code: 200
+      message: OK
+version: 1
