@@ -28,6 +28,7 @@ To use lunch-money, first install it using pip:
 
    lunchmoney.rst
    objects.rst
+   plugins.rst
 
 Indices and tables
 ==================

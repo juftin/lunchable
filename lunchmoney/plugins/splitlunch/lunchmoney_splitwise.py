@@ -20,7 +20,7 @@ except ImportError as ie:
                                 "`pip install %s[splitwise]`", __lunchmoney__)
 
 
-class LunchMoneySplitwise(splitwise.Splitwise):
+class SplitLunch(splitwise.Splitwise):
     """
     Python Extension Class for interacting with Splitwise
     """

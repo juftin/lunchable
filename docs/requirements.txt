@@ -5,3 +5,4 @@ autodocsumm
 requests
 python-dotenv
 pydantic
+splitwise
