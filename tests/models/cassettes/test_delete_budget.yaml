@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"start_date": "2022-11-01", "category_id": 229137, "amount": 100.0}'
+    body: null
     headers:
       Accept:
       - '*/*'
@@ -9,31 +9,31 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '68'
+      - '0'
       Content-Type:
       - application/json
       User-Agent:
       - python-requests/2.26.0
       authorization:
       - XXXXXXXXXX
-    method: PUT
-    uri: https://dev.lunchmoney.app/v1/budgets
+    method: DELETE
+    uri: https://dev.lunchmoney.app/v1/budgets?start_date=2022-11-01&category_id=229137
   response:
     body:
-      string: '{"category_group":null}'
+      string: 'true'
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
       Connection:
       - keep-alive
       Content-Length:
-      - '23'
+      - '4'
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 17 Sep 2021 01:55:06 GMT
+      - Fri, 17 Sep 2021 02:04:13 GMT
       Etag:
-      - W/"17-5ALBl+bKXJaccIUKdwiYXHJOenY"
+      - W/"4-X/5TO4MPCKAyY0ipFgr6/IraRNs"
       Server:
       - Cowboy
       Vary:

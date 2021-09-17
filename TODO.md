@@ -2,18 +2,14 @@
 
 ## API Endpoints Roadmap
 
-### Incomplete
-
 #### Budget
 
 - [x] `GET` `v1/budgets`
-    - [ ] Tests
+    - [x] Tests
 - [x] `PUT` `v1/budgets`
     - [x] Tests
 - [x] `DELETE` `v1/budgets`
-    - [ ] Tests
-
-### Done
+    - [x] Tests
 
 #### Assets
 

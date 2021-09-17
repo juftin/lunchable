@@ -6,8 +6,8 @@ import datetime
 import logging
 
 from lunchmoney import LunchMoney
-from lunchmoney.models.transactions import (TransactionsObject,
-                                            TransactionInsertObject,
+from lunchmoney.models.transactions import (TransactionInsertObject,
+                                            TransactionsObject,
                                             TransactionUpdateObject)
 from tests.conftest import lunchmoney_cassette
 
@@ -67,10 +67,7 @@ def test_update_transaction(lunch_money_obj: LunchMoney):
 @lunchmoney_cassette
 def test_create_transaction_group(lunch_money_obj: LunchMoney):
     """
-
-    Returns
-    -------
-
+    Create a transaction group
     """
     group_id = lunch_money_obj.create_transaction_group(
         date=datetime.datetime.now().date(),

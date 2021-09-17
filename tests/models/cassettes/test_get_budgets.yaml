@@ -11,31 +11,28 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.25.1
+      - python-requests/2.26.0
       authorization:
       - XXXXXXXXXX
     method: GET
-    uri: https://dev.lunchmoney.app/v1/budgets?start_date=2021-09-01&end_date=2021-09-29
+    uri: https://dev.lunchmoney.app/v1/budgets?start_date=2022-11-01&end_date=2022-11-29
   response:
     body:
       string: !!binary |
-        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
+        H4sIAAAAAAAAA92YXU/bMBSG/0rk61AladMS7vgYMIlpiG7aBUKVm5ykFo5dOTZbhvrfZ5OWpuyU
+        7oLd+K52nGOfp699Xuf+meRUQyVVOxO0BnJCTnkuF5KHwRlVDQm3z1lBTpIki4dJr7NS0izXrwrD
+        eUi6Hje4a7OmG9RrM5FL90JJeQMhgV85NwXMSiXr2dwUFWj8mZba9r4+K6im5OSZJFGSHMXxURS7
+        ljB2oKKioblmUtjhUUiaJYiCicqGmM1pY+eOViubhhQlq9xb3a+XZU/SoUuwAJE7HrUUesFbS4LW
+        0gi9ySM3Stkh7ab9GrlrUmM7GlNV0NhXXhagiZ1SqgKUmz78G/0ZFY/BJQCOfegd9m5layIxSoRx
+        jtIYjzylocAJy45yYThz4rl/JkvawqtCZBmc1qBYTnuiJMM0HSSjKCJ9aRLTFKSnzW6QI72JeMPm
+        oHQbfDHaUN4PGGfpYDw5ELAb1A94AeIJVPDD/jlqZ33RIIoOLS9aPWz3SIIp4lyWJUAwXcglvk18
+        FcYayhCD8klY2JoyUbtTBqOS+k1lhFG5lLIILoAzq8cWozKK/KaSYlSuaBMG31zYpbSacZFRxYz9
+        ZjNG2bBS46fKsd80JigNJXNbZvbYkcxvIscYkWu74DA4tdYOPU5iT5G870nObc0xqr1h4rFf78fp
+        4Xo/Tvv1PsOQ34JqpKA8OKcKUOr+XUd2fTFqg24BP6hGvt4S3tfgNVCuF21wS382gWUTfBaNsfPk
+        0Jdk+g8WNN2xoDFqt+6A1XOjGkDt1ijJJr7+CxssqN+6s1dd6qjvkabnzjxGLcUdK6BZ0BflYmV0
+        4gWUkHRTbbviaNu52YD9vjc7cD9V1JpMgZdHrF4q+YRvQqc3z+88MWpR3MV4uUdsI189/fvF4UrK
+        ikPwVUAw1VLRaqcoxIMsO/SRww7ZqQqoU5nW8hF1KGPPq0GCfsy0V8wn4KgM/Tjz9vNAP2V+F+se
+        9huKt1jeZrpeIIJik7pW5qMz358QakE/OKH/8V/uz2i4evgDoC4BR/wYAAA=
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -46,9 +43,9 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 16 Sep 2021 01:21:06 GMT
+      - Fri, 17 Sep 2021 02:01:04 GMT
       Etag:
-      - W/"1bfd-741OLvfminv866t+7G6txnB+SmQ"
+      - W/"18fc-+GSluJOaeMsffGw0jN8iQ5GS3mA"
       Server:
       - Cowboy
       Transfer-Encoding:

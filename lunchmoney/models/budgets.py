@@ -117,18 +117,21 @@ class _LunchMoneyBudgets(LunchMoneyAPIClient):
                       category_id: int,
                       amount: float,
                       currency: Optional[str] = None
-                      ) -> Dict[str, Dict[str, Any]]:
+                      ) -> Optional[Dict[str, Any]]:
         """
-        Upsert a budget
+        Upsert Budget
 
-        Use this method to update an existing budget or insert a new budget for a particular
-        category and date.
+        Use this endpoint to update an existing budget or insert a new budget for
+        a particular category and date.
 
-        Note: Lunch Money currently only supports monthly budgets, so your date must always be
-        the start of a month (eg. 2021-04-01)
+        Note: Lunch Money currently only supports monthly budgets, so your date must
+        always be the start of a month (eg. 2021-04-01)
 
-        If this is a sub-category, the response will include the updated category group's budget.
-        This is because setting a sub-category may also update the category group's overall budget.
+        If this is a sub-category, the response will include the updated category
+        group's budget. This is because setting a sub-category may also update
+        the category group's overall budget.
+
+        https://lunchmoney.dev/#upsert-budget
 
         Parameters
         ----------
@@ -145,14 +148,15 @@ class _LunchMoneyBudgets(LunchMoneyAPIClient):
 
         Returns
         -------
-        Dict[str, Dict[str, Any]]
+        Optional[Dict[str, Any]]
         """
         body = BudgetParamsPut(start_date=start_date, category_id=category_id,
                                amount=amount, currency=currency).dict(exclude_none=True)
         response_data = self._make_request(method="PUT",
                                            url_path=[APIConfig.LUNCHMONEY_BUDGET],
                                            payload=body)
-        return response_data
+
+        return response_data["category_group"]
 
     def remove_budget(self,
                       start_date: datetime.date,
