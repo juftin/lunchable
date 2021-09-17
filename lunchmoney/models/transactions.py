@@ -8,9 +8,9 @@ import datetime
 import logging
 from typing import Any, Dict, List, Optional, Union
 
-from lunchmoney import LunchMoneyError
 from pydantic import BaseModel, Field
 
+from lunchmoney import LunchMoneyError
 from lunchmoney.config import APIConfig
 from lunchmoney.models._core import LunchMoneyAPIClient
 

@@ -2,6 +2,13 @@
 
 ## API Endpoints Roadmap
 
+#### Assets
+
+- [x] `GET` `v1/assets`
+    - [x] Tests
+- [x] `PUT` `v1/assets/:id`
+    - [x] Tests
+
 #### Budget
 
 - [x] `GET` `v1/budgets`
@@ -9,13 +16,6 @@
 - [x] `PUT` `v1/budgets`
     - [x] Tests
 - [x] `DELETE` `v1/budgets`
-    - [x] Tests
-
-#### Assets
-
-- [x] `GET` `v1/assets`
-    - [x] Tests
-- [x] `PUT` `v1/assets/:id`
     - [x] Tests
 
 #### Categories
