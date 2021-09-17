@@ -1,6 +1,7 @@
 # lunch-money
 
-A simple Python SDK around the Lunch Money Developer API
+A simple Python SDK around the Lunch Money Developer API built around pydantic models.
 
-Active development, pre-release. Check out the [TODO.md](TODO.md) doc for very basic roadmap +
-status tracking.
+> ### ⚠️ Note: This project is under active development.
+
+### https://lunch-money.readthedocs.io/en/latest/

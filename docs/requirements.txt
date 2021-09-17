@@ -1,0 +1,7 @@
+sphinx
+sphinx-rtd-theme
+autodoc_pydantic
+autodocsumm
+requests
+python-dotenv
+pydantic
