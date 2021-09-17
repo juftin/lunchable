@@ -8,6 +8,7 @@ import datetime
 import logging
 from typing import Any, Dict, List, Optional, Union
 
+from lunchmoney import LunchMoneyError
 from pydantic import BaseModel, Field
 
 from lunchmoney.config import APIConfig
@@ -117,7 +118,7 @@ class TransactionGroupParamsPost(BaseModel):
     category_id: Optional[int]
     notes: Optional[str]
     tags: Optional[List[int]]
-    transactions: Optional[List[int]]
+    transactions: List[int]
 
 
 class _LunchMoneyTransactions(LunchMoneyAPIClient):
@@ -187,7 +188,12 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
                            debit_as_negative: bool = False,
                            skip_balance_update: bool = True) -> Dict[str, Any]:
         """
-        Returns a single Transaction object
+        Update Transaction
+
+        Use this endpoint to update a single transaction. You may also use this
+        to split an existing transaction.
+
+        PUT https://dev.lunchmoney.app/v1/transactions/:transaction_id
 
         Parameters
         ----------
@@ -228,9 +234,13 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
             debit_as_negative: bool = False,
             check_for_recurring: bool = False,
             skip_balance_update: bool = True
-    ) -> Dict[str, Any]:
+    ) -> List[int]:
         """
-        Returns a single Transaction object
+        Insert Transactions
+
+        Use this endpoint to insert many transactions at once.
+
+        https://lunchmoney.dev/#insert-transactions
 
         Parameters
         ----------
@@ -256,7 +266,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
 
         Returns
         -------
-        Dict[str, Any]
+        List[int]
         """
         if isinstance(transactions, TransactionInsertObject):
             transactions = [transactions]
@@ -270,15 +280,16 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         response_data = self._make_request(method="POST",
                                            url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
                                            payload=payload)
-        return response_data
+        ids: List[int] = response_data["ids"]
+        return ids
 
     def create_transaction_group(self,
                                  date: datetime.date,
                                  payee: str,
+                                 transactions: List[int],
                                  category_id: Optional[int] = None,
                                  notes: Optional[str] = None,
-                                 tags: Optional[List[int]] = None,
-                                 transactions: Optional[List[int]] = None) -> int:
+                                 tags: Optional[List[int]] = None) -> int:
         """
         Use this endpoint to create a transaction group of two or more transactions.
 
@@ -303,13 +314,16 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         -------
         int
         """
+        if len(transactions) < 2:
+            raise LunchMoneyError("You must include 2 or more transactions "
+                                  "in the Transaction Group")
         transaction_params = TransactionGroupParamsPost(
             date=date, payee=payee, category_id=category_id,
             notes=notes, tags=tags, transactions=transactions).dict(exclude_none=True)
         response_data = self._make_request(method="POST",
                                            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
                                                      APIConfig.LUNCHMONEY_TRANSACTION_GROUPS],
-                                           params=transaction_params)
+                                           payload=transaction_params)
         return response_data
 
     def delete_transaction_group(self, transaction_group_id: int) -> List[int]:
@@ -320,6 +334,8 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         group will not be removed.
 
         Returns the IDs of the transactions that were part of the deleted group
+
+        https://lunchmoney.dev/#delete-transaction-group
 
         Parameters
         ----------
@@ -334,4 +350,4 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
                                            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
                                                      APIConfig.LUNCHMONEY_TRANSACTION_GROUPS,
                                                      transaction_group_id])
-        return response_data
+        return response_data["transactions"]

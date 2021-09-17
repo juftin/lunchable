@@ -13,23 +13,6 @@
 - [x] `DELETE` `v1/budgets`
     - [ ] Tests
 
-#### Transactions
-
-- [x] `GET` `v1/transactions`
-    - [ ] Tests
-- [x] `GET` `v1/transactions/:transaction_id`
-    - [ ] Tests
-- [x] `POST` `v1/transactions`
-    - [ ] Tests
-- [x] `PUT` `v1/transactions/:transaction_id`
-    - [ ] Tests
-
-
-- [x] `POST` `v1/transactions/group`
-    - [ ] Tests
-- [x] `DELETE` `v1/transactions/group/:transaction_id`
-    - [ ] Tests
-
 ### Done
 
 #### Assets
@@ -66,6 +49,23 @@
 #### Tags
 
 - [x] `GET` `v1/tags`
+    - [x] Tests
+
+#### Transactions
+
+- [x] `GET` `v1/transactions`
+    - [x] Tests
+- [x] `GET` `v1/transactions/:transaction_id`
+    - [x] Tests
+- [x] `POST` `v1/transactions`
+    - [x] Tests
+- [x] `PUT` `v1/transactions/:transaction_id`
+    - [x] Tests
+
+
+- [x] `POST` `v1/transactions/group`
+    - [x] Tests
+- [x] `DELETE` `v1/transactions/group/:transaction_id`
     - [x] Tests
 
 ## Splitwise Plugin Roadmap
