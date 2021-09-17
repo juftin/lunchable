@@ -1,5 +1,5 @@
 ====================
-plugins
+Plugins
 ====================
 
 External plugins for lunch-money
