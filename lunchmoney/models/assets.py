@@ -8,7 +8,7 @@ import datetime
 import logging
 from typing import List, Optional
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, validator, Field
 
 from lunchmoney.config import APIConfig
 from lunchmoney.models._core import LunchMoneyAPIClient
@@ -18,23 +18,31 @@ logger = logging.getLogger(__name__)
 
 class AssetsObject(BaseModel):
     """
+    Manually Managed Asset Objects
+
+    Assets in Lunch Money are similar to `plaid-accounts` except that they are manually managed.
+
     https://lunchmoney.dev/#assets-object
     """
 
-    id: int
-    type_name: str
-    subtype_name: str
-    name: str
-    display_name: Optional[str]
-    balance: float
-    balance_as_of: datetime.datetime
-    closed_on: Optional[datetime.date]
-    currency: str
-    institution_name: Optional[str]
-    created_at: datetime.datetime
+    id: int = Field(description="Unique identifier for asset")
+    type_name: str = Field(description="Primary type of the asset. Must be one of: "
+                                       "[employee compensation, cash, vehicle, loan, "
+                                       "cryptocurrency, investment, other, credit, real estate]")
+    subtype_name: str = Field(description="Optional asset subtype. Examples include: "
+                                          "[retirement, checking, savings, prepaid credit card]")
+    name: str = Field(description="Name of the asset")
+    display_name: Optional[str] = Field(description="Display name of the asset (as set by user)")
+    balance: float = Field(description="Current balance of the asset in numeric format to 4 decimal places")
+    balance_as_of: datetime.datetime = Field(description="Date/time the balance was last updated "
+                                                         "in ISO 8601 extended format")
+    closed_on: Optional[datetime.date] = Field(description="The date this asset was closed (optional)")
+    currency: str = Field(description="Three-letter lowercase currency code of the balance in ISO 4217 format")
+    institution_name: Optional[str] = Field(description="Name of institution holding the asset")
+    created_at: datetime.datetime = Field(description="Date/time the asset was created in ISO 8601 extended format")
 
 
-class AssetsParamsPut(BaseModel):
+class _AssetsParamsPut(BaseModel):
     """
     https://lunchmoney.dev/#update-asset
     """
@@ -115,12 +123,12 @@ class _LunchMoneyAssets(LunchMoneyAPIClient):
         -------
         AssetsObject
         """
-        payload = AssetsParamsPut(type_name=type_name,
-                                  subtype_name=subtype_name,
-                                  name=name, balance=balance,
-                                  balance_as_of=balance_as_of,
-                                  currency=currency,
-                                  institution_name=institution_name).dict(exclude_none=True)
+        payload = _AssetsParamsPut(type_name=type_name,
+                                   subtype_name=subtype_name,
+                                   name=name, balance=balance,
+                                   balance_as_of=balance_as_of,
+                                   currency=currency,
+                                   institution_name=institution_name).dict(exclude_none=True)
         response_data = self._make_request(method="PUT",
                                            url_path=[APIConfig.LUNCHMONEY_ASSETS,
                                                      asset_id],

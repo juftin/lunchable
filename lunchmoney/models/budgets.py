@@ -8,7 +8,7 @@ import datetime
 import logging
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from lunchmoney.config import APIConfig
 from lunchmoney.models._core import LunchMoneyAPIClient
@@ -21,11 +21,11 @@ class BudgetDataObject(BaseModel):
     Data Object within a Budget
     """
 
-    budget_amount: Optional[float]
-    budget_currency: Optional[str]
-    budget_to_base: Optional[float]
-    spending_to_base: float = 0.00
-    num_transactions: int = 0
+    budget_amount: Optional[float] = Field(description="")
+    budget_currency: Optional[str] = Field(description="")
+    budget_to_base: Optional[float] = Field(description="")
+    spending_to_base: float = Field(default=0.00, description="")
+    num_transactions: int = Field(default=0, description="")
 
 
 class BudgetConfigObject(BaseModel):
@@ -43,19 +43,28 @@ class BudgetConfigObject(BaseModel):
 
 class BudgetObject(BaseModel):
     """
-    lunchmoney Budget Object
+    Monthly Budget Per Category Object
+
+    https://lunchmoney.dev/#budget-object
     """
 
-    category_name: str
-    category_id: Optional[int]
-    category_group_name: Optional[str]
-    group_id: Optional[int]
-    is_group: Optional[bool]
-    is_income: bool
-    exclude_from_budget: bool
-    exclude_from_totals: bool
-    data: Dict[datetime.date, BudgetDataObject]
-    config: Optional[BudgetConfigObject]
+    category_name: str = Field(description="Name of the category")
+    category_id: Optional[int] = Field(description="Unique identifier for category")
+    category_group_name: Optional[str] = Field(description="Name of the category group, if applicable")
+    group_id: Optional[int] = Field(description="Unique identifier for category group")
+    is_group: Optional[bool] = Field(description="If true, this category is a group")
+    is_income: bool = Field(description="If true, this category is an income category (category properties are "
+                                        "set in the app via the Categories page)")
+    exclude_from_budget: bool = Field(description="If true, this category is excluded from budget (category "
+                                                  "properties are set in the app via the Categories page)")
+    exclude_from_totals: bool = Field(description="If true, this category is excluded from totals (category "
+                                                  "properties are set in the app via the Categories page)")
+    data: Dict[datetime.date, BudgetDataObject] = Field(description="For each month with budget or category spending "
+                                                                    "data, there is a data object with the key set "
+                                                                    "to the month in format YYYY-MM-DD. For "
+                                                                    "properties, see Data object below.")
+    config: Optional[BudgetConfigObject] = Field(description="Object representing the category's budget "
+                                                             "suggestion configuration")
 
 
 class BudgetParamsGet(BaseModel):

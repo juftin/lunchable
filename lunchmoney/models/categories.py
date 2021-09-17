@@ -8,7 +8,7 @@ import datetime
 import logging
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from lunchmoney.config import APIConfig
 from lunchmoney.models._core import LunchMoneyAPIClient
@@ -30,19 +30,28 @@ class ModelCreateCategory(BaseModel):
 
 class CategoriesObject(BaseModel):
     """
+    Lunch Money Spending Category
+
     https://lunchmoney.dev/#categories-object
     """
 
-    id: int
-    name: str
-    description: Optional[str]
-    is_income: str
-    exclude_from_budget: bool
-    exclude_from_totals: bool
-    updated_at: datetime.datetime
-    created_at: datetime.datetime
-    is_group: bool
-    group_id: Optional[int]
+    id: int = Field(description="A unique identifier for the category.")
+    name: str = Field(description="The name of the category. Must be between 1 and 40 characters.",
+                      min_length=1, max_length=40)
+    description: Optional[str] = Field(description="The description of the category. Must not exceed 140 characters.",
+                                       max_length=140)
+    is_income: str = Field(description="If true, the transactions in this category will be treated as income.")
+    exclude_from_budget: bool = Field(description="If true, the transactions in this category will be excluded "
+                                                  "from the budget.")
+    exclude_from_totals: bool = Field(description="If true, the transactions in this category will be excluded "
+                                                  "from totals.")
+    updated_at: datetime.datetime = Field(description="The date and time of when the category was last updated "
+                                                      "(in the ISO 8601 extended format).")
+    created_at: datetime.datetime = Field(description="The date and time of when the category was created (in the "
+                                                      "ISO 8601 extended format).")
+    is_group: bool = Field(description="If true, the category is a group that can be a parent to other categories.")
+    group_id: Optional[int] = Field(description="The ID of a category group (or null if the category "
+                                                "doesn't belong to a category group).")
 
 
 class _LunchMoneyCategories(LunchMoneyAPIClient):
@@ -67,7 +76,7 @@ class _LunchMoneyCategories(LunchMoneyAPIClient):
         budget_objects = [CategoriesObject(**item) for item in categories]
         return budget_objects
 
-    def create_category(self, name: str,
+    def insert_category(self, name: str,
                         description: Optional[str] = None,
                         is_income: Optional[bool] = False,
                         exclude_from_budget: Optional[bool] = False,

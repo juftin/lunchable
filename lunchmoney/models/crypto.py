@@ -8,7 +8,7 @@ import datetime
 import logging
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from lunchmoney.config import APIConfig
 from lunchmoney.models._core import LunchMoneyAPIClient
@@ -18,21 +18,26 @@ logger = logging.getLogger(__name__)
 
 class CryptoObject(BaseModel):
     """
-    Lunchmoney Crypto object
+    Crypto Asset Object
 
     https://lunchmoney.dev/#crypto-object
     """
 
-    id: int
-    zabo_account_id: Optional[int]
-    source: str
-    name: str
-    display_name: Optional[str]
-    balance: float
-    balance_as_of: Optional[datetime.datetime]
-    status: Optional[str]
-    institution_name: str
-    created_at: datetime.datetime
+    id: int = Field(description="Unique identifier for a manual crypto account (no ID for synced accounts)")
+    zabo_account_id: Optional[int] = Field(description="Unique identifier for a synced crypto account (no ID for "
+                                                       "manual accounts, multiple currencies may have the same "
+                                                       "zabo_account_id)")
+    source: str = Field(description="`synced` (this account is synced via a wallet, exchange, etc.) or "
+                                    "`manual` (this account balance is managed manually)")
+    name: str = Field(description="Name of the crypto asset")
+    display_name: Optional[str] = Field(description="Display name of the crypto asset (as set by user)")
+    balance: float = Field(description="Current balance")
+    balance_as_of: Optional[datetime.datetime] = Field(description="Date/time the balance was last updated in "
+                                                                   "ISO 8601 extended format")
+    currency: Optional[str] = Field(description="Abbreviation for the cryptocurrency")
+    status: Optional[str] = Field(description="The current status of the crypto account. Either active or in error.")
+    institution_name: str = Field(description="Name of provider holding the asset")
+    created_at: datetime.datetime = Field(description="Date/time the asset was created in ISO 8601 extended format")
 
 
 class CryptoParamsPut(BaseModel):
