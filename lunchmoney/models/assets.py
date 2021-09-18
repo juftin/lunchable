@@ -8,7 +8,7 @@ import datetime
 import logging
 from typing import List, Optional
 
-from pydantic import BaseModel, validator, Field
+from pydantic import BaseModel, Field, validator
 
 from lunchmoney.config import APIConfig
 from lunchmoney.models._core import LunchMoneyAPIClient
@@ -26,20 +26,40 @@ class AssetsObject(BaseModel):
     """
 
     id: int = Field(description="Unique identifier for asset")
-    type_name: str = Field(description="Primary type of the asset. Must be one of: "
-                                       "[employee compensation, cash, vehicle, loan, "
-                                       "cryptocurrency, investment, other, credit, real estate]")
-    subtype_name: str = Field(description="Optional asset subtype. Examples include: "
-                                          "[retirement, checking, savings, prepaid credit card]")
+
+    _type_name_description = """
+    Primary type of the asset. Must be one of: [employee compensation, cash, vehicle, loan, 
+    cryptocurrency, investment, other, credit, real estate]
+    """
+    type_name: str = Field(description=_type_name_description)
+
+    _subtype_name_description = """
+    Optional asset subtype. Examples include: [retirement, checking, savings, prepaid credit card]
+    """
+    subtype_name: str = Field(description=_subtype_name_description)
+
     name: str = Field(description="Name of the asset")
+
     display_name: Optional[str] = Field(description="Display name of the asset (as set by user)")
-    balance: float = Field(description="Current balance of the asset in numeric format to 4 decimal places")
-    balance_as_of: datetime.datetime = Field(description="Date/time the balance was last updated "
-                                                         "in ISO 8601 extended format")
-    closed_on: Optional[datetime.date] = Field(description="The date this asset was closed (optional)")
-    currency: str = Field(description="Three-letter lowercase currency code of the balance in ISO 4217 format")
+
+    _balance_description = "Current balance of the asset in numeric format to 4 decimal places"
+    balance: float = Field(description=_balance_description)
+
+    _balance_as_of_description = """
+    Date/time the balance was last updated in ISO 8601 extended format
+    """
+    balance_as_of: datetime.datetime = Field(description=_balance_as_of_description)
+
+    _closed_on_description = "The date this asset was closed (optional)"
+    closed_on: Optional[datetime.date] = Field(description=_closed_on_description)
+
+    _currency_description = "Three-letter lowercase currency code of the balance in ISO 4217 format"
+    currency: str = Field(description=_currency_description)
+
     institution_name: Optional[str] = Field(description="Name of institution holding the asset")
-    created_at: datetime.datetime = Field(description="Date/time the asset was created in ISO 8601 extended format")
+
+    _created_at_description = "Date/time the asset was created in ISO 8601 extended format"
+    created_at: datetime.datetime = Field(description=_created_at_description)
 
 
 class _AssetsParamsPut(BaseModel):
