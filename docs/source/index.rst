@@ -9,23 +9,22 @@ and requests and offers a *simple* and *intuitive* API.
 
    This project is under active development.
 
-Usage
-=====
+.. code-block:: python
 
-Installation
-------------
+    from typing import List
 
-To use lunch-money, first install it using pip:
+    from lunchmoney import LunchMoney
+    from lunchmoney.models import TransactionsObject
 
-.. code-block:: console
-
-   $ pip install lunch-money
+    lunch = LunchMoney()
+    transactions: List[TransactionsObject] = lunch.get_transactions()
 
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
 
+   usage.md
    lunchmoney.rst
    objects.rst
    plugins.rst

@@ -23,7 +23,8 @@ extensions = [
     "sphinx.ext.coverage",
     "sphinx.ext.napoleon",
     "sphinxcontrib.autodoc_pydantic",
-    "autodocsumm"
+    "autodocsumm",
+    "myst_parser"
 ]
 
 templates_path = ["_templates"]
@@ -36,3 +37,9 @@ html_static_path = ["_static"]
 
 autodoc_pydantic_model_show_json = False
 autodoc_pydantic_settings_show_json = False
+
+source_suffix = {
+    ".rst": "restructuredtext",
+    ".txt": "markdown",
+    ".md": "markdown",
+}
