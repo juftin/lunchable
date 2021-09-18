@@ -4,9 +4,9 @@ Run Tests on the Crypto Endpoint
 
 import logging
 
+from conftest import lunchmoney_cassette
 from lunchmoney import LunchMoney
 from lunchmoney.models.crypto import CryptoObject
-from tests.conftest import lunchmoney_cassette
 
 logger = logging.getLogger(__name__)
 
