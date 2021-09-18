@@ -7,10 +7,7 @@ from os import getenv
 from typing import Dict, List, Optional, Union
 from urllib import parse
 
-from dotenv import load_dotenv
-
 from lunchmoney.exceptions import EnvironmentVariableError, LunchMoneyError
-from .file_config import FileConfig
 
 logger = logging.getLogger(__name__)
 
@@ -55,7 +52,6 @@ class APIConfig:
         """
         if access_token is None:
             logger.info("Loading Lunch Money Developer API Access token from environment")
-            load_dotenv(dotenv_path=FileConfig.DOT_ENV_FILE, override=True)
             access_token = getenv(APIConfig._access_token_environment_variable, None)
         if access_token is None:
             access_token_error_message = (

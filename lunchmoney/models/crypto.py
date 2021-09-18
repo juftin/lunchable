@@ -24,40 +24,31 @@ class CryptoObject(BaseModel):
     """
 
     _id_description = "Unique identifier for a manual crypto account (no ID for synced accounts)"
-    id: int = Field(description=_id_description)
-
     _zabo_account_id_description = """
     Unique identifier for a synced crypto account (no ID for manual accounts, 
     multiple currencies may have the same zabo_account_id)
     """
-    zabo_account_id: Optional[int] = Field(description=_zabo_account_id_description)
-
     _source_description = """
     `synced` (this account is synced via a wallet, exchange, etc.) or `manual` (this account 
     balance is managed manually)
     """
-    source: str = Field(description=_source_description)
-
-    name: str = Field(description="Name of the crypto asset")
-
     _display_name_description = "Display name of the crypto asset (as set by user)"
-    display_name: Optional[str] = Field(description=_display_name_description)
-
-    balance: float = Field(description="Current balance")
-
     _balance_as_of_description = """
     Date/time the balance was last updated in ISO 8601 extended format
     """
-    balance_as_of: Optional[datetime.datetime] = Field(description=_balance_as_of_description)
-
-    currency: Optional[str] = Field(description="Abbreviation for the cryptocurrency")
-
     _status_description = "The current status of the crypto account. Either active or in error."
-    status: Optional[str] = Field(description=_status_description)
-
-    institution_name: str = Field(description="Name of provider holding the asset")
-
     _created_at_description = "Date/time the asset was created in ISO 8601 extended format"
+
+    id: int = Field(description=_id_description)
+    zabo_account_id: Optional[int] = Field(description=_zabo_account_id_description)
+    source: str = Field(description=_source_description)
+    name: str = Field(description="Name of the crypto asset")
+    display_name: Optional[str] = Field(description=_display_name_description)
+    balance: float = Field(description="Current balance")
+    balance_as_of: Optional[datetime.datetime] = Field(description=_balance_as_of_description)
+    currency: Optional[str] = Field(description="Abbreviation for the cryptocurrency")
+    status: Optional[str] = Field(description=_status_description)
+    institution_name: str = Field(description="Name of provider holding the asset")
     created_at: datetime.datetime = Field(description=_created_at_description)
 
 

@@ -3,7 +3,8 @@ sphinx-rtd-theme
 autodoc_pydantic
 autodocsumm
 requests
-python-dotenv
 pydantic
 splitwise
 myst-parser
+autoclasstoc
+sphinx-copybutton

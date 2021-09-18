@@ -15,4 +15,3 @@ class FileConfig:
     CONFIG_DIR = _file_config_module.parent
     LUNCHMONEY_DIR = CONFIG_DIR.parent
     PROJECT_DIR = LUNCHMONEY_DIR.parent
-    DOT_ENV_FILE = PROJECT_DIR.joinpath(".env")

@@ -48,44 +48,36 @@ class BudgetObject(BaseModel):
     https://lunchmoney.dev/#budget-object
     """
 
-    category_name: str = Field(description="Name of the category")
-
-    category_id: Optional[int] = Field(description="Unique identifier for category")
-
     _category_group_name_description = "Name of the category group, if applicable"
-    category_group_name: Optional[str] = Field(description=_category_group_name_description)
-
-    group_id: Optional[int] = Field(description="Unique identifier for category group")
-
-    is_group: Optional[bool] = Field(description="If true, this category is a group")
-
     _is_income_description = """
     If true, this category is an income category (category properties 
     are set in the app via the Categories page)
     """
-    is_income: bool = Field(description=_is_income_description)
-
     _exclude_from_budget_description = """
     If true, this category is excluded from budget (category 
     properties are set in the app via the Categories page)
     """
-    exclude_from_budget: bool = Field(description=_exclude_from_budget_description)
-
     _exclude_from_totals_description = """
     If true, this category is excluded from totals (category 
     properties are set in the app via the Categories page)
     """
-    exclude_from_totals: bool = Field(description=_exclude_from_totals_description)
-
     _data_description = """
     For each month with budget or category spending data, there is a data object with the key 
     set to the month in format YYYY-MM-DD. For properties, see Data object below.
     """
-    data: Dict[datetime.date, BudgetDataObject] = Field(description=_data_description)
-
     _config_description = """
     Object representing the category's budget suggestion configuration
     """
+
+    category_name: str = Field(description="Name of the category")
+    category_id: Optional[int] = Field(description="Unique identifier for category")
+    category_group_name: Optional[str] = Field(description=_category_group_name_description)
+    group_id: Optional[int] = Field(description="Unique identifier for category group")
+    is_group: Optional[bool] = Field(description="If true, this category is a group")
+    is_income: bool = Field(description=_is_income_description)
+    exclude_from_budget: bool = Field(description=_exclude_from_budget_description)
+    exclude_from_totals: bool = Field(description=_exclude_from_totals_description)
+    data: Dict[datetime.date, BudgetDataObject] = Field(description=_data_description)
     config: Optional[BudgetConfigObject] = Field(description=_config_description)
 
 

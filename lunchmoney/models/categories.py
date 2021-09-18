@@ -30,50 +30,42 @@ class ModelCreateCategory(BaseModel):
 
 class CategoriesObject(BaseModel):
     """
-    Lunch Money Spending Category
+    Lunch Money Spending Categories
 
     https://lunchmoney.dev/#categories-object
     """
 
-    id: int = Field(description="A unique identifier for the category.")
-
     _name_description = "The name of the category. Must be between 1 and 40 characters."
-    name: str = Field(min_length=1, max_length=40, description=_name_description)
-
     _description_description = "The description of the category. Must not exceed 140 characters."
-    description: Optional[str] = Field(max_length=140, description=_description_description)
-
     _is_income_description = "If true, the transactions in this category will be treated as income."
-    is_income: str = Field(description=_is_income_description)
-
     _exclude_from_budget_description = """
     If true, the transactions in this category will be excluded from the budget.
     """
-    exclude_from_budget: bool = Field(description=_exclude_from_budget_description)
-
     _exclude_from_totals_description = """
     If true, the transactions in this category will be excluded from totals.
     """
-    exclude_from_totals: bool = Field(description=_exclude_from_totals_description)
-
     _updated_at_description = """
     The date and time of when the category was last updated (in the ISO 8601 extended format).
     """
-    updated_at: datetime.datetime = Field(description=_updated_at_description)
-
     _created_at_description = """
     The date and time of when the category was created (in the ISO 8601 extended format).
     """
-    created_at: datetime.datetime = Field(description=_created_at_description)
-
     _is_group_description = """
     If true, the category is a group that can be a parent to other categories.
     """
-    is_group: bool = Field(description=_is_group_description)
-
     _group_id_description = """
     The ID of a category group (or null if the category doesn't belong to a category group).
     """
+
+    id: int = Field(description="A unique identifier for the category.")
+    name: str = Field(min_length=1, max_length=40, description=_name_description)
+    description: Optional[str] = Field(max_length=140, description=_description_description)
+    is_income: str = Field(description=_is_income_description)
+    exclude_from_budget: bool = Field(description=_exclude_from_budget_description)
+    exclude_from_totals: bool = Field(description=_exclude_from_totals_description)
+    updated_at: datetime.datetime = Field(description=_updated_at_description)
+    created_at: datetime.datetime = Field(description=_created_at_description)
+    is_group: bool = Field(description=_is_group_description)
     group_id: Optional[int] = Field(description=_group_id_description)
 
 

@@ -1,4 +1,4 @@
-Lunch Money Python Objects
+Lunch Money Models
 ===================================
 
 .. code-block:: python

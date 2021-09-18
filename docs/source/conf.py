@@ -22,9 +22,13 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.coverage",
     "sphinx.ext.napoleon",
+    'sphinx.ext.viewcode',
+
     "sphinxcontrib.autodoc_pydantic",
     "autodocsumm",
-    "myst_parser"
+    "myst_parser",
+    "autoclasstoc",
+    "sphinx_copybutton"
 ]
 
 templates_path = ["_templates"]
@@ -43,3 +47,5 @@ source_suffix = {
     ".txt": "markdown",
     ".md": "markdown",
 }
+
+autosummary_generate = True

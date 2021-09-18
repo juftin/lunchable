@@ -26,7 +26,7 @@ and requests and offers a *simple* and *intuitive* API.
 
    usage.md
    lunchmoney.rst
-   objects.rst
+   models.rst
    plugins.rst
 
 Indices and tables

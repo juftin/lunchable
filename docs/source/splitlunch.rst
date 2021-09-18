@@ -13,6 +13,7 @@ lunch-money integration with Splitwise.
     :members:
     :inherited-members:
     :autosummary:
+        :toctree: _autosummary
 
 .. toctree::
    :maxdepth: 1

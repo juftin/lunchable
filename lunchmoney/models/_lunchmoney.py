@@ -10,6 +10,8 @@ For example: to see source code on interactions with the "transactions" API endp
 will refer to the _LunchMoneyTransactions object.
 """
 
+from typing import Optional
+
 from .assets import _LunchMoneyAssets
 from .budgets import _LunchMoneyBudgets
 from .categories import _LunchMoneyCategories
@@ -34,4 +36,15 @@ class LunchMoney(
     Core Lunch Money SDK.
     """
 
-    pass
+    def __init__(self, access_token: Optional[str] = None):
+        """
+        Initialize a Lunch Money object with an Access Token.
+
+        Tries to inherit from the Environment if one isn't provided
+
+        Parameters
+        ----------
+        access_token: Optional[str]
+            Lunchmoney Developer API Access Token
+        """
+        super(LunchMoney, self).__init__(access_token=access_token)

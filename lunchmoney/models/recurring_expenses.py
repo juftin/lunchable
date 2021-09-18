@@ -24,61 +24,39 @@ class RecurringExpensesObject(BaseModel):
     """
 
     _id_description = "Unique identifier for recurring expense"
-    id: int = Field(description=_id_description)
-
     _start_date_description = """
     Denotes when recurring expense starts occurring in ISO 8601 format. 
     If null, then this recurring expense will show up for all time 
     before end_date
     """
-    start_date: Optional[datetime.date] = Field(description=_start_date_description)
-
     _end_date_description = """
     Denotes when recurring expense stops occurring in ISO 8601 format. 
     If null, then this recurring expense has no set end date and will 
     show up for all months after start_date
     """
-    end_date: Optional[datetime.date] = Field(description=_end_date_description)
-
     _cadence_description = """
     One of: [monthly, twice a month, once a week, every 3 months, every 4 months, 
     twice a year, yearly]
     """
-    cadence: str = Field(description=_cadence_description)
-
-    payee: str = Field(description="Payee of the recurring expense")
-
     _amount_description = "Amount of the recurring expense in numeric format to 4 decimal places"
-    amount: float = Field(description=_amount_description)
-
     _currency_description = """
     Three-letter lowercase currency code for the recurring expense in ISO 4217 format
     """
-    currency: str = Field(max_length=3, description=_currency_description)
-
     _description_description = """
     If any, represents the user-entered description of the recurring expense
     """
-    description: Optional[str] = Field(description=_description_description)
-
     _billing_date_description = """
     Expected billing date for this recurring expense for this month in ISO 8601 format
     """
-    billing_date: datetime.date = Field(description=_billing_date_description)
-
     _type_description = """"
     This can be one of two values: cleared (The recurring expense has been reviewed 
     by the user), suggested (The recurring expense is suggested by the system; 
     the user has yet to review/clear it)
     """
-    type: str = Field(description=_type_description)
-
     _original_name_description = """
     If any, represents the original name of the recurring expense as
     denoted by the transaction that triggered its creation
     """
-    original_name: Optional[str] = Field(description=_original_name_description)
-
     _source_description = """
     This can be one of three values: manual (User created this recurring expense 
     manually from the Recurring Expenses page), transaction (User created this by 
@@ -86,29 +64,37 @@ class RecurringExpensesObject(BaseModel):
     was created by the system on transaction import). Some older recurring expenses 
     may not have a source.
     """
-    source: str = Field(description=_source_description)
-
     _plaid_account_id_description = """
     If any, denotes the plaid account associated with the creation of this "
     recurring expense (see Plaid Accounts)"
     """
-    plaid_account_id: Optional[int] = Field(description=_plaid_account_id_description)
-
     _asset_id_description = """
     If any, denotes the manually-managed account (i.e. asset) associated with the 
     creation of this recurring expense (see Assets)
     """
-    asset_id: Optional[int] = Field(description=_asset_id_description)
-
     _transaction_id_description = """
     If any, denotes the unique identifier for the associated transaction matching 
     this recurring expense for the current time period
     """
-    transaction_id: Optional[int] = Field(description=_transaction_id_description)
-
     _category_id_description = """
     If any, denotes the unique identifier for the associated category to this recurring expense
     """
+
+    id: int = Field(description=_id_description)
+    start_date: Optional[datetime.date] = Field(description=_start_date_description)
+    end_date: Optional[datetime.date] = Field(description=_end_date_description)
+    cadence: str = Field(description=_cadence_description)
+    payee: str = Field(description="Payee of the recurring expense")
+    amount: float = Field(description=_amount_description)
+    currency: str = Field(max_length=3, description=_currency_description)
+    description: Optional[str] = Field(description=_description_description)
+    billing_date: datetime.date = Field(description=_billing_date_description)
+    type: str = Field(description=_type_description)
+    original_name: Optional[str] = Field(description=_original_name_description)
+    source: str = Field(description=_source_description)
+    plaid_account_id: Optional[int] = Field(description=_plaid_account_id_description)
+    asset_id: Optional[int] = Field(description=_asset_id_description)
+    transaction_id: Optional[int] = Field(description=_transaction_id_description)
     category_id: Optional[int] = Field(description=_category_id_description)
 
 
