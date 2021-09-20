@@ -4,14 +4,14 @@ Run Tests on the Tags Endpoint
 
 import logging
 
-from lunchmoney import LunchMoney
-from lunchmoney.models.tags import TagsObject
-from tests.conftest import lunchmoney_cassette
+from lunchable import LunchMoney
+from lunchable.models.tags import TagsObject
+from tests.conftest import lunchable_cassette
 
 logger = logging.getLogger(__name__)
 
 
-@lunchmoney_cassette
+@lunchable_cassette
 def test_get_tags(lunch_money_obj: LunchMoney):
     """
     Get Plaid Account and Assert it's a Plaid Account

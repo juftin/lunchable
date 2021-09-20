@@ -8,10 +8,10 @@ import datetime
 import logging
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
-from lunchmoney.config import APIConfig
-from lunchmoney.models._core import LunchMoneyAPIClient
+from lunchable.config import APIConfig
+from lunchable.models._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 
@@ -21,11 +21,11 @@ class BudgetDataObject(BaseModel):
     Data Object within a Budget
     """
 
-    budget_amount: Optional[float]
-    budget_currency: Optional[str]
-    budget_to_base: Optional[float]
-    spending_to_base: float = 0.00
-    num_transactions: int = 0
+    budget_amount: Optional[float] = Field()
+    budget_currency: Optional[str] = Field()
+    budget_to_base: Optional[float] = Field()
+    spending_to_base: float = Field(default=0.00)
+    num_transactions: int = Field(default=0)
 
 
 class BudgetConfigObject(BaseModel):
@@ -43,19 +43,42 @@ class BudgetConfigObject(BaseModel):
 
 class BudgetObject(BaseModel):
     """
-    lunchmoney Budget Object
+    Monthly Budget Per Category Object
+
+    https://lunchmoney.dev/#budget-object
     """
 
-    category_name: str
-    category_id: Optional[int]
-    category_group_name: Optional[str]
-    group_id: Optional[int]
-    is_group: Optional[bool]
-    is_income: bool
-    exclude_from_budget: bool
-    exclude_from_totals: bool
-    data: Dict[datetime.date, BudgetDataObject]
-    config: Optional[BudgetConfigObject]
+    _category_group_name_description = "Name of the category group, if applicable"
+    _is_income_description = """
+    If true, this category is an income category (category properties 
+    are set in the app via the Categories page)
+    """
+    _exclude_from_budget_description = """
+    If true, this category is excluded from budget (category 
+    properties are set in the app via the Categories page)
+    """
+    _exclude_from_totals_description = """
+    If true, this category is excluded from totals (category 
+    properties are set in the app via the Categories page)
+    """
+    _data_description = """
+    For each month with budget or category spending data, there is a data object with the key 
+    set to the month in format YYYY-MM-DD. For properties, see Data object below.
+    """
+    _config_description = """
+    Object representing the category's budget suggestion configuration
+    """
+
+    category_name: str = Field(description="Name of the category")
+    category_id: Optional[int] = Field(description="Unique identifier for category")
+    category_group_name: Optional[str] = Field(description=_category_group_name_description)
+    group_id: Optional[int] = Field(description="Unique identifier for category group")
+    is_group: Optional[bool] = Field(description="If true, this category is a group")
+    is_income: bool = Field(description=_is_income_description)
+    exclude_from_budget: bool = Field(description=_exclude_from_budget_description)
+    exclude_from_totals: bool = Field(description=_exclude_from_totals_description)
+    data: Dict[datetime.date, BudgetDataObject] = Field(description=_data_description)
+    config: Optional[BudgetConfigObject] = Field(description=_config_description)
 
 
 class BudgetParamsGet(BaseModel):
@@ -95,7 +118,7 @@ class _LunchMoneyBudgets(LunchMoneyAPIClient):
     def get_budgets(self, start_date: datetime.date,
                     end_date: datetime.date) -> List[BudgetObject]:
         """
-        Get lunchmoney budgets
+        Get Monthly Budgets
 
         Get full details on the budgets for all categories between a certain time
         period. The budgeted and spending amounts will be an aggregate across this
@@ -119,7 +142,7 @@ class _LunchMoneyBudgets(LunchMoneyAPIClient):
                       currency: Optional[str] = None
                       ) -> Optional[Dict[str, Any]]:
         """
-        Upsert Budget
+        Upsert a Budget for a Category and Date
 
         Use this endpoint to update an existing budget or insert a new budget for
         a particular category and date.
@@ -163,10 +186,7 @@ class _LunchMoneyBudgets(LunchMoneyAPIClient):
                       category_id: int
                       ) -> bool:
         """
-        Remove a budget
-
-        Use this endpoint to unset an existing budget for a particular category in a
-        particular month.
+        Unset an Existing Budget for a Particular Category in a Particular Month
 
         Parameters
         ----------

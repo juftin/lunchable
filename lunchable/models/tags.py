@@ -7,10 +7,10 @@ https://lunchmoney.dev/#tags
 import logging
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
-from lunchmoney.config import APIConfig
-from lunchmoney.models._core import LunchMoneyAPIClient
+from lunchable.config import APIConfig
+from lunchable.models._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 
@@ -22,9 +22,9 @@ class TagsObject(BaseModel):
     https://lunchmoney.dev/#tags-object
     """
 
-    id: int
-    name: str
-    description: Optional[str]
+    id: int = Field(description="Unique identifier for tag")
+    name: str = Field(description="User-defined name of tag")
+    description: Optional[str] = Field(description="User-defined description of tag")
 
 
 class _LunchMoneyTags(LunchMoneyAPIClient):
@@ -34,7 +34,7 @@ class _LunchMoneyTags(LunchMoneyAPIClient):
 
     def get_tags(self) -> List[TagsObject]:
         """
-        Get All Tags
+        Get Spending Tags
 
         Use this endpoint to get a list of all tags associated with the
         user's account.

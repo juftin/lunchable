@@ -5,14 +5,14 @@ Run Tests on the Budgets Endpoint
 import datetime
 import logging
 
-from lunchmoney import LunchMoney
-from lunchmoney.models import BudgetObject
-from tests.conftest import lunchmoney_cassette, obscure_start_date
+from lunchable import LunchMoney
+from lunchable.models import BudgetObject
+from tests.conftest import lunchable_cassette, obscure_start_date
 
 logger = logging.getLogger(__name__)
 
 
-@lunchmoney_cassette
+@lunchable_cassette
 def test_upsert_budget(lunch_money_obj: LunchMoney):
     """
     Test upserting some budgets
@@ -24,7 +24,7 @@ def test_upsert_budget(lunch_money_obj: LunchMoney):
     assert isinstance(response, dict) or response is None
 
 
-@lunchmoney_cassette
+@lunchable_cassette
 def test_get_budgets(lunch_money_obj: LunchMoney):
     """
     Test Getting some budgets
@@ -39,7 +39,7 @@ def test_get_budgets(lunch_money_obj: LunchMoney):
     logger.info(budgets)
 
 
-@lunchmoney_cassette
+@lunchable_cassette
 def test_delete_budget(lunch_money_obj: LunchMoney):
     """
     Delete a Budget

@@ -1,11 +1,11 @@
-Lunch Money Python Objects
+Lunch Money Models
 ===================================
 
 .. code-block:: python
 
-   from lunchmoney.models import...
+   from lunchable.models import...
 
-.. currentmodule:: lunchmoney.models
+.. currentmodule:: lunchable.models
 
 .. autosummary::
    :toctree: _autosummary
@@ -17,6 +17,7 @@ Lunch Money Python Objects
     PlaidAccountObject
     RecurringExpensesObject
     TagsObject
-    TransactionsObject
+    TransactionObject
     TransactionUpdateObject
     TransactionInsertObject
+    TransactionSplitObject

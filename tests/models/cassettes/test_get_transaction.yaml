@@ -18,8 +18,8 @@ interactions:
     uri: https://dev.lunchmoney.app/v1/transactions/53725270
   response:
     body:
-      string: '{"id":53725270,"date":"2021-09-06","payee":"Vail","amount":"103.5000","currency":"usd","notes":"Food
-        Vouchers","category_id":229144,"recurring_id":null,"asset_id":null,"plaid_account_id":41575,"status":"cleared","is_group":false,"group_id":null,"parent_id":null,"has_children":null,"tags":null,"external_id":null,"original_name":"IMPRINT
+      string: '{"id":53725270,"date":"2021-09-06","payee":"Vail","amount":"103.5000","currency":"usd","notes":"Updated
+        on 2021-09-16 14:11:38.834960","category_id":229144,"recurring_id":null,"asset_id":null,"plaid_account_id":41575,"status":"cleared","is_group":false,"group_id":null,"parent_id":null,"has_children":null,"tags":null,"external_id":null,"original_name":"IMPRINT
         EVENTS GROUP","type":null,"subtype":null,"fees":null,"price":null,"quantity":null}'
     headers:
       Access-Control-Allow-Credentials:
@@ -27,13 +27,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '420'
+      - '444'
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 16 Sep 2021 19:28:28 GMT
+      - Mon, 20 Sep 2021 05:50:23 GMT
       Etag:
-      - W/"1a4-J4k0gMDd7FaFWGpuY58wQxfdP8U"
+      - W/"1bc-BzdcdXmkBjHfbNJlsxlDESr83aE"
       Server:
       - Cowboy
       Vary:
