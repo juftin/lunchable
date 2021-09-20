@@ -7,7 +7,7 @@ import logging
 
 from lunchmoney import LunchMoney
 from lunchmoney.models.transactions import (TransactionInsertObject,
-                                            TransactionsObject,
+                                            TransactionObject,
                                             TransactionUpdateObject)
 from tests.conftest import lunchmoney_cassette
 
@@ -22,7 +22,7 @@ def test_get_transactions(lunch_money_obj: LunchMoney):
     transactions = lunch_money_obj.get_transactions()
     assert len(transactions) >= 1
     for transaction in transactions:
-        assert isinstance(transaction, TransactionsObject)
+        assert isinstance(transaction, TransactionObject)
     logger.info("%s Transactions returned", len(transactions))
 
 
@@ -32,7 +32,7 @@ def test_get_transaction(lunch_money_obj: LunchMoney):
     Get Transaction (singular) and assert it's a Transaction
     """
     transaction = lunch_money_obj.get_transaction(transaction_id=53725270)
-    assert isinstance(transaction, TransactionsObject)
+    assert isinstance(transaction, TransactionObject)
     logger.info("Transaction returned: %s", transaction.id)
 
 

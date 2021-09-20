@@ -1,3 +1,5 @@
+.. _interacting-with-lunch-money:
+
 Interacting with Lunch Money
 ===================================
 
@@ -11,4 +13,4 @@ Interacting with Lunch Money
     :members:
     :inherited-members:
     :autosummary:
-        :toctree: _autosummary
+        :toctree:

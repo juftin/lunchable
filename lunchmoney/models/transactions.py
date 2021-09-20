@@ -17,7 +17,7 @@ from lunchmoney.models._core import LunchMoneyAPIClient
 logger = logging.getLogger(__name__)
 
 
-class TransactionsObject(BaseModel):
+class TransactionObject(BaseModel):
     """
     Universal Lunch Money Transaction Object
 
@@ -300,7 +300,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
                          start_date: Optional[Union[datetime.date, datetime.datetime, str]] = None,
                          end_date: Optional[Union[datetime.date, datetime.datetime, str]] = None,
                          params: Optional[dict] = None
-                         ) -> List[TransactionsObject]:
+                         ) -> List[TransactionObject]:
         """
         Get lunchmoney transactions
 
@@ -321,7 +321,17 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
 
         Returns
         -------
-        List[TransactionsObject]
+        List[TransactionObject]
+
+        Examples
+        --------
+        Retrieve a list of :class:`.TransactionObject` ::
+
+            from lunchmoney import LunchMoney
+
+            lunch = LunchMoney(access_token="xxxxxxx")
+            transactions = lunch.get_transactions(start_date="2020-01-01",
+                                                  end_date="2020-01-31")
         """
         search_params = TransactionParamsGet(start_date=start_date,
                                              end_date=end_date).dict(exclude_none=True)
@@ -331,10 +341,10 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
                                            url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
                                            params=search_params)
         transactions = response_data[APIConfig.LUNCHMONEY_TRANSACTIONS]
-        transaction_objects = [TransactionsObject(**item) for item in transactions]
+        transaction_objects = [TransactionObject(**item) for item in transactions]
         return transaction_objects
 
-    def get_transaction(self, transaction_id: int) -> TransactionsObject:
+    def get_transaction(self, transaction_id: int) -> TransactionObject:
         """
         Returns a single Transaction object
 
@@ -346,11 +356,23 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         Returns
         -------
         Dict[str, Any]
+
+        Examples
+        --------
+        Retrieve a single transaction by its ID ::
+
+            from lunchmoney import LunchMoney
+
+            lunch = LunchMoney(access_token="xxxxxxx")
+            transaction = lunch.get_transaction(transaction_id=1234)
+
+        The above code returns a :class:`.TransactionObject` with ID # 1234 (assuming
+        it exists)
         """
         response_data = self._make_request(method=self.methods.GET,
                                            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
                                                      transaction_id])
-        return TransactionsObject(**response_data)
+        return TransactionObject(**response_data)
 
     def update_transaction(self, transaction_id: int,
                            transaction: TransactionUpdateObject,
@@ -384,6 +406,20 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         Returns
         -------
         Dict[str, Any]
+
+        Examples
+        --------
+        Update a transaction with a :class:`.TransactionUpdateObject` ::
+
+            from datetime import datetime
+
+            from lunchmoney import LunchMoney, TransactionUpdateObject
+
+            lunch = LunchMoney(access_token="xxxxxxx")
+            transaction_note = f"Updated on {datetime.now()}"
+            notes_update = TransactionUpdateObject(notes=transaction_note)
+            response = lunch.update_transaction(transaction_id=1234,
+                                                transaction=notes_update)
         """
         payload = TransactionUpdateParamsPut(transaction=transaction,
                                              split=split,
@@ -437,6 +473,19 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         Returns
         -------
         List[int]
+
+        Examples
+        --------
+        Create a new transaction with a :class:`.TransactionInsertObject` ::
+
+            from lunchmoney import LunchMoney, TransactionInsertObject
+
+            lunch = LunchMoney(access_token="xxxxxxx")
+
+            new_transaction = TransactionInsertObject(payee="Example Restaurant",
+                                                      amount=120.00,
+                                                      notes="Saturday Dinner")
+            new_transaction_ids = lunch.insert_transactions(transactions=new_transaction)
         """
         if isinstance(transactions, TransactionInsertObject):
             transactions = [transactions]

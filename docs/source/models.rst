@@ -17,6 +17,6 @@ Lunch Money Models
     PlaidAccountObject
     RecurringExpensesObject
     TagsObject
-    TransactionsObject
+    TransactionObject
     TransactionUpdateObject
     TransactionInsertObject

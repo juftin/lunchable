@@ -22,7 +22,8 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.coverage",
     "sphinx.ext.napoleon",
-    'sphinx.ext.viewcode',
+    "sphinx.ext.viewcode",
+    "sphinx.ext.intersphinx",
 
     "sphinxcontrib.autodoc_pydantic",
     "autodocsumm",
@@ -49,3 +50,5 @@ source_suffix = {
 }
 
 autosummary_generate = True
+
+intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}

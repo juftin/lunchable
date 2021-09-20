@@ -11,7 +11,7 @@ from .recurring_expenses import RecurringExpensesObject
 from .tags import TagsObject
 from .transactions import (
     TransactionInsertObject,
-    TransactionsObject,
+    TransactionObject,
     TransactionUpdateObject,
 )
 
@@ -23,7 +23,7 @@ __all__ = [
     "PlaidAccountObject",
     "RecurringExpensesObject",
     "TagsObject",
-    "TransactionsObject",
+    "TransactionObject",
     "TransactionUpdateObject",
     "TransactionInsertObject",
 ]
