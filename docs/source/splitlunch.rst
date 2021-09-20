@@ -11,6 +11,9 @@ lunch-money integration with Splitwise.
 
    $ pip install lunch-money[splitlunch]
 
+.. code-block:: python
+
+   from lunchmoney.plugins.splitlunch import SplitLunch
 
 The goals of this plugin are to support a few things:
 
@@ -19,7 +22,7 @@ The goals of this plugin are to support a few things:
 #. Syncing of Splitwise Account Balance
 
 
-.. currentmodule:: lunchmoney.plugins
+.. currentmodule:: lunchmoney.plugins.splitlunch
 
 .. autoclass:: SplitLunch
     :members:

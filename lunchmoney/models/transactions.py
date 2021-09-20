@@ -267,17 +267,6 @@ class TransactionInsertParamsPost(BaseModel):
     skip_balance_update: bool = True
 
 
-class TransactionUpdateParamsPut(BaseModel):
-    """
-    https://lunchmoney.dev/#update-transaction
-    """
-
-    split: Optional[bool]
-    transaction: TransactionUpdateObject
-    debit_as_negative: bool = False
-    skip_balance_update: bool = True
-
-
 class TransactionGroupParamsPost(BaseModel):
     """
     https://lunchmoney.dev/#create-transaction-group
@@ -289,6 +278,40 @@ class TransactionGroupParamsPost(BaseModel):
     notes: Optional[str]
     tags: Optional[List[int]]
     transactions: List[int]
+
+
+class TransactionSplitObject(BaseModel):
+    """
+    Object for Splitting Transactions
+
+    https://lunchmoney.dev/#split-object
+    """
+    _date_description = "Must be in ISO 8601 format (YYYY-MM-DD)."
+    _category_id_description = """
+    Unique identifier for associated category_id. Category must be associated 
+    with the same account.
+    """
+    _notes_description = "Transaction Split Notes."
+    _amount_description = """
+    Individual amount of split. Currency will inherit from parent transaction. All 
+    amounts must sum up to parent transaction amount.
+    """
+
+    date: datetime.date = Field(description=_date_description)
+    category_id: int = Field(description=_category_id_description)
+    notes: Optional[str] = Field(description=_notes_description)
+    amount: float = Field(description=_amount_description)
+
+
+class TransactionUpdateParamsPut(BaseModel):
+    """
+    https://lunchmoney.dev/#update-transaction
+    """
+
+    split: Optional[TransactionSplitObject]
+    transaction: TransactionUpdateObject
+    debit_as_negative: bool = False
+    skip_balance_update: bool = True
 
 
 class _LunchMoneyTransactions(LunchMoneyAPIClient):
@@ -376,7 +399,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
 
     def update_transaction(self, transaction_id: int,
                            transaction: TransactionUpdateObject,
-                           split: Optional[object] = None,
+                           split: Optional[TransactionSplitObject] = None,
                            debit_as_negative: bool = False,
                            skip_balance_update: bool = True) -> Dict[str, Any]:
         """
@@ -393,7 +416,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
             Lunch Money Transaction ID
         transaction: TransactionUpdateObject
             Object to update with
-        split: object
+        split: Optional[TransactionSplitObject]
             Defines the split of a transaction. You may not split an already-split
             transaction, recurring transaction, or group transaction.
         debit_as_negative: bool

@@ -20,3 +20,4 @@ Lunch Money Models
     TransactionObject
     TransactionUpdateObject
     TransactionInsertObject
+    TransactionSplitObject

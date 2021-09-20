@@ -13,6 +13,7 @@ from .transactions import (
     TransactionInsertObject,
     TransactionObject,
     TransactionUpdateObject,
+    TransactionSplitObject
 )
 
 __all__ = [
@@ -26,4 +27,5 @@ __all__ = [
     "TransactionObject",
     "TransactionUpdateObject",
     "TransactionInsertObject",
+    "TransactionSplitObject",
 ]
