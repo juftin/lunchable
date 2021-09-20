@@ -351,7 +351,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         --------
         Retrieve a list of :class:`.TransactionObject` ::
 
-            from lunchmoney import LunchMoney
+            from lunchable import LunchMoney
 
             lunch = LunchMoney(access_token="xxxxxxx")
             transactions = lunch.get_transactions(start_date="2020-01-01",
@@ -385,7 +385,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         --------
         Retrieve a single transaction by its ID ::
 
-            from lunchmoney import LunchMoney
+            from lunchable import LunchMoney
 
             lunch = LunchMoney(access_token="xxxxxxx")
             transaction = lunch.get_transaction(transaction_id=1234)
@@ -437,7 +437,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
 
             from datetime import datetime
 
-            from lunchmoney import LunchMoney, TransactionUpdateObject
+            from lunchable import LunchMoney, TransactionUpdateObject
 
             lunch = LunchMoney(access_token="xxxxxxx")
             transaction_note = f"Updated on {datetime.now()}"
@@ -502,7 +502,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         --------
         Create a new transaction with a :class:`.TransactionInsertObject` ::
 
-            from lunchmoney import LunchMoney, TransactionInsertObject
+            from lunchable import LunchMoney, TransactionInsertObject
 
             lunch = LunchMoney(access_token="xxxxxxx")
 

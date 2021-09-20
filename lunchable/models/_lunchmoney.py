@@ -44,7 +44,7 @@ class LunchMoney(
     --------
     ::
 
-        from lunchmoney import LunchMoney
+        from lunchable import LunchMoney
 
         lunch = LunchMoney(access_token="xxxxxxx")
         transactions = lunch.get_transactions()
