@@ -1,8 +1,8 @@
 # lunchable
 
 <div align="center">
-<a href="https://github.com/juftin/camply">
-  <img src=docs/source/_static/lunchable.png
+<a href="https://github.com/juftin/lunchable">
+  <img src=https://i.imgur.com/FyKDsG3.png
     width="400" alt="lunchable">
 </a>
 </div>
@@ -13,9 +13,9 @@
 [![GitHub License](https://img.shields.io/github/license/juftin/lunchable?color=blue&label=License)](https://github.com/juftin/lunchable/blob/main/LICENSE)
 [![Documentation Status](https://readthedocs.org/projects/lunchable/badge/?version=latest)](https://lunchable.readthedocs.io/en/latest/?badge=latest)
 
-**lunchable** is a Python Client for the Lunch Money Developer API. It's built on top
-of [pydantic](https://github.com/samuelcolvin/pydantic>), and it offers a *simple* and *intuitive*
-API.
+**lunchable** is a Python Client for the [Lunch Money Developer API](https://lunchmoney.dev). It's
+built on top of [pydantic](https://github.com/samuelcolvin/pydantic>), and it offers a *simple*
+and *intuitive* API.
 
 ### Installation
 
@@ -45,9 +45,6 @@ transaction_as_dict: dict = first_transaction.dict()
 
 > ### ⚠️ Note: This project is under active development.
 
-___________
-___________
-
 <br/>
 
-[<p align="center" ><img src="https://raw.githubusercontent.com/juftin/juftin/main/static/juftin.png" width="120" height="120"  alt="juftin logo"> </p>](https://github.com/juftin)
+[<p align="center" ><img src="https://raw.githubusercontent.com/juftin/juftin/main/static/juftin.png" width="60" height="60"  alt="juftin logo"> </p>](https://github.com/juftin)

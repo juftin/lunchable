@@ -1,7 +1,7 @@
 **lunchable**
 ===================================
 
-.. image:: _static/lunchable.png
+.. image:: https://i.imgur.com/FyKDsG3.png
     :width: 400
     :align: center
     :alt: lunchable
@@ -66,11 +66,11 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-==================
+
 
 .. image:: https://raw.githubusercontent.com/juftin/juftin/main/static/juftin.png
-    :width: 120
-    :height: 120
+    :width: 60
+    :height: 60
     :align: center
     :alt: juftin
     :target: https://github.com/juftin
