@@ -33,13 +33,15 @@ class LunchMoney(
     _LunchMoneyTransactions,
 ):
     """
-    Core Lunch Money Python Client. This class facilitates with connections to
+    Lunch Money Python Client.
+
+    This class facilitates with connections to
     the `Lunch Money Developer API <https://lunchmoney.dev/>`_. Authenticate
     with an Access Token. If an access token isn't provided one will attempt to
     be inherited from a `LUNCHMONEY_ACCESS_TOKEN` environment variable.
 
     Examples
-    ----------
+    --------
     ::
 
         from lunchmoney import LunchMoney

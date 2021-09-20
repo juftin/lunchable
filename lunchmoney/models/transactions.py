@@ -286,6 +286,7 @@ class TransactionSplitObject(BaseModel):
 
     https://lunchmoney.dev/#split-object
     """
+
     _date_description = "Must be in ISO 8601 format (YYYY-MM-DD)."
     _category_id_description = """
     Unique identifier for associated category_id. Category must be associated 
