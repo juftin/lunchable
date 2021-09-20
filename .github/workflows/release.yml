@@ -8,7 +8,7 @@ on:
         types: [ opened, reopened, synchronize ]
 
 jobs:
-    update_release_draft:
+    Release:
         runs-on: ubuntu-latest
         steps:
             -   name: Set up Github Workspace
@@ -20,8 +20,5 @@ jobs:
             -   uses: release-drafter/release-drafter@v5
                 with:
                     config-name: config/release_draft_config.yml
-                    name:        lunchmoney
-                    tag:         "v$ {{ env.VERSION }}"
-                    version:     "$ {{ env.VERSION }}"
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
