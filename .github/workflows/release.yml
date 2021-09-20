@@ -17,14 +17,14 @@ jobs:
                     fetch-depth: 0
             -   name: Version Fetcher
                 run:  |
-                      echo LUNCHMONEY_VERSION=$(python setup.py --version) >> ${GITHUB_ENV}
-                      echo LUNCHMONEY_TAG="v$(python setup.py --version)" >> ${GITHUB_ENV}
-                      echo LUNCHMONEY_RELEASE="lunchmoney v$(python setup.py --version)" >> ${GITHUB_ENV}
+                      echo PROJECT_VERSION=$(python setup.py --version) >> ${GITHUB_ENV}
+                      echo PROJECT_TAG="v$(python setup.py --version)" >> ${GITHUB_ENV}
+                      echo PROJECT_RELEASE="$(python setup.py --name) v$(python setup.py --version)" >> ${GITHUB_ENV}
             -   uses: release-drafter/release-drafter@v5
                 with:
                     config-name: release-drafter.yml
-                    name:        ${{ env.LUNCHMONEY_RELEASE }}
-                    version:     ${{ env.LUNCHMONEY_VERSION }}
-                    tag:         ${{ env.LUNCHMONEY_TAG }}
+                    name:        ${{ env.PROJECT_RELEASE }}
+                    version:     ${{ env.PROJECT_VERSION }}
+                    tag:         ${{ env.PROJECT_TAG }}
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
