@@ -10,7 +10,7 @@ To use lunch-money, first install it using pip:
 
 .. code-block:: console
 
-    $ pip install lunch-money
+    pip install lunch-money
 
 ******************
 Examples

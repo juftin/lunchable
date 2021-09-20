@@ -9,7 +9,7 @@ lunch-money integration with Splitwise.
 
 .. code-block:: console
 
-   $ pip install lunch-money[splitlunch]
+    pip install lunch-money[splitlunch]
 
 .. code-block:: python
 
@@ -18,7 +18,7 @@ lunch-money integration with Splitwise.
 The goals of this plugin are to support a few things:
 
 #. Auto-Importing of Splitwise Transactions
-#. Creation of Splitwise transactions directly from Splitwise
+#. Creation of Splitwise transactions directly from Lunch Money
 #. Syncing of Splitwise Account Balance
 
 
