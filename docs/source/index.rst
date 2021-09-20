@@ -6,7 +6,7 @@
     :align: center
     :alt: lunchable
 
-**lunchable** is a Python client for the
+**lunchable** is a Python Client for the
 `Lunch Money Developer API <https://lunchmoney.dev>`_.
 It's built on top of `pydantic <https://github.com/samuelcolvin/pydantic>`_,
 and it offers a *simple* and *intuitive* API.
@@ -73,5 +73,6 @@ Indices and tables
     :height: 120
     :align: center
     :alt: juftin
+    :target: https://github.com/juftin
 
 
