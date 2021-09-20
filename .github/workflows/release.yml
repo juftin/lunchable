@@ -18,12 +18,13 @@ jobs:
             -   name: Version Fetcher
                 run:  |
                       echo "LUNCHMONEY_VERSION=$(python setup.py --version)" >> ${GITHUB_ENV}
-                      echo "LUNCHMONEY_TAG='v$(python setup.py --version)'" >> ${GITHUB_ENV}
+                      echo "LUNCHMONEY_TAG='v${LUNCHMONEY_VERSION}'" >> ${GITHUB_ENV}
+                      echo "LUNCHMONEY_RELEASE='lunchmoney ${LUNCHMONEY_TAG}'" >> ${GITHUB_ENV}
             -   uses: release-drafter/release-drafter@v5
                 with:
                     config-name: release-drafter.yml
-                    name:        'lunchmoney ${LUNCHMONEY_TAG}'
-                    version:     ${LUNCHMONEY_VERSION}
-                    tag:         ${LUNCHMONEY_TAG}
+                    name:        ${{ env.LUNCHMONEY_RELEASE }}
+                    version:     ${{ env.LUNCHMONEY_VERSION }}
+                    tag:         ${{ env.LUNCHMONEY_TAG }}
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
