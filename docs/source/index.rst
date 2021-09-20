@@ -5,6 +5,7 @@
     :width: 400
     :align: center
     :alt: lunchable
+    :target: https://github.com/juftin/lunchable
 
 **lunchable** is a Python Client for the
 `Lunch Money Developer API <https://lunchmoney.dev>`_.
