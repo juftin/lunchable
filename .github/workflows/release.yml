@@ -19,6 +19,8 @@ jobs:
                 run:  echo "VERSION=$(python setup.py --version)" >> ${GITHUB_ENV}
             -   uses: release-drafter/release-drafter@v5
                 with:
-                    config-name: config/release_draft_config.yml
+                    name:    lunchmoney
+                    tag:     "v$ {{ env.VERSION }}"
+                    version: "$ {{ env.VERSION }}"
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
