@@ -1,6 +1,11 @@
 **lunchable**
 ===================================
 
+.. image:: _static/lunchable.png
+    :width: 400
+    :align: center
+    :alt: lunchable
+
 **lunchable** is a Python client for the
 `Lunch Money Developer API <https://lunchmoney.dev>`_.
 It's built on top of `pydantic <https://github.com/samuelcolvin/pydantic>`_,
@@ -60,3 +65,13 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+==================
+
+.. image:: https://raw.githubusercontent.com/juftin/juftin/main/static/juftin.png
+    :width: 120
+    :height: 120
+    :align: center
+    :alt: juftin
+
+

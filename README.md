@@ -1,5 +1,12 @@
 # lunchable
 
+<div align="center">
+<a href="https://github.com/juftin/camply">
+  <img src=docs/source/_static/lunchable.png
+    width="400" alt="lunchable">
+</a>
+</div>
+
 [![Lunchable Version](https://img.shields.io/pypi/v/lunchable?color=blue&label=lunchable)](https://github.com/juftin/lunchable)
 [![PyPI](https://img.shields.io/pypi/pyversions/lunchable)](https://pypi.python.org/pypi/lunchable/)
 [![Testing Status](https://github.com/juftin/lunchable/actions/workflows/tests.yml/badge.svg)](https://github.com/juftin/lunchable/actions/workflows/tests.yml)
@@ -33,4 +40,14 @@ transaction_as_dict: dict = first_transaction.dict()
 
 ### Check out the [**ReadTheDocs**](https://lunchable.readthedocs.io/en/latest/)
 
+--------------
+--------------
+
 > ### ⚠️ Note: This project is under active development.
+
+___________
+___________
+
+<br/>
+
+[<p align="center" ><img src="https://raw.githubusercontent.com/juftin/juftin/main/static/juftin.png" width="120" height="120"  alt="juftin logo"> </p>](https://github.com/juftin)
