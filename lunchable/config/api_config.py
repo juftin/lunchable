@@ -7,7 +7,7 @@ from os import getenv
 from typing import Dict, List, Optional, Union
 from urllib import parse
 
-from lunchmoney.exceptions import EnvironmentVariableError, LunchMoneyError
+from lunchable.exceptions import EnvironmentVariableError, LunchMoneyError
 
 logger = logging.getLogger(__name__)
 

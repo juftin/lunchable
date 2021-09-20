@@ -7,8 +7,8 @@ from typing import Dict, List
 
 import pytest
 
-from lunchmoney import LunchMoney
-from lunchmoney.models import TransactionObject
+from lunchable import LunchMoney
+from lunchable.models import TransactionObject
 
 obscure_start_date = datetime.datetime(year=2022, month=11, day=1)
 beginning_of_this_month = datetime.datetime.now().replace(day=1)
@@ -33,7 +33,7 @@ def vcr_config() -> Dict[str, list]:
 
 # Decorator Object to Use pyvcr Cassettes on Unit Tests (see `pytest-vcr`)
 # pass `--vcr-record=none` to pytest CI runs to ensure new cassettes are generated
-lunchmoney_cassette = pytest.mark.vcr(scope="module")
+lunchable_cassette = pytest.mark.vcr(scope="module")
 
 
 @pytest.fixture

@@ -7,9 +7,9 @@ import logging
 
 import pytest
 
-from lunchmoney import LunchMoney
-from lunchmoney.models.assets import AssetsObject
-from tests.conftest import lunchmoney_cassette
+from lunchable import LunchMoney
+from lunchable.models.assets import AssetsObject
+from tests.conftest import lunchable_cassette
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 @pytest.fixture
 def lunchmoney_asset() -> AssetsObject:
     """
-    Static lunchmoney.AssetsObject
+    Static lunchable.models.AssetsObject
 
     Returns
     -------
@@ -39,7 +39,7 @@ def lunchmoney_asset() -> AssetsObject:
     return splitwise_asset
 
 
-@lunchmoney_cassette
+@lunchable_cassette
 def test_get_assets(lunch_money_obj: LunchMoney):
     """
     Get Assets and Assert that they're assets
@@ -51,7 +51,7 @@ def test_get_assets(lunch_money_obj: LunchMoney):
     logger.info("%s Assets returned", len(assets))
 
 
-@lunchmoney_cassette
+@lunchable_cassette
 def test_update_asset(lunch_money_obj: LunchMoney, lunchmoney_asset: AssetsObject):
     """
     Update an Asset

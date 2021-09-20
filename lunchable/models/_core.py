@@ -10,8 +10,8 @@ from typing import Any, List, Optional, Union
 
 import requests
 
-from lunchmoney.config import APIConfig
-from lunchmoney.exceptions import LunchMoneyHTTPError
+from lunchable.config import APIConfig
+from lunchable.exceptions import LunchMoneyHTTPError
 
 logger = logging.getLogger(__name__)
 

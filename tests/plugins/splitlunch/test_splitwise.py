@@ -13,7 +13,7 @@ def test_import_splitwise():
     """
     test_case = True
     try:
-        from lunchmoney.plugins.splitlunch import SplitLunch
+        from lunchable.plugins.splitlunch import SplitLunch
     except ImportError:
         test_case = False
     finally:

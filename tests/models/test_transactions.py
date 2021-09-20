@@ -7,16 +7,16 @@ import logging
 from time import sleep
 from typing import List
 
-from lunchmoney import LunchMoney
-from lunchmoney.models.transactions import (TransactionInsertObject,
-                                            TransactionObject,
-                                            TransactionUpdateObject)
-from tests.conftest import lunchmoney_cassette
+from lunchable import LunchMoney
+from lunchable.models.transactions import (TransactionInsertObject,
+                                           TransactionObject,
+                                           TransactionUpdateObject)
+from tests.conftest import lunchable_cassette
 
 logger = logging.getLogger(__name__)
 
 
-@lunchmoney_cassette
+@lunchable_cassette
 def test_get_transactions(lunch_money_obj: LunchMoney):
     """
     Get Transactions and assert they're Transactions
@@ -28,7 +28,7 @@ def test_get_transactions(lunch_money_obj: LunchMoney):
     logger.info("%s Transactions returned", len(transactions))
 
 
-@lunchmoney_cassette
+@lunchable_cassette
 def test_get_transaction(lunch_money_obj: LunchMoney):
     """
     Get Transaction (singular) and assert it's a Transaction
@@ -38,7 +38,7 @@ def test_get_transaction(lunch_money_obj: LunchMoney):
     logger.info("Transaction returned: %s", transaction.id)
 
 
-@lunchmoney_cassette
+@lunchable_cassette
 def test_insert_transactions(lunch_money_obj: LunchMoney,
                              test_transactions: List[TransactionObject]):
     """
@@ -57,7 +57,7 @@ def test_insert_transactions(lunch_money_obj: LunchMoney,
         assert isinstance(transaction_id, int)
 
 
-@lunchmoney_cassette
+@lunchable_cassette
 def test_update_transaction(lunch_money_obj: LunchMoney,
                             test_transactions: List[TransactionObject]):
     """
@@ -70,7 +70,7 @@ def test_update_transaction(lunch_money_obj: LunchMoney,
     assert response["updated"] is True
 
 
-@lunchmoney_cassette
+@lunchable_cassette
 def test_create_and_delete_transaction_group(lunch_money_obj: LunchMoney,
                                              test_transactions: List[TransactionObject]):
     """

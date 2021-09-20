@@ -1,15 +1,15 @@
-﻿.. _interacting-with-lunch-money:
+﻿.. _interacting-with-lunchable:
 
 Interacting with Lunch Money
 ===================================
 
 .. code-block:: python
 
-   from lunchmoney import LunchMoney
+   from lunchable import LunchMoney
 
    lunch = LunchMoney(access_token="xxxxxxx")
 
-.. currentmodule:: lunchmoney
+.. currentmodule:: lunchable
 
 .. autoclass:: LunchMoney
     :members:

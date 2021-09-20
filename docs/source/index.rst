@@ -1,7 +1,7 @@
-**lunch-money**
+**lunchable**
 ===================================
 
-**lunch-money** is a Python client for the Lunch Money Developer API.
+**lunchable** is a Python client for the Lunch Money Developer API.
 It's built on top of `pydantic <https://github.com/samuelcolvin/pydantic>`_,
 and it offers a *simple* and *intuitive* API and Objects.
 
@@ -13,8 +13,8 @@ and it offers a *simple* and *intuitive* API and Objects.
 
     from typing import List
 
-    from lunchmoney import LunchMoney
-    from lunchmoney.models import TransactionObject
+    from lunchable import LunchMoney
+    from lunchable.models import TransactionObject
 
     lunch = LunchMoney(access_token="xxxxxxxxxxx")
     transactions: List[TransactionObject] = lunch.get_transactions()
@@ -27,7 +27,7 @@ and it offers a *simple* and *intuitive* API and Objects.
    :caption: Contents:
 
    usage.rst
-   lunchmoney.rst
+   lunchable.rst
    models.rst
    plugins.rst
    api.rst

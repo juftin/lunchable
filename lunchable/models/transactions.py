@@ -10,9 +10,9 @@ from typing import Any, Dict, List, Optional, Union
 
 from pydantic import BaseModel, Field
 
-from lunchmoney import LunchMoneyError
-from lunchmoney.config import APIConfig
-from lunchmoney.models._core import LunchMoneyAPIClient
+from lunchable import LunchMoneyError
+from lunchable.config import APIConfig
+from lunchable.models._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 

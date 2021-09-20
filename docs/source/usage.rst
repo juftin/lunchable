@@ -6,17 +6,17 @@ Usage
 Installation
 ******************
 
-To use lunch-money, first install it using pip:
+To use lunchable, first install it using pip:
 
 .. code-block:: console
 
-    pip install lunch-money
+    pip install lunchable
 
 ******************
 Examples
 ******************
 
-Read more about :ref:`interacting-with-lunch-money` to see what
+Read more about :ref:`interacting-with-lunchable` to see what
 else you can do.
 
 Transactions
@@ -27,7 +27,7 @@ Retrieve a list of :class:`.TransactionObject`
 
 .. code-block:: python
 
-    from lunchmoney import LunchMoney
+    from lunchable import LunchMoney
 
     lunch = LunchMoney(access_token="xxxxxxx")
     transactions = lunch.get_transactions(start_date="2020-01-01",
@@ -39,7 +39,7 @@ Retrieve a single transaction (:class:`.TransactionObject`)
 
 .. code-block:: python
 
-    from lunchmoney import LunchMoney
+    from lunchable import LunchMoney
 
     lunch = LunchMoney(access_token="xxxxxxx")
     transaction = lunch.get_transaction(transaction_id=1234)
@@ -54,7 +54,7 @@ Update a transaction with a :class:`.TransactionUpdateObject`
 
     from datetime import datetime
 
-    from lunchmoney import LunchMoney, TransactionUpdateObject
+    from lunchable import LunchMoney, TransactionUpdateObject
 
     lunch = LunchMoney(access_token="xxxxxxx")
     transaction_note = f"Updated on {datetime.now()}"
@@ -68,7 +68,7 @@ Create a new transaction with a :class:`.TransactionInsertObject`
 
 .. code-block:: python
 
-    from lunchmoney import LunchMoney, TransactionInsertObject
+    from lunchable import LunchMoney, TransactionInsertObject
 
     lunch = LunchMoney(access_token="xxxxxxx")
 

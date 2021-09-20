@@ -7,8 +7,8 @@ import logging
 from os import environ
 from typing import Dict, Optional
 
-from lunchmoney import __lunchmoney__
-from lunchmoney.exceptions import LunchMoneyImportError
+from lunchable import __lunchable__
+from lunchable.exceptions import LunchMoneyImportError
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +17,7 @@ try:
 except ImportError as ie:
     logger.exception(ie)
     raise LunchMoneyImportError("Looks like you don't have the Splitwise plugin installed: "
-                                "`pip install %s[splitwise]`", __lunchmoney__)
+                                "`pip install %s[splitwise]`", __lunchable__)
 
 
 class SplitLunch(splitwise.Splitwise):

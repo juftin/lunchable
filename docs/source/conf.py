@@ -9,10 +9,10 @@ import sys
 _project_dir = str(Path(__file__).resolve().parent.parent.parent)
 sys.path.insert(0, _project_dir)
 
-from lunchmoney import __lunchmoney__, __version__
+from lunchable import __lunchable__, __version__
 
 _author = "Justin Flannery"
-project = __lunchmoney__
+project = __lunchable__
 copyright = f"{datetime.now().year}, {_author}"
 author = _author
 release = __version__

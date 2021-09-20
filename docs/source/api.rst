@@ -1,8 +1,8 @@
-lunch-money API Documentation
+lunchable API Documentation
 ===================================
 
 .. autosummary::
     :toctree: _autosummary
     :recursive:
 
-    lunchmoney
+    lunchable

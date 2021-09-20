@@ -4,14 +4,14 @@ Run Tests on the Crypto Endpoint
 
 import logging
 
-from conftest import lunchmoney_cassette
-from lunchmoney import LunchMoney
-from lunchmoney.models.crypto import CryptoObject
+from conftest import lunchable_cassette
+from lunchable import LunchMoney
+from lunchable.models.crypto import CryptoObject
 
 logger = logging.getLogger(__name__)
 
 
-@lunchmoney_cassette
+@lunchable_cassette
 def test_get_crypto(lunch_money_obj: LunchMoney):
     """
     Get Crypto and assert its Crypto
@@ -23,7 +23,7 @@ def test_get_crypto(lunch_money_obj: LunchMoney):
     logger.info("%s Crypto Accounts returned", len(cryptos))
 
 
-@lunchmoney_cassette
+@lunchable_cassette
 def test_update_crypto(lunch_money_obj: LunchMoney):
     """
     Update a Crypto Object

@@ -4,14 +4,14 @@ Run Tests on the Recurring Expenses Endpoint
 
 import logging
 
-from lunchmoney import LunchMoney
-from lunchmoney.models.recurring_expenses import RecurringExpensesObject
-from tests.conftest import lunchmoney_cassette
+from lunchable import LunchMoney
+from lunchable.models.recurring_expenses import RecurringExpensesObject
+from tests.conftest import lunchable_cassette
 
 logger = logging.getLogger(__name__)
 
 
-@lunchmoney_cassette
+@lunchable_cassette
 def test_get_recurring_expenses(lunch_money_obj: LunchMoney):
     """
     Get Recurring Expense and Assert it's a Recurring Expense
