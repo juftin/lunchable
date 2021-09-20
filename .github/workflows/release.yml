@@ -21,7 +21,7 @@ jobs:
                 with:
                     config-name: release-drafter.yml
                     name:        lunchmoney
-                    tag:         "v$ {{ env.VERSION }}"
-                    version:     "$ {{ env.VERSION }}"
+                    tag:         "v$VERSION"
+                    version:     "$VERSION"
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
