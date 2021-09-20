@@ -1,4 +1,4 @@
-Lunch Money Python Client
+**lunch-money**
 ===================================
 
 **lunch-money** is a Python client for the Lunch Money Developer API.

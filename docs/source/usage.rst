@@ -16,7 +16,7 @@ To use lunch-money, first install it using pip:
 Examples
 ******************
 
-Read more about the :ref:`interacting-with-lunch-money` to see what
+Read more about :ref:`interacting-with-lunch-money` to see what
 else you can do.
 
 Transactions

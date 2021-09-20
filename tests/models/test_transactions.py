@@ -69,7 +69,7 @@ def test_create_transaction_group(lunch_money_obj: LunchMoney):
     """
     Create a transaction group
     """
-    group_id = lunch_money_obj.create_transaction_group(
+    group_id = lunch_money_obj.insert_transaction_group(
         date=datetime.datetime.now().date(),
         payee="Test",
         notes="Test Transaction Group",
@@ -83,7 +83,7 @@ def test_delete_transaction_group(lunch_money_obj: LunchMoney):
     """
     Update a Transaction in Lunch Money
     """
-    response = lunch_money_obj.delete_transaction_group(transaction_group_id=55335945)
+    response = lunch_money_obj.remove_transaction_group(transaction_group_id=55335945)
     for transaction_id in response:
         assert isinstance(transaction_id, int)
     logger.info("Transactions part of group: %s", response)

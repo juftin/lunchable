@@ -76,7 +76,7 @@ class _LunchMoneyCategories(LunchMoneyAPIClient):
 
     def get_categories(self) -> List[CategoriesObject]:
         """
-        Get all categories
+        Get Spending categories
 
         Use this endpoint to get a list of all categories associated with the user's account.
         https://lunchmoney.dev/#get-all-categories
@@ -97,7 +97,7 @@ class _LunchMoneyCategories(LunchMoneyAPIClient):
                         exclude_from_budget: Optional[bool] = False,
                         exclude_from_totals: Optional[bool] = False) -> int:
         """
-        Create a Category
+        Create a Spending Category
 
         Use this to create a single category
         https://lunchmoney.dev/#create-category

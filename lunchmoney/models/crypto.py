@@ -71,7 +71,7 @@ class _LunchMoneyCrypto(LunchMoneyAPIClient):
 
     def get_crypto(self) -> List[CryptoObject]:
         """
-        Get All Crypto
+        Get Crypto Assets
 
         Use this endpoint to get a list of all cryptocurrency assets associated
         with the user's account. Both crypto balances from synced and manual
@@ -96,7 +96,7 @@ class _LunchMoneyCrypto(LunchMoneyAPIClient):
                       balance: Optional[float] = None,
                       currency: Optional[str] = None) -> CryptoObject:
         """
-        Update Manual Crypto Asset
+        Update a Manual Crypto Asset
 
         Use this endpoint to update a single manually-managed crypto asset (does not include
         assets received from syncing with your wallet/exchange/etc). These are denoted by

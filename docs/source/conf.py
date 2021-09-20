@@ -29,7 +29,8 @@ extensions = [
     "autodocsumm",
     "myst_parser",
     "autoclasstoc",
-    "sphinx_copybutton"
+    "sphinx_copybutton",
+    "sphinx_autodoc_defaultargs"
 ]
 
 templates_path = ["_templates"]
@@ -52,3 +53,9 @@ source_suffix = {
 autosummary_generate = True
 
 intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
+
+rst_prolog = """
+.. |default| raw:: html
+
+    <div class="default-value-section">""" + \
+             ' <span class="default-value-label">Default:</span>'

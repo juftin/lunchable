@@ -115,6 +115,8 @@ class _LunchMoneyRecurringExpenses(LunchMoneyAPIClient):
     def get_recurring_expenses(self, start_date: Optional[datetime.date] = None,
                                debit_as_negative: bool = False) -> List[RecurringExpensesObject]:
         """
+        Get Recurring Expenses
+
         Retrieve a list of recurring expenses to expect for a specified period.
 
         Every month, a different set of recurring expenses is expected. This is because recurring
@@ -133,7 +135,7 @@ class _LunchMoneyRecurringExpenses(LunchMoneyAPIClient):
         ----------
         start_date : Optional[datetime.date]
             Date to search. By default will return the first day of the current month
-        debit_as_negative: bool
+        debit_as_negative: bool: default = False
             Pass in true if you’d like expenses to be returned as negative amounts and credits as
             positive amounts.
 

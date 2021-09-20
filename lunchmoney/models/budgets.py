@@ -118,7 +118,7 @@ class _LunchMoneyBudgets(LunchMoneyAPIClient):
     def get_budgets(self, start_date: datetime.date,
                     end_date: datetime.date) -> List[BudgetObject]:
         """
-        Get lunchmoney budgets
+        Get Monthly Budgets
 
         Get full details on the budgets for all categories between a certain time
         period. The budgeted and spending amounts will be an aggregate across this
@@ -142,7 +142,7 @@ class _LunchMoneyBudgets(LunchMoneyAPIClient):
                       currency: Optional[str] = None
                       ) -> Optional[Dict[str, Any]]:
         """
-        Upsert Budget
+        Upsert a Budget for a Category and Date
 
         Use this endpoint to update an existing budget or insert a new budget for
         a particular category and date.
@@ -186,10 +186,7 @@ class _LunchMoneyBudgets(LunchMoneyAPIClient):
                       category_id: int
                       ) -> bool:
         """
-        Remove a budget
-
-        Use this endpoint to unset an existing budget for a particular category in a
-        particular month.
+        Unset an Existing Budget for a Particular Category in a Particular Month
 
         Parameters
         ----------

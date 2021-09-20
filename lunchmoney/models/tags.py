@@ -34,7 +34,7 @@ class _LunchMoneyTags(LunchMoneyAPIClient):
 
     def get_tags(self) -> List[TagsObject]:
         """
-        Get All Tags
+        Get Spending Tags
 
         Use this endpoint to get a list of all tags associated with the
         user's account.

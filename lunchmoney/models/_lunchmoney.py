@@ -1,5 +1,5 @@
 """
-Lunch Money Python SDK
+Lunch Money Python Client
 
 This Module Leverages Class Inheritance to
 Distribute API Methods Across a series of files. Ultimately, everything
@@ -33,7 +33,19 @@ class LunchMoney(
     _LunchMoneyTransactions,
 ):
     """
-    Core Lunch Money SDK.
+    Core Lunch Money Python Client. This class facilitates with connections to
+    the `Lunch Money Developer API <https://lunchmoney.dev/>`_. Authenticate
+    with an Access Token. If an access token isn't provided one will attempt to
+    be inherited from a `LUNCHMONEY_ACCESS_TOKEN` environment variable.
+
+    Examples
+    ----------
+    ::
+
+        from lunchmoney import LunchMoney
+
+        lunch = LunchMoney(access_token="xxxxxxx")
+        transactions = lunch.get_transactions()
     """
 
     def __init__(self, access_token: Optional[str] = None):

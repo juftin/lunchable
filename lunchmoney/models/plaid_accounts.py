@@ -97,6 +97,8 @@ class _LunchMoneyPlaidAccounts(LunchMoneyAPIClient):
 
     def get_plaid_accounts(self) -> List[PlaidAccountObject]:
         """
+        Get Plaid Synced Assets
+
         Get a list of all synced Plaid accounts associated with the user's account.
 
         Plaid Accounts are individual bank accounts that you have linked to Lunch Money via Plaid.

@@ -82,6 +82,8 @@ class _LunchMoneyAssets(LunchMoneyAPIClient):
 
     def get_assets(self) -> List[AssetsObject]:
         """
+        Get Manually Managed Assets
+
         Get a list of all manually-managed assets associated with the user's account.
 
         (https://lunchmoney.dev/#assets-object)
@@ -105,7 +107,7 @@ class _LunchMoneyAssets(LunchMoneyAPIClient):
                      currency: Optional[str] = None,
                      institution_name: Optional[str] = None) -> AssetsObject:
         """
-        Use this method to update a single asset.
+        Update a Single Asset
 
         Parameters
         ----------

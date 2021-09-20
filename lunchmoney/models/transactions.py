@@ -302,7 +302,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
                          params: Optional[dict] = None
                          ) -> List[TransactionObject]:
         """
-        Get lunchmoney transactions
+        Get Transactions Using Criteria
 
         Use this to retrieve all transactions between a date range. Returns list of Transaction
         objects. If no query parameters are set, this will return transactions for the
@@ -346,7 +346,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
 
     def get_transaction(self, transaction_id: int) -> TransactionObject:
         """
-        Returns a single Transaction object
+        Get a Transaction by ID
 
         Parameters
         ----------
@@ -380,7 +380,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
                            debit_as_negative: bool = False,
                            skip_balance_update: bool = True) -> Dict[str, Any]:
         """
-        Update Transaction
+        Update a Transaction
 
         Use this endpoint to update a single transaction. You may also use this
         to split an existing transaction.
@@ -442,7 +442,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
             skip_balance_update: bool = True
     ) -> List[int]:
         """
-        Insert Transactions
+        Create One or Many Lunch Money Transactions
 
         Use this endpoint to insert many transactions at once.
 
@@ -502,7 +502,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         ids: List[int] = response_data["ids"]
         return ids
 
-    def create_transaction_group(self,
+    def insert_transaction_group(self,
                                  date: datetime.date,
                                  payee: str,
                                  transactions: List[int],
@@ -510,7 +510,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
                                  notes: Optional[str] = None,
                                  tags: Optional[List[int]] = None) -> int:
         """
-        Use this endpoint to create a transaction group of two or more transactions.
+        Create a Transaction Group of Two or More Transactions
 
         Returns the ID of the newly created transaction group
 
@@ -545,7 +545,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
                                            payload=transaction_params)
         return response_data
 
-    def delete_transaction_group(self, transaction_group_id: int) -> List[int]:
+    def remove_transaction_group(self, transaction_group_id: int) -> List[int]:
         """
         Delete a Transaction Group
 

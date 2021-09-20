@@ -8,3 +8,4 @@ splitwise
 myst-parser
 autoclasstoc
 sphinx-copybutton
+sphinx_autodoc_defaultargs
