@@ -22,7 +22,7 @@ jobs:
             -   uses: release-drafter/release-drafter@v5
                 with:
                     config-name: release-drafter.yml
-                    name:        lunchmoney
+                    name:        'lunchmoney $ {{env.LUNCHMONEY_TAG }}'
                     version:     $ {{env.LUNCHMONEY_VERSION }}
                     tag:         $ {{env.LUNCHMONEY_TAG }}
                 env:
