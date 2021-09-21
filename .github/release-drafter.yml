@@ -17,7 +17,7 @@ categories:
     -   title: "📜 Documentation"
         label: "documentation"
 change-template:      "- $TITLE @$AUTHOR (#$NUMBER)"
-change-title-escapes: "\<*_&"
+change-title-escapes: '\<*_&'
 template:             |
                       ## Changes
 
