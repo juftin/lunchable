@@ -22,7 +22,7 @@ jobs:
             -   name: Tag Setter
                 run:  |
                       echo PROJECT_TAG='v${{ env.PROJECT_VERSION }}' >> ${GITHUB_ENV}
-                      echo PROJECT_RELEASE='${{ PROJECT_NAME }} ${{ PROJECT_RELEASE }}' >> ${GITHUB_ENV}
+                      echo PROJECT_RELEASE='${{ env.PROJECT_NAME }} ${{ env.PROJECT_RELEASE }}' >> ${GITHUB_ENV}
             -   name: Draft a Release
                 uses: release-drafter/release-drafter@v5
                 with:
