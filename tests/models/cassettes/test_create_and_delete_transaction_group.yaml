@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"date": "2021-09-19", "payee": "Test", "notes": "Test Transaction Group",
+    body: '{"date": "2021-09-20", "payee": "Test", "notes": "Test Transaction Group",
       "transactions": [55907976, 55907977]}'
     headers:
       Accept:
@@ -21,7 +21,7 @@ interactions:
     uri: https://dev.lunchmoney.app/v1/transactions/group
   response:
     body:
-      string: '55910063'
+      string: '56034791'
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -32,9 +32,9 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 20 Sep 2021 05:50:24 GMT
+      - Mon, 20 Sep 2021 23:46:58 GMT
       Etag:
-      - W/"8-kTgiwHxpBX+yUHJRF/piroz3wKQ"
+      - W/"8-G+S+rrOqUpCQgQ8Hw7AMbFQQrsM"
       Server:
       - Cowboy
       Vary:
@@ -64,7 +64,7 @@ interactions:
       authorization:
       - XXXXXXXXXX
     method: DELETE
-    uri: https://dev.lunchmoney.app/v1/transactions/group/55910063
+    uri: https://dev.lunchmoney.app/v1/transactions/group/56034791
   response:
     body:
       string: '{"transactions":[55907977,55907976]}'
@@ -78,7 +78,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 20 Sep 2021 05:50:25 GMT
+      - Mon, 20 Sep 2021 23:47:00 GMT
       Etag:
       - W/"24-lVChRyRiVqGERw6b0cY0xfzBH0U"
       Server:
