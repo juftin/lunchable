@@ -14,7 +14,7 @@
 [![Documentation Status](https://readthedocs.org/projects/lunchable/badge/?version=latest)](https://lunchable.readthedocs.io/en/latest/?badge=latest)
 
 **lunchable** is a Python Client for the [Lunch Money Developer API](https://lunchmoney.dev). It's
-built on top of [pydantic](https://github.com/samuelcolvin/pydantic>), and it offers a *simple*
+built on top of [pydantic](https://github.com/samuelcolvin/pydantic), and it offers a *simple*
 and *intuitive* API.
 
 ### Installation
