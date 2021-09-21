@@ -19,16 +19,12 @@ jobs:
                 run:  |
                       echo PROJECT_NAME=$(python setup.py --name) >> ${GITHUB_ENV}
                       echo PROJECT_VERSION=$(python setup.py --version) >> ${GITHUB_ENV}
-            -   name: Tag Setter
-                run:  |
-                      echo PROJECT_TAG='v${{ env.PROJECT_VERSION }}' >> ${GITHUB_ENV}
-                      echo PROJECT_RELEASE='${{ env.PROJECT_NAME }} ${{ env.PROJECT_RELEASE }}' >> ${GITHUB_ENV}
             -   name: Draft a Release
                 uses: release-drafter/release-drafter@v5
                 with:
                     config-name: release-drafter.yml
-                    name:        ${{ env.PROJECT_RELEASE }}
+                    name:        '${{ env.PROJECT_NAME }} ${{ env.PROJECT_TAG }}'
                     version:     ${{ env.PROJECT_VERSION }}
-                    tag:         ${{ env.PROJECT_TAG }}
+                    tag:         'v${{ env.PROJECT_VERSION }}'
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
