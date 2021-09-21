@@ -13,7 +13,7 @@ from lunchable.exceptions import LunchMoneyImportError
 logger = logging.getLogger(__name__)
 
 try:
-    import splitwise
+    import splitwise  # type: ignore
 except ImportError as ie:
     logger.exception(ie)
     _pip_extra_error = ("Looks like you don't have the Splitwise plugin installed: "
