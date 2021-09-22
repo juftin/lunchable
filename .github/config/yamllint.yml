@@ -15,7 +15,7 @@ rules:
     line-length:
         level:                               warning
         allow-non-breakable-inline-mappings: true
-        max:                                 100
+        max:                                 120
     truthy:
         check-keys: false
 ignore:  |
