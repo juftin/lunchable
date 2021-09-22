@@ -18,7 +18,7 @@ interactions:
     uri: https://dev.lunchmoney.app/v1/tags
   response:
     body:
-      string: '[{"id":21370,"name":"Test","description":null}]'
+      string: '[{"id":21559,"name":"test","description":null}]'
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -29,9 +29,9 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 16 Sep 2021 05:48:22 GMT
+      - Mon, 20 Sep 2021 23:48:48 GMT
       Etag:
-      - W/"2f-0f8Hz316+SO2R/WG9hi0UlfY3uQ"
+      - W/"2f-kY1WmMDZIsr+kcBhXLB5eymnREM"
       Server:
       - Cowboy
       Vary:

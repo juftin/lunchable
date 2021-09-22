@@ -17,10 +17,14 @@ jobs:
                     fetch-depth: 0
             -   name: Version Fetcher
                 run:  |
+                      echo PROJECT_NAME=$(python setup.py --name) >> ${GITHUB_ENV}
                       echo PROJECT_VERSION=$(python setup.py --version) >> ${GITHUB_ENV}
-                      echo PROJECT_TAG="v$(python setup.py --version)" >> ${GITHUB_ENV}
-                      echo PROJECT_RELEASE="$(python setup.py --name) v$(python setup.py --version)" >> ${GITHUB_ENV}
-            -   uses: release-drafter/release-drafter@v5
+            -   name: Tag Setter
+                run:  |
+                      echo PROJECT_TAG='v${{ env.PROJECT_VERSION }}' >> ${GITHUB_ENV}
+                      echo PROJECT_RELEASE='${{ env.PROJECT_NAME }} v${{ env.PROJECT_VERSION }}' >> ${GITHUB_ENV}
+            -   name: Draft a Release
+                uses: release-drafter/release-drafter@v5
                 with:
                     config-name: release-drafter.yml
                     name:        ${{ env.PROJECT_RELEASE }}

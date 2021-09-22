@@ -1,7 +1,7 @@
 interactions:
 - request:
-    body: '{"transactions": [{"date": "2021-09-19", "amount": 3.5, "payee": "Random
-      Test", "asset_id": 23043, "notes": "Random Test Description: 2021-09-19 23:50:22.981630"}],
+    body: '{"transactions": [{"date": "2021-09-20", "amount": 3.5, "payee": "Random
+      Test", "asset_id": 23043, "notes": "Random Test Description: 2021-09-20 17:46:57.069659"}],
       "apply_rules": false, "skip_duplicates": true, "check_for_recurring": false,
       "debit_as_negative": false, "skip_balance_update": true}'
     headers:
@@ -23,7 +23,7 @@ interactions:
     uri: https://dev.lunchmoney.app/v1/transactions
   response:
     body:
-      string: '{"ids":[55910062]}'
+      string: '{"ids":[56034790]}'
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -34,9 +34,9 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 20 Sep 2021 05:50:23 GMT
+      - Mon, 20 Sep 2021 23:46:57 GMT
       Etag:
-      - W/"12-lSWY/FUEcAiVauPmEoAu6iRuL1E"
+      - W/"12-fLM1EHbcaIVuFdrr5voTXMmeoHI"
       Server:
       - Cowboy
       Vary:

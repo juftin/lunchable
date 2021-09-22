@@ -21,7 +21,7 @@ interactions:
     uri: https://dev.lunchmoney.app/v1/categories
   response:
     body:
-      string: '{"category_id":250066}'
+      string: '{"category_id":251537}'
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -32,9 +32,9 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 16 Sep 2021 02:52:10 GMT
+      - Mon, 20 Sep 2021 23:46:55 GMT
       Etag:
-      - W/"16-4HUONhO61CUpP/0GWPZOADZM9TQ"
+      - W/"16-BLL2IxbxaRopKZFXwZ9TARckwPY"
       Server:
       - Cowboy
       Vary:
