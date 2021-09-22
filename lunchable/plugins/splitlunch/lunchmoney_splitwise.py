@@ -1,5 +1,5 @@
 """
-Splitwise Interactions
+Lunchable Plugin for Splitwise
 """
 
 import datetime
@@ -27,7 +27,7 @@ except ImportError as ie:
 
 class SplitLunch(splitwise.Splitwise):
     """
-    Python Extension Class for interacting with Splitwise
+    Lunchable Plugin For Interacting With Splitwise
     """
 
     def __init__(self,
@@ -317,5 +317,5 @@ class SplitLunch(splitwise.Splitwise):
         if expense.payment is True:
             financial_impact, self_paid = self._get_payment_impact(expense=expense)
         elif expense.payment is False:
-            financial_impact, self_paid = self._get_payment_impact(expense=expense)
+            financial_impact, self_paid = self._get_expense_impact(expense=expense)
         return financial_impact, self_paid
