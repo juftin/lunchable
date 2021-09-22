@@ -7,10 +7,12 @@ import logging
 from math import floor
 from os import environ, getenv
 from random import shuffle
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
-from lunchable import __lunchable__
-from lunchable.exceptions import LunchMoneyError, LunchMoneyImportError
+from lunchable import __lunchable__, LunchMoney
+from lunchable.exceptions import LunchMoneyImportError
+from lunchable.plugins.splitlunch.exceptions import SplitLunchError
+from lunchable.plugins.splitlunch.models import SplitLunchExpense
 
 logger = logging.getLogger(__name__)
 
@@ -21,12 +23,6 @@ except ImportError as ie:
     _pip_extra_error = ("Looks like you don't have the Splitwise plugin installed: "
                         f"`pip install {__lunchable__}[splitlunch]`")
     raise LunchMoneyImportError(_pip_extra_error)
-
-
-class SplitLunchError(LunchMoneyError):
-    """
-    Split Lunch Errors
-    """
 
 
 class SplitLunch(splitwise.Splitwise):
@@ -40,7 +36,8 @@ class SplitLunch(splitwise.Splitwise):
                  consumer_key: Optional[str] = None,
                  consumer_secret: Optional[str] = None,
                  api_key: Optional[str] = None,
-                 access_token: Optional[Dict[str, str]] = None):
+                 access_token: Optional[Dict[str, str]] = None,
+                 lunchable: Optional[LunchMoney] = None):
         """
         Initialize the Parent Class with some additional properties
 
@@ -52,38 +49,18 @@ class SplitLunch(splitwise.Splitwise):
         consumer_secret: Optional[str], default = None
         access_token: Optional[str], default = None
         """
-        if consumer_key is None:
-            consumer_key = environ["SPLITWISE_CONSUMER_KEY"]
-        if consumer_secret is None:
-            consumer_secret = environ["SPLITWISE_CONSUMER_SECRET"]
-        init_kwargs = dict(consumer_key=consumer_key,
-                           consumer_secret=consumer_secret)
-
-        if api_key is None:
-            api_key = getenv("SPLITWISE_API_KEY", None)
-        if access_token is None:
-            _oauth_token = getenv("SPLITWISE_OAUTH_TOKEN")
-            _oauth_token_secret = getenv("SPLITWISE_OAUTH_SECRET")
-            if _oauth_token is None or _oauth_token_secret is None:
-                access_token = None
-            else:
-                access_token = dict(oauth_token=_oauth_token,
-                                    oauth_token_secret=_oauth_token_secret)
-        if api_key is not None and access_token is not None:
-            init_kwargs.update(dict(api_key=api_key))
-        elif api_key is not None:
-            init_kwargs.update(dict(api_key=api_key))
-        elif access_token is not None:
-            init_kwargs.update(access_token)
-        else:
-            raise SplitLunchError("No Splitwise API Key or Access Token Identified")
-        super().__init__(**init_kwargs)
+        init_kwargs = self._get_splitwise_init_kwargs(consumer_key=consumer_key,
+                                                      consumer_secret=consumer_secret,
+                                                      api_key=api_key,
+                                                      access_token=access_token)
+        super(SplitLunch, self).__init__(**init_kwargs)
 
         self.current_user: splitwise.CurrentUser = self.getCurrentUser()
         self.financial_partner: splitwise.Friend = self.get_friend(
             friend_id=financial_partner_id,
             email_address=financial_partner_email)
         self.last_check: Optional[datetime.datetime] = None
+        self.lunchable: Optional[LunchMoney] = lunchable
 
     def __repr__(self):
         """
@@ -112,6 +89,11 @@ class SplitLunch(splitwise.Splitwise):
         tuple
             A tuple is returned with each participant's amount
         """
+        try:
+            assert amount == round(amount, 2)
+        except AssertionError:
+            raise SplitLunchError(f"{amount} caused an error, you must provide a real "
+                                  "spending amount.")
         first_owe = second_owe = amount / 2
         pennies = int((amount - floor(amount)) * 100)
         if (pennies % 2) == 0:
@@ -196,3 +178,144 @@ class SplitLunch(splitwise.Splitwise):
             elif email_address is not None and friend.email.lower() == email_address.lower():
                 return friend
         raise SplitLunchError("Couldn't identify financial partner in Splitwise.")
+
+    @classmethod
+    def _get_splitwise_init_kwargs(cls,
+                                   consumer_key: Optional[str] = None,
+                                   consumer_secret: Optional[str] = None,
+                                   api_key: Optional[str] = None,
+                                   access_token: Optional[Dict[str, str]] = None) -> Dict[str, Any]:
+        """
+        Get the Splitwise Kwargs
+
+        Parameters
+        ----------
+        consumer_key: Optional[str], default = None
+        consumer_secret: Optional[str], default = None
+        api_key: Optional[str], default = None
+        access_token: Optional[str], default = None
+        """
+        if consumer_key is None:
+            consumer_key = environ["SPLITWISE_CONSUMER_KEY"]
+        if consumer_secret is None:
+            consumer_secret = environ["SPLITWISE_CONSUMER_SECRET"]
+        init_kwargs = dict(consumer_key=consumer_key,
+                           consumer_secret=consumer_secret)
+        if api_key is None:
+            api_key = getenv("SPLITWISE_API_KEY", None)
+        if access_token is None:
+            _oauth_token = getenv("SPLITWISE_OAUTH_TOKEN")
+            _oauth_token_secret = getenv("SPLITWISE_OAUTH_SECRET")
+            if _oauth_token is None or _oauth_token_secret is None:
+                access_token = None
+            else:
+                access_token = dict(oauth_token=_oauth_token,
+                                    oauth_token_secret=_oauth_token_secret)
+        if api_key is not None and access_token is not None:
+            init_kwargs.update(dict(api_key=api_key))
+        elif api_key is not None:
+            init_kwargs.update(dict(api_key=api_key))
+        elif access_token is not None:
+            init_kwargs.update(access_token)
+        else:
+            raise SplitLunchError("No Splitwise API Key or Access Token Identified")
+        return init_kwargs
+
+    def splitwise_to_pydantic(self, expense: splitwise.Expense) -> SplitLunchExpense:
+        """
+        Convert Splitwise Object to Pydantic
+
+        Parameters
+        ----------
+        expense: splitwise.Expense
+
+        Returns
+        -------
+        SplitLunchExpense
+        """
+        financial_impact, self_paid = self._get_splitwise_impact(expense=expense)
+        expense = SplitLunchExpense(splitwise_id=expense.id,
+                                    original_amount=expense.cost,
+                                    financial_impact=financial_impact,
+                                    self_paid=self_paid,
+                                    description=expense.description,
+                                    category=expense.category.name,
+                                    details=expense.details,
+                                    payment=expense.payment,
+                                    date=expense.date,
+                                    users=[user.id for user in expense.users],
+                                    created_at=expense.created_at,
+                                    updated_at=expense.updated_at,
+                                    deleted_at=expense.deleted_at,
+                                    deleted=True if expense.deleted_at is not None else False)
+        return expense
+
+    def _get_expense_impact(self, expense: splitwise.Expense) -> Tuple[float, bool]:
+        """
+        Get the Financial Impact of a Splitwise Expense
+
+        Parameters
+        ----------
+        expense: splitwise.Expense
+
+        Returns
+        -------
+        Tuple[float, bool]
+        """
+        financial_impact = 0.00
+        self_paid = True
+        if len(expense.repayments) >= 1:
+            for debt in expense.repayments:
+                if debt.fromUser == self.current_user.id:
+                    self_paid = False
+                    financial_impact -= float(debt.amount)
+                elif debt.toUser == self.current_user.id:
+                    financial_impact += float(debt.amount)
+        elif len(expense.repayments) == 0:
+            assert len(expense.users) == 1
+            assert expense.users[0].id == self.current_user.id
+        return financial_impact, self_paid
+
+    def _get_payment_impact(self, expense: splitwise.Expense) -> Tuple[float, bool]:
+        """
+        Get the Financial Impact of a Splitwise Payment
+
+        Parameters
+        ----------
+        expense: splitwise.Expense
+
+        Returns
+        -------
+        Tuple[float, bool]
+        """
+        financial_impact = 0.00
+        self_paid = True
+        if len(expense.repayments) >= 1:
+            for debt in expense.repayments:
+                if debt.fromUser == self.current_user.id:
+                    self_paid = False
+                    financial_impact += float(debt.amount)
+                elif debt.toUser == self.current_user.id:
+                    financial_impact -= float(debt.amount)
+        elif len(expense.repayments) == 0:
+            assert expense.users[0].id == self.current_user.id
+            financial_impact -= float(expense.cost)
+        return financial_impact, self_paid
+
+    def _get_splitwise_impact(self, expense: splitwise.Expense) -> Tuple[float, bool]:
+        """
+        Get the Financial Impact of a Splitwise Transaction
+
+        Parameters
+        ----------
+        expense: splitwise.Expense
+
+        Returns
+        -------
+        Tuple[float, bool]
+        """
+        if expense.payment is True:
+            financial_impact, self_paid = self._get_payment_impact(expense=expense)
+        elif expense.payment is False:
+            financial_impact, self_paid = self._get_payment_impact(expense=expense)
+        return financial_impact, self_paid
