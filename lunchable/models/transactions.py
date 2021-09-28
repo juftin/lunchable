@@ -103,7 +103,7 @@ class TransactionObject(BaseModel):
     """
 
     id: Optional[int] = Field(description="Unique identifier for transaction")
-    date: str = Field(description="Date of transaction in ISO 8601 format")
+    date: datetime.date = Field(description="Date of transaction in ISO 8601 format")
     payee: Optional[str] = Field(description=_payee_description)
     amount: float = Field(description=_amount_description)
     currency: Optional[str] = Field(max_length=3, description=_currency_description)
@@ -118,7 +118,7 @@ class TransactionObject(BaseModel):
     tags: Optional[List[TagsObject]] = Field(description="Array of Tag objects")
     external_id: Optional[str] = Field(max_length=75,
                                        description=_external_id_description)
-    original_name: str = Field(description=_original_name_description)
+    original_name: Optional[str] = Field(description=_original_name_description)
     type: Optional[str] = Field(description=_type_description)
     subtype: Optional[str] = Field(description=_subtype_description)
     fees: Optional[str] = Field(description=_fees_description)
@@ -321,14 +321,10 @@ class _TransactionUpdateParamsPut(BaseModel):
     https://lunchmoney.dev/#update-transaction
     """
 
-    split: Optional[TransactionSplitObject]
-    transaction: TransactionUpdateObject
+    split: Optional[List[TransactionSplitObject]] = None
+    transaction: Optional[TransactionUpdateObject] = None
     debit_as_negative: bool = False
     skip_balance_update: bool = True
-
-
-class _TransactionParamsGetQuery:
-    pass
 
 
 class _LunchMoneyTransactions(LunchMoneyAPIClient):
@@ -467,8 +463,8 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         return TransactionObject(**response_data)
 
     def update_transaction(self, transaction_id: int,
-                           transaction: TransactionUpdateObject,
-                           split: Optional[TransactionSplitObject] = None,
+                           transaction: Optional[TransactionUpdateObject] = None,
+                           split: Optional[List[TransactionSplitObject]] = None,
                            debit_as_negative: bool = False,
                            skip_balance_update: bool = True) -> Dict[str, Any]:
         """
@@ -485,7 +481,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
             Lunch Money Transaction ID
         transaction: TransactionUpdateObject
             Object to update with
-        split: Optional[TransactionSplitObject]
+        split: Optional[List[TransactionSplitObject]]
             Defines the split of a transaction. You may not split an already-split
             transaction, recurring transaction, or group transaction.
         debit_as_negative: bool
@@ -513,11 +509,13 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
             response = lunch.update_transaction(transaction_id=1234,
                                                 transaction=notes_update)
         """
+        if transaction is None and split is None:
+            raise LunchMoneyError("You must update the transaction or provide a split")
         payload = _TransactionUpdateParamsPut(transaction=transaction,
                                               split=split,
                                               debit_as_negative=debit_as_negative,
                                               skip_balance_update=skip_balance_update
-                                              ).dict(exclude_unset=True)
+                                              ).dict(exclude_none=True)
         response_data = self._make_request(method=self.methods.PUT,
                                            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
                                                      transaction_id],
