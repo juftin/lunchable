@@ -18,8 +18,8 @@ and it offers a *simple* and *intuitive* API.
 .. image:: https://img.shields.io/pypi/pyversions/lunchable
     :target: https://pypi.python.org/pypi/lunchable/
     :alt: PyPI
-.. image:: https://github.com/juftin/lunchable/actions/workflows/tests.yml/badge.svg
-    :target: https://github.com/juftin/lunchable/actions/workflows/tests.yml
+.. image:: https://github.com/juftin/lunchable/actions/workflows/tests.yml/badge.svg?branch=main
+    :target: https://github.com/juftin/lunchable/actions/workflows/tests.yml?query=branch%3Amain
     :alt: Testing Status
 .. image:: https://img.shields.io/github/license/juftin/lunchable?color=blue&label=License
     :target: https://github.com/juftin/lunchable/blob/main/LICENSE
