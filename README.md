@@ -9,7 +9,7 @@
 
 [![Lunchable Version](https://img.shields.io/pypi/v/lunchable?color=blue&label=lunchable)](https://github.com/juftin/lunchable)
 [![PyPI](https://img.shields.io/pypi/pyversions/lunchable)](https://pypi.python.org/pypi/lunchable/)
-[![Testing Status](https://github.com/juftin/lunchable/actions/workflows/tests.yml/badge.svg)](https://github.com/juftin/lunchable/actions/workflows/tests.yml)
+[![Testing Status](https://github.com/juftin/lunchable/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/juftin/lunchable/actions/workflows/tests.yml?query=branch%3Amain)
 [![GitHub License](https://img.shields.io/github/license/juftin/lunchable?color=blue&label=License)](https://github.com/juftin/lunchable/blob/main/LICENSE)
 [![Documentation Status](https://readthedocs.org/projects/lunchable/badge/?version=latest)](https://lunchable.readthedocs.io/en/latest/?badge=latest)
 

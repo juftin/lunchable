@@ -13,6 +13,7 @@ from pydantic import BaseModel, Field
 from lunchable import LunchMoneyError
 from lunchable.config import APIConfig
 from lunchable.models._core import LunchMoneyAPIClient
+from lunchable.models.tags import TagsObject
 
 logger = logging.getLogger(__name__)
 
@@ -102,7 +103,7 @@ class TransactionObject(BaseModel):
     """
 
     id: Optional[int] = Field(description="Unique identifier for transaction")
-    date: str = Field(description="Date of transaction in ISO 8601 format")
+    date: datetime.date = Field(description="Date of transaction in ISO 8601 format")
     payee: Optional[str] = Field(description=_payee_description)
     amount: float = Field(description=_amount_description)
     currency: Optional[str] = Field(max_length=3, description=_currency_description)
@@ -114,10 +115,10 @@ class TransactionObject(BaseModel):
     parent_id: Optional[int] = Field(description=_parent_id_description)
     is_group: Optional[bool] = Field(description=_is_group_description)
     group_id: Optional[int] = Field(description=_group_id_description)
-    tags: Optional[List[str]] = Field(description="Array of Tag objects")
+    tags: Optional[List[TagsObject]] = Field(description="Array of Tag objects")
     external_id: Optional[str] = Field(max_length=75,
                                        description=_external_id_description)
-    original_name: str = Field(description=_original_name_description)
+    original_name: Optional[str] = Field(description=_original_name_description)
     type: Optional[str] = Field(description=_type_description)
     subtype: Optional[str] = Field(description=_subtype_description)
     fees: Optional[str] = Field(description=_fees_description)
@@ -245,16 +246,27 @@ class TransactionUpdateObject(BaseModel):
     tags: Optional[List[Any]] = Field(description=_tags_description)
 
 
-class TransactionParamsGet(BaseModel):
+class _TransactionParamsGet(BaseModel):
     """
     https://lunchmoney.dev/#get-all-transactions
     """
 
+    tag_id: Optional[int]
+    recurring_id: Optional[int]
+    plaid_account_id: Optional[int]
+    category_id: Optional[int]
+    asset_id: Optional[int]
+    group_id: Optional[int]
+    is_group: Optional[bool]
+    status: Optional[str]
+    offset: Optional[int]
+    limit: Optional[int]
     start_date: Optional[datetime.date]
     end_date: Optional[datetime.date]
+    debit_as_negative: Optional[bool]
 
 
-class TransactionInsertParamsPost(BaseModel):
+class _TransactionInsertParamsPost(BaseModel):
     """
     https://lunchmoney.dev/#insert-transactions
     """
@@ -267,7 +279,7 @@ class TransactionInsertParamsPost(BaseModel):
     skip_balance_update: bool = True
 
 
-class TransactionGroupParamsPost(BaseModel):
+class _TransactionGroupParamsPost(BaseModel):
     """
     https://lunchmoney.dev/#create-transaction-group
     """
@@ -304,13 +316,13 @@ class TransactionSplitObject(BaseModel):
     amount: float = Field(description=_amount_description)
 
 
-class TransactionUpdateParamsPut(BaseModel):
+class _TransactionUpdateParamsPut(BaseModel):
     """
     https://lunchmoney.dev/#update-transaction
     """
 
-    split: Optional[TransactionSplitObject]
-    transaction: TransactionUpdateObject
+    split: Optional[List[TransactionSplitObject]] = None
+    transaction: Optional[TransactionUpdateObject] = None
     debit_as_negative: bool = False
     skip_balance_update: bool = True
 
@@ -323,29 +335,69 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
     def get_transactions(self,
                          start_date: Optional[Union[datetime.date, datetime.datetime, str]] = None,
                          end_date: Optional[Union[datetime.date, datetime.datetime, str]] = None,
-                         params: Optional[dict] = None
-                         ) -> List[TransactionObject]:
+                         tag_id: Optional[int] = None,
+                         recurring_id: Optional[int] = None,
+                         plaid_account_id: Optional[int] = None,
+                         category_id: Optional[int] = None,
+                         asset_id: Optional[int] = None,
+                         group_id: Optional[int] = None,
+                         is_group: Optional[bool] = None,
+                         status: Optional[str] = None,
+                         offset: Optional[int] = None,
+                         limit: Optional[int] = None,
+                         debit_as_negative: Optional[bool] = None,
+                         params: Optional[dict] = None) -> List[TransactionObject]:
         """
         Get Transactions Using Criteria
 
         Use this to retrieve all transactions between a date range. Returns list of Transaction
         objects. If no query parameters are set, this will return transactions for the
-        current calendar month. If either start_date or _end_date are datetime.datetime objects,
+        current calendar month. If either start_date or end_date are datetime.datetime objects,
         they will be reduced to dates. If a string is provided, it will be attempted to be parsed
-        as YYYY-MM-DD format
+        as YYYY-MM-DD format.
 
         Parameters
         ----------
-        start_date: Optional[Union[datetime.date, datetime.datetime, str]]:
-            start date for search
+        start_date: Optional[Union[datetime.date, datetime.datetime, str]]
+            Denotes the beginning of the time period to fetch transactions for. Defaults
+            to beginning of current month. Required if end_date exists. Format: YYYY-MM-DD.
         end_date: Optional[Union[datetime.date, datetime.datetime, str]]
-            end date for search
+            Denotes the end of the time period you'd like to get transactions for.
+            Defaults to end of current month. Required if start_date exists.
+        tag_id: Optional[int]
+            Filter by tag. Only accepts IDs, not names.
+        recurring_id: Optional[int]
+            Filter by recurring expense
+        plaid_account_id: Optional[int]
+            Filter by Plaid account
+        category_id: Optional[int]
+            Filter by category. Will also match category groups.
+        asset_id: Optional[int]
+            Filter by asset
+        group_id: Optional[int]
+            Filter by group_id (if the transaction is part of a specific group)
+        is_group: Optional[bool]
+            Filter by group (returns transaction groups)
+        status: Optional[str]
+            Filter by status (Can be cleared or uncleared. For recurring
+            transactions, use recurring)
+        offset: Optional[int]
+            Sets the offset for the records returned
+        limit: Optional[int]
+            Sets the maximum number of records to return. Note: The server will not
+            respond with any indication that there are more records to be returned.
+            Please check the response length to determine if you should make another
+            call with an offset to fetch more transactions.
+        debit_as_negative: Optional[bool]
+            Pass in true if you’d like expenses to be returned as negative amounts and
+            credits as positive amounts. Defaults to false.
         params: Optional[dict]
-            additional parameters to pass to the API
+            Additional Query String Params
 
         Returns
         -------
         List[TransactionObject]
+            A list of transactions
 
         Examples
         --------
@@ -357,10 +409,22 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
             transactions = lunch.get_transactions(start_date="2020-01-01",
                                                   end_date="2020-01-31")
         """
-        search_params = TransactionParamsGet(start_date=start_date,
-                                             end_date=end_date).dict(exclude_none=True)
-        if params is not None:
-            search_params.update(params)
+        search_params = _TransactionParamsGet(
+            tag_id=tag_id,
+            recurring_id=recurring_id,
+            plaid_account_id=plaid_account_id,
+            category_id=category_id,
+            asset_id=asset_id,
+            group_id=group_id,
+            is_group=is_group,
+            status=status,
+            offset=offset,
+            limit=limit,
+            start_date=start_date,
+            end_date=end_date,
+            debit_as_negative=debit_as_negative,
+        ).dict(exclude_none=True)
+        search_params.update(params if params is not None else {})
         response_data = self._make_request(method=self.methods.GET,
                                            url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
                                            params=search_params)
@@ -399,8 +463,8 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         return TransactionObject(**response_data)
 
     def update_transaction(self, transaction_id: int,
-                           transaction: TransactionUpdateObject,
-                           split: Optional[TransactionSplitObject] = None,
+                           transaction: Optional[TransactionUpdateObject] = None,
+                           split: Optional[List[TransactionSplitObject]] = None,
                            debit_as_negative: bool = False,
                            skip_balance_update: bool = True) -> Dict[str, Any]:
         """
@@ -417,7 +481,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
             Lunch Money Transaction ID
         transaction: TransactionUpdateObject
             Object to update with
-        split: Optional[TransactionSplitObject]
+        split: Optional[List[TransactionSplitObject]]
             Defines the split of a transaction. You may not split an already-split
             transaction, recurring transaction, or group transaction.
         debit_as_negative: bool
@@ -445,11 +509,13 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
             response = lunch.update_transaction(transaction_id=1234,
                                                 transaction=notes_update)
         """
-        payload = TransactionUpdateParamsPut(transaction=transaction,
-                                             split=split,
-                                             debit_as_negative=debit_as_negative,
-                                             skip_balance_update=skip_balance_update
-                                             ).dict(exclude_unset=True)
+        if transaction is None and split is None:
+            raise LunchMoneyError("You must update the transaction or provide a split")
+        payload = _TransactionUpdateParamsPut(transaction=transaction,
+                                              split=split,
+                                              debit_as_negative=debit_as_negative,
+                                              skip_balance_update=skip_balance_update
+                                              ).dict(exclude_none=True)
         response_data = self._make_request(method=self.methods.PUT,
                                            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
                                                      transaction_id],
@@ -513,13 +579,13 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         """
         if isinstance(transactions, TransactionInsertObject):
             transactions = [transactions]
-        payload = TransactionInsertParamsPost(transactions=transactions,
-                                              apply_rules=apply_rules,
-                                              skip_duplicates=skip_duplicates,
-                                              check_for_recurring=check_for_recurring,
-                                              debit_as_negative=debit_as_negative,
-                                              skip_balance_update=skip_balance_update
-                                              ).dict(exclude_unset=True)
+        payload = _TransactionInsertParamsPost(transactions=transactions,
+                                               apply_rules=apply_rules,
+                                               skip_duplicates=skip_duplicates,
+                                               check_for_recurring=check_for_recurring,
+                                               debit_as_negative=debit_as_negative,
+                                               skip_balance_update=skip_balance_update
+                                               ).dict(exclude_unset=True)
         response_data = self._make_request(method=self.methods.POST,
                                            url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
                                            payload=payload)
@@ -560,7 +626,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         if len(transactions) < 2:
             raise LunchMoneyError("You must include 2 or more transactions "
                                   "in the Transaction Group")
-        transaction_params = TransactionGroupParamsPost(
+        transaction_params = _TransactionGroupParamsPost(
             date=date, payee=payee, category_id=category_id,
             notes=notes, tags=tags, transactions=transactions).dict(exclude_none=True)
         response_data = self._make_request(method=self.methods.POST,

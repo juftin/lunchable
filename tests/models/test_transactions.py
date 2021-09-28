@@ -10,7 +10,7 @@ from typing import List
 from lunchable import LunchMoney
 from lunchable.models.transactions import (TransactionInsertObject,
                                            TransactionObject,
-                                           TransactionUpdateObject)
+                                           TransactionSplitObject, TransactionUpdateObject)
 from tests.conftest import lunchable_cassette
 
 logger = logging.getLogger(__name__)
@@ -88,3 +88,20 @@ def test_create_and_delete_transaction_group(lunch_money_obj: LunchMoney,
     for transaction_id in response:
         assert isinstance(transaction_id, int)
     logger.info("Transactions part of group: %s", response)
+
+
+@lunchable_cassette
+def test_split_transaction(lunch_money_obj: LunchMoney):
+    """
+    Try to split a transaction
+    """
+    transaction_to_split = lunch_money_obj.get_transaction(57264954)
+    amount_1, amount_2 = 10, 10
+    split_object = TransactionSplitObject(
+        date=transaction_to_split.date,
+        category_id=transaction_to_split.category_id,
+        notes=transaction_to_split.notes,
+        amount=amount_1)
+    new_split = lunch_money_obj.update_transaction(
+        transaction_id=transaction_to_split.id,
+        split=split_object)

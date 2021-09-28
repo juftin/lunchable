@@ -11,6 +11,8 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 from lunchable import __lunchable__, LunchMoney
 from lunchable.exceptions import LunchMoneyImportError
+from lunchable.models import TransactionObject
+from lunchable.plugins.splitlunch.config import SplitLunchConfig
 from lunchable.plugins.splitlunch.exceptions import SplitLunchError
 from lunchable.plugins.splitlunch.models import SplitLunchExpense
 
@@ -31,13 +33,13 @@ class SplitLunch(splitwise.Splitwise):
     """
 
     def __init__(self,
+                 lunch_money_access_token: Optional[str] = None,
                  financial_partner_id: Optional[int] = None,
                  financial_partner_email: Optional[str] = None,
                  consumer_key: Optional[str] = None,
                  consumer_secret: Optional[str] = None,
                  api_key: Optional[str] = None,
-                 access_token: Optional[Dict[str, str]] = None,
-                 lunchable: Optional[LunchMoney] = None):
+                 access_token: Optional[Dict[str, str]] = None):
         """
         Initialize the Parent Class with some additional properties
 
@@ -60,7 +62,13 @@ class SplitLunch(splitwise.Splitwise):
             friend_id=financial_partner_id,
             email_address=financial_partner_email)
         self.last_check: Optional[datetime.datetime] = None
-        self.lunchable: Optional[LunchMoney] = lunchable
+        self.lunchable = LunchMoney(access_token=lunch_money_access_token)
+        tags = self._get_tag_ids()
+        self.splitwise_tag_id = tags[SplitLunchConfig.splitwise_tag]
+        self.splitlunch_tag_id = tags[SplitLunchConfig.splitlunch_tag]
+        self.earliest_start_date = datetime.date(1812, 1, 1)
+        today = datetime.date.today()
+        self.latest_end_date = datetime.date(today.year + 10, 12, 31)
 
     def __repr__(self):
         """
@@ -316,6 +324,75 @@ class SplitLunch(splitwise.Splitwise):
         """
         if expense.payment is True:
             financial_impact, self_paid = self._get_payment_impact(expense=expense)
-        elif expense.payment is False:
+        else:
             financial_impact, self_paid = self._get_expense_impact(expense=expense)
         return financial_impact, self_paid
+
+    def _get_tag_ids(self) -> Dict[str, Optional[int]]:
+        """
+        Get Lunch Money Tags to Interact with
+
+        Returns
+        -------
+        Dict[str, int]
+        """
+        tag_dict: Dict[str, Optional[int]] = dict()
+        tag_dict[SplitLunchConfig.splitlunch_tag] = None
+        tag_dict[SplitLunchConfig.splitwise_tag] = None
+        if self.lunchable is None:
+            return tag_dict
+        all_tags = self.lunchable.get_tags()
+        for tag in all_tags:
+            if tag.name.lower() == SplitLunchConfig.splitlunch_tag.lower():
+                tag_dict[SplitLunchConfig.splitlunch_tag] = tag.id
+            elif tag.name.lower() == SplitLunchConfig.splitwise_tag.lower():
+                tag_dict[SplitLunchConfig.splitwise_tag] = tag.id
+        return tag_dict
+
+    def get_splitlunch_tagged_transactions(
+            self, start_date: Optional[datetime.date] = None,
+            end_date: Optional[datetime.date] = None) -> List[TransactionObject]:
+        """
+        Retrieve all transactions with the "Splitlunch" Tag
+
+        Parameters
+        ----------
+        start_date: Optional[datetime.date]
+        end_date : Optional[datetime.date]
+
+        Returns
+        -------
+        List[TransactionObject]
+        """
+        if start_date is None:
+            start_date = self.earliest_start_date
+        if end_date is None:
+            end_date = self.latest_end_date
+        transactions = self.lunchable.get_transactions(tag_id=self.splitlunch_tag_id,
+                                                       start_date=start_date,
+                                                       end_date=end_date)
+        return transactions
+
+    def get_splitwise_tagged_transactions(
+            self, start_date: Optional[datetime.date] = None,
+            end_date: Optional[datetime.date] = None) -> List[TransactionObject]:
+        """
+        Retrieve all transactions with the "Splitwise" Tag
+
+        Parameters
+        ----------
+        start_date: Optional[datetime.date]
+        end_date : Optional[datetime.date]
+
+        Returns
+        -------
+        List[TransactionObject]
+        """
+        if start_date is None:
+            start_date = self.earliest_start_date
+        if end_date is None:
+            end_date = self.latest_end_date
+        transactions = self.lunchable.get_transactions(tag_id=self.splitwise_tag_id,
+                                                       start_date=start_date,
+                                                       end_date=end_date)
+        return transactions
