@@ -95,13 +95,15 @@ def test_split_transaction(lunch_money_obj: LunchMoney):
     """
     Try to split a transaction
     """
-    transaction_to_split = lunch_money_obj.get_transaction(57264954)
-    amount_1, amount_2 = 10, 10
+    transaction_to_split = lunch_money_obj.get_transaction(57271032)
+    amount_1 = transaction_to_split.amount / 2
     split_object = TransactionSplitObject(
         date=transaction_to_split.date,
         category_id=transaction_to_split.category_id,
         notes=transaction_to_split.notes,
         amount=amount_1)
+    split_object_2 = split_object.copy()
     new_split = lunch_money_obj.update_transaction(
         transaction_id=transaction_to_split.id,
-        split=split_object)
+        split=[split_object, split_object_2])
+    assert len(new_split["split"]) == 2
