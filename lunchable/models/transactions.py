@@ -102,7 +102,7 @@ class TransactionObject(BaseModel):
     transactions.
     """
 
-    id: Optional[int] = Field(description="Unique identifier for transaction")
+    id: int = Field(description="Unique identifier for transaction")
     date: datetime.date = Field(description="Date of transaction in ISO 8601 format")
     payee: Optional[str] = Field(description=_payee_description)
     amount: float = Field(description=_amount_description)
@@ -243,7 +243,7 @@ class TransactionUpdateObject(BaseModel):
     notes: Optional[str] = Field(description="Max 350 characters", max_length=350)
     status: Optional[str] = Field(description=_status_description)
     external_id: Optional[str] = Field(description=_external_id_description)
-    tags: Optional[List[Any]] = Field(description=_tags_description)
+    tags: Optional[List[Union[int, str]]] = Field(description=_tags_description)
 
 
 class _TransactionParamsGet(BaseModel):
@@ -509,13 +509,14 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
             response = lunch.update_transaction(transaction_id=1234,
                                                 transaction=notes_update)
         """
-        if transaction is None and split is None:
-            raise LunchMoneyError("You must update the transaction or provide a split")
-        payload = _TransactionUpdateParamsPut(transaction=transaction,
-                                              split=split,
+        payload = _TransactionUpdateParamsPut(split=split,
                                               debit_as_negative=debit_as_negative,
                                               skip_balance_update=skip_balance_update
                                               ).dict(exclude_none=True)
+        if transaction is None and split is None:
+            raise LunchMoneyError("You must update the transaction or provide a split")
+        elif transaction is not None:
+            payload["transaction"] = transaction.dict(exclude_unset=True)
         response_data = self._make_request(method=self.methods.PUT,
                                            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
                                                      transaction_id],

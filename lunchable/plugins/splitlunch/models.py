@@ -17,6 +17,7 @@ class SplitLunchExpense(BaseModel):
     original_amount: float
     self_paid: bool
     financial_impact: float
+    personal_share: float
     description: str
     category: str
     details: Optional[str]
