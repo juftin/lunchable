@@ -7,7 +7,7 @@ https://lunchmoney.dev/#tags
 import logging
 from typing import List, Optional
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field
 
 from lunchable.config import APIConfig
 from lunchable.models._core import LunchMoneyAPIClient
@@ -23,18 +23,8 @@ class TagsObject(BaseModel):
     """
 
     id: int = Field(description="Unique identifier for tag")
-    name: str = Field(description="User-defined name of tag")
+    name: str = Field(description="User-defined name of tag", min_length=1)
     description: Optional[str] = Field(description="User-defined description of tag")
-
-    @validator("name", pre=True)
-    def none_str(cls, v):
-        """
-        Convert None to Empty Str
-        """
-        if v is None:
-            return ""
-        else:
-            return v
 
 
 class _LunchMoneyTags(LunchMoneyAPIClient):

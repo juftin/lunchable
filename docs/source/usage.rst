@@ -62,6 +62,22 @@ Update a transaction with a :class:`.TransactionUpdateObject`
     response = lunch.update_transaction(transaction_id=1234,
                                         transaction=notes_update)
 
+Update a :class:`.TransactionObject` with itself
+----------------------------------------------------------------------
+
+.. code-block:: python
+
+    from datetime import datetime, timedelta
+
+    from lunchable import LunchMoney
+
+    lunch = LunchMoney(access_token="xxxxxxx")
+    transaction = lunch.get_transaction(transaction_id=1234)
+
+    transaction.notes = f"Updated on {datetime.now()}"
+    transaction.date = transaction.date + timedelta(days=1)
+    response = lunch.update_transaction(transaction_id=transaction.id,
+                                        transaction=transaction)
 
 Create a new transaction with a :class:`.TransactionInsertObject`
 ----------------------------------------------------------------------

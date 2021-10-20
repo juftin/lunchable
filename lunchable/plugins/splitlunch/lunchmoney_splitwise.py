@@ -5,15 +5,16 @@ Lunchable Plugin for Splitwise
 import datetime
 import logging
 from math import floor
-from os import environ, getenv
+from os import getenv
 from random import shuffle
+from textwrap import dedent
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 from lunchable import __lunchable__, LunchMoney
 from lunchable.exceptions import LunchMoneyImportError
 from lunchable.models import (AssetsObject, CategoriesObject,
-                              TagsObject, TransactionObject,
-                              TransactionSplitObject,
+                              TagsObject, TransactionInsertObject,
+                              TransactionObject, TransactionSplitObject,
                               TransactionUpdateObject)
 from lunchable.plugins.splitlunch.config import SplitLunchConfig
 from lunchable.plugins.splitlunch.exceptions import SplitLunchError
@@ -87,6 +88,38 @@ class SplitLunch(splitwise.Splitwise):
         return f"<Splitwise: {self.current_user.email}>"
 
     @classmethod
+    def _split_amount(cls, amount: float, splits: int) -> Tuple[float]:
+        """
+        Split a money amount into fair shares
+
+        Parameters
+        ----------
+        amount: float
+        splits: int
+
+        Returns
+        -------
+        Tuple[float]
+        """
+        try:
+            assert amount == round(amount, 2)
+        except AssertionError:
+            raise SplitLunchError(f"{amount} caused an error, you must provide a real "
+                                  "spending amount.")
+        equal_shares = round(amount, 2) / splits
+        remainder_dollars = floor(equal_shares)
+        remainder_cents = floor((equal_shares - remainder_dollars) * 100) / 100
+        remainder_left = round(
+            (equal_shares - remainder_dollars - remainder_cents)
+            * splits * 100, 0)
+        owed_amount = remainder_dollars + remainder_cents
+        return_amounts = [owed_amount for _ in range(splits)]
+        for i in range(int(remainder_left)):
+            return_amounts[i] += 0.010
+        shuffle(return_amounts)
+        return tuple([round(item, 2) for item in return_amounts])
+
+    @classmethod
     def split_a_transaction(cls, amount: Union[float, int]) -> Tuple[float, float]:
         """
         Split a Transaction into Two
@@ -103,21 +136,7 @@ class SplitLunch(splitwise.Splitwise):
         tuple
             A tuple is returned with each participant's amount
         """
-        try:
-            assert amount == round(amount, 2)
-        except AssertionError:
-            raise SplitLunchError(f"{amount} caused an error, you must provide a real "
-                                  "spending amount.")
-        first_owe = second_owe = amount / 2
-        pennies = int(round(((amount - floor(amount)) * 100), 0))
-        if (pennies % 2) == 0:
-            amounts_due = (round(first_owe, 2), round(second_owe, 2))
-        else:
-            first_owe += 0.005
-            second_owe -= 0.005
-            two_amounts = [round(first_owe, 2), round(second_owe, 2)]
-            shuffle(two_amounts)
-            amounts_due = tuple(two_amounts)  # type: ignore
+        amounts_due = cls._split_amount(amount=amount, splits=2)
         return amounts_due
 
     def create_self_paid_expense(self, amount: float, description: str) -> SplitLunchExpense:
@@ -194,8 +213,16 @@ class SplitLunch(splitwise.Splitwise):
                 return friend
         raise SplitLunchError("Couldn't identify financial partner in Splitwise.")
 
-    # noinspection PyIncorrectDocstring
-    def get_expenses(self, *args, **kwargs) -> List[SplitLunchExpense]:
+    def get_expenses(self,
+                     offset: Optional[int] = None,
+                     limit: Optional[int] = None,
+                     group_id: Optional[int] = None,
+                     friendship_id: Optional[int] = None,
+                     dated_after: Optional[datetime.datetime] = None,
+                     dated_before: Optional[datetime.datetime] = None,
+                     updated_after: Optional[datetime.datetime] = None,
+                     updated_before: Optional[datetime.datetime] = None
+                     ) -> List[SplitLunchExpense]:
         """
         Get Splitwise Expenses
 
@@ -222,7 +249,14 @@ class SplitLunch(splitwise.Splitwise):
         -------
         List[SplitLunchExpense]
         """
-        expenses = self.getExpenses(*args, **kwargs)
+        expenses = self.getExpenses(offset=offset,
+                                    limit=limit,
+                                    group_id=group_id,
+                                    friendship_id=friendship_id,
+                                    dated_after=dated_after,
+                                    dated_before=dated_before,
+                                    updated_after=updated_after,
+                                    updated_before=updated_before)
         pydantic_expenses = [self.splitwise_to_pydantic(expense) for expense in expenses]
         return pydantic_expenses
 
@@ -243,9 +277,9 @@ class SplitLunch(splitwise.Splitwise):
         access_token: Optional[str], default = None
         """
         if consumer_key is None:
-            consumer_key = environ["SPLITWISE_CONSUMER_KEY"]
+            consumer_key = getenv("SPLITWISE_CONSUMER_KEY")
         if consumer_secret is None:
-            consumer_secret = environ["SPLITWISE_CONSUMER_SECRET"]
+            consumer_secret = getenv("SPLITWISE_CONSUMER_SECRET")
         init_kwargs = dict(consumer_key=consumer_key,
                            consumer_secret=consumer_secret)
         if api_key is None:
@@ -258,9 +292,17 @@ class SplitLunch(splitwise.Splitwise):
             else:
                 access_token = dict(oauth_token=_oauth_token,
                                     oauth_token_secret=_oauth_token_secret)
-        if api_key is not None and access_token is not None:
-            init_kwargs.update(dict(api_key=api_key))
-        elif api_key is not None:
+
+        if init_kwargs["consumer_key"] is None or (api_key is None and access_token is None):
+            error_message = dedent("""
+            You must set your Splitwise credentials explicitly or by assigning
+            the `SPLITWISE_CONSUMER_KEY`, `SPLITWISE_CONSUMER_SECRET` environment variables and the 
+            `SPLITWISE_API_KEY` or `SPLITWISE_OAUTH_TOKEN` / `SPLITWISE_OAUTH_SECRET`
+            environment variables
+            """).replace("\n", " ").replace("  ", " ")
+            logger.error(error_message)
+            raise SplitLunchError(error_message)
+        if api_key is not None:
             init_kwargs.update(dict(api_key=api_key))
         elif access_token is not None:
             init_kwargs.update(access_token)
@@ -518,7 +560,7 @@ class SplitLunch(splitwise.Splitwise):
                                                        end_date=end_date)
         return transactions
 
-    def make_splitlunch(self) -> None:
+    def make_splitlunch(self, tag_transactions: bool = False) -> None:
         """
         Operate on `SplitLunch` tagged transactions
 
@@ -548,8 +590,105 @@ class SplitLunch(splitwise.Splitwise):
                                                                 split=[split_object,
                                                                        reimbursement_object])
             # Tag each of the new transactions generated
-            splits = update_response["split"]
-            for split_transaction_id in splits:
-                tag_update = TransactionUpdateObject(tags=[self.splitwise_tag.name])
+            for split_transaction_id in update_response["split"]:
+                tags = [tag.name for tag in transaction.tags if
+                        tag.name.lower() != self.splitlunch_tag.name.lower()]
+                if self.splitwise_tag.name not in tags and tag_transactions is True:
+                    tags.append(self.splitwise_tag.name)
+                tag_update = TransactionUpdateObject(tags=tags)
                 self.lunchable.update_transaction(transaction_id=split_transaction_id,
                                                   transaction=tag_update)
+
+    def make_splitlunch_import(self, tag_transactions: bool = False) -> None:
+        """
+        Operate on `SplitLunchImport` tagged transactions
+
+        Send a transaction to Splitwise and then split the original transaction in Lunch Money.
+        One of these new splits will be recategorized to `Reimbursement`. Both new splits
+        will receive the `Splitwise` tag without the `SplitLunchImport` tag. Any other tags will be
+        reapplied.
+
+        Parameters
+        ----------
+        tag_transactions : bool
+            Whether to tag the transactions with the `Splitwise` tag after splitting them.
+            Defaults to False which
+        """
+        tagged_objects = self.get_splitlunch_import_tagged_transactions()
+        for transaction in tagged_objects:
+            # Split the Original Amount
+            description = transaction.payee
+            if transaction.notes is not None:
+                description = f"{transaction.payee} - {transaction.notes}"
+            new_transaction = self.create_self_paid_expense(amount=transaction.amount,
+                                                            description=description)
+            notes = f"Splitwise ID: {new_transaction.splitwise_id}"
+            if transaction.notes is not None:
+                notes = f"{transaction.notes} || {notes}"
+            split_object = TransactionSplitObject(
+                date=transaction.date,
+                category_id=transaction.category_id,
+                notes=notes,
+                amount=new_transaction.personal_share
+            )
+            reimbursement_object = split_object.copy()
+            reimbursement_object.amount = round(transaction.amount - new_transaction.personal_share,
+                                                2)
+            reimbursement_object.category_id = self.reimbursement_category.id
+            logger.debug(f"Transaction split by Splitwise: {transaction.amount} -> "
+                         f"({split_object.amount}, {reimbursement_object.amount})")
+            update_response = self.lunchable.update_transaction(transaction_id=transaction.id,
+                                                                split=[split_object,
+                                                                       reimbursement_object])
+            # Tag each of the new transactions generated
+            for split_transaction_id in update_response["split"]:
+                tags = [tag.name for tag in transaction.tags if
+                        tag.name.lower() != self.splitlunch_import_tag.name.lower()]
+                if self.splitwise_tag.name not in tags and tag_transactions is True:
+                    tags.append(self.splitwise_tag.name)
+                tag_update = TransactionUpdateObject(tags=tags)
+                self.lunchable.update_transaction(transaction_id=split_transaction_id,
+                                                  transaction=tag_update)
+
+    def splitwise_to_lunchmoney(self, expenses: List[SplitLunchExpense]) -> List[int]:
+        """
+        Ingest Splitwise Expenses into Lunch Money
+
+        This function inserts splitwise expenses into Lunch Money. If an expense
+        is not a payment, not deleted, and not self-paid it qualifies for ingestion. Otherwise
+        it will be ignored.
+
+        Parameters
+        ----------
+        expenses: List[SplitLunchExpense]
+
+        Returns
+        -------
+        List[int]
+            New Lunch Money transaction IDs
+        """
+        batch = []
+        new_transaction_ids = []
+        for splitwise_transaction in expenses:
+            if all([
+                splitwise_transaction.deleted is False,
+                splitwise_transaction.payment is False,
+                splitwise_transaction.self_paid is False
+            ]):
+                new_lunchmoney_transaction = TransactionInsertObject(
+                    date=splitwise_transaction.date,
+                    payee=splitwise_transaction.description,
+                    amount=splitwise_transaction.personal_share,
+                    asset_id=self.splitwise_asset.id,
+                    external_id=splitwise_transaction.splitwise_id,
+                    tags=[self.splitwise_tag.name]
+                )
+                batch.append(new_lunchmoney_transaction)
+                if len(batch) == 10:
+                    new_ids = self.lunchable.insert_transactions(transactions=batch)
+                    new_transaction_ids += new_ids
+                    batch = []
+        if len(batch) > 0:
+            new_ids = self.lunchable.insert_transactions(transactions=batch)
+            new_transaction_ids += new_ids
+        return new_transaction_ids

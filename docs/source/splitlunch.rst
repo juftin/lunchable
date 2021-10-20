@@ -26,9 +26,10 @@ The goals of this plugin are to support a few things:
 
 .. autoclass:: SplitLunch
     :members:
-    :inherited-members:
     :autosummary:
         :toctree: _autosummary
 
-.. toctree::
-   :maxdepth: 1
+.. autosummary::
+    :toctree: _autosummary
+
+    models.SplitLunchExpense
