@@ -10,9 +10,21 @@ import pytest
 from lunchable import LunchMoney
 from lunchable.models import TransactionObject
 
-obscure_start_date = datetime.datetime(year=2022, month=11, day=1)
+obscure_start_date_object = datetime.datetime(year=2022, month=11, day=1)
 beginning_of_this_month = datetime.datetime.now().replace(day=1)
 module_scope = pytest.fixture(scope="module")
+
+
+@pytest.fixture
+def obscure_start_date() -> datetime.datetime:
+    """
+    An Obscure Hardcoded Date
+
+    Returns
+    -------
+    datetime.datetime
+    """
+    return obscure_start_date_object
 
 
 @module_scope
