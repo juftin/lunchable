@@ -2,7 +2,7 @@
 Lunchmoney CLI Hook
 """
 
-from ._cli import main
+from lunchable._cli import cli
 
 if __name__ == "__main__":
-    main()
+    cli()

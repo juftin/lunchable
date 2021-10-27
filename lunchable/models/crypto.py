@@ -83,7 +83,7 @@ class _LunchMoneyCrypto(LunchMoneyAPIClient):
         -------
         List[CryptoObject]
         """
-        response_data = self._make_request(method=self.methods.GET,
+        response_data = self._make_request(method=self.Methods.GET,
                                            url_path=APIConfig.LUNCHMONEY_CRYPTO)
         crypto_data = response_data["crypto"]
         crypto_objects = [CryptoObject(**item) for item in crypto_data]
@@ -127,7 +127,7 @@ class _LunchMoneyCrypto(LunchMoneyAPIClient):
         crypto_body = CryptoParamsPut(name=name, display_name=display_name,
                                       institution_name=institution_name, balance=balance,
                                       currency=currency).dict(exclude_none=True)
-        response_data = self._make_request(method=self.methods.PUT,
+        response_data = self._make_request(method=self.Methods.PUT,
                                            url_path=[APIConfig.LUNCHMONEY_CRYPTO,
                                                      APIConfig.LUNCHMONEY_CRYPTO_MANUAL,
                                                      crypto_id],

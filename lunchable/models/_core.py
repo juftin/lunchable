@@ -32,7 +32,18 @@ class LunchMoneyAPIClient:
     Core API Client Class
     """
 
-    methods = _Methods
+    class Methods:
+        """
+        HTTP Request Method Enumerations: GET, OPTIONS, HEAD, POST, PUT, PATCH, or DELETE
+        """
+        # This Helper Namespace Organizes and Tracks HTTP Requests by Method
+        GET = "GET"
+        OPTIONS = "OPTIONS"
+        HEAD = "HEAD"
+        POST = "POST"
+        PUT = "PUT"
+        PATCH = "PATCH"
+        DELETE = "DELETE"
 
     def __init__(self, access_token: Optional[str] = None):
         """
@@ -74,15 +85,16 @@ class LunchMoneyAPIClient:
 
     def _make_request(self, method: str, url_path: Union[List[Union[str, int]], str, int],
                       params: Optional[dict] = None,
-                      payload: Optional[Any] = None) -> Any:
+                      payload: Optional[Any] = None,
+                      **kwargs) -> Any:
         """
         Make a Request to the API
 
         Parameters
         ----------
         method: str
-            requests method: ``GET``, ``OPTIONS``, ``HEAD``, ``POST``, ``PUT``,
-            ``PATCH``, or ``DELETE``
+            requests method: GET, OPTIONS, HEAD, POST, PUT,
+            PATCH, or DELETE
         url_path: Union[List[Union[str, int]], str, int]
             API Components, if a list join these sequentially
         params: Optional[dict]
@@ -100,7 +112,7 @@ class LunchMoneyAPIClient:
         try:
             response = self.lunch_money_session.request(
                 method=method, url=url, params=params,
-                data=payload)
+                data=payload, **kwargs)
             response.raise_for_status()
         except requests.exceptions.HTTPError as he:
             logger.exception(he)

@@ -491,7 +491,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
             debit_as_negative=debit_as_negative,
         ).dict(exclude_none=True)
         search_params.update(params if params is not None else {})
-        response_data = self._make_request(method=self.methods.GET,
+        response_data = self._make_request(method=self.Methods.GET,
                                            url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
                                            params=search_params)
         transactions = response_data[APIConfig.LUNCHMONEY_TRANSACTIONS]
@@ -523,7 +523,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         The above code returns a :class:`.TransactionObject` with ID # 1234 (assuming
         it exists)
         """
-        response_data = self._make_request(method=self.methods.GET,
+        response_data = self._make_request(method=self.Methods.GET,
                                            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
                                                      transaction_id])
         return TransactionObject(**response_data)
@@ -607,7 +607,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
             if isinstance(transaction, TransactionObject):
                 transaction = transaction.get_update_object()
             payload["transaction"] = transaction.dict(exclude_unset=True)
-        response_data = self._make_request(method=self.methods.PUT,
+        response_data = self._make_request(method=self.Methods.PUT,
                                            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
                                                      transaction_id],
                                            payload=payload)
@@ -690,7 +690,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
                                                debit_as_negative=debit_as_negative,
                                                skip_balance_update=skip_balance_update
                                                ).dict(exclude_unset=True)
-        response_data = self._make_request(method=self.methods.POST,
+        response_data = self._make_request(method=self.Methods.POST,
                                            url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
                                            payload=payload)
         ids: List[int] = response_data["ids"]
@@ -733,7 +733,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         transaction_params = _TransactionGroupParamsPost(
             date=date, payee=payee, category_id=category_id,
             notes=notes, tags=tags, transactions=transactions).dict(exclude_none=True)
-        response_data = self._make_request(method=self.methods.POST,
+        response_data = self._make_request(method=self.Methods.POST,
                                            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
                                                      APIConfig.LUNCHMONEY_TRANSACTION_GROUPS],
                                            payload=transaction_params)
@@ -759,7 +759,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         -------
         List[int]
         """
-        response_data = self._make_request(method=self.methods.DELETE,
+        response_data = self._make_request(method=self.Methods.DELETE,
                                            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
                                                      APIConfig.LUNCHMONEY_TRANSACTION_GROUPS,
                                                      transaction_group_id])

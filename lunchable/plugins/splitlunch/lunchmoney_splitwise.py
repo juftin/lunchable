@@ -10,6 +10,8 @@ from random import shuffle
 from textwrap import dedent
 from typing import Any, Dict, List, Optional, Tuple, Union
 
+from dateutil.tz import tzlocal
+
 from lunchable import __lunchable__, LunchMoney
 from lunchable.exceptions import LunchMoneyImportError
 from lunchable.models import (AssetsObject, CategoriesObject,
@@ -43,7 +45,8 @@ class SplitLunch(splitwise.Splitwise):
                  consumer_key: Optional[str] = None,
                  consumer_secret: Optional[str] = None,
                  api_key: Optional[str] = None,
-                 access_token: Optional[Dict[str, str]] = None):
+                 access_token: Optional[Dict[str, str]] = None,
+                 lunchable_client: Optional[LunchMoney] = None):
         """
         Initialize the Parent Class with some additional properties
 
@@ -66,7 +69,8 @@ class SplitLunch(splitwise.Splitwise):
             friend_id=financial_partner_id,
             email_address=financial_partner_email)
         self.last_check: Optional[datetime.datetime] = None
-        self.lunchable = LunchMoney(access_token=lunch_money_access_token)
+        self.lunchable = LunchMoney(access_token=lunch_money_access_token) if \
+            lunchable_client is None else lunchable_client
         tags = self._get_splitwise_tags()
         self.splitwise_tag = tags[SplitLunchConfig.splitwise_tag]
         self.splitlunch_tag = tags[SplitLunchConfig.splitlunch_tag]
@@ -560,7 +564,7 @@ class SplitLunch(splitwise.Splitwise):
                                                        end_date=end_date)
         return transactions
 
-    def make_splitlunch(self, tag_transactions: bool = False) -> None:
+    def make_splitlunch(self, tag_transactions: bool = False) -> List[int]:
         """
         Operate on `SplitLunch` tagged transactions
 
@@ -568,6 +572,7 @@ class SplitLunch(splitwise.Splitwise):
         new splits will be recategorized to `Reimbursement`. Both new splits will receive
         the `Splitwise` tag without any preexisting tags.
         """
+        split_transaction_ids = list()
         tagged_objects = self.get_splitlunch_tagged_transactions()
         for transaction in tagged_objects:
             # Split the Original Amount
@@ -590,6 +595,7 @@ class SplitLunch(splitwise.Splitwise):
                                                                 split=[split_object,
                                                                        reimbursement_object])
             # Tag each of the new transactions generated
+            split_transaction_ids.append({transaction.id: update_response["split"]})
             for split_transaction_id in update_response["split"]:
                 tags = [tag.name for tag in transaction.tags if
                         tag.name.lower() != self.splitlunch_tag.name.lower()]
@@ -598,6 +604,7 @@ class SplitLunch(splitwise.Splitwise):
                 tag_update = TransactionUpdateObject(tags=tags)
                 self.lunchable.update_transaction(transaction_id=split_transaction_id,
                                                   transaction=tag_update)
+        return split_transaction_ids
 
     def make_splitlunch_import(self, tag_transactions: bool = False) -> None:
         """
@@ -675,20 +682,22 @@ class SplitLunch(splitwise.Splitwise):
                 splitwise_transaction.payment is False,
                 splitwise_transaction.self_paid is False
             ]):
+
                 new_lunchmoney_transaction = TransactionInsertObject(
-                    date=splitwise_transaction.date,
+                    date=splitwise_transaction.date.astimezone(tzlocal()),
                     payee=splitwise_transaction.description,
                     amount=splitwise_transaction.personal_share,
                     asset_id=self.splitwise_asset.id,
-                    external_id=splitwise_transaction.splitwise_id,
-                    tags=[self.splitwise_tag.name]
+                    external_id=splitwise_transaction.splitwise_id
                 )
                 batch.append(new_lunchmoney_transaction)
                 if len(batch) == 10:
-                    new_ids = self.lunchable.insert_transactions(transactions=batch)
+                    new_ids = self.lunchable.insert_transactions(transactions=batch,
+                                                                 apply_rules=True)
                     new_transaction_ids += new_ids
                     batch = []
         if len(batch) > 0:
-            new_ids = self.lunchable.insert_transactions(transactions=batch)
+            new_ids = self.lunchable.insert_transactions(transactions=batch,
+                                                         apply_rules=True)
             new_transaction_ids += new_ids
         return new_transaction_ids

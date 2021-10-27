@@ -109,7 +109,7 @@ class _LunchMoneyPlaidAccounts(LunchMoneyAPIClient):
         -------
         List[PlaidAccountObject]
         """
-        response_data = self._make_request(method=self.methods.GET,
+        response_data = self._make_request(method=self.Methods.GET,
                                            url_path=APIConfig.LUNCHMONEY_PLAID_ACCOUNTS)
         accounts = response_data.get(APIConfig.LUNCHMONEY_PLAID_ACCOUNTS)
         account_objects = [PlaidAccountObject(**item) for item in accounts]
