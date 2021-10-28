@@ -10,8 +10,6 @@ from random import shuffle
 from textwrap import dedent
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-from dateutil.tz import tzlocal
-
 from lunchable import __lunchable__, LunchMoney
 from lunchable.exceptions import LunchMoneyImportError
 from lunchable.models import (AssetsObject, CategoriesObject,
@@ -26,6 +24,7 @@ logger = logging.getLogger(__name__)
 
 try:
     import splitwise  # type: ignore
+    from dateutil.tz import tzlocal
 except ImportError as ie:
     logger.exception(ie)
     _pip_extra_error = ("Looks like you don't have the Splitwise plugin installed: "
@@ -475,7 +474,11 @@ class SplitLunch(splitwise.Splitwise):
         -------
         Dict[str, int]
         """
-        tag_dict: Dict[str, TagsObject] = dict()
+        tag_dict: Dict[str, TagsObject] = {
+            SplitLunchConfig.splitlunch_tag: None,
+            SplitLunchConfig.splitwise_tag: None,
+            SplitLunchConfig.splitlunch_import_tag: None,
+        }
         if self.lunchable is None:
             return tag_dict
         all_tags = self.lunchable.get_tags()
@@ -487,9 +490,10 @@ class SplitLunch(splitwise.Splitwise):
             elif tag.name.lower() == SplitLunchConfig.splitlunch_import_tag.lower():
                 tag_dict[SplitLunchConfig.splitlunch_import_tag] = tag
 
-        assert tag_dict[SplitLunchConfig.splitlunch_tag] is not None
-        assert tag_dict[SplitLunchConfig.splitwise_tag] is not None
-        assert tag_dict[SplitLunchConfig.splitlunch_import_tag] is not None
+        for tag_key, tag_value in tag_dict.items():
+            if tag_value is None:
+                logger.warning(f"Missing Lunch Money tag: `{tag_key}`. Add this tag "
+                               "to enable some functionality. ")
         return tag_dict
 
     def get_splitlunch_tagged_transactions(
@@ -701,3 +705,60 @@ class SplitLunch(splitwise.Splitwise):
                                                          apply_rules=True)
             new_transaction_ids += new_ids
         return new_transaction_ids
+
+    def get_splitwise_balance(self) -> float:
+        """
+        Get the net balance in Splitwise
+
+        Returns
+        -------
+        float
+        """
+        groups = self.getGroups()
+        total_balance = 0.00
+        for group in groups:
+            for debt in group.simplified_debts:
+                if debt.fromUser == self.current_user.id:
+                    total_balance -= float(debt.amount)
+                elif debt.toUser == self.current_user.id:
+                    total_balance += float(debt.amount)
+        return total_balance
+
+    def update_splitwise_balance(self) -> AssetsObject:
+        """
+        Get and update the Splitwise Asset in Lunch Money
+
+        Returns
+        -------
+        AssetsObject
+            Updated  balance
+        """
+        balance = self.get_splitwise_balance()
+        if balance != self.splitwise_asset.balance:
+            updated_asset = self.lunchable.update_asset(asset_id=self.splitwise_asset.id,
+                                                        balance=balance)
+            self.splitwise_asset = updated_asset
+        return self.splitwise_asset
+
+    def get_new_transactions(self) -> List[SplitLunchExpense]:
+        """
+
+        Returns
+        -------
+
+        """
+        splitlunch_expenses = self.lunchable.get_transactions(
+            asset_id=self.splitwise_asset.id,
+            start_date=datetime.datetime(1800, 1, 1),
+            end_date=datetime.datetime(2300, 12, 31)
+        )
+        splitlunch_ids = {int(item.external_id) for item in splitlunch_expenses}
+        splitwise_expenses = self.get_expenses(limit=0)
+        splitwise_ids = {item.splitwise_id for item in splitwise_expenses}
+        new_ids = splitwise_ids.difference(splitlunch_ids)
+        new_expenses = [expense for expense in splitwise_expenses if
+                        all([expense.splitwise_id in new_ids,
+                             expense.deleted is False,
+                             expense.payment is False,
+                             expense.self_paid is False])]
+        return new_expenses
