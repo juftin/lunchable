@@ -129,3 +129,73 @@ class LunchMoneyAPIClient:
             logger.exception(errors)
             raise LunchMoneyHTTPError(errors)
         return loads(response.content)
+
+    def make_http_request(self, method: str,
+                          url: str,
+                          params: Optional[Any] = None,
+                          data: Optional[Any] = None,
+                          json: Optional[Any] = None,
+                          **kwargs
+                          ) -> requests.Response:
+        """
+        Make a HTTP Request
+
+        This is a simple method :class:`.LunchMoney` exposes to make HTTP requests. It
+        has the benefit of using an existing `requests.Session` as well as as out of the box
+        auth headers that are used to connect to the Lunch Money Developer API.
+
+        Parameters
+        ----------
+        method: str
+            requests method: GET, OPTIONS, HEAD, POST, PUT,
+            PATCH, or DELETE
+        url: str
+            URL for the new Request object.
+        params: Optional[Any]
+            Dictionary, list of tuples or bytes to send in the query
+            string for the Request.
+        data: Optional[Any]
+            Dictionary, list of tuples, bytes, or file-like object to send
+            in the body of the Request.
+        json: Optional[Any]
+            A JSON serializable Python object to send in the body of the Request.
+
+        Returns
+        -------
+        Any
+
+        Examples
+        --------
+        A recent use of this method was to delete a Tag (which isn't available via the
+        Developer API yet) ::
+
+            import lunchable
+
+            lunch = lunchable.LunchMoney()
+
+            # Get All the Tags
+            all_tags = lunch.get_tags()
+            # Get All The Null Tags (a list of 1 or zero)
+            null_tags = [tag for tag in all_tags if tag.name in [None, ""]]
+
+            # Create a Cookie dictionary from a browser session
+            cookies = {"cookie_keys": "cookie_values"}
+
+            for null_tag in null_tags:
+                # use the requests.session embedded in the class to make a request with cookies
+                response = lunch.make_request(
+                    method="DELETE",
+                    url=f"https://api.lunchmoney.app/tags/{null_tag.id}",
+                    cookies=cookies)
+                # raise an error for 4XX responses
+                response.raise_for_status()
+        """
+        response = self.lunch_money_session.request(
+            method=method,
+            url=url,
+            params=params,
+            data=data,
+            json=json,
+            **kwargs
+        )
+        return response

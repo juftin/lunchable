@@ -742,10 +742,11 @@ class SplitLunch(splitwise.Splitwise):
 
     def get_new_transactions(self) -> List[SplitLunchExpense]:
         """
+        Get Splitwise Transactions that don't exist in Lunch Money
 
         Returns
         -------
-
+        List[SplitLunchExpense]
         """
         splitlunch_expenses = self.lunchable.get_transactions(
             asset_id=self.splitwise_asset.id,
@@ -762,3 +763,19 @@ class SplitLunch(splitwise.Splitwise):
                              expense.payment is False,
                              expense.self_paid is False])]
         return new_expenses
+
+    def refresh_splitwise_transactions(self) -> List[SplitLunchExpense]:
+        """
+        Import New Splitwise Transactions to Lunch Money
+
+        This function get's all transactions from Splitwise, all transactions from
+        your Lunch Money Splitwise account and compares the two.
+
+        Returns
+        -------
+        List[SplitLunchExpense]
+        """
+        new_transactions = self.get_new_transactions()
+        self.splitwise_to_lunchmoney(expenses=new_transactions)
+        self.update_splitwise_balance()
+        return new_transactions

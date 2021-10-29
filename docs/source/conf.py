@@ -30,7 +30,8 @@ extensions = [
     "myst_parser",
     "autoclasstoc",
     "sphinx_copybutton",
-    "sphinx_autodoc_defaultargs"
+    "sphinx_autodoc_defaultargs",
+    "sphinx_click",
 ]
 
 templates_path = ["_templates"]

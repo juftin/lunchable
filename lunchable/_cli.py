@@ -18,22 +18,23 @@ logger = logging.getLogger(__name__)
 
 @click.group()
 @click.version_option(lunchable.__version__)
-@click.option("--json/--no-json", default=False, help="Disable Logging Output for pure JSON")
-@click.option("--debug/--no-debug", default=False, help="Enable Debugging (verbose) output")
-@click.pass_context
-def cli(ctx, **kwargs):
+def cli():
     """
     lunchable interactions with Lunch Money 🍱
     """
-    ctx.ensure_object(dict)
-    ctx.obj["DEBUG"] = kwargs["debug"]
-    ctx.obj["JSON"] = kwargs["json"]
 
 
 @cli.group()
 def transactions():
     """
     Interact with Lunch Money transactions
+    """
+
+
+@cli.group()
+def plugins():
+    """
+    Interact with Lunchable Plugins
     """
 
 
@@ -77,9 +78,8 @@ def lunchmoney_transactions(**kwargs):
     click.echo(json.dumps(transactions, default=pydantic_encoder, indent=2))
 
 
-@cli.group()
-@click.pass_context
-def splitlunch(ctx):
+@plugins.group()
+def splitlunch():
     """
     Interact with the Splitwise Plugin for lunchable, SplitLunch 💲🍱
     """
@@ -113,7 +113,7 @@ def splitlunch_expenses(**kwargs):
     click.echo(json.dumps(expenses, default=pydantic_encoder, indent=2))
 
 
-@splitlunch.command("make-splitlunch")
+@splitlunch.command("splitlunch")
 @click.option("--tag-transactions", is_flag=True,
               help="Tag the resulting transactions with a `Splitwise` tag.")
 def make_splitlunch(**kwargs) -> List[int]:
@@ -127,7 +127,7 @@ def make_splitlunch(**kwargs) -> List[int]:
     click.echo(json.dumps(results, default=pydantic_encoder))
 
 
-@splitlunch.command("make-splitlunch-import")
+@splitlunch.command("splitlunch-import")
 @click.option("--tag-transactions", is_flag=True,
               help="Tag the resulting transactions with a `Splitwise` tag.")
 def make_splitlunch_import(**kwargs) -> List[int]:
@@ -143,7 +143,7 @@ def make_splitlunch_import(**kwargs) -> List[int]:
     click.echo(json.dumps(results, default=pydantic_encoder))
 
 
-@splitlunch.command("update-splitwise-balance")
+@splitlunch.command("update-balance")
 def update_splitwise_balance():
     """
     Update the Splitwise Asset Balance
@@ -151,3 +151,17 @@ def update_splitwise_balance():
     splitlunch = SplitLunch()
     updated_asset = splitlunch.update_splitwise_balance()
     click.echo(json.dumps(updated_asset, default=pydantic_encoder, indent=2))
+
+
+@splitlunch.command("refresh")
+def refresh_splitwise_transactions():
+    """
+    Import New Splitwise Transactions to Lunch Money and
+
+    This function gets all transactions from Splitwise, all transactions from
+    your Lunch Money Splitwise account and compares the two. This also updates
+    the account balance.
+    """
+    splitlunch = SplitLunch()
+    new_transactions = splitlunch.refresh_splitwise_transactions()
+    click.echo(json.dumps(new_transactions, default=pydantic_encoder, indent=2))

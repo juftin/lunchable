@@ -5,7 +5,9 @@ autodocsumm
 requests
 pydantic
 splitwise
+python-dateutil
 myst-parser
 autoclasstoc
 sphinx-copybutton
 sphinx_autodoc_defaultargs
+sphinx-click
