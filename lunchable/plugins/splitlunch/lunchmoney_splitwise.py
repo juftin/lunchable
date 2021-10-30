@@ -601,8 +601,8 @@ class SplitLunch(splitwise.Splitwise):
             split_transaction_ids.append({transaction.id: update_response["split"]})
             for split_transaction_id in update_response["split"]:
                 update_tags = transaction.tags if transaction.tags is not None else []
-                tags = [tag.name for tag in update_tags if tag is not None and
-                        tag.name.lower() != self.splitlunch_tag.name.lower()]
+                tags = [tag.name for tag in update_tags if
+                        tag is not None and tag.name.lower() != self.splitlunch_tag.name.lower()]
                 if self.splitwise_tag.name not in tags and tag_transactions is True:
                     tags.append(self.splitwise_tag.name)
                 tag_update = TransactionUpdateObject(tags=tags)
