@@ -12,6 +12,13 @@ To use lunchable, first install it using pip:
 
     pip install lunchable
 
+
+or, if you're using the Splitwise plugin on the CLI:
+
+.. code-block:: console
+
+    pip install lunchable[splitwise]
+
 Install Shell Completion
 =========================
 

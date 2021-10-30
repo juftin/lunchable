@@ -313,7 +313,8 @@ class TransactionObject(TransactionBaseObject):
             update_dict["status"] = None
         update_object = TransactionUpdateObject(**update_dict)
         if update_object.tags is not None:
-            update_object.tags = [tag.name for tag in self.tags]
+            tags = [] if self.tags is None else self.tags
+            update_object.tags = [tag.name for tag in tags]
         return update_object
 
     def get_insert_object(self) -> TransactionInsertObject:
@@ -335,7 +336,8 @@ class TransactionObject(TransactionBaseObject):
             insert_dict["status"] = None
         insert_object = TransactionInsertObject(**insert_dict)
         if insert_object.tags is not None:
-            insert_object.tags = [tag.name for tag in self.tags]
+            tags = [] if self.tags is None else self.tags
+            insert_object.tags = [tag.name for tag in tags]
         return insert_object
 
 

@@ -57,7 +57,6 @@ and it offers a *simple* and *intuitive* API.
    usage.rst
    lunchable.rst
    cli.rst
-   models.rst
    plugins.rst
    api/modules.rst
 

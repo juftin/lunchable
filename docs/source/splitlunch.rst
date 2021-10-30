@@ -28,8 +28,3 @@ The goals of this plugin are to support a few things:
     :members:
     :autosummary:
         :toctree: _autosummary
-
-.. autosummary::
-    :toctree: _autosummary
-
-    models.SplitLunchExpense

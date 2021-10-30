@@ -16,7 +16,7 @@ from lunchable.models import (AssetsObject, CategoriesObject,
                               TagsObject, TransactionInsertObject,
                               TransactionObject, TransactionSplitObject,
                               TransactionUpdateObject)
-from lunchable.plugins.splitlunch.config import SplitLunchConfig
+from lunchable.plugins.splitlunch._config import SplitLunchConfig
 from lunchable.plugins.splitlunch.exceptions import SplitLunchError
 from lunchable.plugins.splitlunch.models import SplitLunchExpense
 
@@ -122,7 +122,7 @@ class SplitLunch(splitwise.Splitwise):
         return tuple([round(item, 2) for item in return_amounts])
 
     @classmethod
-    def split_a_transaction(cls, amount: Union[float, int]) -> Tuple[float, float]:
+    def split_a_transaction(cls, amount: Union[float, int]) -> Tuple[float]:
         """
         Split a Transaction into Two
 
@@ -473,7 +473,7 @@ class SplitLunch(splitwise.Splitwise):
         -------
         Dict[str, int]
         """
-        tag_dict: Dict[str, TagsObject] = {
+        tag_dict: Dict[str, Optional[TagsObject]] = {
             SplitLunchConfig.splitlunch_tag: None,
             SplitLunchConfig.splitwise_tag: None,
             SplitLunchConfig.splitlunch_import_tag: None,
@@ -752,7 +752,8 @@ class SplitLunch(splitwise.Splitwise):
             start_date=datetime.datetime(1800, 1, 1),
             end_date=datetime.datetime(2300, 12, 31)
         )
-        splitlunch_ids = {int(item.external_id) for item in splitlunch_expenses}
+        splitlunch_ids = {int(item.external_id) for item in splitlunch_expenses if
+                          item.external_id is not None}
         splitwise_expenses = self.get_expenses(limit=0)
         splitwise_ids = {item.splitwise_id for item in splitwise_expenses}
         new_ids = splitwise_ids.difference(splitlunch_ids)
