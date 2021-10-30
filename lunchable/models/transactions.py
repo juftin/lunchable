@@ -533,9 +533,17 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
                                                      transaction_id])
         return TransactionObject(**response_data)
 
-    ListOrSingleTransactionUpdateObject = Optional[Union[
-        TransactionUpdateObject, TransactionObject
-    ]]
+    ListOrSingleTransactionUpdateObject = Union[
+        TransactionUpdateObject,
+        TransactionObject
+    ]
+
+    ListOrSingleTransactionInsertObject = Union[
+        TransactionObject,
+        TransactionInsertObject,
+        List[TransactionObject],
+        List[TransactionInsertObject]
+    ]
 
     def update_transaction(
             self, transaction_id: int,
@@ -616,11 +624,6 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
                                            payload=payload)
         return response_data
 
-    ListOrSingleTransactionInsertObject = Union[
-        Union[TransactionInsertObject, TransactionObject],
-        List[Union[TransactionInsertObject, TransactionObject]]
-    ]
-
     def insert_transactions(
             self,
             transactions: ListOrSingleTransactionInsertObject,
@@ -684,8 +687,11 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         for item in transactions:
             if isinstance(item, TransactionObject):
                 insert_objects.append(item.get_insert_object())
-            else:
+            elif isinstance(item, TransactionInsertObject):
                 insert_objects.append(item)
+            else:
+                raise LunchMoneyError("Only TransactionObjects or TransactionInsertObjects are "
+                                      "supported by this function.")
         payload = _TransactionInsertParamsPost(transactions=insert_objects,
                                                apply_rules=apply_rules,
                                                skip_duplicates=skip_duplicates,

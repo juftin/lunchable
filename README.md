@@ -43,8 +43,6 @@ transaction_as_dict: dict = first_transaction.dict()
 --------------
 --------------
 
-> ### ⚠️ Note: This project is under active development.
-
 <br/>
 
 [<p align="center" ><img src="https://raw.githubusercontent.com/juftin/juftin/main/static/juftin.png" width="60" height="60"  alt="juftin logo"> </p>](https://github.com/juftin)

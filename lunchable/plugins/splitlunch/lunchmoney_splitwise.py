@@ -91,7 +91,7 @@ class SplitLunch(splitwise.Splitwise):
         return f"<Splitwise: {self.current_user.email}>"
 
     @classmethod
-    def _split_amount(cls, amount: float, splits: int) -> Tuple[float]:
+    def _split_amount(cls, amount: float, splits: int) -> Tuple[float, ...]:
         """
         Split a money amount into fair shares
 
@@ -122,7 +122,7 @@ class SplitLunch(splitwise.Splitwise):
         return tuple([round(item, 2) for item in return_amounts])
 
     @classmethod
-    def split_a_transaction(cls, amount: Union[float, int]) -> Tuple[float]:
+    def split_a_transaction(cls, amount: Union[float, int]) -> Tuple[float, ...]:
         """
         Split a Transaction into Two
 
@@ -567,7 +567,7 @@ class SplitLunch(splitwise.Splitwise):
                                                        end_date=end_date)
         return transactions
 
-    def make_splitlunch(self, tag_transactions: bool = False) -> List[int]:
+    def make_splitlunch(self, tag_transactions: bool = False) -> List[Dict[int, Any]]:
         """
         Operate on `SplitLunch` tagged transactions
 
@@ -600,7 +600,8 @@ class SplitLunch(splitwise.Splitwise):
             # Tag each of the new transactions generated
             split_transaction_ids.append({transaction.id: update_response["split"]})
             for split_transaction_id in update_response["split"]:
-                tags = [tag.name for tag in transaction.tags if
+                update_tags = transaction.tags if transaction.tags is not None else []
+                tags = [tag.name for tag in update_tags if tag is not None and
                         tag.name.lower() != self.splitlunch_tag.name.lower()]
                 if self.splitwise_tag.name not in tags and tag_transactions is True:
                     tags.append(self.splitwise_tag.name)
@@ -627,7 +628,7 @@ class SplitLunch(splitwise.Splitwise):
         tagged_objects = self.get_splitlunch_import_tagged_transactions()
         for transaction in tagged_objects:
             # Split the Original Amount
-            description = transaction.payee
+            description = str(transaction.payee)
             if transaction.notes is not None:
                 description = f"{transaction.payee} - {transaction.notes}"
             new_transaction = self.create_self_paid_expense(amount=transaction.amount,
@@ -652,7 +653,8 @@ class SplitLunch(splitwise.Splitwise):
                                                                        reimbursement_object])
             # Tag each of the new transactions generated
             for split_transaction_id in update_response["split"]:
-                tags = [tag.name for tag in transaction.tags if
+                update_tags = transaction.tags if transaction.tags is not None else []
+                tags = [tag.name for tag in update_tags if
                         tag.name.lower() != self.splitlunch_import_tag.name.lower()]
                 if self.splitwise_tag.name not in tags and tag_transactions is True:
                     tags.append(self.splitwise_tag.name)

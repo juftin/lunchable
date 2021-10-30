@@ -4,7 +4,6 @@ Lunchmoney CLI
 
 import json
 import logging
-from typing import List
 
 import click
 from pydantic.json import pydantic_encoder
@@ -118,7 +117,7 @@ def splitlunch_expenses(**kwargs):
 @splitlunch.command("splitlunch")
 @click.option("--tag-transactions", is_flag=True,
               help="Tag the resulting transactions with a `Splitwise` tag.")
-def make_splitlunch(**kwargs) -> List[int]:
+def make_splitlunch(**kwargs):
     """
     Split all `SplitLunch` tagged transactions in half.
 
@@ -132,7 +131,7 @@ def make_splitlunch(**kwargs) -> List[int]:
 @splitlunch.command("splitlunch-import")
 @click.option("--tag-transactions", is_flag=True,
               help="Tag the resulting transactions with a `Splitwise` tag.")
-def make_splitlunch_import(**kwargs) -> List[int]:
+def make_splitlunch_import(**kwargs):
     """
     Import `SplitLunchImport` tagged transactions to Splitwise and Split them in Lunch Money
 
