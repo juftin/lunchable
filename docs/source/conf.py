@@ -26,6 +26,7 @@ extensions = [
     "sphinx.ext.intersphinx",
 
     "sphinxcontrib.autodoc_pydantic",
+    "sphinxcontrib.apidoc",
     "autodocsumm",
     "myst_parser",
     "autoclasstoc",
@@ -60,3 +61,8 @@ rst_prolog = """
 
     <div class="default-value-section">""" + \
              ' <span class="default-value-label">Default:</span>'
+
+apidoc_module_dir = "../lunchable"
+apidoc_output_dir = "reference"
+apidoc_excluded_paths = ["tests"]
+apidoc_separate_modules = True

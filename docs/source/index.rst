@@ -59,7 +59,7 @@ and it offers a *simple* and *intuitive* API.
    cli.rst
    models.rst
    plugins.rst
-   api.rst
+   api/modules.rst
 
 Indices and tables
 ==================

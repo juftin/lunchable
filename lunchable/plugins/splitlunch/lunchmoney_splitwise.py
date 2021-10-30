@@ -113,8 +113,7 @@ class SplitLunch(splitwise.Splitwise):
         remainder_dollars = floor(equal_shares)
         remainder_cents = floor((equal_shares - remainder_dollars) * 100) / 100
         remainder_left = round(
-            (equal_shares - remainder_dollars - remainder_cents)
-            * splits * 100, 0)
+            (equal_shares - remainder_dollars - remainder_cents) * splits * 100, 0)
         owed_amount = remainder_dollars + remainder_cents
         return_amounts = [owed_amount for _ in range(splits)]
         for i in range(int(remainder_left)):

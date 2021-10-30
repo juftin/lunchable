@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 @click.version_option(lunchable.__version__)
 def cli():
     """
-    lunchable interactions with Lunch Money 🍱
+    Interactions with Lunch Money via lunchable 🍱
     """
 
 
@@ -109,6 +109,8 @@ def splitlunch_expenses(**kwargs):
     Retrieve Splitwise Expenses
     """
     splitlunch = SplitLunch()
+    if set(kwargs.values()) == {None}:
+        kwargs["limit"] = 5
     expenses = splitlunch.get_expenses(**kwargs)
     click.echo(json.dumps(expenses, default=pydantic_encoder, indent=2))
 

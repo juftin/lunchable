@@ -12,7 +12,7 @@ from typing import Any, Dict, List, Optional, Union
 from pydantic import BaseModel, Field
 
 from lunchable import LunchMoneyError
-from lunchable.config import APIConfig
+from lunchable._config import APIConfig
 from lunchable.models._core import LunchMoneyAPIClient
 from lunchable.models.tags import TagsObject
 
@@ -23,6 +23,7 @@ class TransactionBaseObject(BaseModel):
     """
     Base Model For All Transactions to Inherit From
     """
+
     pass
 
 
@@ -74,6 +75,7 @@ class TransactionInsertObject(TransactionBaseObject):
         """
         Status Options, must be "cleared" or "uncleared"
         """
+
         cleared = "cleared"
         uncleared = "uncleared"
 
@@ -144,6 +146,7 @@ class TransactionUpdateObject(TransactionBaseObject):
         """
         Status Options, must be "cleared" or "uncleared"
         """
+
         cleared = "cleared"
         uncleared = "uncleared"
 
@@ -581,7 +584,6 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
             response = lunch.update_transaction(transaction_id=1234,
                                                 transaction=notes_update)
 
-
         Update a :class:`.TransactionObject` with itself ::
 
             from datetime import datetime, timedelta
@@ -596,7 +598,6 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
             response = lunch.update_transaction(transaction_id=transaction.id,
                                                 transaction=transaction)
         """
-
         payload = _TransactionUpdateParamsPut(split=split,
                                               debit_as_negative=debit_as_negative,
                                               skip_balance_update=skip_balance_update

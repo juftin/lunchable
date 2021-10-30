@@ -6,8 +6,10 @@ requests
 pydantic
 splitwise
 python-dateutil
+click
 myst-parser
 autoclasstoc
 sphinx-copybutton
 sphinx_autodoc_defaultargs
 sphinx-click
+sphinxcontrib-apidoc

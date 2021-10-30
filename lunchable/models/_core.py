@@ -10,7 +10,7 @@ from typing import Any, List, Optional, Union
 
 import requests
 
-from lunchable.config import APIConfig
+from lunchable._config import APIConfig
 from lunchable.exceptions import LunchMoneyHTTPError
 
 logger = logging.getLogger(__name__)
@@ -36,6 +36,7 @@ class LunchMoneyAPIClient:
         """
         HTTP Request Method Enumerations: GET, OPTIONS, HEAD, POST, PUT, PATCH, or DELETE
         """
+
         # This Helper Namespace Organizes and Tracks HTTP Requests by Method
         GET = "GET"
         OPTIONS = "OPTIONS"

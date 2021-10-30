@@ -121,6 +121,8 @@ env.bash
 # documentation
 /site
 docs/source/_autosummary
+docs/source/api/
+!docs/source/api/modules.rst
 
 # mypy
 .mypy_cache/
@@ -132,3 +134,5 @@ dmypy.json
 
 # IDE Files
 .idea/
+
+# Documentation

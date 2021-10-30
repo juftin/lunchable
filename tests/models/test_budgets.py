@@ -7,7 +7,7 @@ import logging
 
 from lunchable import LunchMoney
 from lunchable.models import BudgetObject
-from tests.conftest import lunchable_cassette, obscure_start_date_object
+from tests.conftest import lunchable_cassette
 
 logger = logging.getLogger(__name__)
 
