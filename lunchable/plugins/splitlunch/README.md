@@ -5,9 +5,9 @@
 <div align="center">
     <p float="center">
         <img src=https://assets.splitwise.com/assets/core/logo-square.svg
-            width="130" alt="lunchable">
+            width="195" alt="lunchable">
         <img src=https://i.imgur.com/FyKDsG3.png
-            width="200" alt="lunchable">
+            width="300" alt="lunchable">
     </p>
 </div>
 
