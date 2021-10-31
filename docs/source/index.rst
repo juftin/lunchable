@@ -10,7 +10,10 @@
 **lunchable** is a Python Client for the
 `Lunch Money Developer API <https://lunchmoney.dev>`_.
 It's built on top of `pydantic <https://github.com/samuelcolvin/pydantic>`_,
-and it offers a *simple* and *intuitive* API.
+it offers an *intuitive* API, a *simple* CLI,
+complete coverage of all endpoints,
+*plugins* to other external services,
+and extensive test coverage.
 
 .. image:: https://img.shields.io/pypi/v/lunchable?color=blue&label=lunchable
     :target: https://github.com/juftin/lunchable
@@ -28,11 +31,6 @@ and it offers a *simple* and *intuitive* API.
     :target: https://lunchable.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
-
-.. note::
-
-   This project is under active development.
-
 .. code-block:: console
 
     pip install lunchable
@@ -49,6 +47,11 @@ and it offers a *simple* and *intuitive* API.
 
     first_transaction: TransactionObject = transactions[0]
     transaction_as_dict: dict = first_transaction.dict()
+
+.. code-block:: console
+
+    export LUNCHMONEY_ACCESS_TOKEN="xxxxxxxxxxx"
+    lunchable transactions get --limit 5
 
 .. toctree::
    :maxdepth: 1
@@ -75,5 +78,3 @@ Indices and tables
     :align: center
     :alt: juftin
     :target: https://github.com/juftin
-
-

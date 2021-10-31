@@ -10,7 +10,6 @@ from pydantic.json import pydantic_encoder
 
 import lunchable
 from lunchable import LunchMoney
-from lunchable.plugins.splitlunch import SplitLunch
 
 logger = logging.getLogger(__name__)
 
@@ -107,6 +106,8 @@ def splitlunch_expenses(**kwargs):
     """
     Retrieve Splitwise Expenses
     """
+    from lunchable.plugins.splitlunch import SplitLunch
+
     splitlunch = SplitLunch()
     if set(kwargs.values()) == {None}:
         kwargs["limit"] = 5
@@ -123,6 +124,8 @@ def make_splitlunch(**kwargs):
 
     One of these new splits will be recategorized to `Reimbursement`.
     """
+    from lunchable.plugins.splitlunch import SplitLunch
+
     splitlunch = SplitLunch()
     results = splitlunch.make_splitlunch(**kwargs)
     click.echo(json.dumps(results, default=pydantic_encoder))
@@ -139,6 +142,8 @@ def make_splitlunch_import(**kwargs):
     One of these new splits will be recategorized to `Reimbursement`. Any tags will be
     reapplied.
     """
+    from lunchable.plugins.splitlunch import SplitLunch
+
     splitlunch = SplitLunch()
     results = splitlunch.make_splitlunch_import(**kwargs)
     click.echo(json.dumps(results, default=pydantic_encoder))
@@ -149,6 +154,8 @@ def update_splitwise_balance():
     """
     Update the Splitwise Asset Balance
     """
+    from lunchable.plugins.splitlunch import SplitLunch
+
     splitlunch = SplitLunch()
     updated_asset = splitlunch.update_splitwise_balance()
     click.echo(json.dumps(updated_asset, default=pydantic_encoder, indent=2))
@@ -163,6 +170,8 @@ def refresh_splitwise_transactions():
     your Lunch Money Splitwise account and compares the two. This also updates
     the account balance.
     """
+    from lunchable.plugins.splitlunch import SplitLunch
+
     splitlunch = SplitLunch()
     new_transactions = splitlunch.refresh_splitwise_transactions()
     click.echo(json.dumps(new_transactions, default=pydantic_encoder, indent=2))

@@ -92,3 +92,24 @@ Create a new transaction with a :class:`.TransactionInsertObject`
                                               amount=120.00,
                                               notes="Saturday Dinner")
     new_transaction_ids = lunch.insert_transactions(transactions=new_transaction)
+
+Use the :ref:`Lunchable CLI`
+----------------------------
+
+.. code-block:: console
+
+    lunchable transactions get --limit 5
+
+Use the :ref:`Lunchable CLI` via Docker
+---------------------------------------
+
+.. code-block:: console
+
+    docker pull juftin/lunchable
+
+.. code-block:: console
+
+    docker run \                                                                                                   INT ✘  02:04:20 PM 
+        --env LUNCHMONEY_ACCESS_TOKEN=${LUNCHMONEY_ACCESS_TOKEN} \
+        juftin/lunchable:latest \
+        lunchable transactions get --limit 5

@@ -35,6 +35,65 @@ except ImportError as ie:
 class SplitLunch(splitwise.Splitwise):
     """
     Lunchable Plugin For Interacting With Splitwise
+
+    This plugin supports different operations, and some of those operations
+    have prerequisites:
+
+    1) It supports the auto-importing of Splitwise expenses into Lunch Money
+    transactions. This requires a manual asset exist in your Lunch Money
+    account with "Splitwise" in the Name.
+
+        Prerequisites:
+           - Accounts:
+                - Splitwise must be in the account name
+
+    2) It supports the creation of Splitwise transactions directly from synced Lunch Money
+    accounts. This syncing requires you create a tag called `SplitLunchImport`. Transactions
+    with this tag will be created in Splitwise with your "financial partner". Once transactions
+    are created in Splitwise they will be split in half in Lunch Money. Half of the split will be
+    marked in the `Reimbursement` category which must be created.
+
+        Prerequisites:
+           - Financial Partners:
+                - If you only have one friend in Splitwise, this is your Financial Partner
+                - Financial Partners must be specified by their Splitwise ID or Email Address
+           - Tags:
+                - `SplitLunchImport`
+           - Categories:
+                - `Reimbursement`
+
+    3) It supports a workflow where you mark transactions as split (identical to scenario #2)
+    without importing them into Splitwise. This syncing requires you create a tag
+    called `SplitLunch` and a category named `Reimbursement`
+
+        Prerequisites:
+           - Tags:
+                - `SplitLunch`
+           - Categories:
+                - `Reimbursement`
+
+    Parameters
+    ----------
+    financial_partner_id: Optional[int]
+        Splitwise User ID of financial partner
+    financial_partner_email: Optional[str]
+        Splitwise linked email address of financial partner
+    consumer_key: Optional[str]
+        Consumer Key provided by Splitwise. Defaults to `SPLITWISE_CONSUMER_KEY` environment
+        variable
+    consumer_secret: Optional[str]
+        Consumer Key provided by Splitwise. Defaults to `SPLITWISE_CONSUMER_SECRET`
+        environment variable
+    api_key: Optional[str]
+        Consumer Key provided by Splitwise. Defaults to `SPLITWISE_API_KEY` environment
+        variable.
+    access_token: Optional[str]
+        Access Token is a combination of oauth_token and oauth_token_secret. Defaults to
+        `SPLITWISE_OAUTH_TOKEN` and `SPLITWISE_OAUTH_SECRET `environment variables.
+        Providing an api_key overrides this auth method.
+    lunchable_client: LunchMoney
+        Instantiated LunchMoney object to use as internal client. One will
+        be created using environment variables otherwise.
     """
 
     def __init__(self,
@@ -45,17 +104,33 @@ class SplitLunch(splitwise.Splitwise):
                  consumer_secret: Optional[str] = None,
                  api_key: Optional[str] = None,
                  access_token: Optional[Dict[str, str]] = None,
-                 lunchable_client: Optional[LunchMoney] = None):
+                 lunchable_client: Optional[LunchMoney] = None,
+                 ):
         """
         Initialize the Parent Class with some additional properties
 
         Parameters
         ----------
-        financial_partner_id: Optional[int], default = None,
-        financial_partner_email: Optional[str], default = None,
-        consumer_key: Optional[str], default = None
-        consumer_secret: Optional[str], default = None
-        access_token: Optional[str], default = None
+        financial_partner_id: Optional[int]
+            Splitwise User ID of financial partner
+        financial_partner_email: Optional[str]
+            Splitwise linked email address of financial partner
+        consumer_key: Optional[str]
+            Consumer Key provided by Splitwise. Defaults to `SPLITWISE_CONSUMER_KEY` environment
+            variable
+        consumer_secret: Optional[str]
+            Consumer Key provided by Splitwise. Defaults to `SPLITWISE_CONSUMER_SECRET`
+            environment variable
+        api_key: Optional[str]
+            Consumer Key provided by Splitwise. Defaults to `SPLITWISE_API_KEY` environment
+            variable.
+        access_token: Optional[str]
+            Access Token is a combination of oauth_token and oauth_token_secret. Defaults to
+            `SPLITWISE_OAUTH_TOKEN` and `SPLITWISE_OAUTH_SECRET `environment variables.
+            Providing an api_key overrides this auth method.
+        lunchable_client: LunchMoney
+            Instantiated LunchMoney object to use as internal client. One will
+            be created using environment variables otherwise.
         """
         init_kwargs = self._get_splitwise_init_kwargs(consumer_key=consumer_key,
                                                       consumer_secret=consumer_secret,
@@ -699,31 +774,63 @@ class SplitLunch(splitwise.Splitwise):
         """
         batch = []
         new_transaction_ids = []
+        filtered_expenses = self.filter_relevant_splitwise_expenses(expenses=expenses)
+        for splitwise_transaction in filtered_expenses:
+            new_lunchmoney_transaction = TransactionInsertObject(
+                date=splitwise_transaction.date.astimezone(tzlocal()),
+                payee=splitwise_transaction.description,
+                amount=splitwise_transaction.personal_share,
+                asset_id=self.splitwise_asset.id,
+                external_id=splitwise_transaction.splitwise_id
+            )
+            batch.append(new_lunchmoney_transaction)
+            if len(batch) == 10:
+                new_ids = self.lunchable.insert_transactions(transactions=batch,
+                                                             apply_rules=True)
+                new_transaction_ids += new_ids
+                batch = []
+        if len(batch) > 0:
+            new_ids = self.lunchable.insert_transactions(transactions=batch,
+                                                         apply_rules=True)
+            new_transaction_ids += new_ids
+        return new_transaction_ids
+
+    @staticmethod
+    def filter_relevant_splitwise_expenses(expenses: List[SplitLunchExpense]
+                                           ) -> List[SplitLunchExpense]:
+        """
+        Filter Expenses in Splitwise into relevant expenses.
+
+        This filtering action is important to understand when seeing why not
+        all transactions from Splitwise end up flowing into Lunch Money.
+
+        1) It filters out deleted expenses
+
+        2) It filters out `self-paid` expenses. A `self-paid` expense is an expense in Splitwise
+        where you originated the payment. This is excluded because it is assumed that these
+        transactions will have already been imported via a different account.
+
+        3) It filters out payments. Payments are excluded because it is assumed that these
+        transactions will have already been imported via a different account.
+
+        Parameters
+        ----------
+        expenses: List[SplitLunchExpense]
+
+        Returns
+        -------
+        List[SplitLunchExpense]
+        """
+        filtered_expenses = list()
         for splitwise_transaction in expenses:
             if all([
                 splitwise_transaction.deleted is False,
                 splitwise_transaction.payment is False,
                 splitwise_transaction.self_paid is False
             ]):
+                filtered_expenses.append(splitwise_transaction)
 
-                new_lunchmoney_transaction = TransactionInsertObject(
-                    date=splitwise_transaction.date.astimezone(tzlocal()),
-                    payee=splitwise_transaction.description,
-                    amount=splitwise_transaction.personal_share,
-                    asset_id=self.splitwise_asset.id,
-                    external_id=splitwise_transaction.splitwise_id
-                )
-                batch.append(new_lunchmoney_transaction)
-                if len(batch) == 10:
-                    new_ids = self.lunchable.insert_transactions(transactions=batch,
-                                                                 apply_rules=True)
-                    new_transaction_ids += new_ids
-                    batch = []
-        if len(batch) > 0:
-            new_ids = self.lunchable.insert_transactions(transactions=batch,
-                                                         apply_rules=True)
-            new_transaction_ids += new_ids
-        return new_transaction_ids
+        return filtered_expenses
 
     def get_splitwise_balance(self) -> float:
         """
@@ -777,11 +884,9 @@ class SplitLunch(splitwise.Splitwise):
         splitwise_expenses = self.get_expenses(limit=0)
         splitwise_ids = {item.splitwise_id for item in splitwise_expenses}
         new_ids = splitwise_ids.difference(splitlunch_ids)
-        new_expenses = [expense for expense in splitwise_expenses if
-                        all([expense.splitwise_id in new_ids,
-                             expense.deleted is False,
-                             expense.payment is False,
-                             expense.self_paid is False])]
+        filtered_expenses = self.filter_relevant_splitwise_expenses(expenses=splitwise_expenses)
+        new_expenses = [expense for expense in filtered_expenses if
+                        expense.splitwise_id in new_ids]
         return new_expenses
 
     def refresh_splitwise_transactions(self) -> List[SplitLunchExpense]:

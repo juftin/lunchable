@@ -25,6 +25,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
     "sphinx.ext.intersphinx",
+    "sphinx.ext.autosectionlabel",
 
     "sphinxcontrib.autodoc_pydantic",
     "sphinxcontrib.apidoc",
