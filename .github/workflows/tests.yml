@@ -50,8 +50,8 @@ jobs:
                 run:  |
                       VERSION=$(python setup.py --version)
                       echo VERSION=${VERSION} >> ${GITHUB_ENV}
-            -   name: Docker Image Building and Publishing
+            -   name: Docker Image Building
                 uses: docker/build-push-action@v2
                 with:
-                    push: False
+                    push: false
                     tags: juftin/lunchable:latest,juftin/lunchable:${{ env.VERSION }}

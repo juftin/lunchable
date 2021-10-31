@@ -59,6 +59,5 @@ jobs:
             -   name: Docker Image Building and Publishing
                 uses: docker/build-push-action@v2
                 with:
-                    push: True
+                    push: true
                     tags: juftin/lunchable:latest,juftin/lunchable:${{ env.VERSION }}
-
