@@ -70,10 +70,11 @@ class SplitLunch(splitwise.Splitwise):
         self.last_check: Optional[datetime.datetime] = None
         self.lunchable = LunchMoney(access_token=lunch_money_access_token) if \
             lunchable_client is None else lunchable_client
-        tags = self._get_splitwise_tags()
-        self.splitwise_tag = tags[SplitLunchConfig.splitwise_tag]
-        self.splitlunch_tag = tags[SplitLunchConfig.splitlunch_tag]
-        self.splitlunch_import_tag = tags[SplitLunchConfig.splitlunch_import_tag]
+        self._none_tag = TagsObject(id=0, name="SplitLunch Placeholder Tag")
+        self.splitwise_tag = self._none_tag.copy()
+        self.splitlunch_tag = self._none_tag.copy()
+        self.splitlunch_import_tag = self._none_tag.copy()
+        self._get_splitwise_tags()
         self.earliest_start_date = datetime.date(1812, 1, 1)
         today = datetime.date.today()
         self.latest_end_date = datetime.date(today.year + 10, 12, 31)
@@ -465,7 +466,7 @@ class SplitLunch(splitwise.Splitwise):
             financial_impact, self_paid = self._get_expense_impact(expense=expense)
         return financial_impact, self_paid
 
-    def _get_splitwise_tags(self) -> Dict[str, TagsObject]:
+    def _get_splitwise_tags(self) -> None:
         """
         Get Lunch Money Tags to Interact with
 
@@ -473,27 +474,39 @@ class SplitLunch(splitwise.Splitwise):
         -------
         Dict[str, int]
         """
-        tag_dict: Dict[str, Optional[TagsObject]] = {
-            SplitLunchConfig.splitlunch_tag: None,
-            SplitLunchConfig.splitwise_tag: None,
-            SplitLunchConfig.splitlunch_import_tag: None,
-        }
-        if self.lunchable is None:
-            return tag_dict
         all_tags = self.lunchable.get_tags()
         for tag in all_tags:
             if tag.name.lower() == SplitLunchConfig.splitlunch_tag.lower():
-                tag_dict[SplitLunchConfig.splitlunch_tag] = tag
+                self.splitlunch_tag = tag
             elif tag.name.lower() == SplitLunchConfig.splitwise_tag.lower():
-                tag_dict[SplitLunchConfig.splitwise_tag] = tag
+                self.splitwise_tag = tag
             elif tag.name.lower() == SplitLunchConfig.splitlunch_import_tag.lower():
-                tag_dict[SplitLunchConfig.splitlunch_import_tag] = tag
+                self.splitlunch_import_tag = tag
 
-        for tag_key, tag_value in tag_dict.items():
-            if tag_value is None:
-                logger.warning(f"Missing Lunch Money tag: `{tag_key}`. Add this tag "
-                               "to enable some functionality. ")
-        return tag_dict
+    def _raise_nonexistent_tag_error(self, tags: List[str]) -> None:
+        """
+        Raise a warning for specific SplitLunch Tags
+
+        tags: List[str]
+            A list of tags to raise the error for
+        """
+        if self.splitlunch_tag == self._none_tag and SplitLunchConfig.splitlunch_tag in tags:
+            error_message = (f"a `{SplitLunchConfig.splitlunch_tag}` tag is required. "
+                             f"This tag is used for splitting transactions in half and have half "
+                             f"marked as reimbursed.")
+            raise SplitLunchError(error_message)
+        if self.splitwise_tag == self._none_tag and SplitLunchConfig.splitwise_tag in tags:
+            error_message = (f"a `{SplitLunchConfig.splitwise_tag}` tag is required. "
+                             f"This tag is used for splitting transactions in half and have half "
+                             f"marked as reimbursed.")
+            raise SplitLunchError(error_message)
+        if self.splitlunch_import_tag == self._none_tag and \
+                SplitLunchConfig.splitlunch_import_tag in tags:
+            error_message = (f"a `{SplitLunchConfig.splitlunch_import_tag}` tag is required. "
+                             f"This tag is used for creating Splitwise transactions directly from "
+                             f"Lunch Money transactions. These transactions will be split in half,"
+                             f"and have one half marked as reimbursed.")
+            raise SplitLunchError(error_message)
 
     def get_splitlunch_tagged_transactions(
             self, start_date: Optional[datetime.date] = None,
@@ -514,6 +527,7 @@ class SplitLunch(splitwise.Splitwise):
             start_date = self.earliest_start_date
         if end_date is None:
             end_date = self.latest_end_date
+        self._raise_nonexistent_tag_error(tags=[SplitLunchConfig.splitlunch_tag])
         transactions = self.lunchable.get_transactions(tag_id=self.splitlunch_tag.id,
                                                        start_date=start_date,
                                                        end_date=end_date)
@@ -538,6 +552,7 @@ class SplitLunch(splitwise.Splitwise):
             start_date = self.earliest_start_date
         if end_date is None:
             end_date = self.latest_end_date
+        self._raise_nonexistent_tag_error(tags=[SplitLunchConfig.splitlunch_import_tag])
         transactions = self.lunchable.get_transactions(tag_id=self.splitlunch_import_tag.id,
                                                        start_date=start_date,
                                                        end_date=end_date)
@@ -562,6 +577,7 @@ class SplitLunch(splitwise.Splitwise):
             start_date = self.earliest_start_date
         if end_date is None:
             end_date = self.latest_end_date
+        self._raise_nonexistent_tag_error(tags=[SplitLunchConfig.splitwise_tag])
         transactions = self.lunchable.get_transactions(tag_id=self.splitwise_tag.id,
                                                        start_date=start_date,
                                                        end_date=end_date)
@@ -604,6 +620,7 @@ class SplitLunch(splitwise.Splitwise):
                 tags = [tag.name for tag in update_tags if
                         tag is not None and tag.name.lower() != self.splitlunch_tag.name.lower()]
                 if self.splitwise_tag.name not in tags and tag_transactions is True:
+                    self._raise_nonexistent_tag_error(tags=[SplitLunchConfig.splitwise_tag])
                     tags.append(self.splitwise_tag.name)
                 tag_update = TransactionUpdateObject(tags=tags)
                 self.lunchable.update_transaction(transaction_id=split_transaction_id,
@@ -657,6 +674,7 @@ class SplitLunch(splitwise.Splitwise):
                 tags = [tag.name for tag in update_tags if
                         tag.name.lower() != self.splitlunch_import_tag.name.lower()]
                 if self.splitwise_tag.name not in tags and tag_transactions is True:
+                    self._raise_nonexistent_tag_error(tags=[SplitLunchConfig.splitwise_tag])
                     tags.append(self.splitwise_tag.name)
                 tag_update = TransactionUpdateObject(tags=tags)
                 self.lunchable.update_transaction(transaction_id=split_transaction_id,

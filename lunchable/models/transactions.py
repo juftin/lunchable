@@ -542,7 +542,13 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         TransactionObject,
         TransactionInsertObject,
         List[TransactionObject],
-        List[TransactionInsertObject]
+        List[TransactionInsertObject],
+        List[
+            Union[
+                TransactionObject,
+                TransactionInsertObject
+            ],
+        ]
     ]
 
     def update_transaction(

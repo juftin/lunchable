@@ -3,9 +3,6 @@ SplitLunch
 
 lunchable integration with Splitwise.
 
-.. note::
-
-   This plugin is not ready for use yet. Stay tuned 😎
 
 .. code-block:: console
 
