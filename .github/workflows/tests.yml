@@ -55,3 +55,6 @@ jobs:
                 with:
                     push: false
                     tags: juftin/lunchable:latest,juftin/lunchable:${{ env.VERSION }}
+            -   name: Test Docker Image
+                run:  |
+                      docker run --rm juftin/lunchable:latest
