@@ -70,15 +70,19 @@ jobs:
                 uses: actions/setup-python@v2
                 with:
                     python-version: "3.9"
+            -   name: Install Dependencies
+                run:  |
+                      pip install --update pip
+                      pip install packaging
             -   name: Checkout Main Branch
                 uses: actions/checkout@v2
                 with:
                     fetch-depth: 0
                     ref:         main
-            -   name: Get Main Version
+            -   name: Get Version from main
                 run:  |
-                      MAIN_VERSION="$(python setup.py --version)"
-                      echo MAIN_VERSION="${MAIN_VERSION}" >> ${GITHUB_ENV}
+                      COMPARED_VERSION="$(python setup.py --version)"
+                      echo COMPARED_VERSION="${COMPARED_VERSION}" >> ${GITHUB_ENV}
             -   name: Checkout Current Ref
                 uses: actions/checkout@v2
                 with:
@@ -90,10 +94,4 @@ jobs:
                       echo CURRENT_VERSION="${CURRENT_VERSION}" >> ${GITHUB_ENV}
             -   name: Compare Versions
                 run:  |
-                      pip install packaging
                       python "${{ github.workspace }}/.github/helpers/version_check.py"
-            -   name: Compare Versions
-                run:  |
-                      echo "Current Version: ${CURRENT_VERSION}"
-                      echo "Main Version: ${MAIN_VERSION}"
-                      echo "Proceeding, version check passed."
