@@ -16,8 +16,8 @@ SplitLunch
 
 --------
 
-lunchable integration with Splitwise
-====================================
+Integrations
+============
 
 This plugin supports different operations, and some of those operations
 have prerequisites:

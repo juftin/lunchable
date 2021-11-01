@@ -265,7 +265,7 @@ class SplitLunch(splitwise.Splitwise):
         return pydantic_response
 
     def get_friend(self, email_address: Optional[str] = None,
-                   friend_id: Optional[int] = None) -> splitwise.Friend:
+                   friend_id: Optional[int] = None) -> Optional[splitwise.Friend]:
         """
         Retrieve a Financial Partner by Email Address
 
@@ -279,7 +279,7 @@ class SplitLunch(splitwise.Splitwise):
 
         Returns
         -------
-        splitwise.Friend
+        Optional[splitwise.Friend]
         """
         friend_list: List[splitwise.Friend] = self.getFriends()
         if len(friend_list) == 1:
@@ -289,7 +289,7 @@ class SplitLunch(splitwise.Splitwise):
                 return friend
             elif email_address is not None and friend.email.lower() == email_address.lower():
                 return friend
-        raise SplitLunchError("Couldn't identify financial partner in Splitwise.")
+        return None
 
     def get_expenses(self,
                      offset: Optional[int] = None,
@@ -478,7 +478,7 @@ class SplitLunch(splitwise.Splitwise):
             financial_impact -= float(expense.cost)
         return financial_impact, self_paid
 
-    def _get_splitwise_asset(self) -> AssetsObject:
+    def _get_splitwise_asset(self) -> Optional[AssetsObject]:
         """
         Get the Splitwise asset
 
@@ -495,13 +495,16 @@ class SplitLunch(splitwise.Splitwise):
             if asset.institution_name is not None and \
                     "splitwise" in asset.institution_name.lower():
                 splitwise_assets.append(asset)
-        if len(splitwise_assets) != 1:
+        if len(splitwise_assets) == 0:
+            return None
+        elif len(splitwise_assets) > 1:
             raise SplitLunchError("SplitLunch requires an manually managed Splitwise asset. "
                                   "Make sure you have a single account where 'Splitwise' "
                                   "is in the asset's `Institution Name`.")
-        return splitwise_assets[0]
+        else:
+            return splitwise_assets[0]
 
-    def _get_reimbursement_category(self) -> CategoriesObject:
+    def _get_reimbursement_category(self) -> Optional[CategoriesObject]:
         """
         Get the Reimbusement Category
 
@@ -518,9 +521,7 @@ class SplitLunch(splitwise.Splitwise):
             if "reimbursement" == category.name.strip().lower():
                 reimbursement_list.append(category)
         if len(reimbursement_list) != 1:
-            raise SplitLunchError("SplitLunch requires a reimbursement Category. "
-                                  "Make sure you have a category entitled `Reimbursement`. "
-                                  "This category will be excluded from budgeting.")
+            return None
         return reimbursement_list[0]
 
     def _get_splitwise_impact(self, expense: splitwise.Expense) -> Tuple[float, bool]:
@@ -666,6 +667,9 @@ class SplitLunch(splitwise.Splitwise):
         new splits will be recategorized to `Reimbursement`. Both new splits will receive
         the `Splitwise` tag without any preexisting tags.
         """
+        if self.reimbursement_category is None:
+            self._raise_category_reimbursement_error()
+            raise ValueError("ReimbursementCategory")
         split_transaction_ids = list()
         tagged_objects = self.get_splitlunch_tagged_transactions()
         for transaction in tagged_objects:
@@ -717,6 +721,10 @@ class SplitLunch(splitwise.Splitwise):
             Whether to tag the transactions with the `Splitwise` tag after splitting them.
             Defaults to False which
         """
+        self._raise_financial_partner_error()
+        if self.reimbursement_category is None:
+            self._raise_category_reimbursement_error()
+            raise ValueError("ReimbursementCategory")
         tagged_objects = self.get_splitlunch_import_tagged_transactions()
         for transaction in tagged_objects:
             # Split the Original Amount
@@ -772,6 +780,9 @@ class SplitLunch(splitwise.Splitwise):
         List[int]
             New Lunch Money transaction IDs
         """
+        if self.splitwise_asset is None:
+            self._raise_splitwise_asset_error()
+            raise ValueError("SplitwiseAsset")
         batch = []
         new_transaction_ids = []
         filtered_expenses = self.filter_relevant_splitwise_expenses(expenses=expenses)
@@ -859,6 +870,9 @@ class SplitLunch(splitwise.Splitwise):
         AssetsObject
             Updated  balance
         """
+        if self.splitwise_asset is None:
+            self._raise_splitwise_asset_error()
+            raise ValueError("SplitwiseAsset")
         balance = self.get_splitwise_balance()
         if balance != self.splitwise_asset.balance:
             updated_asset = self.lunchable.update_asset(asset_id=self.splitwise_asset.id,
@@ -874,6 +888,9 @@ class SplitLunch(splitwise.Splitwise):
         -------
         List[SplitLunchExpense]
         """
+        if self.splitwise_asset is None:
+            self._raise_splitwise_asset_error()
+            raise ValueError("SplitwiseAsset")
         splitlunch_expenses = self.lunchable.get_transactions(
             asset_id=self.splitwise_asset.id,
             start_date=datetime.datetime(1800, 1, 1),
@@ -904,3 +921,30 @@ class SplitLunch(splitwise.Splitwise):
         self.splitwise_to_lunchmoney(expenses=new_transactions)
         self.update_splitwise_balance()
         return new_transactions
+
+    def _raise_financial_partner_error(self) -> None:
+        """
+        Raise Errors for Financial Partners
+        """
+        if self.financial_partner is None:
+            raise SplitLunchError("You must designate a financial partner in Splitwise. "
+                                  "This can be done with the partner's Splitwise User ID # "
+                                  "or their email address.")
+
+    def _raise_splitwise_asset_error(self) -> None:
+        """
+        Raise Errors for Splitwise Asset
+        """
+        raise SplitLunchError("You must create an asset (aka Account) in Lunch Money with "
+                              "`Splitwise` in the name. There should only be one account "
+                              "like this.")
+
+    def _raise_category_reimbursement_error(self) -> None:
+        """
+        Raise Errors for Splitwise Asset
+        """
+        raise SplitLunchError("SplitLunch requires a reimbursement Category. "
+                              "Make sure you have a category entitled `Reimbursement`. "
+                              "This category will be excluded from budgeting."
+                              "Half of split transactions will be created with "
+                              "this category.")
