@@ -10,7 +10,7 @@ from pydantic.json import pydantic_encoder
 
 import lunchable
 from lunchable import LunchMoney
-from plugins.pushlunch import PushLunch
+from lunchable.plugins.pushlunch import PushLunch
 
 logger = logging.getLogger(__name__)
 
