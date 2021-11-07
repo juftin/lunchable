@@ -10,6 +10,7 @@ from pydantic.json import pydantic_encoder
 
 import lunchable
 from lunchable import LunchMoney
+from plugins.pushlunch import PushLunch
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +21,7 @@ def cli():
     """
     Interactions with Lunch Money via lunchable 🍱
     """
+    pass
 
 
 @cli.group()
@@ -79,7 +81,7 @@ def lunchmoney_transactions(**kwargs):
 @plugins.group()
 def splitlunch():
     """
-    Interact with the Splitwise Plugin for lunchable, SplitLunch 💲🍱
+    Splitwise Plugin for lunchable, SplitLunch 💲🍱
     """
     pass
 
@@ -115,9 +117,16 @@ def splitlunch_expenses(**kwargs):
     click.echo(json.dumps(expenses, default=pydantic_encoder, indent=2))
 
 
+tag_transactions = click.option("--tag-transactions", is_flag=True,
+                                help="Tag the resulting transactions with a `Splitwise` tag.")
+financial_partner_id = click.option("--financial-partner-id", default=None,
+                                    help="Splitwise ID of your financial partner.")
+financial_partner_email = click.option("--financial-partner-email", default=None,
+                                       help="Splitwise Email Address of your financial partner.")
+
+
 @splitlunch.command("splitlunch")
-@click.option("--tag-transactions", is_flag=True,
-              help="Tag the resulting transactions with a `Splitwise` tag.")
+@tag_transactions
 def make_splitlunch(**kwargs):
     """
     Split all `SplitLunch` tagged transactions in half.
@@ -132,8 +141,9 @@ def make_splitlunch(**kwargs):
 
 
 @splitlunch.command("splitlunch-import")
-@click.option("--tag-transactions", is_flag=True,
-              help="Tag the resulting transactions with a `Splitwise` tag.")
+@tag_transactions
+@financial_partner_id
+@financial_partner_email
 def make_splitlunch_import(**kwargs):
     """
     Import `SplitLunchImport` tagged transactions to Splitwise and Split them in Lunch Money
@@ -144,13 +154,39 @@ def make_splitlunch_import(**kwargs):
     """
     from lunchable.plugins.splitlunch import SplitLunch
 
-    splitlunch = SplitLunch()
+    financial_partner_id = kwargs.pop("financial_partner_id")
+    financial_partner_email = kwargs.pop("financial_partner_email")
+    splitlunch = SplitLunch(financial_partner_id=financial_partner_id,
+                            financial_partner_email=financial_partner_email)
     results = splitlunch.make_splitlunch_import(**kwargs)
     click.echo(json.dumps(results, default=pydantic_encoder))
 
 
+@splitlunch.command("splitlunch-direct-import")
+@tag_transactions
+@financial_partner_id
+@financial_partner_email
+def make_splitlunch_direct_import(**kwargs):
+    """
+    Import `SplitLunchDirectImport` tagged transactions to Splitwise and Split them in Lunch Money
+
+    Send a transaction to Splitwise and then split the original transaction in Lunch Money.
+    One of these new splits will be recategorized to `Reimbursement`. Any tags will be
+    reapplied.
+    """
+    from lunchable.plugins.splitlunch import SplitLunch
+
+    financial_partner_id = kwargs.pop("financial_partner_id")
+    financial_partner_email = kwargs.pop("financial_partner_email")
+    splitlunch = SplitLunch(financial_partner_id=financial_partner_id,
+                            financial_partner_email=financial_partner_email)
+
+    results = splitlunch.make_splitlunch_direct_import(**kwargs)
+    click.echo(json.dumps(results, default=pydantic_encoder))
+
+
 @splitlunch.command("update-balance")
-def update_splitwise_balance():
+def update_splitwise_balance(**kwargs):
     """
     Update the Splitwise Asset Balance
     """
@@ -162,7 +198,7 @@ def update_splitwise_balance():
 
 
 @splitlunch.command("refresh")
-def refresh_splitwise_transactions():
+def refresh_splitwise_transactions(**kwargs):
     """
     Import New Splitwise Transactions to Lunch Money and
 
@@ -175,3 +211,33 @@ def refresh_splitwise_transactions():
     splitlunch = SplitLunch()
     new_transactions = splitlunch.refresh_splitwise_transactions()
     click.echo(json.dumps(new_transactions, default=pydantic_encoder, indent=2))
+
+
+@plugins.group()
+def pushlunch():
+    """
+    Push Notifications for Lunch Money: PushLunch 📲
+    """
+    pass
+
+
+@pushlunch.command("notify")
+@click.option("--continuous", is_flag=True,
+              help="Whether to continuously check for more uncleared transactions, "
+                   "waiting a fixed amount in between checks.")
+@click.option("--interval", default=None,
+              help="Sleep Interval in Between Tries - only applies if `continuous` is set. "
+                   "Defaults to 60 (minutes). Cannot be less than 5 (minutes)")
+@click.option("--user-key", default=None,
+              help="Pushover User Key. Defaults to `PUSHOVER_USER_KEY` env var")
+def notify(continuous: bool, interval: int, user_key: str):
+    """
+    Send a Notification for each Uncleared Transaction
+    """
+    push = PushLunch(user_key=user_key)
+    if interval is not None:
+        interval = int(interval)
+    if continuous is not None:
+        logging.basicConfig(level=logging.INFO,
+                            format="%(asctime)s [%(levelname)8s]: %(message)s")
+    push.notify_uncleared_transactions(continuous=continuous, interval=interval)

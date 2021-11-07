@@ -64,6 +64,23 @@ This syncing requires you create a tag called `SplitLunch` and a category named
        - Categories:
             - `Reimbursement`
 
+LunchMoney -> Splitwise (without splitting)
+-------------------------------------------
+It supports the creation of Splitwise transactions directly from synced Lunch Money
+accounts. This syncing requires you create a tag called `SplitLunchDirectImport`. Transactions
+with this tag will be created in Splitwise with the total completely owed by your
+"financial partner". The entire transaction wil then be categorized as `Reimbursement` without
+being split.
+
+    Prerequisites:
+       - Financial Partners:
+            - If you only have one friend in Splitwise, this is your Financial Partner
+            - Financial Partners must be specified by their Splitwise ID or Email Address
+       - Tags:
+            - `SplitLunchDirectImport`
+       - Categories:
+            - `Reimbursement`
+
 .. note::
 
    Some of the above scenarios allow for tagging of a `Splitwise`
