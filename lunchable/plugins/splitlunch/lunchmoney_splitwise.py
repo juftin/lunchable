@@ -411,10 +411,10 @@ class SplitLunch(splitwise.Splitwise):
 
         Parameters
         ----------
-        consumer_key: Optional[str], default = None
-        consumer_secret: Optional[str], default = None
-        api_key: Optional[str], default = None
-        access_token: Optional[str], default = None
+        consumer_key: Optional[str]
+        consumer_secret: Optional[str]
+        api_key: Optional[str]
+        access_token: Optional[str]
         """
         if consumer_key is None:
             consumer_key = getenv("SPLITWISE_CONSUMER_KEY")

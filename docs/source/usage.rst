@@ -109,7 +109,7 @@ Use the :ref:`Lunchable CLI` via Docker
 
 .. code-block:: console
 
-    docker run \                                                                                                   INT ✘  02:04:20 PM 
+    docker run \
         --env LUNCHMONEY_ACCESS_TOKEN=${LUNCHMONEY_ACCESS_TOKEN} \
         juftin/lunchable:latest \
         lunchable transactions get --limit 5

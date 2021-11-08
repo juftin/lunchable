@@ -9,4 +9,5 @@ looking for, consider building it yourself and opening a pull-request.
 .. toctree::
    :maxdepth: 1
 
+   pushlunch.rst
    splitlunch.rst

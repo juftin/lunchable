@@ -1,12 +1,12 @@
-##################
-SplitLunch
-##################
+#################################
+SplitLunch: Splitwise Integration
+#################################
 
 |pic1| |pic2|
 
 .. |pic1| image:: https://assets.splitwise.com/assets/core/logo-square.svg
    :width: 35%
-   :alt: lunchable
+   :alt: splitwise
    :target: https://www.splitwise.com/
 
 .. |pic2| image:: https://i.imgur.com/FyKDsG3.png
@@ -111,7 +111,7 @@ Run the SplitLunch plugin for the :ref:`Lunchable CLI` via Docker
 
 .. code-block:: console
 
-    docker run \                                                                                                   INT ✘  02:04:20 PM 
+    docker run \
         --env LUNCHMONEY_ACCESS_TOKEN=${LUNCHMONEY_ACCESS_TOKEN} \
         --env SPLITWISE_CONSUMER_KEY=${SPLITWISE_CONSUMER_KEY} \
         --env SPLITWISE_CONSUMER_SECRET=${SPLITWISE_CONSUMER_SECRET} \

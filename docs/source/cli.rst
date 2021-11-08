@@ -2,6 +2,20 @@
 Lunchable CLI
 ##################
 
+.. code-block:: console
+
+    Usage: lunchable [OPTIONS] COMMAND [ARGS]...
+
+      Interactions with Lunch Money via lunchable 🍱
+
+    Options:
+      --version  Show the version and exit.
+      --help     Show this message and exit.
+
+    Commands:
+      plugins       Interact with Lunchable Plugins
+      transactions  Interact with Lunch Money transactions
+
 ******************
 Installation
 ******************
@@ -48,7 +62,7 @@ Run via Docker
 
 .. code-block:: console
 
-    docker run \                                                                                                   INT ✘  02:04:20 PM 
+    docker run \
         --env LUNCHMONEY_ACCESS_TOKEN=${LUNCHMONEY_ACCESS_TOKEN} \
         juftin/lunchable:latest \
         lunchable transactions get --limit 5
