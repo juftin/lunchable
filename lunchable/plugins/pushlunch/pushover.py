@@ -14,15 +14,16 @@ from typing import Any, Dict, List, Optional
 import requests
 
 from lunchable import LunchMoney
-from lunchable.models import TransactionObject
+from lunchable.models import AssetsObject, PlaidAccountObject, TransactionObject
 
 logger = logging.getLogger(__name__)
 
 
-class PushLunchException(Exception):
+class PushLunchError(Exception):
     """
     PushLunch Exception
     """
+
     pass
 
 
@@ -55,9 +56,8 @@ class PushLunch:
         lunchable_client: Optional[LunchMoney]
             lunchable client to use. One will be created if none provided.
         """
-
         self.session = requests.Session()
-        self.session.headers = {"Content-Type": "application/json"}
+        self.session.headers.update({"Content-Type": "application/json"})
 
         _courtesy_token = b"YXpwMzZ6MjExcWV5OGFvOXNicWF0cmdraXc4aGVz"
         if app_token is None:
@@ -65,8 +65,8 @@ class PushLunch:
         token = app_token or b64decode(_courtesy_token).decode("utf-8")
         user_key = user_key or getenv("PUSHOVER_USER_KEY", None)
         if user_key is None:
-            raise PushLunchException("You must provide a Pushover User Key or define it with "
-                                     "a `PUSHOVER_USER_KEY` environment variable")
+            raise PushLunchError("You must provide a Pushover User Key or define it with "
+                                 "a `PUSHOVER_USER_KEY` environment variable")
         self._params = dict(
             user=user_key,
             token=token
@@ -123,7 +123,7 @@ class PushLunch:
         -------
         requests.Response
         """
-        html = 1 if html not in [None, False] else None
+        html_param = 1 if html not in [None, False] else None
         params_dict = dict(message=message,
                            attachment=attachment,
                            device=device,
@@ -133,18 +133,21 @@ class PushLunch:
                            priority=priority,
                            sound=sound,
                            timestamp=timestamp,
-                           html=html)
-        non_none_dict = {key: value for key, value in params_dict.items() if value is not None}
-        params_dict = self._params.copy()
-        params_dict.update(non_none_dict)
+                           html=html_param)
+        params: Dict[str, Any] = {key: value for key, value in params_dict.items() if
+                                  value is not None}
+        params.update(self._params)
         response = self.session.post(url=self.pushover_endpoint,
-                                     params=params_dict)
+                                     params=params
+                                     )
         response.raise_for_status()
         return response
 
     def post_transaction(self, transaction: TransactionObject) -> Optional[Dict[str, Any]]:
         """
-        Post a Lunch Money Transaction as a Pushover Notification - assuming the instance of the
+        Post a Lunch Money Transaction as a Pushover Notification
+
+        Assuming the instance of the
         class hasn't already posted this particular notification
 
         Parameters
@@ -161,16 +164,19 @@ class PushLunch:
             category = "N/A"
         else:
             category = self.category_mapping[transaction.category_id]
+        account_id = transaction.plaid_account_id or transaction.asset_id
+        assert account_id is not None
         transaction_formatted = dedent(f"""
         <b>Payee:</b> <i>{transaction.payee}</i>
         <b>Amount:</b> <i>{self._format_float(transaction.amount)}</i>
         <b>Date:</b> <i>{transaction.date.strftime("%A %B %-d, %Y")}</i>
         <b>Category:</b> <i>{category}</i>        
-        <b>Account:</b> <i>{self.asset_mapping[transaction.plaid_account_id or
-                                               transaction.asset_id]}</i>
-        <b>Currency:</b> <i>{transaction.currency.upper()}</i>
-        <b>Status:</b> <i>{transaction.status.title()}</i>
+        <b>Account:</b> <i>{self.asset_mapping[account_id]}</i>
         """).strip()
+        if transaction.currency is not None:
+            transaction_formatted += f"\n<b>Currency:</b> <i>{transaction.currency.upper()}</i>"
+        if transaction.status is not None:
+            transaction_formatted += f"\n<b>Status:</b> <i>{transaction.status.title()}</i>"
         if transaction.notes is not None:
             note = f"<b>Notes:</b> <i>{transaction.notes}</i>"
             transaction_formatted += f"\n{note}"
@@ -194,16 +200,19 @@ class PushLunch:
         -------
         Dict[int, str]
         """
-        assets = self.lunchable.get_assets()
-        assets += self.lunchable.get_plaid_accounts()
-
+        manual_assets = self.lunchable.get_assets()
+        plaid_account = self.lunchable.get_plaid_accounts()
+        assets = [*manual_assets, *plaid_account]
         asset_mapping = dict()
         for account in assets:
-            try:
-                name = account.display_name
-            except AttributeError:
-                name = account.name
-            asset_mapping[account.id] = name
+            if isinstance(account, AssetsObject):
+                if account.display_name is None:
+                    name = account.name
+                else:
+                    name = account.display_name
+                asset_mapping[account.id] = name
+            elif isinstance(account, PlaidAccountObject):
+                asset_mapping[account.id] = account.name
         return asset_mapping
 
     def _get_categories(self) -> Dict[int, str]:
@@ -224,10 +233,12 @@ class PushLunch:
     def _format_float(cls, amount: float) -> str:
         """
         Format Floats to be pleasant and human readable
+
         Parameters
         ----------
         amount: float
             Float Amount to be converted into a string
+
         Returns
         -------
         str
