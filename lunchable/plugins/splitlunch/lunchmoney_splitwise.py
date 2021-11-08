@@ -802,7 +802,7 @@ class SplitLunch(splitwise.Splitwise):
                                                   transaction=tag_update)
         return split_transaction_ids
 
-    def make_splitlunch_import(self, tag_transactions: bool = False) -> None:
+    def make_splitlunch_import(self, tag_transactions: bool = False) -> List[Dict[str, Any]]:
         """
         Operate on `SplitLunchImport` tagged transactions
 
@@ -816,12 +816,17 @@ class SplitLunch(splitwise.Splitwise):
         tag_transactions : bool
             Whether to tag the transactions with the `Splitwise` tag after splitting them.
             Defaults to False which
+
+        Returns
+        -------
+        List[Dict[str, Any]]
         """
         self._raise_financial_partner_error()
         if self.reimbursement_category is None:
             self._raise_category_reimbursement_error()
             raise ValueError("ReimbursementCategory")
         tagged_objects = self.get_splitlunch_import_tagged_transactions()
+        update_responses = list()
         for transaction in tagged_objects:
             # Split the Original Amount
             description = str(transaction.payee)
@@ -847,6 +852,7 @@ class SplitLunch(splitwise.Splitwise):
             update_response = self.lunchable.update_transaction(transaction_id=transaction.id,
                                                                 split=[split_object,
                                                                        reimbursement_object])
+            update_responses.append(update_response)
             # Tag each of the new transactions generated
             for split_transaction_id in update_response["split"]:
                 update_tags = transaction.tags or []
@@ -858,6 +864,7 @@ class SplitLunch(splitwise.Splitwise):
                 tag_update = TransactionUpdateObject(tags=tags)
                 self.lunchable.update_transaction(transaction_id=split_transaction_id,
                                                   transaction=tag_update)
+        return update_responses
 
     def make_splitlunch_direct_import(self, tag_transactions: bool = False) -> None:
         """

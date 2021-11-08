@@ -159,7 +159,7 @@ def make_splitlunch_import(**kwargs):
     splitlunch = SplitLunch(financial_partner_id=financial_partner_id,
                             financial_partner_email=financial_partner_email)
     results = splitlunch.make_splitlunch_import(**kwargs)
-    click.echo(json.dumps(results, default=pydantic_encoder))
+    click.echo(json.dumps(results, default=pydantic_encoder, indent=2))
 
 
 @splitlunch.command("splitlunch-direct-import")
