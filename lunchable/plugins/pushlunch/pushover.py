@@ -64,7 +64,7 @@ class PushLunch:
             app_token = getenv("PUSHOVER_APP_TOKEN", None)
         token = app_token or b64decode(_courtesy_token).decode("utf-8")
         user_key = user_key or getenv("PUSHOVER_USER_KEY", None)
-        if user_key is None:
+        if user_key in [None, ""]:
             raise PushLunchError("You must provide a Pushover User Key or define it with "
                                  "a `PUSHOVER_USER_KEY` environment variable")
         self._params = dict(

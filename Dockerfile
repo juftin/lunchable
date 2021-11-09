@@ -1,5 +1,5 @@
 ARG PYTHON_VERSION
-FROM python:${PYTHON_VERSION:-3.8}
+FROM python:${PYTHON_VERSION:-3.9}
 
 MAINTAINER Justin Flannery "juftin@juftin.com"
 
