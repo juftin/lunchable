@@ -305,8 +305,7 @@ class PushLunch:
             if continuous is True:
                 notified = len(self.notified_transactions)
                 new_transactions = notified - found_transactions
-                if new_transactions > 0:
-                    logger.info("%s new transactions pushed. %s total.", new_transactions, notified)
+                logger.info("%s new transactions pushed. %s total.", new_transactions, notified)
                 sleep(interval * 60)
             else:
                 continuous_search = False
