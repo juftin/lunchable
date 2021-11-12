@@ -445,7 +445,7 @@ class SplitLunch(splitwise.Splitwise):
         if api_key is not None:
             init_kwargs.update(dict(api_key=api_key))
         elif access_token is not None:
-            init_kwargs.update(access_token)
+            init_kwargs.update(dict(access_token=access_token))
         else:
             raise SplitLunchError("No Splitwise API Key or Access Token Identified")
         return init_kwargs

@@ -111,13 +111,13 @@ Run the SplitLunch plugin for the :ref:`Lunchable CLI` via Docker
 
 .. code-block:: console
 
-    docker run \
-        --env LUNCHMONEY_ACCESS_TOKEN=${LUNCHMONEY_ACCESS_TOKEN} \
-        --env SPLITWISE_CONSUMER_KEY=${SPLITWISE_CONSUMER_KEY} \
-        --env SPLITWISE_CONSUMER_SECRET=${SPLITWISE_CONSUMER_SECRET} \
-        --env SPLITWISE_API_KEY=${SPLITWISE_API_KEY} \
-        juftin/lunchable:latest \
-        lunchable plugins splitlunch refresh
+docker run \
+    --env LUNCHMONEY_ACCESS_TOKEN=${LUNCHMONEY_ACCESS_TOKEN} \
+    --env SPLITWISE_CONSUMER_KEY=${SPLITWISE_CONSUMER_KEY} \
+    --env SPLITWISE_CONSUMER_SECRET=${SPLITWISE_CONSUMER_SECRET} \
+    --env SPLITWISE_API_KEY=${SPLITWISE_API_KEY} \
+    juftin/lunchable:latest \
+    lunchable plugins splitlunch --help
 
 Run via Python
 ===============
