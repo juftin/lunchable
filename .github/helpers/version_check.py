@@ -23,7 +23,7 @@ try:
         compared_version = argv[2]
     except IndexError:
         compared_version = Version(environ["COMPARED_VERSION"])
-    assert current_version >= compared_version
+    assert current_version > compared_version
 except KeyError:
     raise EnvironmentError(f"You must set the `CURRENT_VERSION` and `MAIN_VERSION` "
                            "environment variables or pass them in as arguments, "
