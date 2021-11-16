@@ -100,4 +100,4 @@ jobs:
                 with:
                     default_author: github_actions
                     message:        "Generate Docs: ${{ github.ref }}"
-                    add:            "docs/api/*.rst"
+                    add:            "${{ github.workspace }}/docs/api/"
