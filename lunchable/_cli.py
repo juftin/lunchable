@@ -209,8 +209,8 @@ def refresh_splitwise_transactions(**kwargs):
     from lunchable.plugins.splitlunch import SplitLunch
 
     splitlunch = SplitLunch()
-    new_transactions = splitlunch.refresh_splitwise_transactions()
-    click.echo(json.dumps(new_transactions, default=pydantic_encoder, indent=2))
+    response = splitlunch.refresh_splitwise_transactions()
+    click.echo(json.dumps(response, default=pydantic_encoder, indent=2))
 
 
 @plugins.group()

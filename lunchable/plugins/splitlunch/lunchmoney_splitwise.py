@@ -99,10 +99,6 @@ class SplitLunch(splitwise.Splitwise):
     api_key: Optional[str]
         Consumer Key provided by Splitwise. Defaults to `SPLITWISE_API_KEY` environment
         variable.
-    access_token: Optional[str]
-        Access Token is a combination of oauth_token and oauth_token_secret. Defaults to
-        `SPLITWISE_OAUTH_TOKEN` and `SPLITWISE_OAUTH_SECRET `environment variables.
-        Providing an api_key overrides this auth method.
     lunchable_client: LunchMoney
         Instantiated LunchMoney object to use as internal client. One will
         be created using environment variables otherwise.
@@ -115,7 +111,6 @@ class SplitLunch(splitwise.Splitwise):
                  consumer_key: Optional[str] = None,
                  consumer_secret: Optional[str] = None,
                  api_key: Optional[str] = None,
-                 access_token: Optional[Dict[str, str]] = None,
                  lunchable_client: Optional[LunchMoney] = None,
                  ):
         """
@@ -136,10 +131,6 @@ class SplitLunch(splitwise.Splitwise):
         api_key: Optional[str]
             Consumer Key provided by Splitwise. Defaults to `SPLITWISE_API_KEY` environment
             variable.
-        access_token: Optional[str]
-            Access Token is dict with the following key, value pairs: oauth_token,
-            oauth_token_secret. Defaults to `SPLITWISE_OAUTH_TOKEN` and `SPLITWISE_OAUTH_SECRET`
-            environment variables. Providing an api_key overrides this auth method.
         lunch_money_access_token: Optional[str]
             Lunch Money Access Token. Will be inherited from `LUNCHMONEY_ACCESS_TOKEN`
             environment variable if not provided.
@@ -149,10 +140,8 @@ class SplitLunch(splitwise.Splitwise):
         """
         init_kwargs = self._get_splitwise_init_kwargs(consumer_key=consumer_key,
                                                       consumer_secret=consumer_secret,
-                                                      api_key=api_key,
-                                                      access_token=access_token)
+                                                      api_key=api_key)
         super(SplitLunch, self).__init__(**init_kwargs)
-
         self.current_user: splitwise.CurrentUser = self.getCurrentUser()
         self.financial_partner: splitwise.Friend = self.get_friend(
             friend_id=financial_partner_id,
@@ -408,7 +397,6 @@ class SplitLunch(splitwise.Splitwise):
                                    consumer_key: Optional[str] = None,
                                    consumer_secret: Optional[str] = None,
                                    api_key: Optional[str] = None,
-                                   access_token: Optional[Dict[str, Any]] = None
                                    ) -> Dict[str, Any]:
         """
         Get the Splitwise Kwargs
@@ -418,40 +406,24 @@ class SplitLunch(splitwise.Splitwise):
         consumer_key: Optional[str]
         consumer_secret: Optional[str]
         api_key: Optional[str]
-        access_token: Optional[str]
         """
         if consumer_key is None:
             consumer_key = getenv("SPLITWISE_CONSUMER_KEY")
         if consumer_secret is None:
             consumer_secret = getenv("SPLITWISE_CONSUMER_SECRET")
-        init_kwargs = dict(consumer_key=consumer_key,
-                           consumer_secret=consumer_secret)
         if api_key is None:
             api_key = getenv("SPLITWISE_API_KEY", None)
-        if access_token is None:
-            _oauth_token = getenv("SPLITWISE_OAUTH_TOKEN")
-            _oauth_token_secret = getenv("SPLITWISE_OAUTH_SECRET")
-            if _oauth_token is None or _oauth_token_secret is None:
-                access_token = None
-            else:
-                access_token = dict(oauth_token=_oauth_token,
-                                    oauth_token_secret=_oauth_token_secret)
-
-        if init_kwargs["consumer_key"] is None or (api_key is None and access_token is None):
+        init_kwargs = dict(consumer_key=consumer_key,
+                           consumer_secret=consumer_secret,
+                           api_key=api_key)
+        if consumer_key is None or consumer_secret is None or api_key is None:
             error_message = dedent("""
             You must set your Splitwise credentials explicitly or by assigning
-            the `SPLITWISE_CONSUMER_KEY`, `SPLITWISE_CONSUMER_SECRET` environment variables and the 
-            `SPLITWISE_API_KEY` or `SPLITWISE_OAUTH_TOKEN` / `SPLITWISE_OAUTH_SECRET`
-            environment variables
+            the `SPLITWISE_CONSUMER_KEY`, `SPLITWISE_CONSUMER_SECRET`, and the 
+            `SPLITWISE_API_KEY`environment variables
             """).replace("\n", " ").replace("  ", " ")
             logger.error(error_message)
             raise SplitLunchError(error_message)
-        if api_key is not None:
-            init_kwargs.update(dict(api_key=api_key))
-        elif access_token is not None:
-            init_kwargs.update(dict(access_token=access_token))
-        else:
-            raise SplitLunchError("No Splitwise API Key or Access Token Identified")
         return init_kwargs
 
     def splitwise_to_pydantic(self, expense: splitwise.Expense) -> SplitLunchExpense:
@@ -1028,13 +1000,18 @@ class SplitLunch(splitwise.Splitwise):
             self.splitwise_asset = updated_asset
         return self.splitwise_asset
 
-    def get_new_transactions(self) -> List[SplitLunchExpense]:
+    _deleted_payee = "[DELETED FROM SPLITWISE]"
+
+    def get_new_transactions(self) -> Tuple[List[SplitLunchExpense], List[TransactionObject]]:
         """
         Get Splitwise Transactions that don't exist in Lunch Money
 
+        Also return deleted transaction from LunchMoney
+
         Returns
         -------
-        List[SplitLunchExpense]
+        Tuple[List[SplitLunchExpense], List[TransactionObject]]
+            New and Deleted Transactions
         """
         if self.splitwise_asset is None:
             self._raise_splitwise_asset_error()
@@ -1052,9 +1029,44 @@ class SplitLunch(splitwise.Splitwise):
         filtered_expenses = self.filter_relevant_splitwise_expenses(expenses=splitwise_expenses)
         new_expenses = [expense for expense in filtered_expenses if
                         expense.splitwise_id in new_ids]
-        return new_expenses
+        deleted_transactions = self.get_deleted_transactions(
+            splitlunch_expenses=splitlunch_expenses,
+            splitwise_transactions=splitwise_expenses
+        )
+        return new_expenses, deleted_transactions
 
-    def refresh_splitwise_transactions(self) -> List[SplitLunchExpense]:
+    def get_deleted_transactions(self,
+                                 splitlunch_expenses: List[TransactionObject],
+                                 splitwise_transactions: List[SplitLunchExpense]
+                                 ) -> List[TransactionObject]:
+        """
+        Get Splitwise Transactions that exist in Lunch Money but have since been deleted
+
+        Set these transactions to $0.00 and Make a Note
+
+        Parameters
+        ----------
+        splitlunch_expenses: List[TransactionObject]
+        splitwise_transactions: List[SplitLunchExpense]
+
+        Returns
+        -------
+        List[TransactionObject]
+        """
+        if self.splitwise_asset is None:
+            self._raise_splitwise_asset_error()
+            raise ValueError("SplitwiseAsset")
+        existing_transactions = {int(item.external_id) for item in splitlunch_expenses if
+                                 item.external_id is not None}
+        deleted_ids = {item.splitwise_id for item in splitwise_transactions if item.deleted is True}
+        untethered_transactions = deleted_ids.intersection(existing_transactions)
+        transactions_to_delete = [
+            tran for tran in splitlunch_expenses if
+            int(tran.external_id) in untethered_transactions and tran.payee != self._deleted_payee
+        ]
+        return transactions_to_delete
+
+    def refresh_splitwise_transactions(self) -> Dict[str, list]:
         """
         Import New Splitwise Transactions to Lunch Money
 
@@ -1065,10 +1077,38 @@ class SplitLunch(splitwise.Splitwise):
         -------
         List[SplitLunchExpense]
         """
-        new_transactions = self.get_new_transactions()
+        new_transactions, deleted_transactions = self.get_new_transactions()
         self.splitwise_to_lunchmoney(expenses=new_transactions)
         self.update_splitwise_balance()
-        return new_transactions
+        self.handle_deleted_transactions(deleted_transactions=deleted_transactions)
+        return dict(new=new_transactions, deleted=deleted_transactions)
+
+    def handle_deleted_transactions(self,
+                                    deleted_transactions: List[TransactionObject],
+                                    ) -> List[Dict[str, Any]]:
+        """
+        Update Transactions That Exist in Splitwise, but have been deleted in Splitwise
+
+        Parameters
+        ----------
+        deleted_transactions: List[TransactionObject]
+
+        Returns
+        -------
+        List[Dict[str, Any]]
+        """
+        updated_transactions = list()
+        for transaction in deleted_transactions:
+            update = self.lunchable.update_transaction(
+                transaction_id=transaction.id,
+                transaction=TransactionUpdateObject(
+                    amount=0.00,
+                    payee=self._deleted_payee,
+                    notes=f"{transaction.payee} || {transaction.amount} || {transaction.notes}"
+                )
+            )
+            updated_transactions.append(update)
+        return updated_transactions
 
     def _raise_financial_partner_error(self) -> None:
         """
