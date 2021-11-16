@@ -1062,7 +1062,9 @@ class SplitLunch(splitwise.Splitwise):
         untethered_transactions = deleted_ids.intersection(existing_transactions)
         transactions_to_delete = [
             tran for tran in splitlunch_expenses if
-            int(tran.external_id) in untethered_transactions and tran.payee != self._deleted_payee
+            tran.external_id is not None and
+            int(tran.external_id) in untethered_transactions and
+            tran.payee != self._deleted_payee
         ]
         return transactions_to_delete
 
