@@ -6,7 +6,8 @@ from datetime import datetime
 from pathlib import Path
 import sys
 
-_project_dir = str(Path(__file__).resolve().parent.parent.parent)
+_project_path = Path(__file__).resolve().parent.parent.parent
+_project_dir = str(_project_path)
 sys.path.insert(0, _project_dir)
 
 from lunchable import __lunchable__, __version__
@@ -24,13 +25,16 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
     "sphinx.ext.intersphinx",
+    "sphinx.ext.autosectionlabel",
 
     "sphinxcontrib.autodoc_pydantic",
+    "sphinxcontrib.apidoc",
     "autodocsumm",
     "myst_parser",
     "autoclasstoc",
     "sphinx_copybutton",
-    "sphinx_autodoc_defaultargs"
+    "sphinx_autodoc_defaultargs",
+    "sphinx_click",
 ]
 
 templates_path = ["_templates"]
@@ -59,3 +63,4 @@ rst_prolog = """
 
     <div class="default-value-section">""" + \
              ' <span class="default-value-label">Default:</span>'
+

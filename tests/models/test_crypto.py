@@ -4,7 +4,7 @@ Run Tests on the Crypto Endpoint
 
 import logging
 
-from conftest import lunchable_cassette
+from tests.conftest import lunchable_cassette
 from lunchable import LunchMoney
 from lunchable.models.crypto import CryptoObject
 

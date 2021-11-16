@@ -5,20 +5,189 @@ https://lunchmoney.dev/#transactions
 """
 
 import datetime
+from enum import Enum
 import logging
 from typing import Any, Dict, List, Optional, Union
 
 from pydantic import BaseModel, Field
 
 from lunchable import LunchMoneyError
-from lunchable.config import APIConfig
+from lunchable._config import APIConfig
 from lunchable.models._core import LunchMoneyAPIClient
 from lunchable.models.tags import TagsObject
 
 logger = logging.getLogger(__name__)
 
 
-class TransactionObject(BaseModel):
+class TransactionBaseObject(BaseModel):
+    """
+    Base Model For All Transactions to Inherit From
+    """
+
+    pass
+
+
+class TransactionInsertObject(TransactionBaseObject):
+    """
+    Object For Creating New Transactions
+
+    https://lunchmoney.dev/#insert-transactions
+    """
+
+    _date_description = """
+    Must be in ISO 8601 format (YYYY-MM-DD).
+    """
+    _amount_description = """
+    Numeric value of amount. i.e. $4.25 should be denoted as 4.25.
+    """
+    _category_id_description = """
+    Unique identifier for associated category_id. Category must be associated with 
+    the same account and must not be a category group.
+    """
+    _currency_description = """
+    Three-letter lowercase currency code in ISO 4217 format. The code sent must exist 
+    in our database. Defaults to user account's primary currency.
+    """
+    _asset_id_description = """
+    Unique identifier for associated asset (manually-managed account). Asset must be 
+    associated with the same account.
+    """
+    _recurring_id = """
+    Unique identifier for associated recurring expense. Recurring expense must be associated 
+    with the same account.
+    """
+    _status_description = """
+    Must be either cleared or uncleared. If recurring_id is provided, the status will 
+    automatically be set to recurring or recurring_suggested depending on the type of 
+    recurring_id. Defaults to uncleared.
+    """
+    _external_id_description = """
+    User-defined external ID for transaction. Max 75 characters. External IDs must be 
+    unique within the same asset_id.
+    """
+    _tags_description = """
+    Passing in a number will attempt to match by ID. If no matching tag ID is found, an error 
+    will be thrown. Passing in a string will attempt to match by string. If no matching tag 
+    name is found, a new tag will be created.
+    """
+
+    class StatusEnum(str, Enum):
+        """
+        Status Options, must be "cleared" or "uncleared"
+        """
+
+        cleared = "cleared"
+        uncleared = "uncleared"
+
+    date: datetime.date = Field(description=_date_description)
+    amount: float = Field(description=_amount_description)
+    category_id: Optional[int] = Field(description=_category_id_description)
+    payee: Optional[str] = Field(description="Max 140 characters", max_length=140)
+    currency: Optional[str] = Field(description=_currency_description, max_length=3)
+    asset_id: Optional[int] = Field(description=_asset_id_description)
+    recurring_id: Optional[int] = Field(description=_recurring_id)
+    notes: Optional[str] = Field(description="Max 350 characters", max_length=350)
+    status: Optional[StatusEnum] = Field(description=_status_description)
+    external_id: Optional[str] = Field(description=_external_id_description, max_length=75)
+    tags: Optional[List[Union[str, int]]] = Field(description=_tags_description)
+
+
+class TransactionUpdateObject(TransactionBaseObject):
+    """
+    Object For Updating Existing Transactions
+
+    https://lunchmoney.dev/#update-transaction
+    """
+
+    _date_description = """
+    Must be in ISO 8601 format (YYYY-MM-DD).
+    """
+    _category_id_description = """
+    Unique identifier for associated category_id. Category must be associated 
+    with the same account and must not be a category group.
+    """
+    _amount_description = """
+    You may only update this if this transaction was not created from an automatic 
+    import, i.e. if this transaction is not associated with a plaid_account_id
+    """
+    _currency_description = """
+    You may only update this if this transaction was not created from an automatic 
+    import, i.e. if this transaction is not associated with a plaid_account_id. 
+    Defaults to user account's primary currency.
+    """
+    _asset_id_description = """
+    Unique identifier for associated asset (manually-managed account). Asset must be 
+    associated with the same account. You may only update this if this transaction was 
+    not created from an automatic import, i.e. if this transaction is not associated 
+    with a plaid_account_id
+    """
+    _recurring_id_description = """
+    Unique identifier for associated recurring expense. Recurring expense must 
+    be associated with the same account.
+    """
+    _status_description = """
+    Must be either cleared or uncleared. Defaults to uncleared If recurring_id is 
+    provided, the status will automatically be set to recurring or recurring_suggested 
+    depending on the type of recurring_id. Defaults to uncleared.
+    """
+    _external_id_description = """
+    User-defined external ID for transaction. Max 75 characters. External IDs must be 
+    unique within the same asset_id. You may only update this if this transaction was 
+    not created from an automatic import, i.e. if this transaction is not associated 
+    with a plaid_account_id
+    """
+    _tags_description = """
+    Passing in a number will attempt to match by ID. If no matching tag ID is found, 
+    an error will be thrown. Passing in a string will attempt to match by string. 
+    If no matching tag name is found, a new tag will be created.
+    """
+
+    class StatusEnum(str, Enum):
+        """
+        Status Options, must be "cleared" or "uncleared"
+        """
+
+        cleared = "cleared"
+        uncleared = "uncleared"
+
+    date: Optional[datetime.date] = Field(description=_date_description)
+    category_id: Optional[int] = Field(description=_category_id_description)
+    payee: Optional[str] = Field(description="Max 140 characters", max_length=140)
+    amount: Optional[float] = Field(description=_amount_description)
+    currency: Optional[str] = Field(description=_currency_description)
+    asset_id: Optional[int] = Field(description=_asset_id_description)
+    recurring_id: Optional[int] = Field(description=_recurring_id_description)
+    notes: Optional[str] = Field(description="Max 350 characters", max_length=350)
+    status: Optional[StatusEnum] = Field(description=_status_description)
+    external_id: Optional[str] = Field(description=_external_id_description)
+    tags: Optional[List[Union[int, str]]] = Field(description=_tags_description)
+
+
+class TransactionSplitObject(TransactionBaseObject):
+    """
+    Object for Splitting Transactions
+
+    https://lunchmoney.dev/#split-object
+    """
+
+    _date_description = "Must be in ISO 8601 format (YYYY-MM-DD)."
+    _category_id_description = """
+    Unique identifier for associated category_id. Category must be associated 
+    with the same account.
+    """
+    _notes_description = "Transaction Split Notes."
+    _amount_description = """
+    Individual amount of split. Currency will inherit from parent transaction. All 
+    amounts must sum up to parent transaction amount.
+    """
+
+    date: datetime.date = Field(description=_date_description)
+    category_id: int = Field(description=_category_id_description)
+    notes: Optional[str] = Field(description=_notes_description)
+    amount: float = Field(description=_amount_description)
+
+
+class TransactionObject(TransactionBaseObject):
     """
     Universal Lunch Money Transaction Object
 
@@ -102,7 +271,7 @@ class TransactionObject(BaseModel):
     transactions.
     """
 
-    id: Optional[int] = Field(description="Unique identifier for transaction")
+    id: int = Field(description="Unique identifier for transaction")
     date: datetime.date = Field(description="Date of transaction in ISO 8601 format")
     payee: Optional[str] = Field(description=_payee_description)
     amount: float = Field(description=_amount_description)
@@ -125,125 +294,51 @@ class TransactionObject(BaseModel):
     price: Optional[str] = Field(description=_price_description)
     quantity: Optional[str] = Field(description=_quantity_description)
 
+    def get_update_object(self) -> TransactionUpdateObject:
+        """
+        Return a TransactionUpdateObject
 
-class TransactionInsertObject(BaseModel):
-    """
-    Object For Creating New Transactions
+        Return a TransactionUpdateObject to update an expense. Simply
+        change one of the properties and perform an `update_transaction` with
+        your Lunchable object.
 
-    https://lunchmoney.dev/#insert-transactions
-    """
+        Returns
+        -------
+        TransactionUpdateObject
+        """
+        update_dict = self.dict()
+        try:
+            TransactionUpdateObject.StatusEnum(self.status)
+        except ValueError:
+            update_dict["status"] = None
+        update_object = TransactionUpdateObject(**update_dict)
+        if update_object.tags is not None:
+            tags = [] if self.tags is None else self.tags
+            update_object.tags = [tag.name for tag in tags]
+        return update_object
 
-    _date_description = """
-    Must be in ISO 8601 format (YYYY-MM-DD).
-    """
-    _amount_description = """
-    Numeric value of amount. i.e. $4.25 should be denoted as 4.25.
-    """
-    _category_id_description = """
-    Unique identifier for associated category_id. Category must be associated with 
-    the same account and must not be a category group.
-    """
-    _currency_description = """
-    Three-letter lowercase currency code in ISO 4217 format. The code sent must exist 
-    in our database. Defaults to user account's primary currency.
-    """
-    _asset_id_description = """
-    Unique identifier for associated asset (manually-managed account). Asset must be 
-    associated with the same account.
-    """
-    _recurring_id = """
-    Unique identifier for associated recurring expense. Recurring expense must be associated 
-    with the same account.
-    """
-    _status_description = """
-    Must be either cleared or uncleared. If recurring_id is provided, the status will 
-    automatically be set to recurring or recurring_suggested depending on the type of 
-    recurring_id. Defaults to uncleared.
-    """
-    _external_id_description = """
-    User-defined external ID for transaction. Max 75 characters. External IDs must be 
-    unique within the same asset_id.
-    """
-    _tags_description = """
-    Passing in a number will attempt to match by ID. If no matching tag ID is found, an error 
-    will be thrown. Passing in a string will attempt to match by string. If no matching tag 
-    name is found, a new tag will be created.
-    """
+    def get_insert_object(self) -> TransactionInsertObject:
+        """
+        Return a TransactionInsertObject
 
-    date: datetime.date = Field(description=_date_description)
-    amount: float = Field(description=_amount_description)
-    category_id: Optional[int] = Field(description=_category_id_description)
-    payee: Optional[str] = Field(description="Max 140 characters", max_length=140)
-    currency: Optional[str] = Field(description=_currency_description, max_length=3)
-    asset_id: Optional[int] = Field(description=_asset_id_description)
-    recurring_id: Optional[int] = Field(description=_recurring_id)
-    notes: Optional[str] = Field(description="Max 350 characters", max_length=350)
-    status: Optional[str] = Field(description=_status_description)
-    external_id: Optional[str] = Field(description=_external_id_description, max_length=75)
-    tags: Optional[List[Any]] = Field(description=_tags_description)
+        Return a TransactionInsertObject to update an expense. Simply
+        change some of the properties and perform an `insert_transactions` with
+        your Lunchable object.
 
-
-class TransactionUpdateObject(BaseModel):
-    """
-    Object For Updating Existing Transactions
-
-    https://lunchmoney.dev/#update-transaction
-    """
-
-    _date_description = """
-    Must be in ISO 8601 format (YYYY-MM-DD).
-    """
-    _category_id_description = """
-    Unique identifier for associated category_id. Category must be associated 
-    with the same account and must not be a category group.
-    """
-    _amount_description = """
-    You may only update this if this transaction was not created from an automatic 
-    import, i.e. if this transaction is not associated with a plaid_account_id
-    """
-    _currency_description = """
-    You may only update this if this transaction was not created from an automatic 
-    import, i.e. if this transaction is not associated with a plaid_account_id. 
-    Defaults to user account's primary currency.
-    """
-    _asset_id_description = """
-    Unique identifier for associated asset (manually-managed account). Asset must be 
-    associated with the same account. You may only update this if this transaction was 
-    not created from an automatic import, i.e. if this transaction is not associated 
-    with a plaid_account_id
-    """
-    _recurring_id_description = """
-    Unique identifier for associated recurring expense. Recurring expense must 
-    be associated with the same account.
-    """
-    _status_description = """
-    Must be either cleared or uncleared. Defaults to uncleared If recurring_id is 
-    provided, the status will automatically be set to recurring or recurring_suggested 
-    depending on the type of recurring_id. Defaults to uncleared.
-    """
-    _external_id_description = """
-    User-defined external ID for transaction. Max 75 characters. External IDs must be 
-    unique within the same asset_id. You may only update this if this transaction was 
-    not created from an automatic import, i.e. if this transaction is not associated 
-    with a plaid_account_id
-    """
-    _tags_description = """
-    Passing in a number will attempt to match by ID. If no matching tag ID is found, 
-    an error will be thrown. Passing in a string will attempt to match by string. 
-    If no matching tag name is found, a new tag will be created.
-    """
-
-    date: Optional[datetime.date] = Field(description=_date_description)
-    category_id: Optional[int] = Field(description=_category_id_description)
-    payee: Optional[str] = Field(description="Max 140 characters", max_length=140)
-    amount: Optional[float] = Field(description=_amount_description)
-    currency: Optional[str] = Field(description=_currency_description)
-    asset_id: Optional[int] = Field(description=_asset_id_description)
-    recurring_id: Optional[int] = Field(description=_recurring_id_description)
-    notes: Optional[str] = Field(description="Max 350 characters", max_length=350)
-    status: Optional[str] = Field(description=_status_description)
-    external_id: Optional[str] = Field(description=_external_id_description)
-    tags: Optional[List[Any]] = Field(description=_tags_description)
+        Returns
+        -------
+        TransactionInsertObject
+        """
+        insert_dict = self.dict()
+        try:
+            TransactionInsertObject.StatusEnum(self.status)
+        except ValueError:
+            insert_dict["status"] = None
+        insert_object = TransactionInsertObject(**insert_dict)
+        if insert_object.tags is not None:
+            tags = [] if self.tags is None else self.tags
+            insert_object.tags = [tag.name for tag in tags]
+        return insert_object
 
 
 class _TransactionParamsGet(BaseModel):
@@ -290,30 +385,6 @@ class _TransactionGroupParamsPost(BaseModel):
     notes: Optional[str]
     tags: Optional[List[int]]
     transactions: List[int]
-
-
-class TransactionSplitObject(BaseModel):
-    """
-    Object for Splitting Transactions
-
-    https://lunchmoney.dev/#split-object
-    """
-
-    _date_description = "Must be in ISO 8601 format (YYYY-MM-DD)."
-    _category_id_description = """
-    Unique identifier for associated category_id. Category must be associated 
-    with the same account.
-    """
-    _notes_description = "Transaction Split Notes."
-    _amount_description = """
-    Individual amount of split. Currency will inherit from parent transaction. All 
-    amounts must sum up to parent transaction amount.
-    """
-
-    date: datetime.date = Field(description=_date_description)
-    category_id: int = Field(description=_category_id_description)
-    notes: Optional[str] = Field(description=_notes_description)
-    amount: float = Field(description=_amount_description)
 
 
 class _TransactionUpdateParamsPut(BaseModel):
@@ -425,7 +496,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
             debit_as_negative=debit_as_negative,
         ).dict(exclude_none=True)
         search_params.update(params if params is not None else {})
-        response_data = self._make_request(method=self.methods.GET,
+        response_data = self._make_request(method=self.Methods.GET,
                                            url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
                                            params=search_params)
         transactions = response_data[APIConfig.LUNCHMONEY_TRANSACTIONS]
@@ -457,21 +528,41 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         The above code returns a :class:`.TransactionObject` with ID # 1234 (assuming
         it exists)
         """
-        response_data = self._make_request(method=self.methods.GET,
+        response_data = self._make_request(method=self.Methods.GET,
                                            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
                                                      transaction_id])
         return TransactionObject(**response_data)
 
-    def update_transaction(self, transaction_id: int,
-                           transaction: Optional[TransactionUpdateObject] = None,
-                           split: Optional[List[TransactionSplitObject]] = None,
-                           debit_as_negative: bool = False,
-                           skip_balance_update: bool = True) -> Dict[str, Any]:
+    ListOrSingleTransactionUpdateObject = Union[
+        TransactionUpdateObject,
+        TransactionObject
+    ]
+
+    ListOrSingleTransactionInsertObject = Union[
+        TransactionObject,
+        TransactionInsertObject,
+        List[TransactionObject],
+        List[TransactionInsertObject],
+        List[
+            Union[
+                TransactionObject,
+                TransactionInsertObject
+            ],
+        ]
+    ]
+
+    def update_transaction(
+            self, transaction_id: int,
+            transaction: ListOrSingleTransactionUpdateObject = None,
+            split: Optional[List[TransactionSplitObject]] = None,
+            debit_as_negative: bool = False,
+            skip_balance_update: bool = True) -> Dict[str, Any]:
         """
         Update a Transaction
 
         Use this endpoint to update a single transaction. You may also use this
-        to split an existing transaction.
+        to split an existing transaction. If a TransactionObject is provided it will be
+        converted into a TransactionUpdateObject.
 
         PUT https://dev.lunchmoney.app/v1/transactions/:transaction_id
 
@@ -479,7 +570,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         ----------
         transaction_id: int
             Lunch Money Transaction ID
-        transaction: TransactionUpdateObject
+        transaction: ListOrSingleTransactionUpdateObject
             Object to update with
         split: Optional[List[TransactionSplitObject]]
             Defines the split of a transaction. You may not split an already-split
@@ -508,15 +599,32 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
             notes_update = TransactionUpdateObject(notes=transaction_note)
             response = lunch.update_transaction(transaction_id=1234,
                                                 transaction=notes_update)
+
+        Update a :class:`.TransactionObject` with itself ::
+
+            from datetime import datetime, timedelta
+
+            from lunchable import LunchMoney
+
+            lunch = LunchMoney(access_token="xxxxxxx")
+            transaction = lunch.get_transaction(transaction_id=1234)
+
+            transaction.notes = f"Updated on {datetime.now()}"
+            transaction.date = transaction.date + timedelta(days=1)
+            response = lunch.update_transaction(transaction_id=transaction.id,
+                                                transaction=transaction)
         """
-        if transaction is None and split is None:
-            raise LunchMoneyError("You must update the transaction or provide a split")
-        payload = _TransactionUpdateParamsPut(transaction=transaction,
-                                              split=split,
+        payload = _TransactionUpdateParamsPut(split=split,
                                               debit_as_negative=debit_as_negative,
                                               skip_balance_update=skip_balance_update
                                               ).dict(exclude_none=True)
-        response_data = self._make_request(method=self.methods.PUT,
+        if transaction is None and split is None:
+            raise LunchMoneyError("You must update the transaction or provide a split")
+        elif transaction is not None:
+            if isinstance(transaction, TransactionObject):
+                transaction = transaction.get_update_object()
+            payload["transaction"] = transaction.dict(exclude_unset=True)
+        response_data = self._make_request(method=self.Methods.PUT,
                                            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
                                                      transaction_id],
                                            payload=payload)
@@ -524,7 +632,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
 
     def insert_transactions(
             self,
-            transactions: Union[TransactionInsertObject, List[TransactionInsertObject]],
+            transactions: ListOrSingleTransactionInsertObject,
             apply_rules: bool = False,
             skip_duplicates: bool = True,
             debit_as_negative: bool = False,
@@ -534,13 +642,15 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         """
         Create One or Many Lunch Money Transactions
 
-        Use this endpoint to insert many transactions at once.
+        Use this endpoint to insert many transactions at once. Also accepts
+        a single transaction as well. If a TransactionObject is provided it will be
+        converted into a TransactionInsertObject.
 
         https://lunchmoney.dev/#insert-transactions
 
         Parameters
         ----------
-        transactions: Union[TransactionInsertObject, List[TransactionInsertObject]]
+        transactions: ListOrSingleTransactionTypeObject
             Transactions to insert. Either a single TransactionInsertObject object or
             a list of them
         apply_rules: bool
@@ -577,16 +687,25 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
                                                       notes="Saturday Dinner")
             new_transaction_ids = lunch.insert_transactions(transactions=new_transaction)
         """
-        if isinstance(transactions, TransactionInsertObject):
+        insert_objects = list()
+        if not isinstance(transactions, list):
             transactions = [transactions]
-        payload = _TransactionInsertParamsPost(transactions=transactions,
+        for item in transactions:
+            if isinstance(item, TransactionObject):
+                insert_objects.append(item.get_insert_object())
+            elif isinstance(item, TransactionInsertObject):
+                insert_objects.append(item)
+            else:
+                raise LunchMoneyError("Only TransactionObjects or TransactionInsertObjects are "
+                                      "supported by this function.")
+        payload = _TransactionInsertParamsPost(transactions=insert_objects,
                                                apply_rules=apply_rules,
                                                skip_duplicates=skip_duplicates,
                                                check_for_recurring=check_for_recurring,
                                                debit_as_negative=debit_as_negative,
                                                skip_balance_update=skip_balance_update
                                                ).dict(exclude_unset=True)
-        response_data = self._make_request(method=self.methods.POST,
+        response_data = self._make_request(method=self.Methods.POST,
                                            url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
                                            payload=payload)
         ids: List[int] = response_data["ids"]
@@ -629,7 +748,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         transaction_params = _TransactionGroupParamsPost(
             date=date, payee=payee, category_id=category_id,
             notes=notes, tags=tags, transactions=transactions).dict(exclude_none=True)
-        response_data = self._make_request(method=self.methods.POST,
+        response_data = self._make_request(method=self.Methods.POST,
                                            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
                                                      APIConfig.LUNCHMONEY_TRANSACTION_GROUPS],
                                            payload=transaction_params)
@@ -655,7 +774,7 @@ class _LunchMoneyTransactions(LunchMoneyAPIClient):
         -------
         List[int]
         """
-        response_data = self._make_request(method=self.methods.DELETE,
+        response_data = self._make_request(method=self.Methods.DELETE,
                                            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
                                                      APIConfig.LUNCHMONEY_TRANSACTION_GROUPS,
                                                      transaction_group_id])

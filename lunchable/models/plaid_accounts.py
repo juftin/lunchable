@@ -10,7 +10,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
-from lunchable.config import APIConfig
+from lunchable._config import APIConfig
 from lunchable.models._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
@@ -84,7 +84,7 @@ class PlaidAccountObject(BaseModel):
     institution_name: str = Field(description=_institution_name_description)
     status: str = Field(description=_status_description)
     last_import: Optional[datetime.datetime] = Field(description=_last_import_description)
-    balance: float = Field(description=_balance_description)
+    balance: Optional[float] = Field(description=_balance_description)
     currency: str = Field(description=_currency_description)
     balance_last_update: datetime.datetime = Field(description=_balance_last_update_description)
     limit: Optional[int] = Field(description=_limit_description)
@@ -109,7 +109,7 @@ class _LunchMoneyPlaidAccounts(LunchMoneyAPIClient):
         -------
         List[PlaidAccountObject]
         """
-        response_data = self._make_request(method=self.methods.GET,
+        response_data = self._make_request(method=self.Methods.GET,
                                            url_path=APIConfig.LUNCHMONEY_PLAID_ACCOUNTS)
         accounts = response_data.get(APIConfig.LUNCHMONEY_PLAID_ACCOUNTS)
         account_objects = [PlaidAccountObject(**item) for item in accounts]

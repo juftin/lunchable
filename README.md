@@ -14,8 +14,9 @@
 [![Documentation Status](https://readthedocs.org/projects/lunchable/badge/?version=latest)](https://lunchable.readthedocs.io/en/latest/?badge=latest)
 
 **lunchable** is a Python Client for the [Lunch Money Developer API](https://lunchmoney.dev). It's
-built on top of [pydantic](https://github.com/samuelcolvin/pydantic), and it offers a *simple*
-and *intuitive* API.
+built on top of [pydantic](https://github.com/samuelcolvin/pydantic), it offers an *intuitive* API,
+a *simple* CLI, complete coverage of all endpoints,
+*plugins* to other external services, and extensive test coverage.
 
 ### Installation
 
@@ -32,18 +33,21 @@ from lunchable import LunchMoney
 from lunchable.models import TransactionObject
 
 lunch = LunchMoney(access_token="xxxxxxxxxxx")
-transactions: List[TransactionObject] = lunch.get_transactions()
+transactions: List[TransactionObject] = lunch.get_transactions(limit=5)
 
 first_transaction: TransactionObject = transactions[0]
 transaction_as_dict: dict = first_transaction.dict()
+```
+
+```shell
+export LUNCHMONEY_ACCESS_TOKEN="xxxxxxxxxxx"
+lunchable transactions get --limit 5
 ```
 
 ### Check out the [**ReadTheDocs**](https://lunchable.readthedocs.io/en/latest/)
 
 --------------
 --------------
-
-> ### ⚠️ Note: This project is under active development.
 
 <br/>
 

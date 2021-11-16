@@ -7,13 +7,14 @@ import logging
 
 from lunchable import LunchMoney
 from lunchable.models import BudgetObject
-from tests.conftest import lunchable_cassette, obscure_start_date
+from tests.conftest import lunchable_cassette
 
 logger = logging.getLogger(__name__)
 
 
 @lunchable_cassette
-def test_upsert_budget(lunch_money_obj: LunchMoney):
+def test_upsert_budget(lunch_money_obj: LunchMoney,
+                       obscure_start_date: datetime.datetime):
     """
     Test upserting some budgets
     """
@@ -25,7 +26,8 @@ def test_upsert_budget(lunch_money_obj: LunchMoney):
 
 
 @lunchable_cassette
-def test_get_budgets(lunch_money_obj: LunchMoney):
+def test_get_budgets(lunch_money_obj: LunchMoney,
+                     obscure_start_date: datetime.datetime):
     """
     Test Getting some budgets
     """
@@ -40,7 +42,8 @@ def test_get_budgets(lunch_money_obj: LunchMoney):
 
 
 @lunchable_cassette
-def test_delete_budget(lunch_money_obj: LunchMoney):
+def test_delete_budget(lunch_money_obj: LunchMoney,
+                       obscure_start_date: datetime.datetime):
     """
     Delete a Budget
     """

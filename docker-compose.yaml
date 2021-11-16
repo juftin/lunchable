@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+    lunchable:
+        build:
+            context:    .
+            dockerfile: Dockerfile
+            args:
+                PYTHON_VERSION: 3.9
+        container_name: lunchable
+        image:          juftin/lunchable:latest
+        environment:
+            LUNCHMONEY_ACCESS_TOKEN:   ${LUNCHMONEY_ACCESS_TOKEN}
+            SPLITWISE_CONSUMER_KEY:    ${SPLITWISE_CONSUMER_KEY:-}
+            SPLITWISE_CONSUMER_SECRET: ${SPLITWISE_CONSUMER_SECRET:-}
+            SPLITWISE_API_KEY:         ${SPLITWISE_API_KEY:-}
+            PUSHOVER_USER_KEY:         ${PUSHOVER_USER_KEY:-}
+        command:        "lunchable plugins pushlunch notify --continuous --interval 60"

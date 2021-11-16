@@ -10,7 +10,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
-from lunchable.config import APIConfig
+from lunchable._config import APIConfig
 from lunchable.models._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
@@ -85,7 +85,7 @@ class _LunchMoneyCategories(LunchMoneyAPIClient):
         -------
         List[CategoriesObject]
         """
-        response_data = self._make_request(method=self.methods.GET,
+        response_data = self._make_request(method=self.Methods.GET,
                                            url_path=APIConfig.LUNCHMONEY_CATEGORIES)
         categories = response_data["categories"]
         budget_objects = [CategoriesObject(**item) for item in categories]
@@ -129,7 +129,7 @@ class _LunchMoneyCategories(LunchMoneyAPIClient):
             is_income=is_income,
             exclude_from_budget=exclude_from_budget,
             exclude_from_totals=exclude_from_totals).dict(exclude_none=True)
-        response_data = self._make_request(method=self.methods.POST,
+        response_data = self._make_request(method=self.Methods.POST,
                                            url_path=APIConfig.LUNCHMONEY_CATEGORIES,
                                            payload=category_body)
         return response_data["category_id"]
