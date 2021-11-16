@@ -1,4 +1,4 @@
-name: Publish Release
+name: Publishing
 
 on:
     release:
@@ -10,7 +10,7 @@ on:
 
 
 jobs:
-    pypi-publishing:
+    pypi:
         if:      ${{ github.event_name == 'release' }}
         runs-on: ubuntu-latest
         env:
@@ -47,7 +47,7 @@ jobs:
                       twine upload "${{ github.workspace }}/dist/*" \
                           --username ${{ secrets.PYPI_USERNAME }} \
                           --password ${{ secrets.PYPI_PASSWORD }}
-    docker-publishing:
+    docker:
         if:      ${{ github.event_name == 'release' }}
         runs-on: ubuntu-latest
         steps:
@@ -73,7 +73,7 @@ jobs:
                 with:
                     push: true
                     tags: juftin/lunchable:latest,juftin/lunchable:${{ env.VERSION }}
-    docs-publishing:
+    docs:
         if:      ${{ github.event_name == 'pull_request' }}
         runs-on: ubuntu-latest
         steps:
@@ -100,4 +100,4 @@ jobs:
                 with:
                     default_author: github_actions
                     message:        "Generate Docs: ${{ github.ref }}"
-                    add:            "${{ github.workspace }}/docs/api/"
+                    add:            "${{ github.workspace }}/docs/source/api/"
