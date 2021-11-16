@@ -21,6 +21,9 @@ and extensive test coverage.
 .. image:: https://img.shields.io/pypi/pyversions/lunchable
     :target: https://pypi.python.org/pypi/lunchable/
     :alt: PyPI
+.. image:: https://img.shields.io/docker/v/juftin/lunchable?color=blue&label=docker&logo=docker
+    :target: https://hub.docker.com/r/juftin/lunchable
+    :alt: Docker
 .. image:: https://github.com/juftin/lunchable/actions/workflows/tests.yml/badge.svg?branch=main
     :target: https://github.com/juftin/lunchable/actions/workflows/tests.yml?query=branch%3Amain
     :alt: Testing Status
@@ -61,7 +64,7 @@ and extensive test coverage.
    lunchable.rst
    cli.rst
    plugins.rst
-   api/modules.rst
+   API Documentation <api/modules.rst>
 
 Indices and tables
 ==================

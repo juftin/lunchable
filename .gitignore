@@ -121,7 +121,6 @@ env.bash
 # documentation
 /site
 docs/source/_autosummary
-docs/source/api/lunchable*.rst
 
 # mypy
 .mypy_cache/
