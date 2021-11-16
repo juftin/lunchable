@@ -1,11 +1,6 @@
 version: "3.7"
 services:
     lunchable:
-        build:
-            context:    .
-            dockerfile: Dockerfile
-            args:
-                PYTHON_VERSION: 3.9
         container_name: lunchable
         image:          juftin/lunchable:latest
         environment:
