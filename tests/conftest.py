@@ -35,7 +35,12 @@ def scrub_string(string, replacement=""):
 
     def before_record_response(response):
         body = response["body"]["string"]
-        for string_part in string.split(","):
+        sensitive_strings = string.split(",")
+        try:
+            sensitive_strings.remove("<LUNCH>")
+        except ValueError:
+            pass
+        for string_part in sensitive_strings:
             string_part = string_part.strip()
             if isinstance(body, bytes):
                 try:
@@ -71,7 +76,7 @@ def vcr_config() -> Dict[str, list]:
             ("user", "XXXXXXXXXX"),
             ("token", "XXXXXXXXXX")
         ],
-        "before_record_response": scrub_string(getenv("SENSITIVE_REQUEST_STRINGS", []),
+        "before_record_response": scrub_string(getenv("SENSITIVE_REQUEST_STRINGS", "<LUNCH>"),
                                                "XXXXXXXXXX")
     }
 

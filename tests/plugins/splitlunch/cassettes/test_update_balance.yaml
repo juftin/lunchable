@@ -19,7 +19,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 Nov 2021 01:56:25 GMT
+      - Tue, 16 Nov 2021 02:19:01 GMT
       Etag:
       - W/"e0c027c87558e7c4714a014dbf70ad90"
       Expires:
@@ -47,9 +47,9 @@ interactions:
       X-Permitted-Cross-Domain-Policies:
       - none
       X-Request-Id:
-      - a2e130df-ada4-42dc-8340-1de77dde3daa
+      - 3572656c-23d4-4248-8f00-fd8cd85bd9c1
       X-Runtime:
-      - '0.037259'
+      - '0.039383'
       X-Xss-Protection:
       - 1; mode=block
     status:
@@ -64,7 +64,7 @@ interactions:
     uri: https://secure.splitwise.com/api/v3.0/get_friends
   response:
     body:
-      string: "{\"friends\":[{\"id\":XXXXXXXXXX,\"first_name\":\"XXXXXXXXXX\",\"last_name\":\"\u2764\uFE0F
+      string: "{\"friends\":[{\"id\":10910565,\"first_name\":\"XXXXXXXXXX\",\"last_name\":\"\u2764\uFE0F
         XXXXXXXXXX\",\"email\":\"XXXXXXXXXX@gmail.com\",\"registration_status\":\"unsubscribed\",\"picture\":{\"small\":\"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-ruby33-50px.png\",\"medium\":\"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-ruby33-100px.png\",\"large\":\"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-ruby33-200px.png\"},\"balance\":[{\"currency_code\":\"USD\",\"amount\":\"176.67\"}],\"groups\":[{\"group_id\":0,\"balance\":[{\"currency_code\":\"USD\",\"amount\":\"176.67\"}]}],\"updated_at\":\"2021-11-15T17:40:10Z\"}]}"
     headers:
       Cache-Control:
@@ -76,7 +76,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 Nov 2021 01:56:25 GMT
+      - Tue, 16 Nov 2021 02:19:01 GMT
       Etag:
       - W/"b21fa77f5f18aa1852ea588667ab46c9"
       Expires:
@@ -104,9 +104,9 @@ interactions:
       X-Permitted-Cross-Domain-Policies:
       - none
       X-Request-Id:
-      - b5020782-fe8c-42e0-bb5d-c9820bfd7f51
+      - 23d89aee-7935-44eb-85bc-09218f2863fe
       X-Runtime:
-      - '0.035931'
+      - '0.037655'
       X-Xss-Protection:
       - 1; mode=block
     status:
@@ -143,7 +143,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 Nov 2021 01:56:25 GMT
+      - Tue, 16 Nov 2021 02:19:02 GMT
       Etag:
       - W/"174-NUxNLDDMbGDO7Da7jlNAmQyhgKo"
       Server:
@@ -177,7 +177,7 @@ interactions:
   response:
     body:
       string: '{"assets":[{"id":21845,"type_name":"cash","subtype_name":"digital wallet
-        (paypal, venmo)","name":"Splitwise Balance","display_name":"Splitwise","balance":"176.6700","balance_as_of":"2021-11-15T17:44:52.277Z","currency":"usd","closed_on":null,"institution_name":"Splitwise","created_at":"2021-08-28T16:06:02.701Z"},{"id":23043,"type_name":"cash","subtype_name":"digital
+        (paypal, venmo)","name":"Splitwise Balance","display_name":"Splitwise","balance":"176.6700","balance_as_of":"2021-11-16T02:17:52.209Z","currency":"usd","closed_on":null,"institution_name":"Splitwise","created_at":"2021-08-28T16:06:02.701Z"},{"id":23043,"type_name":"cash","subtype_name":"digital
         wallet (paypal, venmo)","name":"Test Account","display_name":"Test Account","balance":"181.7100","balance_as_of":"2021-11-02T22:27:05.311Z","currency":"usd","closed_on":null,"institution_name":"Test","created_at":"2021-09-20T05:32:29.060Z"}]}'
     headers:
       Access-Control-Allow-Credentials:
@@ -189,9 +189,9 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 Nov 2021 01:56:26 GMT
+      - Tue, 16 Nov 2021 02:19:02 GMT
       Etag:
-      - W/"263-PuKlmQwTXplhQGNn6uzd/fxEv94"
+      - W/"263-O7f1qpDRxlhCsYNKHX/bMe83e1M"
       Server:
       - Cowboy
       Vary:
@@ -250,7 +250,7 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 Nov 2021 01:56:26 GMT
+      - Tue, 16 Nov 2021 02:19:02 GMT
       Etag:
       - W/"1aa8-J6Eh1EZIPff3WsMWdh+K0M/hEm0"
       Server:
@@ -275,7 +275,7 @@ interactions:
     uri: https://secure.splitwise.com/api/v3.0/get_groups
   response:
     body:
-      string: '{"groups":[{"id":0,"name":"Non-group expenses","created_at":"2015-01-31T09:04:03Z","updated_at":"2021-11-16T01:56:26Z","members":[{"id":1616678,"first_name":"Justin","last_name":"Flannery","picture":{"small":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-50px.png","medium":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-100px.png","large":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-200px.png"},"custom_picture":false,"email":"juftin@gmail.com","registration_status":"confirmed","balance":[{"amount":"176.67","currency_code":"USD"}]}],"simplify_by_default":false,"original_debts":[{"from":XXXXXXXXXX,"to":1616678,"amount":"176.67","currency_code":"USD"}],"simplified_debts":[{"from":XXXXXXXXXX,"to":1616678,"amount":"176.67","currency_code":"USD"}],"avatar":{"small":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-50px.png","medium":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-100px.png","large":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-200px.png","xlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-500px.png","xxlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-1000px.png","original":null},"tall_avatar":{"xlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_tall_avatars/avatar-nongroup-288px.png","large":"https://s3.amazonaws.com/splitwise/uploads/group/default_tall_avatars/avatar-nongroup-192px.png"},"custom_avatar":false,"cover_photo":{"xxlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_cover_photos/coverphoto-nongroup-1000px.png","xlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_cover_photos/coverphoto-nongroup-500px.png"}}]}'
+      string: '{"groups":[{"id":0,"name":"Non-group expenses","created_at":"2015-01-31T09:04:03Z","updated_at":"2021-11-16T02:19:02Z","members":[{"id":1616678,"first_name":"Justin","last_name":"Flannery","picture":{"small":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-50px.png","medium":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-100px.png","large":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-200px.png"},"custom_picture":false,"email":"juftin@gmail.com","registration_status":"confirmed","balance":[{"amount":"176.67","currency_code":"USD"}]}],"simplify_by_default":false,"original_debts":[{"from":10910565,"to":1616678,"amount":"176.67","currency_code":"USD"}],"simplified_debts":[{"from":10910565,"to":1616678,"amount":"176.67","currency_code":"USD"}],"avatar":{"small":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-50px.png","medium":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-100px.png","large":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-200px.png","xlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-500px.png","xxlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-1000px.png","original":null},"tall_avatar":{"xlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_tall_avatars/avatar-nongroup-288px.png","large":"https://s3.amazonaws.com/splitwise/uploads/group/default_tall_avatars/avatar-nongroup-192px.png"},"custom_avatar":false,"cover_photo":{"xxlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_cover_photos/coverphoto-nongroup-1000px.png","xlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_cover_photos/coverphoto-nongroup-500px.png"}}]}'
     headers:
       Cache-Control:
       - no-store
@@ -286,9 +286,9 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 16 Nov 2021 01:56:26 GMT
+      - Tue, 16 Nov 2021 02:19:02 GMT
       Etag:
-      - W/"add3bf02a497a2453b09e230e6133d31"
+      - W/"5582a2ffe738236da0345ad293182fb0"
       Expires:
       - Fri, 01 Jan 1990 00:00:00 GMT
       Pragma:
@@ -314,9 +314,9 @@ interactions:
       X-Permitted-Cross-Domain-Policies:
       - none
       X-Request-Id:
-      - 389f8637-b7e1-41e4-8d89-2ead2f4a7871
+      - 318c5cee-3ed4-4ae0-ac70-3eeb2e1c661d
       X-Runtime:
-      - '0.021931'
+      - '0.025765'
       X-Xss-Protection:
       - 1; mode=block
     status:
