@@ -408,7 +408,8 @@ class SplitLunch(splitwise.Splitwise):
                                    consumer_key: Optional[str] = None,
                                    consumer_secret: Optional[str] = None,
                                    api_key: Optional[str] = None,
-                                   access_token: Optional[Dict[str, str]] = None) -> Dict[str, Any]:
+                                   access_token: Optional[Dict[str, Any]] = None
+                                   ) -> Dict[str, Any]:
         """
         Get the Splitwise Kwargs
 

@@ -67,7 +67,6 @@ def vcr_config() -> Dict[str, list]:
     -------
     Dict[str, list]:
     """
-
     return {
         "filter_headers": [
             ("authorization", "XXXXXXXXXX")

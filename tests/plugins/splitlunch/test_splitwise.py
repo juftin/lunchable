@@ -30,4 +30,3 @@ def test_update_balance():
     """
     lunch = SplitLunch()
     lunch.update_splitwise_balance()
-
