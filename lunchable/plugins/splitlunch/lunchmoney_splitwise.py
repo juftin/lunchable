@@ -842,7 +842,7 @@ class SplitLunch(splitwise.Splitwise):
                                                   transaction=tag_update)
         return update_responses
 
-    def make_splitlunch_direct_import(self, tag_transactions: bool = False) -> None:
+    def make_splitlunch_direct_import(self, tag_transactions: bool = False) -> List[Dict[str, Any]]:
         """
         Operate on `SplitLunchDirectImport` tagged transactions
 
@@ -861,6 +861,7 @@ class SplitLunch(splitwise.Splitwise):
             self._raise_category_reimbursement_error()
             raise ValueError("ReimbursementCategory")
         tagged_objects = self.get_splitlunch_direct_import_tagged_transactions()
+        update_responses = list()
         for transaction in tagged_objects:
             # Split the Original Amount
             description = str(transaction.payee)
@@ -880,8 +881,10 @@ class SplitLunch(splitwise.Splitwise):
             update = TransactionUpdateObject(category_id=self.reimbursement_category.id,
                                              tags=tags,
                                              notes=notes)
-            self.lunchable.update_transaction(transaction_id=transaction.id,
-                                              transaction=update)
+            response = self.lunchable.update_transaction(transaction_id=transaction.id,
+                                                         transaction=update)
+            update_responses.append(response)
+        return update_responses
 
     def splitwise_to_lunchmoney(self, expenses: List[SplitLunchExpense]) -> List[int]:
         """
