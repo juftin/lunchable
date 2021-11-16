@@ -24,7 +24,7 @@ and extensive test coverage.
 .. image:: https://img.shields.io/docker/v/juftin/lunchable?color=blue&label=docker&logo=docker
     :target: https://hub.docker.com/r/juftin/lunchable
     :alt: Docker
-.. image:: https://github.com/juftin/lunchable/actions/workflows/tests.yml/badge.svg?branch=main&event=release
+.. image:: https://github.com/juftin/lunchable/actions/workflows/tests.yml/badge.svg?branch=main
     :target: https://github.com/juftin/lunchable/actions/workflows/tests.yml?query=branch%3Amain
     :alt: Testing Status
 .. image:: https://img.shields.io/github/license/juftin/lunchable?color=blue&label=License
