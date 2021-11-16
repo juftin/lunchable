@@ -419,7 +419,7 @@ class SplitLunch(splitwise.Splitwise):
         if consumer_key is None or consumer_secret is None or api_key is None:
             error_message = dedent("""
             You must set your Splitwise credentials explicitly or by assigning
-            the `SPLITWISE_CONSUMER_KEY`, `SPLITWISE_CONSUMER_SECRET`, and the 
+            the `SPLITWISE_CONSUMER_KEY`, `SPLITWISE_CONSUMER_SECRET`, and the
             `SPLITWISE_API_KEY`environment variables
             """).replace("\n", " ").replace("  ", " ")
             logger.error(error_message)
