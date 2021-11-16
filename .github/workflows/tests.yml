@@ -1,9 +1,8 @@
 name: Tests
 
 on:
-    push:
-        branches:
-            - main
+    release:
+        types: [ published ]
     pull_request:
         branches: [ "**" ]
 
@@ -66,7 +65,7 @@ jobs:
                       docker run --rm juftin/lunchable:latest
 
     version-checker:
-        if:      ${{ github.event_name == 'push' }} && ${{ github.base_ref == 'main' }}
+        if:      ${{ github.event_name == 'pull_request' }}
         runs-on: ubuntu-latest
         steps:
             -   name: Set up Python
