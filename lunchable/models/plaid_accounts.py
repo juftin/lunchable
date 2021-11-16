@@ -84,7 +84,7 @@ class PlaidAccountObject(BaseModel):
     institution_name: str = Field(description=_institution_name_description)
     status: str = Field(description=_status_description)
     last_import: Optional[datetime.datetime] = Field(description=_last_import_description)
-    balance: float = Field(description=_balance_description)
+    balance: Optional[float] = Field(description=_balance_description)
     currency: str = Field(description=_currency_description)
     balance_last_update: datetime.datetime = Field(description=_balance_last_update_description)
     limit: Optional[int] = Field(description=_limit_description)

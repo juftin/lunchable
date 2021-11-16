@@ -137,9 +137,12 @@ class SplitLunch(splitwise.Splitwise):
             Consumer Key provided by Splitwise. Defaults to `SPLITWISE_API_KEY` environment
             variable.
         access_token: Optional[str]
-            Access Token is a combination of oauth_token and oauth_token_secret. Defaults to
-            `SPLITWISE_OAUTH_TOKEN` and `SPLITWISE_OAUTH_SECRET `environment variables.
-            Providing an api_key overrides this auth method.
+            Access Token is dict with the following key, value pairs: oauth_token,
+            oauth_token_secret. Defaults to `SPLITWISE_OAUTH_TOKEN` and `SPLITWISE_OAUTH_SECRET`
+            environment variables. Providing an api_key overrides this auth method.
+        lunch_money_access_token: Optional[str]
+            Lunch Money Access Token. Will be inherited from `LUNCHMONEY_ACCESS_TOKEN`
+            environment variable if not provided.
         lunchable_client: LunchMoney
             Instantiated LunchMoney object to use as internal client. One will
             be created using environment variables otherwise.

@@ -7,6 +7,13 @@ on:
 jobs:
     pypi-publishing:
         runs-on: ubuntu-latest
+        env:
+            LUNCHMONEY_ACCESS_TOKEN:   ${{ secrets.LUNCHMONEY_ACCESS_TOKEN }}
+            SENSITIVE_REQUEST_STRINGS: ${{ secrets.SENSITIVE_REQUEST_STRINGS }}
+            SPLITWISE_CONSUMER_KEY:    ${{ secrets.SPLITWISE_CONSUMER_KEY }}
+            SPLITWISE_CONSUMER_SECRET: ${{ secrets.SPLITWISE_CONSUMER_SECRET }}
+            SPLITWISE_API_KEY:         ${{ secrets.SPLITWISE_API_KEY }}
+            PUSHOVER_USER_KEY:         ${{ secrets.PUSHOVER_USER_KEY }}
         steps:
             -   name: Set up Github Workspace
                 uses: actions/checkout@v2
@@ -26,8 +33,6 @@ jobs:
             -   name: Run Tests
                 run:  |
                       tox -e py39
-                env:
-                    LUNCHMONEY_ACCESS_TOKEN: ${{ secrets.LUNCHMONEY_ACCESS_TOKEN }}
             -   name: Build Python Package
                 run:  |
                       python -m build
