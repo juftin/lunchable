@@ -1,10 +1,10 @@
 # SplitLunch
 
-## A lunchable plugin to Splitwise
+## Lunch Money Push Notifications via Pushover
 
 <div align="center">
     <p float="center">
-        <img src=https://assets.splitwise.com/assets/core/logo-square.svg
+        <img src=https://pushover.net/images/pushover-logo.svg
             width="195" alt="lunchable">
         <img src=https://i.imgur.com/FyKDsG3.png
             width="300" alt="lunchable">
@@ -18,27 +18,30 @@
 [![GitHub License](https://img.shields.io/github/license/juftin/lunchable?color=blue&label=License)](https://github.com/juftin/lunchable/blob/main/LICENSE)
 [![Documentation Status](https://readthedocs.org/projects/lunchable/badge/?version=latest)](https://lunchable.readthedocs.io/en/latest/?badge=latest)
 
+`PushLunch` supports Push Notifications via [Pushover](https://pushover.net). Pushover supports iOS
+and Android Push notifications. To get started just provide your Pushover
+`User Key` directly or via the `PUSHOVER_USER_KEY` environment variable.
+
+## Run via the Lunchable CLI
+
+The below command checks for un-reviewed transactions in the current period and sends them as Push
+Notifications. The `--continuous` flag tells it to run forever which will only send you a push
+notifaction once for each transaction. By default it will check every 60 minutes, but this can be
+changed using the `--interval`
+argument.
+
 ```shell
-pip install lunchable[splitlunch]
+lunchable plugins pushlunch notify --continuous
 ```
 
-```python
-from lunchable.plugins.splitlunch import SplitLunch
-
-splitlunch = SplitLunch()
-splitlunch.refresh_splitwise_transactions()
-```
+## Run via Docker
 
 ```shell
-lunchable plugins splitlunch expenses --limit 5
-lunchable plugins splitlunch refresh
+docker run --rm \
+    --env LUNCHMONEY_ACCESS_TOKEN=${LUNCHMONEY_ACCESS_TOKEN} \
+    --env PUSHOVER_USER_KEY=${PUSHOVER_USER_KEY} \
+    juftin/lunchable:latest \
+    lunchable plugins pushlunch notify --continuous
 ```
 
-The goals of this plugin are to support a few things:
-
-1. Auto-Importing of Splitwise Transactions
-2. Creation of Splitwise transactions directly from Lunch Money
-3. Syncing of Splitwise Account Balance
-4. A simple workflow to split transactions in half and mark half as reimbursed
-
-### More info on the [ReadTheDocs](https://lunchable.readthedocs.io/en/latest/splitlunch.html)
+### More info on the [ReadTheDocs](https://lunchable.readthedocs.io/en/latest/pushlunch.html)
