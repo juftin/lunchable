@@ -1071,7 +1071,7 @@ class SplitLunch(splitwise.Splitwise):
         ]
         return transactions_to_delete
 
-    def refresh_splitwise_transactions(self) -> Dict[str, list]:
+    def refresh_splitwise_transactions(self) -> Dict[str, Any]:
         """
         Import New Splitwise Transactions to Lunch Money
 
@@ -1084,9 +1084,11 @@ class SplitLunch(splitwise.Splitwise):
         """
         new_transactions, deleted_transactions = self.get_new_transactions()
         self.splitwise_to_lunchmoney(expenses=new_transactions)
-        self.update_splitwise_balance()
+        splitwise_asset = self.update_splitwise_balance()
         self.handle_deleted_transactions(deleted_transactions=deleted_transactions)
-        return dict(new=new_transactions, deleted=deleted_transactions)
+        return dict(balance=splitwise_asset.balance,
+                    new=new_transactions,
+                    deleted=deleted_transactions)
 
     def handle_deleted_transactions(self,
                                     deleted_transactions: List[TransactionObject],
