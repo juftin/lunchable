@@ -828,7 +828,15 @@ class SplitLunch(splitwise.Splitwise):
             update_response = self.lunchable.update_transaction(transaction_id=transaction.id,
                                                                 split=[split_object,
                                                                        reimbursement_object])
-            update_responses.append(update_response)
+            formatted_update_response = dict(original_id=transaction.id,
+                                             payee=transaction.payee,
+                                             amount=transaction.amount,
+                                             reimbursement_amount=reimbursement_object.amount,
+                                             notes=transaction.notes,
+                                             splitwise_id=new_transaction.splitwise_id,
+                                             updated=update_response["updated"],
+                                             split=update_response["split"])
+            update_responses.append(formatted_update_response)
             # Tag each of the new transactions generated
             for split_transaction_id in update_response["split"]:
                 update_tags = transaction.tags or []
@@ -874,7 +882,7 @@ class SplitLunch(splitwise.Splitwise):
                 notes = f"{transaction.notes} || {notes}"
             existing_tags = transaction.tags or []
             tags = [tag.name for tag in existing_tags if
-                    tag.name.lower() != self.splitlunch_import_tag.name.lower()]
+                    tag.name.lower() != self.splitlunch_direct_import_tag.name.lower()]
             if self.splitwise_tag.name not in tags and tag_transactions is True:
                 self._raise_nonexistent_tag_error(tags=[SplitLunchConfig.splitwise_tag])
                 tags.append(self.splitwise_tag.name)
@@ -883,7 +891,15 @@ class SplitLunch(splitwise.Splitwise):
                                              notes=notes)
             response = self.lunchable.update_transaction(transaction_id=transaction.id,
                                                          transaction=update)
-            update_responses.append(response)
+            formatted_update_response = dict(original_id=transaction.id,
+                                             payee=transaction.payee,
+                                             amount=transaction.amount,
+                                             reimbursement_amount=transaction.amount,
+                                             notes=transaction.notes,
+                                             splitwise_id=new_transaction.splitwise_id,
+                                             updated=response["updated"],
+                                             split=None)
+            update_responses.append(formatted_update_response)
         return update_responses
 
     def splitwise_to_lunchmoney(self, expenses: List[SplitLunchExpense]) -> List[int]:
