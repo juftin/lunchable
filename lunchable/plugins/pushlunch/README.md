@@ -17,13 +17,18 @@
 [![GitHub License](https://img.shields.io/github/license/juftin/lunchable?color=blue&label=License)](https://github.com/juftin/lunchable/blob/main/LICENSE)
 [![Documentation Status](https://readthedocs.org/projects/lunchable/badge/?version=latest)](https://lunchable.readthedocs.io/en/latest/?badge=latest)
 
+`PushLunch` supports Push Notifications via [Pushover](https://pushover.net). Pushover supports iOS
+and Android Push notifications. To get started just provide your Pushover
+`User Key` directly or via the `PUSHOVER_USER_KEY` environment variable.
+
 ```shell
 pip install lunchable
 ```
 
-`PushLunch` supports Push Notifications via [Pushover](https://pushover.net). Pushover supports iOS
-and Android Push notifications. To get started just provide your Pushover
-`User Key` directly or via the `PUSHOVER_USER_KEY` environment variable.
+The below command checks for un-reviewed transactions in the current period and sends them as Push
+Notifications. The `–-continuous` flag tells it to run forever which will only send you a push
+notification once for each transaction. By default, it will check every 60 minutes - but this can be
+changed using the `-–interval` argument.
 
 ```shell
 lunchable plugins pushlunch notify --continuous --user-key <PUSHOVER_USER_KEY>
