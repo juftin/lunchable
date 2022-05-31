@@ -39,17 +39,24 @@ class AssetsObject(BaseModel):
     _closed_on_description = "The date this asset was closed (optional)"
     _currency_description = "Three-letter lowercase currency code of the balance in ISO 4217 format"
     _created_at_description = "Date/time the asset was created in ISO 8601 extended format"
+    _exclude_transactions_description = ("If true, this asset will not show up as an "
+                                         "option for assignment when creating "
+                                         "transactions manually")
 
     id: int = Field(description="Unique identifier for asset")
     type_name: str = Field(description=_type_name_description)
-    subtype_name: str = Field(description=_subtype_name_description)
+    subtype_name: Optional[str] = Field(description=_subtype_name_description)
     name: str = Field(description="Name of the asset")
-    display_name: Optional[str] = Field(description="Display name of the asset (as set by user)")
+    display_name: Optional[str] = Field(
+        description="Display name of the asset (as set by user)")
     balance: float = Field(description=_balance_description)
     balance_as_of: datetime.datetime = Field(description=_balance_as_of_description)
     closed_on: Optional[datetime.date] = Field(description=_closed_on_description)
     currency: str = Field(description=_currency_description)
-    institution_name: Optional[str] = Field(description="Name of institution holding the asset")
+    institution_name: Optional[str] = Field(
+        description="Name of institution holding the asset")
+    exclude_transactions: bool = Field(default=False,
+                                       description=_exclude_transactions_description)
     created_at: datetime.datetime = Field(description=_created_at_description)
 
 
@@ -65,6 +72,31 @@ class _AssetsParamsPut(BaseModel):
     balance_as_of: Optional[datetime.datetime]
     currency: Optional[str]
     institution_name: Optional[str]
+
+    @classmethod
+    @validator("balance", pre=True)
+    def result_check(cls, x):
+        """
+        Check a result
+        """
+        return round(x, 2)
+
+
+class _AssetsParamsPost(BaseModel):
+    """
+    https://lunchmoney.dev/#create-asset
+    """
+
+    type_name: str
+    subtype_name: Optional[str]
+    name: str
+    display_name: Optional[str]
+    balance: float
+    balance_as_of: Optional[datetime.datetime]
+    currency: Optional[str]
+    institution_name: Optional[str]
+    closed_on: Optional[datetime.date]
+    exclude_transactions: bool = False
 
     @classmethod
     @validator("balance", pre=True)
@@ -141,10 +173,76 @@ class _LunchMoneyAssets(LunchMoneyAPIClient):
                                    name=name, balance=balance,
                                    balance_as_of=balance_as_of,
                                    currency=currency,
-                                   institution_name=institution_name).dict(exclude_none=True)
+                                   institution_name=institution_name).dict(
+            exclude_none=True)
         response_data = self._make_request(method="PUT",
                                            url_path=[APIConfig.LUNCHMONEY_ASSETS,
                                                      asset_id],
+                                           payload=payload)
+        asset = AssetsObject(**response_data)
+        return asset
+
+    def create_asset(self,
+                     type_name: str,
+                     name: Optional[str] = None,
+                     subtype_name: Optional[str] = None,
+                     display_name: Optional[str] = None,
+                     balance: float = 0.00,
+                     balance_as_of: Optional[datetime.datetime] = None,
+                     currency: Optional[str] = None,
+                     institution_name: Optional[str] = None,
+                     closed_on: Optional[datetime.date] = None,
+                     exclude_transactions: bool = False,
+                     ) -> AssetsObject:
+        """
+        Create a single (manually-managed) asset.
+
+        Parameters
+        ----------
+        type_name: Optional[str]
+            Must be one of: cash, credit, investment, other, real estate, loan, vehicle,
+            cryptocurrency, employee compensation
+        name: Optional[str]
+            Max 45 characters
+        subtype_name: Optional[str]
+            Max 25 characters
+        display_name: Optional[str]
+            Display name of the asset (as set by user)
+        balance: float
+            Numeric value of the current balance of the account. Do not include any
+            special characters aside from a decimal point! Defaults to `0.00`
+        balance_as_of: Optional[datetime.datetime]
+            Has no effect if balance is not defined. If balance is defined, but
+            balance_as_of is not supplied or is invalid, current timestamp will be used.
+        currency: Optional[str]
+            Three-letter lowercase currency in ISO 4217 format. The code sent must exist
+            in our database. Defaults to user's primary currency.
+        institution_name: Optional[str]
+            Max 50 characters
+        closed_on: Optional[datetime]
+            The date this asset was closed
+        exclude_transactions: bool
+            If true, this asset will not show up as an option for assignment when
+            creating transactions manually. Defaults to False
+
+        Returns
+        -------
+        AssetsObject
+        """
+        payload = _AssetsParamsPost(
+            type_name=type_name,
+            subtype_name=subtype_name,
+            name=name,
+            display_name=display_name,
+            balance=balance,
+            balance_as_of=balance_as_of,
+            currency=currency,
+            institution_name=institution_name,
+            closed_on=closed_on,
+            exclude_transactions=exclude_transactions,
+        ).dict(exclude_none=True)
+        response_data = self._make_request(method="POST",
+                                           url_path=[APIConfig.LUNCHMONEY_ASSETS],
                                            payload=payload)
         asset = AssetsObject(**response_data)
         return asset
