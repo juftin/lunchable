@@ -220,7 +220,7 @@ class _LunchMoneyAssets(LunchMoneyAPIClient):
             in our database. Defaults to user's primary currency.
         institution_name: Optional[str]
             Max 50 characters
-        closed_on: Optional[datetime]
+        closed_on: Optional[datetime.date]
             The date this asset was closed
         exclude_transactions: bool
             If true, this asset will not show up as an option for assignment when
