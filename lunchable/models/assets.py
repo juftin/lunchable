@@ -183,7 +183,7 @@ class _LunchMoneyAssets(LunchMoneyAPIClient):
         asset = AssetsObject(**response_data)
         return asset
 
-    def create_asset(self,
+    def insert_asset(self,
                      type_name: str,
                      name: Optional[str] = None,
                      subtype_name: Optional[str] = None,
