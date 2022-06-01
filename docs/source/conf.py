@@ -84,12 +84,3 @@ always_document_default_args = True
 docstring_default_arg_substitution = "**[Default]:**"
 
 html_favicon = "https://juftin.com/favicon.ico"
-
-
-import logging
-
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG)
-
-logger.info("Hey, I'm the local logger")
-
