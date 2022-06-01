@@ -12,8 +12,7 @@
 It's built on top of `pydantic <https://github.com/samuelcolvin/pydantic>`_,
 it offers an *intuitive* API, a *simple* CLI,
 complete coverage of all endpoints,
-*plugins* to other external services,
-and extensive test coverage.
+and *plugins* to other external services
 
 .. image:: https://img.shields.io/pypi/v/lunchable?color=blue&label=lunchable
     :target: https://github.com/juftin/lunchable
