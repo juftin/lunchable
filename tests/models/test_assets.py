@@ -69,7 +69,7 @@ def test_create_asset(lunch_money_obj: LunchMoney):
     """
     Create an Asset
     """
-    response = lunch_money_obj.create_asset(
+    response = lunch_money_obj.insert_asset(
         type_name="cash",
         name="test-account-1",
         subtype_name=None,
