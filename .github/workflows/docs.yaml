@@ -51,7 +51,6 @@ jobs:
                                    git rm -rf . || true
                                    cp -R ${{ github.workspace }}/main/docs/_build/html/* ${PWD}
                                    touch .nojekyll
-                                   cp ${{ github.workspace }}/main/docs/README.md README.md
                                    git add .
                                    git diff-index --quiet HEAD || git commit -m "GitHub Pages - ${{ env.COMMIT_SHA }}"
                                    git push origin gh-pages --force
