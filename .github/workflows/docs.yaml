@@ -3,11 +3,7 @@ name: Documentation
 on:
     push:
         branches: [ main ]
-    pull_request:
-        types: [ opened, synchronize, reopened ]
-        paths:
-            - "docs/**"
-            - "lunchable/**"
+
 jobs:
     github-pages-publish:
         runs-on: ubuntu-latest
