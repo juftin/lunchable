@@ -17,6 +17,7 @@ jobs:
                     - { name: 'Python 3.8', python: '3.8', tox: py38 }
                     - { name: 'Python 3.7', python: '3.7', tox: py37 }
                     - { name: 'Python 3.6', python: '3.6', tox: py36 }
+                    - { name: 'Python 3.10', python: '3.10', tox: py310 }
         env:
             LUNCHMONEY_ACCESS_TOKEN:   ${{ secrets.LUNCHMONEY_ACCESS_TOKEN }}
             SENSITIVE_REQUEST_STRINGS: ${{ secrets.SENSITIVE_REQUEST_STRINGS }}

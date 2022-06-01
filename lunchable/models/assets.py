@@ -8,15 +8,16 @@ import datetime
 import logging
 from typing import List, Optional
 
-from pydantic import BaseModel, Field, validator
+from pydantic import Field, validator
 
 from lunchable._config import APIConfig
+from lunchable.models._base import LunchableModel
 from lunchable.models._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 
 
-class AssetsObject(BaseModel):
+class AssetsObject(LunchableModel):
     """
     Manually Managed Asset Objects
 
@@ -60,7 +61,7 @@ class AssetsObject(BaseModel):
     created_at: datetime.datetime = Field(description=_created_at_description)
 
 
-class _AssetsParamsPut(BaseModel):
+class _AssetsParamsPut(LunchableModel):
     """
     https://lunchmoney.dev/#update-asset
     """
@@ -82,7 +83,7 @@ class _AssetsParamsPut(BaseModel):
         return round(x, 2)
 
 
-class _AssetsParamsPost(BaseModel):
+class _AssetsParamsPost(LunchableModel):
     """
     https://lunchmoney.dev/#create-asset
     """

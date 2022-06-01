@@ -8,15 +8,16 @@ import datetime
 import logging
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 from lunchable._config import APIConfig
+from lunchable.models._base import LunchableModel
 from lunchable.models._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 
 
-class BudgetDataObject(BaseModel):
+class BudgetDataObject(LunchableModel):
     """
     Data Object within a Budget
     """
@@ -28,7 +29,7 @@ class BudgetDataObject(BaseModel):
     num_transactions: int = Field(default=0)
 
 
-class BudgetConfigObject(BaseModel):
+class BudgetConfigObject(LunchableModel):
     """
     Budget Configuration Object
     """
@@ -41,7 +42,7 @@ class BudgetConfigObject(BaseModel):
     auto_suggest: str
 
 
-class BudgetObject(BaseModel):
+class BudgetObject(LunchableModel):
     """
     Monthly Budget Per Category Object
 
@@ -81,7 +82,7 @@ class BudgetObject(BaseModel):
     config: Optional[BudgetConfigObject] = Field(description=_config_description)
 
 
-class BudgetParamsGet(BaseModel):
+class BudgetParamsGet(LunchableModel):
     """
     https://lunchmoney.dev/#get-budget-summary
     """
@@ -90,7 +91,7 @@ class BudgetParamsGet(BaseModel):
     end_date: datetime.date
 
 
-class BudgetParamsPut(BaseModel):
+class BudgetParamsPut(LunchableModel):
     """
     https://lunchmoney.dev/#upsert-budget
     """
@@ -101,7 +102,7 @@ class BudgetParamsPut(BaseModel):
     currency: Optional[str]
 
 
-class BudgetParamsRemove(BaseModel):
+class BudgetParamsRemove(LunchableModel):
     """
     https://lunchmoney.dev/#remove-budget
     """
