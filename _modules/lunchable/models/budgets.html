@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lunchable.models.budgets &mdash; lunchable 0.1.11 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> lunchable
+          </a>
+              <div class="version">
+                0.1.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lunchable.html">Interacting with Lunch Money</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Lunchable CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">lunchable</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>lunchable.models.budgets</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for lunchable.models.budgets</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Lunch Money - Budgets</span>
+
+<span class="sd">https://lunchmoney.dev/#budget</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">Field</span>
+
+<span class="kn">from</span> <span class="nn">lunchable._config</span> <span class="kn">import</span> <span class="n">APIConfig</span>
+<span class="kn">from</span> <span class="nn">lunchable.models._base</span> <span class="kn">import</span> <span class="n">LunchableModel</span>
+<span class="kn">from</span> <span class="nn">lunchable.models._core</span> <span class="kn">import</span> <span class="n">LunchMoneyAPIClient</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="BudgetDataObject"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.budgets.BudgetDataObject">[docs]</a><span class="k">class</span> <span class="nc">BudgetDataObject</span><span class="p">(</span><span class="n">LunchableModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Data Object within a Budget</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">budget_amount</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">budget_currency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">budget_to_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">spending_to_base</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.00</span><span class="p">)</span>
+    <span class="n">num_transactions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BudgetConfigObject"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.budgets.BudgetConfigObject">[docs]</a><span class="k">class</span> <span class="nc">BudgetConfigObject</span><span class="p">(</span><span class="n">LunchableModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Budget Configuration Object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">config_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">cadence</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">amount</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">currency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">to_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">auto_suggest</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="BudgetObject"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.budgets.BudgetObject">[docs]</a><span class="k">class</span> <span class="nc">BudgetObject</span><span class="p">(</span><span class="n">LunchableModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Monthly Budget Per Category Object</span>
+
+<span class="sd">    https://lunchmoney.dev/#budget-object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_category_group_name_description</span> <span class="o">=</span> <span class="s2">&quot;Name of the category group, if applicable&quot;</span>
+    <span class="n">_is_income_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    If true, this category is an income category (category properties </span>
+<span class="s2">    are set in the app via the Categories page)</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_exclude_from_budget_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    If true, this category is excluded from budget (category </span>
+<span class="s2">    properties are set in the app via the Categories page)</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_exclude_from_totals_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    If true, this category is excluded from totals (category </span>
+<span class="s2">    properties are set in the app via the Categories page)</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_data_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    For each month with budget or category spending data, there is a data object with the key </span>
+<span class="s2">    set to the month in format YYYY-MM-DD. For properties, see Data object below.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_config_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Object representing the category&#39;s budget suggestion configuration</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="n">category_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Name of the category&quot;</span><span class="p">)</span>
+    <span class="n">category_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Unique identifier for category&quot;</span><span class="p">)</span>
+    <span class="n">category_group_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_category_group_name_description</span><span class="p">)</span>
+    <span class="n">group_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Unique identifier for category group&quot;</span><span class="p">)</span>
+    <span class="n">is_group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;If true, this category is a group&quot;</span><span class="p">)</span>
+    <span class="n">is_income</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_is_income_description</span><span class="p">)</span>
+    <span class="n">exclude_from_budget</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_exclude_from_budget_description</span><span class="p">)</span>
+    <span class="n">exclude_from_totals</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_exclude_from_totals_description</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">BudgetDataObject</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_data_description</span><span class="p">)</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">BudgetConfigObject</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_config_description</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BudgetParamsGet"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.budgets.BudgetParamsGet">[docs]</a><span class="k">class</span> <span class="nc">BudgetParamsGet</span><span class="p">(</span><span class="n">LunchableModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://lunchmoney.dev/#get-budget-summary</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span>
+    <span class="n">end_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span></div>
+
+
+<div class="viewcode-block" id="BudgetParamsPut"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.budgets.BudgetParamsPut">[docs]</a><span class="k">class</span> <span class="nc">BudgetParamsPut</span><span class="p">(</span><span class="n">LunchableModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://lunchmoney.dev/#upsert-budget</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span>
+    <span class="n">category_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">currency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="BudgetParamsRemove"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.budgets.BudgetParamsRemove">[docs]</a><span class="k">class</span> <span class="nc">BudgetParamsRemove</span><span class="p">(</span><span class="n">LunchableModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://lunchmoney.dev/#remove-budget</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span>
+    <span class="n">category_id</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+<span class="k">class</span> <span class="nc">_LunchMoneyBudgets</span><span class="p">(</span><span class="n">LunchMoneyAPIClient</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Lunch Money Budget Interactions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get_budgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+                    <span class="n">end_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">BudgetObject</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get Monthly Budgets</span>
+
+<span class="sd">        Get full details on the budgets for all categories between a certain time</span>
+<span class="sd">        period. The budgeted and spending amounts will be an aggregate across this</span>
+<span class="sd">        time period. (https://lunchmoney.dev/#plaid-accounts-object)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[BudgetObject]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">BudgetParamsGet</span><span class="p">(</span><span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_BUDGET</span><span class="p">],</span>
+                                           <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">budget_objects</span> <span class="o">=</span> <span class="p">[</span><span class="n">BudgetObject</span><span class="p">(</span><span class="o">**</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">response_data</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">budget_objects</span>
+
+    <span class="k">def</span> <span class="nf">upsert_budget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                      <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+                      <span class="n">category_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                      <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                      <span class="n">currency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                      <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Upsert a Budget for a Category and Date</span>
+
+<span class="sd">        Use this endpoint to update an existing budget or insert a new budget for</span>
+<span class="sd">        a particular category and date.</span>
+
+<span class="sd">        Note: Lunch Money currently only supports monthly budgets, so your date must</span>
+<span class="sd">        always be the start of a month (eg. 2021-04-01)</span>
+
+<span class="sd">        If this is a sub-category, the response will include the updated category</span>
+<span class="sd">        group&#39;s budget. This is because setting a sub-category may also update</span>
+<span class="sd">        the category group&#39;s overall budget.</span>
+
+<span class="sd">        https://lunchmoney.dev/#upsert-budget</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        start_date : date</span>
+<span class="sd">            Start date for the budget period. Lunch Money currently only supports monthly budgets,</span>
+<span class="sd">            so your date must always be the start of a month (eg. 2021-04-01)</span>
+<span class="sd">        category_id: int</span>
+<span class="sd">            Unique identifier for the category</span>
+<span class="sd">        amount: float</span>
+<span class="sd">            Amount for budget</span>
+<span class="sd">        currency: Optional[str]</span>
+<span class="sd">            Currency for the budgeted amount (optional). If empty, will default to your primary</span>
+<span class="sd">            currency</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Optional[Dict[str, Any]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="n">BudgetParamsPut</span><span class="p">(</span><span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">category_id</span><span class="o">=</span><span class="n">category_id</span><span class="p">,</span>
+                               <span class="n">amount</span><span class="o">=</span><span class="n">amount</span><span class="p">,</span> <span class="n">currency</span><span class="o">=</span><span class="n">currency</span><span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;PUT&quot;</span><span class="p">,</span>
+                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_BUDGET</span><span class="p">],</span>
+                                           <span class="n">payload</span><span class="o">=</span><span class="n">body</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;category_group&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">remove_budget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                      <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+                      <span class="n">category_id</span><span class="p">:</span> <span class="nb">int</span>
+                      <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unset an Existing Budget for a Particular Category in a Particular Month</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        start_date : date</span>
+<span class="sd">            Start date for the budget period. Lunch Money currently only supports monthly budgets,</span>
+<span class="sd">            so your date must always be the start of a month (eg. 2021-04-01)</span>
+<span class="sd">        category_id: int</span>
+<span class="sd">            Unique identifier for the category</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">BudgetParamsRemove</span><span class="p">(</span><span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">category_id</span><span class="o">=</span><span class="n">category_id</span><span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;DELETE&quot;</span><span class="p">,</span>
+                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_BUDGET</span><span class="p">],</span>
+                                           <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response_data</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

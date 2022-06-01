@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lunchable.models.categories &mdash; lunchable 0.1.11 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> lunchable
+          </a>
+              <div class="version">
+                0.1.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lunchable.html">Interacting with Lunch Money</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Lunchable CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">lunchable</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>lunchable.models.categories</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for lunchable.models.categories</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Lunch Money - Categories</span>
+
+<span class="sd">https://lunchmoney.dev/#categories</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">Field</span>
+
+<span class="kn">from</span> <span class="nn">lunchable._config</span> <span class="kn">import</span> <span class="n">APIConfig</span>
+<span class="kn">from</span> <span class="nn">lunchable.models._base</span> <span class="kn">import</span> <span class="n">LunchableModel</span>
+<span class="kn">from</span> <span class="nn">lunchable.models._core</span> <span class="kn">import</span> <span class="n">LunchMoneyAPIClient</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ModelCreateCategory"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.categories.ModelCreateCategory">[docs]</a><span class="k">class</span> <span class="nc">ModelCreateCategory</span><span class="p">(</span><span class="n">LunchableModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://lunchmoney.dev/#create-category</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">is_income</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">exclude_from_budget</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">exclude_from_totals</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="CategoriesObject"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.categories.CategoriesObject">[docs]</a><span class="k">class</span> <span class="nc">CategoriesObject</span><span class="p">(</span><span class="n">LunchableModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Lunch Money Spending Categories</span>
+
+<span class="sd">    https://lunchmoney.dev/#categories-object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_name_description</span> <span class="o">=</span> <span class="s2">&quot;The name of the category. Must be between 1 and 40 characters.&quot;</span>
+    <span class="n">_description_description</span> <span class="o">=</span> <span class="s2">&quot;The description of the category. Must not exceed 140 characters.&quot;</span>
+    <span class="n">_is_income_description</span> <span class="o">=</span> <span class="s2">&quot;If true, the transactions in this category will be treated as income.&quot;</span>
+    <span class="n">_exclude_from_budget_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    If true, the transactions in this category will be excluded from the budget.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_exclude_from_totals_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    If true, the transactions in this category will be excluded from totals.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_updated_at_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    The date and time of when the category was last updated (in the ISO 8601 extended format).</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_created_at_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    The date and time of when the category was created (in the ISO 8601 extended format).</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_is_group_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    If true, the category is a group that can be a parent to other categories.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_group_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    The ID of a category group (or null if the category doesn&#39;t belong to a category group).</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;A unique identifier for the category.&quot;</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">_name_description</span><span class="p">)</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">140</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">_description_description</span><span class="p">)</span>
+    <span class="n">is_income</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_is_income_description</span><span class="p">)</span>
+    <span class="n">exclude_from_budget</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_exclude_from_budget_description</span><span class="p">)</span>
+    <span class="n">exclude_from_totals</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_exclude_from_totals_description</span><span class="p">)</span>
+    <span class="n">updated_at</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_updated_at_description</span><span class="p">)</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_created_at_description</span><span class="p">)</span>
+    <span class="n">is_group</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_is_group_description</span><span class="p">)</span>
+    <span class="n">group_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_group_id_description</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">_LunchMoneyCategories</span><span class="p">(</span><span class="n">LunchMoneyAPIClient</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Lunch Money Categories Interactions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">CategoriesObject</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get Spending categories</span>
+
+<span class="sd">        Use this endpoint to get a list of all categories associated with the user&#39;s account.</span>
+<span class="sd">        https://lunchmoney.dev/#get-all-categories</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[CategoriesObject]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
+                                           <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CATEGORIES</span><span class="p">)</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;categories&quot;</span><span class="p">]</span>
+        <span class="n">budget_objects</span> <span class="o">=</span> <span class="p">[</span><span class="n">CategoriesObject</span><span class="p">(</span><span class="o">**</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">budget_objects</span>
+
+    <span class="k">def</span> <span class="nf">insert_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                        <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">is_income</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="n">exclude_from_budget</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="n">exclude_from_totals</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a Spending Category</span>
+
+<span class="sd">        Use this to create a single category</span>
+<span class="sd">        https://lunchmoney.dev/#create-category</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name: str</span>
+<span class="sd">            Name of category. Must be between 1 and 40 characters.</span>
+<span class="sd">        description: Optional[str]</span>
+<span class="sd">            Description of category. Must be less than 140 categories. Defaults to None.</span>
+<span class="sd">        is_income: Optional[bool]</span>
+<span class="sd">            Whether or not transactions in this category should be treated as income.</span>
+<span class="sd">            Defaults to False.</span>
+<span class="sd">        exclude_from_budget: Optional[bool]</span>
+<span class="sd">            Whether or not transactions in this category should be excluded from budgets.</span>
+<span class="sd">            Defaults to False.</span>
+<span class="sd">        exclude_from_totals: Optional[bool]</span>
+<span class="sd">            Whether or not transactions in this category should be excluded from</span>
+<span class="sd">            calculated totals. Defaults to False.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            ID of the newly created category</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">category_body</span> <span class="o">=</span> <span class="n">ModelCreateCategory</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">is_income</span><span class="o">=</span><span class="n">is_income</span><span class="p">,</span>
+            <span class="n">exclude_from_budget</span><span class="o">=</span><span class="n">exclude_from_budget</span><span class="p">,</span>
+            <span class="n">exclude_from_totals</span><span class="o">=</span><span class="n">exclude_from_totals</span><span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span>
+                                           <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CATEGORIES</span><span class="p">,</span>
+                                           <span class="n">payload</span><span class="o">=</span><span class="n">category_body</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;category_id&quot;</span><span class="p">]</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

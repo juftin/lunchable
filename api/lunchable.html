@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lunchable package &mdash; lunchable 0.1.11 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lunchable.models package" href="lunchable.models.html" />
+    <link rel="prev" title="lunchable" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> lunchable
+          </a>
+              <div class="version">
+                0.1.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lunchable.html">Interacting with Lunch Money</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Lunchable CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins.html">Plugins</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">lunchable package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lunchable.models.html">lunchable.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lunchable.plugins.html">lunchable.plugins package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-lunchable.exceptions">lunchable.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-lunchable">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">lunchable</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">lunchable</a> &raquo;</li>
+      <li>lunchable package</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lunchable-package">
+<h1>lunchable package<a class="headerlink" href="#lunchable-package" title="Permalink to this headline"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lunchable.models.html">lunchable.models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lunchable.models.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lunchable.models.html#module-lunchable.models.assets">lunchable.models.assets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lunchable.models.html#module-lunchable.models.budgets">lunchable.models.budgets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lunchable.models.html#module-lunchable.models.categories">lunchable.models.categories module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lunchable.models.html#module-lunchable.models.crypto">lunchable.models.crypto module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lunchable.models.html#module-lunchable.models.plaid_accounts">lunchable.models.plaid_accounts module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lunchable.models.html#module-lunchable.models.recurring_expenses">lunchable.models.recurring_expenses module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lunchable.models.html#module-lunchable.models.tags">lunchable.models.tags module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lunchable.models.html#module-lunchable.models.transactions">lunchable.models.transactions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lunchable.models.html#module-lunchable.models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lunchable.plugins.html">lunchable.plugins package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lunchable.plugins.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lunchable.plugins.pushlunch.html">lunchable.plugins.pushlunch package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lunchable.plugins.pushlunch.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lunchable.plugins.pushlunch.html#module-lunchable.plugins.pushlunch.pushover">lunchable.plugins.pushlunch.pushover module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lunchable.plugins.pushlunch.html#module-lunchable.plugins.pushlunch">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lunchable.plugins.splitlunch.html">lunchable.plugins.splitlunch package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lunchable.plugins.splitlunch.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lunchable.plugins.splitlunch.html#module-lunchable.plugins.splitlunch.exceptions">lunchable.plugins.splitlunch.exceptions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lunchable.plugins.splitlunch.html#module-lunchable.plugins.splitlunch.lunchmoney_splitwise">lunchable.plugins.splitlunch.lunchmoney_splitwise module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lunchable.plugins.splitlunch.html#module-lunchable.plugins.splitlunch.models">lunchable.plugins.splitlunch.models module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lunchable.plugins.splitlunch.html#module-lunchable.plugins.splitlunch">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lunchable.plugins.html#module-lunchable.plugins">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-lunchable.exceptions">
+<span id="lunchable-exceptions-module"></span><h2>lunchable.exceptions module<a class="headerlink" href="#module-lunchable.exceptions" title="Permalink to this headline"></a></h2>
+<p>Lunchmoney Exceptions</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="lunchable.exceptions.EnvironmentVariableError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lunchable.exceptions.</span></span><span class="sig-name descname"><span class="pre">EnvironmentVariableError</span></span><a class="reference internal" href="../_modules/lunchable/exceptions.html#EnvironmentVariableError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.exceptions.EnvironmentVariableError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lunchable.exceptions.LunchMoneyError" title="lunchable.exceptions.LunchMoneyError"><code class="xref py py-class docutils literal notranslate"><span class="pre">lunchable.exceptions.LunchMoneyError</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OSError" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">OSError</span></code></a></p>
+<p>Lunch Money Missing Environment Variable Error</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="lunchable.exceptions.LunchMoneyError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lunchable.exceptions.</span></span><span class="sig-name descname"><span class="pre">LunchMoneyError</span></span><a class="reference internal" href="../_modules/lunchable/exceptions.html#LunchMoneyError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.exceptions.LunchMoneyError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>Base Exception for Lunch Money</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="lunchable.exceptions.LunchMoneyHTTPError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lunchable.exceptions.</span></span><span class="sig-name descname"><span class="pre">LunchMoneyHTTPError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lunchable/exceptions.html#LunchMoneyHTTPError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.exceptions.LunchMoneyHTTPError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lunchable.exceptions.LunchMoneyError" title="lunchable.exceptions.LunchMoneyError"><code class="xref py py-class docutils literal notranslate"><span class="pre">lunchable.exceptions.LunchMoneyError</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.exceptions.HTTPError</span></code></p>
+<p>Lunch Money HTTP Error</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="lunchable.exceptions.LunchMoneyImportError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lunchable.exceptions.</span></span><span class="sig-name descname"><span class="pre">LunchMoneyImportError</span></span><a class="reference internal" href="../_modules/lunchable/exceptions.html#LunchMoneyImportError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.exceptions.LunchMoneyImportError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lunchable.exceptions.LunchMoneyError" title="lunchable.exceptions.LunchMoneyError"><code class="xref py py-class docutils literal notranslate"><span class="pre">lunchable.exceptions.LunchMoneyError</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ImportError" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImportError</span></code></a></p>
+<p>Lunch Money Import Error</p>
+</dd></dl>
+
+</section>
+<section id="module-lunchable">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-lunchable" title="Permalink to this headline"></a></h2>
+<p>Lunch Money Python SDK</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="lunchable.LunchMoney">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lunchable.</span></span><span class="sig-name descname"><span class="pre">LunchMoney</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">access_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lunchable/models/_lunchmoney.html#LunchMoney"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.LunchMoney" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">lunchable.models.assets._LunchMoneyAssets</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">lunchable.models.budgets._LunchMoneyBudgets</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">lunchable.models.categories._LunchMoneyCategories</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">lunchable.models.crypto._LunchMoneyCrypto</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">lunchable.models.plaid_accounts._LunchMoneyPlaidAccounts</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">lunchable.models.recurring_expenses._LunchMoneyRecurringExpenses</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">lunchable.models.tags._LunchMoneyTags</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">lunchable.models.transactions._LunchMoneyTransactions</span></code></p>
+<p>Lunch Money Python Client.</p>
+<p>This class facilitates with connections to
+the <a class="reference external" href="https://lunchmoney.dev/">Lunch Money Developer API</a>. Authenticate
+with an Access Token. If an access token isn’t provided one will attempt to
+be inherited from a <cite>LUNCHMONEY_ACCESS_TOKEN</cite> environment variable.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lunchable</span> <span class="kn">import</span> <span class="n">LunchMoney</span>
+
+<span class="n">lunch</span> <span class="o">=</span> <span class="n">LunchMoney</span><span class="p">(</span><span class="n">access_token</span><span class="o">=</span><span class="s2">&quot;xxxxxxx&quot;</span><span class="p">)</span>
+<span class="n">transactions</span> <span class="o">=</span> <span class="n">lunch</span><span class="o">.</span><span class="n">get_transactions</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>access_token</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="lunchable.LunchMoneyError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lunchable.</span></span><span class="sig-name descname"><span class="pre">LunchMoneyError</span></span><a class="reference internal" href="../_modules/lunchable/exceptions.html#LunchMoneyError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.LunchMoneyError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>Base Exception for Lunch Money</p>
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="lunchable.TransactionInsertObject">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lunchable.</span></span><span class="sig-name descname"><span class="pre">TransactionInsertObject</span></span><a class="reference internal" href="../_modules/lunchable/models/transactions.html#TransactionInsertObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.TransactionInsertObject" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionBaseObject" title="lunchable.models.transactions.TransactionBaseObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">lunchable.models.transactions.TransactionBaseObject</span></code></a></p>
+<p>Object For Creating New Transactions</p>
+<p><a class="reference external" href="https://lunchmoney.dev/#insert-transactions">https://lunchmoney.dev/#insert-transactions</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionInsertObject.amount" title="lunchable.models.transactions.TransactionInsertObject.amount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">amount</span> <span class="pre">(float)</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionInsertObject.asset_id" title="lunchable.models.transactions.TransactionInsertObject.asset_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asset_id</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionInsertObject.category_id" title="lunchable.models.transactions.TransactionInsertObject.category_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">category_id</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionInsertObject.currency" title="lunchable.models.transactions.TransactionInsertObject.currency"><code class="xref py py-obj docutils literal notranslate"><span class="pre">currency</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionInsertObject.date" title="lunchable.models.transactions.TransactionInsertObject.date"><code class="xref py py-obj docutils literal notranslate"><span class="pre">date</span> <span class="pre">(datetime.date)</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionInsertObject.external_id" title="lunchable.models.transactions.TransactionInsertObject.external_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">external_id</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionInsertObject.notes" title="lunchable.models.transactions.TransactionInsertObject.notes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">notes</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionInsertObject.payee" title="lunchable.models.transactions.TransactionInsertObject.payee"><code class="xref py py-obj docutils literal notranslate"><span class="pre">payee</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionInsertObject.recurring_id" title="lunchable.models.transactions.TransactionInsertObject.recurring_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">recurring_id</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionInsertObject.status" title="lunchable.models.transactions.TransactionInsertObject.status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">status</span> <span class="pre">(Optional[lunchable.models.transactions.TransactionInsertObject.StatusEnum])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionInsertObject.tags" title="lunchable.models.transactions.TransactionInsertObject.tags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tags</span> <span class="pre">(Optional[List[Union[str,</span> <span class="pre">int]]])</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionInsertObject.amount">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#lunchable.TransactionInsertObject.amount" title="Permalink to this definition"></a></dt>
+<dd><p>Numeric value of amount. i.e. $4.25 should be denoted as 4.25.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionInsertObject.asset_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">asset_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionInsertObject.asset_id" title="Permalink to this definition"></a></dt>
+<dd><p>Unique identifier for associated asset (manually-managed account). Asset must be 
+associated with the same account.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionInsertObject.category_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">category_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionInsertObject.category_id" title="Permalink to this definition"></a></dt>
+<dd><p>Unique identifier for associated category_id. Category must be associated with 
+the same account and must not be a category group.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionInsertObject.currency">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">currency</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionInsertObject.currency" title="Permalink to this definition"></a></dt>
+<dd><p>Three-letter lowercase currency code in ISO 4217 format. The code sent must exist 
+in our database. Defaults to user account’s primary currency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>maxLength</strong> = 3</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionInsertObject.date">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.date" title="(in Python v3.10)"><span class="pre">datetime.date</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#lunchable.TransactionInsertObject.date" title="Permalink to this definition"></a></dt>
+<dd><p>Must be in ISO 8601 format (YYYY-MM-DD).</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionInsertObject.external_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">external_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionInsertObject.external_id" title="Permalink to this definition"></a></dt>
+<dd><p>User-defined external ID for transaction. Max 75 characters. External IDs must be 
+unique within the same asset_id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>maxLength</strong> = 75</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionInsertObject.notes">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">notes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionInsertObject.notes" title="Permalink to this definition"></a></dt>
+<dd><p>Max 350 characters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>maxLength</strong> = 350</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionInsertObject.payee">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">payee</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionInsertObject.payee" title="Permalink to this definition"></a></dt>
+<dd><p>Max 140 characters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>maxLength</strong> = 140</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionInsertObject.recurring_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">recurring_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionInsertObject.recurring_id" title="Permalink to this definition"></a></dt>
+<dd><p>Unique identifier for associated recurring expense. Recurring expense must be associated 
+with the same account.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionInsertObject.status">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionInsertObject.StatusEnum" title="lunchable.models.transactions.TransactionInsertObject.StatusEnum"><span class="pre">lunchable.models.transactions.TransactionInsertObject.StatusEnum</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionInsertObject.status" title="Permalink to this definition"></a></dt>
+<dd><p>Must be either cleared or uncleared. If recurring_id is provided, the status will 
+automatically be set to recurring or recurring_suggested depending on the type of 
+recurring_id. Defaults to uncleared.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionInsertObject.tags">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tags</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionInsertObject.tags" title="Permalink to this definition"></a></dt>
+<dd><p>Passing in a number will attempt to match by ID. If no matching tag ID is found, an error 
+will be thrown. Passing in a string will attempt to match by string. If no matching tag 
+name is found, a new tag will be created.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lunchable.TransactionInsertObject.StatusEnum">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StatusEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lunchable/models/transactions.html#TransactionInsertObject.StatusEnum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.TransactionInsertObject.StatusEnum" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>Status Options, must be “cleared” or “uncleared”</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lunchable.TransactionInsertObject.StatusEnum.cleared">
+<span class="sig-name descname"><span class="pre">cleared</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cleared'</span></em><a class="headerlink" href="#lunchable.TransactionInsertObject.StatusEnum.cleared" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lunchable.TransactionInsertObject.StatusEnum.uncleared">
+<span class="sig-name descname"><span class="pre">uncleared</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'uncleared'</span></em><a class="headerlink" href="#lunchable.TransactionInsertObject.StatusEnum.uncleared" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="lunchable.TransactionSplitObject">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lunchable.</span></span><span class="sig-name descname"><span class="pre">TransactionSplitObject</span></span><a class="reference internal" href="../_modules/lunchable/models/transactions.html#TransactionSplitObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.TransactionSplitObject" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionBaseObject" title="lunchable.models.transactions.TransactionBaseObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">lunchable.models.transactions.TransactionBaseObject</span></code></a></p>
+<p>Object for Splitting Transactions</p>
+<p><a class="reference external" href="https://lunchmoney.dev/#split-object">https://lunchmoney.dev/#split-object</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionSplitObject.amount" title="lunchable.models.transactions.TransactionSplitObject.amount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">amount</span> <span class="pre">(float)</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionSplitObject.category_id" title="lunchable.models.transactions.TransactionSplitObject.category_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">category_id</span> <span class="pre">(int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionSplitObject.date" title="lunchable.models.transactions.TransactionSplitObject.date"><code class="xref py py-obj docutils literal notranslate"><span class="pre">date</span> <span class="pre">(datetime.date)</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionSplitObject.notes" title="lunchable.models.transactions.TransactionSplitObject.notes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">notes</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionSplitObject.amount">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#lunchable.TransactionSplitObject.amount" title="Permalink to this definition"></a></dt>
+<dd><p>Individual amount of split. Currency will inherit from parent transaction. All 
+amounts must sum up to parent transaction amount.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionSplitObject.category_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">category_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#lunchable.TransactionSplitObject.category_id" title="Permalink to this definition"></a></dt>
+<dd><p>Unique identifier for associated category_id. Category must be associated 
+with the same account.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionSplitObject.date">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.date" title="(in Python v3.10)"><span class="pre">datetime.date</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#lunchable.TransactionSplitObject.date" title="Permalink to this definition"></a></dt>
+<dd><p>Must be in ISO 8601 format (YYYY-MM-DD).</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionSplitObject.notes">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">notes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionSplitObject.notes" title="Permalink to this definition"></a></dt>
+<dd><p>Transaction Split Notes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="lunchable.TransactionUpdateObject">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lunchable.</span></span><span class="sig-name descname"><span class="pre">TransactionUpdateObject</span></span><a class="reference internal" href="../_modules/lunchable/models/transactions.html#TransactionUpdateObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.TransactionUpdateObject" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionBaseObject" title="lunchable.models.transactions.TransactionBaseObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">lunchable.models.transactions.TransactionBaseObject</span></code></a></p>
+<p>Object For Updating Existing Transactions</p>
+<p><a class="reference external" href="https://lunchmoney.dev/#update-transaction">https://lunchmoney.dev/#update-transaction</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionUpdateObject.amount" title="lunchable.models.transactions.TransactionUpdateObject.amount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">amount</span> <span class="pre">(Optional[float])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionUpdateObject.asset_id" title="lunchable.models.transactions.TransactionUpdateObject.asset_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asset_id</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionUpdateObject.category_id" title="lunchable.models.transactions.TransactionUpdateObject.category_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">category_id</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionUpdateObject.currency" title="lunchable.models.transactions.TransactionUpdateObject.currency"><code class="xref py py-obj docutils literal notranslate"><span class="pre">currency</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionUpdateObject.date" title="lunchable.models.transactions.TransactionUpdateObject.date"><code class="xref py py-obj docutils literal notranslate"><span class="pre">date</span> <span class="pre">(Optional[datetime.date])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionUpdateObject.external_id" title="lunchable.models.transactions.TransactionUpdateObject.external_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">external_id</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionUpdateObject.notes" title="lunchable.models.transactions.TransactionUpdateObject.notes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">notes</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionUpdateObject.payee" title="lunchable.models.transactions.TransactionUpdateObject.payee"><code class="xref py py-obj docutils literal notranslate"><span class="pre">payee</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionUpdateObject.recurring_id" title="lunchable.models.transactions.TransactionUpdateObject.recurring_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">recurring_id</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionUpdateObject.status" title="lunchable.models.transactions.TransactionUpdateObject.status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">status</span> <span class="pre">(Optional[lunchable.models.transactions.TransactionUpdateObject.StatusEnum])</span></code></a></p></li>
+<li><p><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionUpdateObject.tags" title="lunchable.models.transactions.TransactionUpdateObject.tags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tags</span> <span class="pre">(Optional[List[Union[str,</span> <span class="pre">int]]])</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionUpdateObject.amount">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionUpdateObject.amount" title="Permalink to this definition"></a></dt>
+<dd><p>You may only update this if this transaction was not created from an automatic 
+import, i.e. if this transaction is not associated with a plaid_account_id</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionUpdateObject.asset_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">asset_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionUpdateObject.asset_id" title="Permalink to this definition"></a></dt>
+<dd><p>Unique identifier for associated asset (manually-managed account). Asset must be 
+associated with the same account. You may only update this if this transaction was 
+not created from an automatic import, i.e. if this transaction is not associated 
+with a plaid_account_id</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionUpdateObject.category_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">category_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionUpdateObject.category_id" title="Permalink to this definition"></a></dt>
+<dd><p>Unique identifier for associated category_id. Category must be associated 
+with the same account and must not be a category group.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionUpdateObject.currency">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">currency</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionUpdateObject.currency" title="Permalink to this definition"></a></dt>
+<dd><p>You may only update this if this transaction was not created from an automatic 
+import, i.e. if this transaction is not associated with a plaid_account_id. 
+Defaults to user account’s primary currency.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionUpdateObject.date">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.date" title="(in Python v3.10)"><span class="pre">datetime.date</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionUpdateObject.date" title="Permalink to this definition"></a></dt>
+<dd><p>Must be in ISO 8601 format (YYYY-MM-DD).</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionUpdateObject.external_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">external_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionUpdateObject.external_id" title="Permalink to this definition"></a></dt>
+<dd><p>User-defined external ID for transaction. Max 75 characters. External IDs must be 
+unique within the same asset_id. You may only update this if this transaction was 
+not created from an automatic import, i.e. if this transaction is not associated 
+with a plaid_account_id</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionUpdateObject.notes">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">notes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionUpdateObject.notes" title="Permalink to this definition"></a></dt>
+<dd><p>Max 350 characters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>maxLength</strong> = 350</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionUpdateObject.payee">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">payee</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionUpdateObject.payee" title="Permalink to this definition"></a></dt>
+<dd><p>Max 140 characters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>maxLength</strong> = 140</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionUpdateObject.recurring_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">recurring_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionUpdateObject.recurring_id" title="Permalink to this definition"></a></dt>
+<dd><p>Unique identifier for associated recurring expense. Recurring expense must 
+be associated with the same account.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionUpdateObject.status">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="lunchable.models.html#lunchable.models.transactions.TransactionUpdateObject.StatusEnum" title="lunchable.models.transactions.TransactionUpdateObject.StatusEnum"><span class="pre">lunchable.models.transactions.TransactionUpdateObject.StatusEnum</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionUpdateObject.status" title="Permalink to this definition"></a></dt>
+<dd><p>Must be either cleared or uncleared. Defaults to uncleared If recurring_id is 
+provided, the status will automatically be set to recurring or recurring_suggested 
+depending on the type of recurring_id. Defaults to uncleared.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="lunchable.TransactionUpdateObject.tags">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tags</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lunchable.TransactionUpdateObject.tags" title="Permalink to this definition"></a></dt>
+<dd><p>Passing in a number will attempt to match by ID. If no matching tag ID is found, 
+an error will be thrown. Passing in a string will attempt to match by string. 
+If no matching tag name is found, a new tag will be created.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lunchable.TransactionUpdateObject.StatusEnum">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StatusEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lunchable/models/transactions.html#TransactionUpdateObject.StatusEnum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.TransactionUpdateObject.StatusEnum" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>Status Options, must be “cleared” or “uncleared”</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lunchable.TransactionUpdateObject.StatusEnum.cleared">
+<span class="sig-name descname"><span class="pre">cleared</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cleared'</span></em><a class="headerlink" href="#lunchable.TransactionUpdateObject.StatusEnum.cleared" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lunchable.TransactionUpdateObject.StatusEnum.uncleared">
+<span class="sig-name descname"><span class="pre">uncleared</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'uncleared'</span></em><a class="headerlink" href="#lunchable.TransactionUpdateObject.StatusEnum.uncleared" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="lunchable" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lunchable.models.html" class="btn btn-neutral float-right" title="lunchable.models package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

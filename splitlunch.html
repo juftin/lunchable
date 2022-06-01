@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SplitLunch: Splitwise Integration &mdash; lunchable 0.1.11 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="lunchable" href="api/modules.html" />
+    <link rel="prev" title="PushLunch: Push Notifications via Pushover" href="pushlunch.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> lunchable
+          </a>
+              <div class="version">
+                0.1.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lunchable.html">Interacting with Lunch Money</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Lunchable CLI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="plugins.html">Plugins</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pushlunch.html">PushLunch: Push Notifications via Pushover</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SplitLunch: Splitwise Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#integrations">Integrations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#auto-importer">Auto Importer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lunchmoney-splitwise">LunchMoney -&gt; Splitwise</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#splitlunch">SplitLunch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lunchmoney-splitwise-without-splitting">LunchMoney -&gt; Splitwise (without splitting)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-the-splitlunch-plugin-for-the-lunchable-cli">Run the SplitLunch plugin for the <span class="xref std std-ref">Lunchable CLI</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-the-splitlunch-plugin-for-the-lunchable-cli-via-docker">Run the SplitLunch plugin for the <span class="xref std std-ref">Lunchable CLI</span> via Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-via-python">Run via Python</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">lunchable</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="plugins.html">Plugins</a> &raquo;</li>
+      <li>SplitLunch: Splitwise Integration</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="splitlunch-splitwise-integration">
+<h1>SplitLunch: Splitwise Integration<a class="headerlink" href="#splitlunch-splitwise-integration" title="Permalink to this headline"></a></h1>
+<p><a class="reference external" href="https://www.splitwise.com/"><img alt="splitwise" src="https://assets.splitwise.com/assets/core/logo-square.svg" width="35%" /></a> <a class="reference external" href="https://github.com/juftin/lunchable"><img alt="lunchable" src="https://i.imgur.com/FyKDsG3.png" style="width: 60%;" /></a></p>
+<hr class="docutils" />
+<section id="integrations">
+<h2>Integrations<a class="headerlink" href="#integrations" title="Permalink to this headline"></a></h2>
+<p>This plugin supports different operations, and some of those operations
+have prerequisites:</p>
+<section id="auto-importer">
+<h3>Auto Importer<a class="headerlink" href="#auto-importer" title="Permalink to this headline"></a></h3>
+<p>It supports the auto-importing of Splitwise expenses into Lunch Money
+transactions. This requires a manual asset exist in your Lunch Money
+account with “Splitwise” in the Name.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Prerequisites:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Accounts:</dt><dd><ul>
+<li><p>Splitwise must be in the account name</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="lunchmoney-splitwise">
+<h3>LunchMoney -&gt; Splitwise<a class="headerlink" href="#lunchmoney-splitwise" title="Permalink to this headline"></a></h3>
+<p>It supports the creation of Splitwise transactions directly from synced Lunch Money
+accounts. This syncing requires you create a tag called <cite>SplitLunchImport</cite>. Transactions
+with this tag will be created in Splitwise with your “financial partner”. Once transactions
+are created in Splitwise they will be split in half in Lunch Money. Half of the split will be
+marked in the <cite>Reimbursement</cite> category which must be created.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Prerequisites:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Financial Partners:</dt><dd><ul>
+<li><p>If you only have one friend in Splitwise, this is your Financial Partner</p></li>
+<li><p>Financial Partners must be specified by their Splitwise ID or Email Address</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Tags:</dt><dd><ul>
+<li><p><cite>SplitLunchImport</cite></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Categories:</dt><dd><ul>
+<li><p><cite>Reimbursement</cite></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="splitlunch">
+<h3>SplitLunch<a class="headerlink" href="#splitlunch" title="Permalink to this headline"></a></h3>
+<p>It supports a workflow where you mark transactions as split
+(identical to <cite>Lunch Money -&gt; Splitwise</cite>) without importing them into Splitwise.
+This syncing requires you create a tag called <cite>SplitLunch</cite> and a category named
+<cite>Reimbursement</cite></p>
+<blockquote>
+<div><dl class="simple">
+<dt>Prerequisites:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Tags:</dt><dd><ul>
+<li><p><cite>SplitLunch</cite></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Categories:</dt><dd><ul>
+<li><p><cite>Reimbursement</cite></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="lunchmoney-splitwise-without-splitting">
+<h3>LunchMoney -&gt; Splitwise (without splitting)<a class="headerlink" href="#lunchmoney-splitwise-without-splitting" title="Permalink to this headline"></a></h3>
+<p>It supports the creation of Splitwise transactions directly from synced Lunch Money
+accounts. This syncing requires you create a tag called <cite>SplitLunchDirectImport</cite>. Transactions
+with this tag will be created in Splitwise with the total completely owed by your
+“financial partner”. The entire transaction wil then be categorized as <cite>Reimbursement</cite> without
+being split.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Prerequisites:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Financial Partners:</dt><dd><ul>
+<li><p>If you only have one friend in Splitwise, this is your Financial Partner</p></li>
+<li><p>Financial Partners must be specified by their Splitwise ID or Email Address</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Tags:</dt><dd><ul>
+<li><p><cite>SplitLunchDirectImport</cite></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Categories:</dt><dd><ul>
+<li><p><cite>Reimbursement</cite></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some of the above scenarios allow for tagging of a <cite>Splitwise</cite>
+tag on updated transactions. This tag must be created for this
+functionality to work.</p>
+</div>
+</section>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pip install lunchable[splitlunch]</span>
+</pre></div>
+</div>
+</section>
+<section id="run-the-splitlunch-plugin-for-the-lunchable-cli">
+<h2>Run the SplitLunch plugin for the <a class="reference internal" href="cli.html#lunchable-cli"><span class="std std-ref">Lunchable CLI</span></a><a class="headerlink" href="#run-the-splitlunch-plugin-for-the-lunchable-cli" title="Permalink to this headline"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">lunchable plugins splitlunch --help</span>
+</pre></div>
+</div>
+</section>
+<section id="run-the-splitlunch-plugin-for-the-lunchable-cli-via-docker">
+<h2>Run the SplitLunch plugin for the <a class="reference internal" href="cli.html#lunchable-cli"><span class="std std-ref">Lunchable CLI</span></a> via Docker<a class="headerlink" href="#run-the-splitlunch-plugin-for-the-lunchable-cli-via-docker" title="Permalink to this headline"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker pull juftin/lunchable</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run \</span>
+<span class="go">    --env LUNCHMONEY_ACCESS_TOKEN=${LUNCHMONEY_ACCESS_TOKEN} \</span>
+<span class="go">    --env SPLITWISE_CONSUMER_KEY=${SPLITWISE_CONSUMER_KEY} \</span>
+<span class="go">    --env SPLITWISE_CONSUMER_SECRET=${SPLITWISE_CONSUMER_SECRET} \</span>
+<span class="go">    --env SPLITWISE_API_KEY=${SPLITWISE_API_KEY} \</span>
+<span class="go">    juftin/lunchable:latest \</span>
+<span class="go">    lunchable plugins splitlunch --help</span>
+</pre></div>
+</div>
+</section>
+<section id="run-via-python">
+<h2>Run via Python<a class="headerlink" href="#run-via-python" title="Permalink to this headline"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lunchable.plugins.splitlunch</span> <span class="kn">import</span> <span class="n">SplitLunch</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lunchable.plugins.splitlunch.</span></span><span class="sig-name descname"><span class="pre">SplitLunch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lunch_money_access_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">financial_partner_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">financial_partner_email</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consumer_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consumer_secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lunchable_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch" title="Permalink to this definition"></a></dt>
+<dd><p>Lunchable Plugin For Interacting With Splitwise</p>
+<p>This plugin supports different operations, and some of those operations
+have prerequisites:</p>
+<p>1) It supports the auto-importing of Splitwise expenses into Lunch Money
+transactions. This requires a manual asset exist in your Lunch Money
+account with “Splitwise” in the Name.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Prerequisites:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Accounts:</dt><dd><ul>
+<li><p>Splitwise must be in the account name</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<p>2) It supports the creation of Splitwise transactions directly from synced Lunch Money
+accounts. This syncing requires you create a tag called <cite>SplitLunchImport</cite>. Transactions
+with this tag will be created in Splitwise with your “financial partner”. Once transactions
+are created in Splitwise they will be split in half in Lunch Money. Half of the split will be
+marked in the <cite>Reimbursement</cite> category which must be created.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Prerequisites:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Financial Partners:</dt><dd><ul>
+<li><p>If you only have one friend in Splitwise, this is your Financial Partner</p></li>
+<li><p>Financial Partners must be specified by their Splitwise ID or Email Address</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Tags:</dt><dd><ul>
+<li><p><cite>SplitLunchImport</cite></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Categories:</dt><dd><ul>
+<li><p><cite>Reimbursement</cite></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<p>3) It supports a workflow where you mark transactions as split (identical to scenario #2)
+without importing them into Splitwise. This syncing requires you create a tag
+called <cite>SplitLunch</cite> and a category named <cite>Reimbursement</cite></p>
+<blockquote>
+<div><dl class="simple">
+<dt>Prerequisites:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Tags:</dt><dd><ul>
+<li><p><cite>SplitLunch</cite></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Categories:</dt><dd><ul>
+<li><p><cite>Reimbursement</cite></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<p>4) It supports a workflow where you mark transactions as <cite>Reimbursed</cite> and import them to
+Splitwise with the total completely owed by your financial partner.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Prerequisites:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Financial Partners:</dt><dd><ul>
+<li><p>If you only have one friend in Splitwise, this is your Financial Partner</p></li>
+<li><p>Financial Partners must be specified by their Splitwise ID or Email Address</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Tags:</dt><dd><ul>
+<li><p><cite>SplitLunchDirectImport</cite></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Categories:</dt><dd><ul>
+<li><p><cite>Reimbursement</cite></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lunch_money_access_token</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>financial_partner_id</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – Splitwise User ID of financial partner
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>financial_partner_email</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – Splitwise linked email address of financial partner
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>consumer_key</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – Consumer Key provided by Splitwise. Defaults to <cite>SPLITWISE_CONSUMER_KEY</cite> environment
+variable
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>consumer_secret</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – Consumer Key provided by Splitwise. Defaults to <cite>SPLITWISE_CONSUMER_SECRET</cite>
+environment variable
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>api_key</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – Consumer Key provided by Splitwise. Defaults to <cite>SPLITWISE_API_KEY</cite> environment
+variable.
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>lunchable_client</strong> (<a class="reference internal" href="lunchable.html#lunchable.LunchMoney" title="lunchable.LunchMoney"><em>LunchMoney</em></a>) – Instantiated LunchMoney object to use as internal client. One will
+be created using environment variables otherwise.
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Methods:</strong></p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.create_expense_on_behalf_of_partner" title="lunchable.plugins.splitlunch.SplitLunch.create_expense_on_behalf_of_partner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_expense_on_behalf_of_partner</span></code></a>(amount, ...)</p></td>
+<td><p>Create and Submit a Splitwise Expense on behalf of your financial partner.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.create_self_paid_expense" title="lunchable.plugins.splitlunch.SplitLunch.create_self_paid_expense"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_self_paid_expense</span></code></a>(amount, description)</p></td>
+<td><p>Create and Submit a Splitwise Expense</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.filter_relevant_splitwise_expenses" title="lunchable.plugins.splitlunch.SplitLunch.filter_relevant_splitwise_expenses"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_relevant_splitwise_expenses</span></code></a>(expenses)</p></td>
+<td><p>Filter Expenses in Splitwise into relevant expenses.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.get_deleted_transactions" title="lunchable.plugins.splitlunch.SplitLunch.get_deleted_transactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_deleted_transactions</span></code></a>(...)</p></td>
+<td><p>Get Splitwise Transactions that exist in Lunch Money but have since been deleted</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.get_expenses" title="lunchable.plugins.splitlunch.SplitLunch.get_expenses"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_expenses</span></code></a>([offset, limit, group_id, ...])</p></td>
+<td><p>Get Splitwise Expenses</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.get_friend" title="lunchable.plugins.splitlunch.SplitLunch.get_friend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_friend</span></code></a>([email_address, friend_id])</p></td>
+<td><p>Retrieve a Financial Partner by Email Address</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.get_new_transactions" title="lunchable.plugins.splitlunch.SplitLunch.get_new_transactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_new_transactions</span></code></a>()</p></td>
+<td><p>Get Splitwise Transactions that don't exist in Lunch Money</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.get_splitlunch_direct_import_tagged_transactions" title="lunchable.plugins.splitlunch.SplitLunch.get_splitlunch_direct_import_tagged_transactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_splitlunch_direct_import_tagged_transactions</span></code></a>([...])</p></td>
+<td><p>Retrieve all transactions with the &quot;SplitLunchDirectImport&quot; Tag</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.get_splitlunch_import_tagged_transactions" title="lunchable.plugins.splitlunch.SplitLunch.get_splitlunch_import_tagged_transactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_splitlunch_import_tagged_transactions</span></code></a>([...])</p></td>
+<td><p>Retrieve all transactions with the &quot;SplitLunchImport&quot; Tag</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.get_splitlunch_tagged_transactions" title="lunchable.plugins.splitlunch.SplitLunch.get_splitlunch_tagged_transactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_splitlunch_tagged_transactions</span></code></a>([...])</p></td>
+<td><p>Retrieve all transactions with the &quot;Splitlunch&quot; Tag</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.get_splitwise_balance" title="lunchable.plugins.splitlunch.SplitLunch.get_splitwise_balance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_splitwise_balance</span></code></a>()</p></td>
+<td><p>Get the net balance in Splitwise</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.get_splitwise_tagged_transactions" title="lunchable.plugins.splitlunch.SplitLunch.get_splitwise_tagged_transactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_splitwise_tagged_transactions</span></code></a>([...])</p></td>
+<td><p>Retrieve all transactions with the &quot;Splitwise&quot; Tag</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.handle_deleted_transactions" title="lunchable.plugins.splitlunch.SplitLunch.handle_deleted_transactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">handle_deleted_transactions</span></code></a>(deleted_transactions)</p></td>
+<td><p>Update Transactions That Exist in Splitwise, but have been deleted in Splitwise</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.make_splitlunch" title="lunchable.plugins.splitlunch.SplitLunch.make_splitlunch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_splitlunch</span></code></a>([tag_transactions])</p></td>
+<td><p>Operate on <cite>SplitLunch</cite> tagged transactions</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.make_splitlunch_direct_import" title="lunchable.plugins.splitlunch.SplitLunch.make_splitlunch_direct_import"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_splitlunch_direct_import</span></code></a>([tag_transactions])</p></td>
+<td><p>Operate on <cite>SplitLunchDirectImport</cite> tagged transactions</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.make_splitlunch_import" title="lunchable.plugins.splitlunch.SplitLunch.make_splitlunch_import"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_splitlunch_import</span></code></a>([tag_transactions])</p></td>
+<td><p>Operate on <cite>SplitLunchImport</cite> tagged transactions</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.refresh_splitwise_transactions" title="lunchable.plugins.splitlunch.SplitLunch.refresh_splitwise_transactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refresh_splitwise_transactions</span></code></a>()</p></td>
+<td><p>Import New Splitwise Transactions to Lunch Money</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.split_a_transaction" title="lunchable.plugins.splitlunch.SplitLunch.split_a_transaction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_a_transaction</span></code></a>(amount)</p></td>
+<td><p>Split a Transaction into Two</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.splitwise_to_lunchmoney" title="lunchable.plugins.splitlunch.SplitLunch.splitwise_to_lunchmoney"><code class="xref py py-obj docutils literal notranslate"><span class="pre">splitwise_to_lunchmoney</span></code></a>(expenses)</p></td>
+<td><p>Ingest Splitwise Expenses into Lunch Money</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.splitwise_to_pydantic" title="lunchable.plugins.splitlunch.SplitLunch.splitwise_to_pydantic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">splitwise_to_pydantic</span></code></a>(expense)</p></td>
+<td><p>Convert Splitwise Object to Pydantic</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.splitlunch.SplitLunch.update_splitwise_balance" title="lunchable.plugins.splitlunch.SplitLunch.update_splitwise_balance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_splitwise_balance</span></code></a>()</p></td>
+<td><p>Get and update the Splitwise Asset in Lunch Money</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.create_expense_on_behalf_of_partner">
+<span class="sig-name descname"><span class="pre">create_expense_on_behalf_of_partner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.create_expense_on_behalf_of_partner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.create_expense_on_behalf_of_partner" title="Permalink to this definition"></a></dt>
+<dd><p>Create and Submit a Splitwise Expense on behalf of your financial partner.</p>
+<p>This expense will be completely owed by the partner and maked as reimbursed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>amount</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Transaction Amount</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Transaction Description</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Expense</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.create_self_paid_expense">
+<span class="sig-name descname"><span class="pre">create_self_paid_expense</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.create_self_paid_expense"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.create_self_paid_expense" title="Permalink to this definition"></a></dt>
+<dd><p>Create and Submit a Splitwise Expense</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>amount</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Transaction Amount</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Transaction Description</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Expense</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.filter_relevant_splitwise_expenses">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter_relevant_splitwise_expenses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expenses</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.filter_relevant_splitwise_expenses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.filter_relevant_splitwise_expenses" title="Permalink to this definition"></a></dt>
+<dd><p>Filter Expenses in Splitwise into relevant expenses.</p>
+<p>This filtering action is important to understand when seeing why not
+all transactions from Splitwise end up flowing into Lunch Money.</p>
+<ol class="arabic simple">
+<li><p>It filters out deleted expenses</p></li>
+</ol>
+<p>2) It filters out <cite>self-paid</cite> expenses. A <cite>self-paid</cite> expense is an expense in Splitwise
+where you originated the payment. This is excluded because it is assumed that these
+transactions will have already been imported via a different account.</p>
+<p>3) It filters out payments. Payments are excluded because it is assumed that these
+transactions will have already been imported via a different account.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>expenses</strong> (<em>List</em><em>[</em><a class="reference internal" href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.SplitLunchExpense" title="lunchable.plugins.splitlunch.SplitLunchExpense"><em>SplitLunchExpense</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.SplitLunchExpense" title="lunchable.plugins.splitlunch.SplitLunchExpense">SplitLunchExpense</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.get_deleted_transactions">
+<span class="sig-name descname"><span class="pre">get_deleted_transactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">splitlunch_expenses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">splitwise_transactions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.get_deleted_transactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.get_deleted_transactions" title="Permalink to this definition"></a></dt>
+<dd><p>Get Splitwise Transactions that exist in Lunch Money but have since been deleted</p>
+<p>Set these transactions to $0.00 and Make a Note</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>splitlunch_expenses</strong> (<em>List</em><em>[</em><a class="reference internal" href="api/lunchable.models.html#lunchable.models.transactions.TransactionObject" title="lunchable.models.transactions.TransactionObject"><em>TransactionObject</em></a><em>]</em>) – </p></li>
+<li><p><strong>splitwise_transactions</strong> (<em>List</em><em>[</em><a class="reference internal" href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.SplitLunchExpense" title="lunchable.plugins.splitlunch.SplitLunchExpense"><em>SplitLunchExpense</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="api/lunchable.models.html#lunchable.models.transactions.TransactionObject" title="lunchable.models.transactions.TransactionObject">TransactionObject</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.get_expenses">
+<span class="sig-name descname"><span class="pre">get_expenses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friendship_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dated_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dated_before</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updated_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updated_before</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.get_expenses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.get_expenses" title="Permalink to this definition"></a></dt>
+<dd><p>Get Splitwise Expenses</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – Number of expenses to be skipped
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>limit</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – Number of expenses to be returned
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>group_id</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – GroupID of the expenses
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>friendship_id</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – FriendshipID of the expenses
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>dated_after</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.10)"><em>datetime.datetime</em></a><em>]</em>) – ISO 8601 Date time. Return expenses later that this date
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>dated_before</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.10)"><em>datetime.datetime</em></a><em>]</em>) – ISO 8601 Date time. Return expenses earlier than this date
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>updated_after</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.10)"><em>datetime.datetime</em></a><em>]</em>) – ISO 8601 Date time. Return expenses updated after this date
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>updated_before</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.10)"><em>datetime.datetime</em></a><em>]</em>) – ISO 8601 Date time. Return expenses updated before this date
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.SplitLunchExpense" title="lunchable.plugins.splitlunch.SplitLunchExpense">SplitLunchExpense</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.get_friend">
+<span class="sig-name descname"><span class="pre">get_friend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">email_address</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.get_friend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.get_friend" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve a Financial Partner by Email Address</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>email_address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Email Address of Friend’s user in Splitwise
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>friend_id</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – Splitwise friend ID. Notice the friend ID in the following
+URL: <a class="reference external" href="https://secure.splitwise.com/#/friends/12345678">https://secure.splitwise.com/#/friends/12345678</a>
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Optional[splitwise.Friend]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.get_new_transactions">
+<span class="sig-name descname"><span class="pre">get_new_transactions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.get_new_transactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.get_new_transactions" title="Permalink to this definition"></a></dt>
+<dd><p>Get Splitwise Transactions that don’t exist in Lunch Money</p>
+<p>Also return deleted transaction from LunchMoney</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>New and Deleted Transactions</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Tuple[List[<a class="reference internal" href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.SplitLunchExpense" title="lunchable.plugins.splitlunch.SplitLunchExpense">SplitLunchExpense</a>], List[<a class="reference internal" href="api/lunchable.models.html#lunchable.models.transactions.TransactionObject" title="lunchable.models.transactions.TransactionObject">TransactionObject</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.get_splitlunch_direct_import_tagged_transactions">
+<span class="sig-name descname"><span class="pre">get_splitlunch_direct_import_tagged_transactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.get_splitlunch_direct_import_tagged_transactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.get_splitlunch_direct_import_tagged_transactions" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve all transactions with the “SplitLunchDirectImport” Tag</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_date</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.date" title="(in Python v3.10)"><em>datetime.date</em></a><em>]</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>end_date</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.date" title="(in Python v3.10)"><em>datetime.date</em></a><em>]</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="api/lunchable.models.html#lunchable.models.transactions.TransactionObject" title="lunchable.models.transactions.TransactionObject">TransactionObject</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.get_splitlunch_import_tagged_transactions">
+<span class="sig-name descname"><span class="pre">get_splitlunch_import_tagged_transactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.get_splitlunch_import_tagged_transactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.get_splitlunch_import_tagged_transactions" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve all transactions with the “SplitLunchImport” Tag</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_date</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.date" title="(in Python v3.10)"><em>datetime.date</em></a><em>]</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>end_date</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.date" title="(in Python v3.10)"><em>datetime.date</em></a><em>]</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="api/lunchable.models.html#lunchable.models.transactions.TransactionObject" title="lunchable.models.transactions.TransactionObject">TransactionObject</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.get_splitlunch_tagged_transactions">
+<span class="sig-name descname"><span class="pre">get_splitlunch_tagged_transactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.get_splitlunch_tagged_transactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.get_splitlunch_tagged_transactions" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve all transactions with the “Splitlunch” Tag</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_date</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.date" title="(in Python v3.10)"><em>datetime.date</em></a><em>]</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>end_date</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.date" title="(in Python v3.10)"><em>datetime.date</em></a><em>]</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="api/lunchable.models.html#lunchable.models.transactions.TransactionObject" title="lunchable.models.transactions.TransactionObject">TransactionObject</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.get_splitwise_balance">
+<span class="sig-name descname"><span class="pre">get_splitwise_balance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.get_splitwise_balance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.get_splitwise_balance" title="Permalink to this definition"></a></dt>
+<dd><p>Get the net balance in Splitwise</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.get_splitwise_tagged_transactions">
+<span class="sig-name descname"><span class="pre">get_splitwise_tagged_transactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.get_splitwise_tagged_transactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.get_splitwise_tagged_transactions" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve all transactions with the “Splitwise” Tag</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_date</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.date" title="(in Python v3.10)"><em>datetime.date</em></a><em>]</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>end_date</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.date" title="(in Python v3.10)"><em>datetime.date</em></a><em>]</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="api/lunchable.models.html#lunchable.models.transactions.TransactionObject" title="lunchable.models.transactions.TransactionObject">TransactionObject</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.handle_deleted_transactions">
+<span class="sig-name descname"><span class="pre">handle_deleted_transactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deleted_transactions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.handle_deleted_transactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.handle_deleted_transactions" title="Permalink to this definition"></a></dt>
+<dd><p>Update Transactions That Exist in Splitwise, but have been deleted in Splitwise</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>deleted_transactions</strong> (<em>List</em><em>[</em><a class="reference internal" href="api/lunchable.models.html#lunchable.models.transactions.TransactionObject" title="lunchable.models.transactions.TransactionObject"><em>TransactionObject</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, Any]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.make_splitlunch">
+<span class="sig-name descname"><span class="pre">make_splitlunch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag_transactions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.make_splitlunch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.make_splitlunch" title="Permalink to this definition"></a></dt>
+<dd><p>Operate on <cite>SplitLunch</cite> tagged transactions</p>
+<p>Split all transactions with the <cite>SplitLunch</cite> tag in half. One of these
+new splits will be recategorized to <cite>Reimbursement</cite>. Both new splits will receive
+the <cite>Splitwise</cite> tag without any preexisting tags.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tag_transactions</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.make_splitlunch_direct_import">
+<span class="sig-name descname"><span class="pre">make_splitlunch_direct_import</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag_transactions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.make_splitlunch_direct_import"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.make_splitlunch_direct_import" title="Permalink to this definition"></a></dt>
+<dd><p>Operate on <cite>SplitLunchDirectImport</cite> tagged transactions</p>
+<p>Send a transaction to Splitwise and then mark the transaction under the
+<cite>Reimbursement</cite> category. The sum of the transaction will be completely owed
+by the financial partner.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tag_transactions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to tag the transactions with the <cite>Splitwise</cite> tag after splitting them.
+Defaults to False which
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.make_splitlunch_import">
+<span class="sig-name descname"><span class="pre">make_splitlunch_import</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag_transactions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.make_splitlunch_import"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.make_splitlunch_import" title="Permalink to this definition"></a></dt>
+<dd><p>Operate on <cite>SplitLunchImport</cite> tagged transactions</p>
+<p>Send a transaction to Splitwise and then split the original transaction in Lunch Money.
+One of these new splits will be recategorized to <cite>Reimbursement</cite>. Both new splits
+will receive the <cite>Splitwise</cite> tag without the <cite>SplitLunchImport</cite> tag. Any other tags will be
+reapplied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tag_transactions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to tag the transactions with the <cite>Splitwise</cite> tag after splitting them.
+Defaults to False which
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, Any]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.refresh_splitwise_transactions">
+<span class="sig-name descname"><span class="pre">refresh_splitwise_transactions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.refresh_splitwise_transactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.refresh_splitwise_transactions" title="Permalink to this definition"></a></dt>
+<dd><p>Import New Splitwise Transactions to Lunch Money</p>
+<p>This function get’s all transactions from Splitwise, all transactions from
+your Lunch Money Splitwise account and compares the two.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.SplitLunchExpense" title="lunchable.plugins.splitlunch.SplitLunchExpense">SplitLunchExpense</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.split_a_transaction">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">split_a_transaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.split_a_transaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.split_a_transaction" title="Permalink to this definition"></a></dt>
+<dd><p>Split a Transaction into Two</p>
+<p>Split a bill into a tuple of two amounts (and take care
+of the extra penny if needed)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>amount</strong> (<em>A Currency amount</em><em> (</em><em>no more precise than cents</em><em>)</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A tuple is returned with each participant’s amount</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.splitwise_to_lunchmoney">
+<span class="sig-name descname"><span class="pre">splitwise_to_lunchmoney</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expenses</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.splitwise_to_lunchmoney"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.splitwise_to_lunchmoney" title="Permalink to this definition"></a></dt>
+<dd><p>Ingest Splitwise Expenses into Lunch Money</p>
+<p>This function inserts splitwise expenses into Lunch Money. If an expense
+is not a payment, not deleted, and not self-paid it qualifies for ingestion. Otherwise
+it will be ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>expenses</strong> (<em>List</em><em>[</em><a class="reference internal" href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.SplitLunchExpense" title="lunchable.plugins.splitlunch.SplitLunchExpense"><em>SplitLunchExpense</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>New Lunch Money transaction IDs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.splitwise_to_pydantic">
+<span class="sig-name descname"><span class="pre">splitwise_to_pydantic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expense</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.splitwise_to_pydantic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.splitwise_to_pydantic" title="Permalink to this definition"></a></dt>
+<dd><p>Convert Splitwise Object to Pydantic</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>expense</strong> (<em>splitwise.Expense</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.SplitLunchExpense" title="lunchable.plugins.splitlunch.SplitLunchExpense">SplitLunchExpense</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.splitlunch.SplitLunch.update_splitwise_balance">
+<span class="sig-name descname"><span class="pre">update_splitwise_balance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/splitlunch/lunchmoney_splitwise.html#SplitLunch.update_splitwise_balance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.splitlunch.SplitLunch.update_splitwise_balance" title="Permalink to this definition"></a></dt>
+<dd><p>Get and update the Splitwise Asset in Lunch Money</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Updated  balance</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="api/lunchable.models.html#lunchable.models.assets.AssetsObject" title="lunchable.models.assets.AssetsObject">AssetsObject</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pushlunch.html" class="btn btn-neutral float-left" title="PushLunch: Push Notifications via Pushover" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api/modules.html" class="btn btn-neutral float-right" title="lunchable" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

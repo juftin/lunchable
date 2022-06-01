@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PushLunch: Push Notifications via Pushover &mdash; lunchable 0.1.11 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SplitLunch: Splitwise Integration" href="splitlunch.html" />
+    <link rel="prev" title="Plugins" href="plugins.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> lunchable
+          </a>
+              <div class="version">
+                0.1.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lunchable.html">Interacting with Lunch Money</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Lunchable CLI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="plugins.html">Plugins</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">PushLunch: Push Notifications via Pushover</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#run-via-the-lunchable-cli">Run via the <span class="xref std std-ref">Lunchable CLI</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-via-docker">Run via Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-via-python">Run via Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="splitlunch.html">SplitLunch: Splitwise Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">lunchable</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="plugins.html">Plugins</a> &raquo;</li>
+      <li>PushLunch: Push Notifications via Pushover</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pushlunch-push-notifications-via-pushover">
+<h1>PushLunch: Push Notifications via Pushover<a class="headerlink" href="#pushlunch-push-notifications-via-pushover" title="Permalink to this headline"></a></h1>
+<p><a class="reference external" href="https://www.splitwise.com/"><img alt="pushover" src="https://pushover.net/images/pushover-logo.svg" width="35%" /></a> <a class="reference external" href="https://github.com/juftin/lunchable"><img alt="lunchable" src="https://i.imgur.com/FyKDsG3.png" style="width: 60%;" /></a></p>
+<hr class="docutils" />
+<p><cite>PushLunch</cite> supports Push Notifications via <a class="reference external" href="https://pushover.net">Pushover</a>. Pushover
+supports iOS and Android Push notifications. To get started just provide your Pushover
+<cite>User Key</cite> directly or via the <cite>PUSHOVER_USER_KEY</cite> environment variable.</p>
+<section id="run-via-the-lunchable-cli">
+<h2>Run via the <a class="reference internal" href="cli.html#lunchable-cli"><span class="std std-ref">Lunchable CLI</span></a><a class="headerlink" href="#run-via-the-lunchable-cli" title="Permalink to this headline"></a></h2>
+<p>The below command checks for un-reviewed transactions in the current period and
+sends them as Push Notifications. The <cite>–continuous</cite> flag tells it to run forever which
+will only send you a push notifaction once for each transaction.
+By default it will check every 60 minutes, but this can be changed using the <cite>–interval</cite>
+argument.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">lunchable plugins pushlunch notify --continuous</span>
+</pre></div>
+</div>
+</section>
+<section id="run-via-docker">
+<h2>Run via Docker<a class="headerlink" href="#run-via-docker" title="Permalink to this headline"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --rm \</span>
+<span class="go">    --env LUNCHMONEY_ACCESS_TOKEN=${LUNCHMONEY_ACCESS_TOKEN} \</span>
+<span class="go">    --env PUSHOVER_USER_KEY=${PUSHOVER_USER_KEY} \</span>
+<span class="go">    juftin/lunchable:latest \</span>
+<span class="go">    lunchable plugins pushlunch notify --continuous</span>
+</pre></div>
+</div>
+</section>
+<section id="run-via-python">
+<h2>Run via Python<a class="headerlink" href="#run-via-python" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="lunchable.plugins.pushlunch.PushLunch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lunchable.plugins.pushlunch.</span></span><span class="sig-name descname"><span class="pre">PushLunch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lunchmoney_access_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lunchable_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/pushlunch/pushover.html#PushLunch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.pushlunch.PushLunch" title="Permalink to this definition"></a></dt>
+<dd><p>Lunch Money Pushover Notifications via Lunchable</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_key</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>app_token</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>lunchmoney_access_token</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>lunchable_client</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Methods:</strong></p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.pushlunch.PushLunch.notify_uncleared_transactions" title="lunchable.plugins.pushlunch.PushLunch.notify_uncleared_transactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">notify_uncleared_transactions</span></code></a>([continuous, ...])</p></td>
+<td><p>Get the Current Period's Uncleared Transactions and Send a Notification for each</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lunchable.plugins.pushlunch.PushLunch.post_transaction" title="lunchable.plugins.pushlunch.PushLunch.post_transaction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">post_transaction</span></code></a>(transaction)</p></td>
+<td><p>Post a Lunch Money Transaction as a Pushover Notification</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.pushlunch.PushLunch.send_notification" title="lunchable.plugins.pushlunch.PushLunch.send_notification"><code class="xref py py-obj docutils literal notranslate"><span class="pre">send_notification</span></code></a>(message[, attachment, ...])</p></td>
+<td><p>Send a Pushover Notification</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.pushlunch.PushLunch.notify_uncleared_transactions">
+<span class="sig-name descname"><span class="pre">notify_uncleared_transactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">continuous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/pushlunch/pushover.html#PushLunch.notify_uncleared_transactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.pushlunch.PushLunch.notify_uncleared_transactions" title="Permalink to this definition"></a></dt>
+<dd><p>Get the Current Period’s Uncleared Transactions and Send a Notification for each</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>continuous</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to continuously check for more uncleared transactions,
+waiting a fixed amount in between checks.
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><strong>interval</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – Sleep Interval in Between Tries - only applies if <cite>continuous</cite> is set.
+Defaults to 60 (minutes). Cannot be less than 5 (minutes)
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="api/lunchable.models.html#lunchable.models.transactions.TransactionObject" title="lunchable.models.transactions.TransactionObject">TransactionObject</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.pushlunch.PushLunch.post_transaction">
+<span class="sig-name descname"><span class="pre">post_transaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transaction</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/pushlunch/pushover.html#PushLunch.post_transaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.pushlunch.PushLunch.post_transaction" title="Permalink to this definition"></a></dt>
+<dd><p>Post a Lunch Money Transaction as a Pushover Notification</p>
+<p>Assuming the instance of the
+class hasn’t already posted this particular notification</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>transaction</strong> (<a class="reference internal" href="api/lunchable.models.html#lunchable.models.transactions.TransactionObject" title="lunchable.models.transactions.TransactionObject"><em>TransactionObject</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.pushlunch.PushLunch.send_notification">
+<span class="sig-name descname"><span class="pre">send_notification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priority</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sound</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">html</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/pushlunch/pushover.html#PushLunch.send_notification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.pushlunch.PushLunch.send_notification" title="Permalink to this definition"></a></dt>
+<dd><p>Send a Pushover Notification</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – your message</p></li>
+<li><p><strong>attachment</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><em>object</em></a><em>]</em>) – an image attachment to send with the message; see attachments for more information
+on how to upload files
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>device</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – your user’s device name to send the message directly to that device, rather than
+all of the user’s devices (multiple devices may be separated by a comma)
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>title</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – your message’s title, otherwise your app’s name is used
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>url</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – a supplementary URL to show with your message
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>url_title</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – a title for your supplementary URL, otherwise just the URL is shown
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>priority</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – send as -2 to generate no notification/alert, -1 to always send as a quiet
+notification, 1 to display as high-priority and bypass the user’s quiet hours,
+or 2 to also require confirmation from the user
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>sound</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – the name of one of the sounds supported by device clients to override the
+user’s default sound choice
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>timestamp</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – a Unix timestamp of your message’s date and time to display to the user, rather
+than the time your message is received by our API
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>html</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>1</em><em>]</em>) – Pass 1 if message contains HTML contents
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">False</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>requests.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="plugins.html" class="btn btn-neutral float-left" title="Plugins" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="splitlunch.html" class="btn btn-neutral float-right" title="SplitLunch: Splitwise Integration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

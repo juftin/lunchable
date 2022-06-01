@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lunchable CLI &mdash; lunchable 0.1.11 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Plugins" href="plugins.html" />
+    <link rel="prev" title="Interacting with Lunch Money" href="lunchable.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> lunchable
+          </a>
+              <div class="version">
+                0.1.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lunchable.html">Interacting with Lunch Money</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lunchable CLI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install-shell-completion">Install Shell Completion</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bash">bash</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zsh">zsh</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#run-via-docker">Run via Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lunchable">lunchable</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lunchable-plugins">plugins</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lunchable-transactions">transactions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">lunchable</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Lunchable CLI</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lunchable-cli">
+<h1>Lunchable CLI<a class="headerlink" href="#lunchable-cli" title="Permalink to this headline"></a></h1>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Usage: lunchable [OPTIONS] COMMAND [ARGS]...</span>
+
+<span class="go">  Interactions with Lunch Money via lunchable 🍱</span>
+
+<span class="go">Options:</span>
+<span class="go">  --version  Show the version and exit.</span>
+<span class="go">  --help     Show this message and exit.</span>
+
+<span class="go">Commands:</span>
+<span class="go">  plugins       Interact with Lunchable Plugins</span>
+<span class="go">  transactions  Interact with Lunch Money transactions</span>
+</pre></div>
+</div>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<p>To use lunchable, first install it using pip:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pip install lunchable</span>
+</pre></div>
+</div>
+<p>or, if you’re using the Splitwise plugin on the CLI:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pip install lunchable[splitwise]</span>
+</pre></div>
+</div>
+<section id="install-shell-completion">
+<h3>Install Shell Completion<a class="headerlink" href="#install-shell-completion" title="Permalink to this headline"></a></h3>
+<section id="bash">
+<h4>bash<a class="headerlink" href="#bash" title="Permalink to this headline"></a></h4>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">_LUNCHABLE_COMPLETE=bash_source lunchable &gt; ~/.lunchable-complete.bash</span>
+<span class="go">echo &quot;[[ ! -f ~/.lunchable-complete.bash ]] || source ~/.lunchable-complete.bash&quot; &gt;&gt; ~/.bashrc</span>
+</pre></div>
+</div>
+</section>
+<section id="zsh">
+<h4>zsh<a class="headerlink" href="#zsh" title="Permalink to this headline"></a></h4>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">_LUNCHABLE_COMPLETE=zsh_source lunchable &gt; ~/.lunchable-complete.zsh</span>
+<span class="go">echo &quot;[[ ! -f ~/.lunchable-complete.zsh ]] || source ~/.lunchable-complete.zsh&quot; &gt;&gt; ~/.zshrc</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="run-via-docker">
+<h3>Run via Docker<a class="headerlink" href="#run-via-docker" title="Permalink to this headline"></a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker pull juftin/lunchable</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run \</span>
+<span class="go">    --env LUNCHMONEY_ACCESS_TOKEN=${LUNCHMONEY_ACCESS_TOKEN} \</span>
+<span class="go">    juftin/lunchable:latest \</span>
+<span class="go">    lunchable transactions get --limit 5</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline"></a></h2>
+<section id="lunchable">
+<h3>lunchable<a class="headerlink" href="#lunchable" title="Permalink to this headline"></a></h3>
+<p>Interactions with Lunch Money via lunchable 🍱</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunchable <span class="o">[</span>OPTIONS<span class="o">]</span> COMMAND <span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-version">
+<span class="sig-name descname"><span class="pre">--version</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-lunchable-version" title="Permalink to this definition"></a></dt>
+<dd><p>Show the version and exit.</p>
+</dd></dl>
+
+<section id="lunchable-plugins">
+<h4>plugins<a class="headerlink" href="#lunchable-plugins" title="Permalink to this headline"></a></h4>
+<p>Interact with Lunchable Plugins</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunchable plugins <span class="o">[</span>OPTIONS<span class="o">]</span> COMMAND <span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<section id="lunchable-plugins-pushlunch">
+<h5>pushlunch<a class="headerlink" href="#lunchable-plugins-pushlunch" title="Permalink to this headline"></a></h5>
+<p>Push Notifications for Lunch Money: PushLunch 📲</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunchable plugins pushlunch <span class="o">[</span>OPTIONS<span class="o">]</span> COMMAND <span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<section id="lunchable-plugins-pushlunch-notify">
+<h6>notify<a class="headerlink" href="#lunchable-plugins-pushlunch-notify" title="Permalink to this headline"></a></h6>
+<p>Send a Notification for each Uncleared Transaction</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunchable plugins pushlunch notify <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-pushlunch-notify-continuous">
+<span class="sig-name descname"><span class="pre">--continuous</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-lunchable-plugins-pushlunch-notify-continuous" title="Permalink to this definition"></a></dt>
+<dd><p>Whether to continuously check for more uncleared transactions, waiting a fixed amount in between checks.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-pushlunch-notify-interval">
+<span class="sig-name descname"><span class="pre">--interval</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;interval&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-plugins-pushlunch-notify-interval" title="Permalink to this definition"></a></dt>
+<dd><p>Sleep Interval in Between Tries - only applies if <cite>continuous</cite> is set. Defaults to 60 (minutes). Cannot be less than 5 (minutes)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-pushlunch-notify-user-key">
+<span class="sig-name descname"><span class="pre">--user-key</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;user_key&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-plugins-pushlunch-notify-user-key" title="Permalink to this definition"></a></dt>
+<dd><p>Pushover User Key. Defaults to <cite>PUSHOVER_USER_KEY</cite> env var</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="lunchable-plugins-splitlunch">
+<h5>splitlunch<a class="headerlink" href="#lunchable-plugins-splitlunch" title="Permalink to this headline"></a></h5>
+<p>Splitwise Plugin for lunchable, SplitLunch 💲🍱</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunchable plugins splitlunch <span class="o">[</span>OPTIONS<span class="o">]</span> COMMAND <span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<section id="lunchable-plugins-splitlunch-expenses">
+<h6>expenses<a class="headerlink" href="#lunchable-plugins-splitlunch-expenses" title="Permalink to this headline"></a></h6>
+<p>Retrieve Splitwise Expenses</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunchable plugins splitlunch expenses <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-expenses-limit">
+<span class="sig-name descname"><span class="pre">--limit</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;limit&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-expenses-limit" title="Permalink to this definition"></a></dt>
+<dd><p>Limit the amount of Results. 0 returns everything.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-expenses-offset">
+<span class="sig-name descname"><span class="pre">--offset</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;offset&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-expenses-offset" title="Permalink to this definition"></a></dt>
+<dd><p>Number of expenses to be skipped</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-expenses-0">
+<span class="sig-name descname"><span class="pre">--limit</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;limit&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-expenses-0" title="Permalink to this definition"></a></dt>
+<dd><p>Number of expenses to be returned</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-expenses-group-id">
+<span class="sig-name descname"><span class="pre">--group-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;group_id&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-expenses-group-id" title="Permalink to this definition"></a></dt>
+<dd><p>GroupID of the expenses</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-expenses-friendship-id">
+<span class="sig-name descname"><span class="pre">--friendship-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;friendship_id&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-expenses-friendship-id" title="Permalink to this definition"></a></dt>
+<dd><p>FriendshipID of the expenses</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-expenses-dated-after">
+<span class="sig-name descname"><span class="pre">--dated-after</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;dated_after&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-expenses-dated-after" title="Permalink to this definition"></a></dt>
+<dd><p>ISO 8601 Date time. Return expenses later that this date</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-expenses-dated-before">
+<span class="sig-name descname"><span class="pre">--dated-before</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;dated_before&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-expenses-dated-before" title="Permalink to this definition"></a></dt>
+<dd><p>ISO 8601 Date time. Return expenses earlier than this date</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-expenses-updated-after">
+<span class="sig-name descname"><span class="pre">--updated-after</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;updated_after&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-expenses-updated-after" title="Permalink to this definition"></a></dt>
+<dd><p>ISO 8601 Date time. Return expenses updated after this date</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-expenses-updated-before">
+<span class="sig-name descname"><span class="pre">--updated-before</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;updated_before&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-expenses-updated-before" title="Permalink to this definition"></a></dt>
+<dd><p>ISO 8601 Date time. Return expenses updated before this date</p>
+</dd></dl>
+
+</section>
+<section id="lunchable-plugins-splitlunch-refresh">
+<h6>refresh<a class="headerlink" href="#lunchable-plugins-splitlunch-refresh" title="Permalink to this headline"></a></h6>
+<p>Import New Splitwise Transactions to Lunch Money and</p>
+<p>This function gets all transactions from Splitwise, all transactions from
+your Lunch Money Splitwise account and compares the two. This also updates
+the account balance.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunchable plugins splitlunch refresh <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="lunchable-plugins-splitlunch-splitlunch">
+<h6>splitlunch<a class="headerlink" href="#lunchable-plugins-splitlunch-splitlunch" title="Permalink to this headline"></a></h6>
+<p>Split all <cite>SplitLunch</cite> tagged transactions in half.</p>
+<p>One of these new splits will be recategorized to <cite>Reimbursement</cite>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunchable plugins splitlunch splitlunch <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-splitlunch-tag-transactions">
+<span class="sig-name descname"><span class="pre">--tag-transactions</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-splitlunch-tag-transactions" title="Permalink to this definition"></a></dt>
+<dd><p>Tag the resulting transactions with a <cite>Splitwise</cite> tag.</p>
+</dd></dl>
+
+</section>
+<section id="lunchable-plugins-splitlunch-splitlunch-direct-import">
+<h6>splitlunch-direct-import<a class="headerlink" href="#lunchable-plugins-splitlunch-splitlunch-direct-import" title="Permalink to this headline"></a></h6>
+<p>Import <cite>SplitLunchDirectImport</cite> tagged transactions to Splitwise and Split them in Lunch Money</p>
+<p>Send a transaction to Splitwise and then split the original transaction in Lunch Money.
+One of these new splits will be recategorized to <cite>Reimbursement</cite>. Any tags will be
+reapplied.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunchable plugins splitlunch splitlunch-direct-import <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-splitlunch-direct-import-tag-transactions">
+<span class="sig-name descname"><span class="pre">--tag-transactions</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-splitlunch-direct-import-tag-transactions" title="Permalink to this definition"></a></dt>
+<dd><p>Tag the resulting transactions with a <cite>Splitwise</cite> tag.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-splitlunch-direct-import-financial-partner-id">
+<span class="sig-name descname"><span class="pre">--financial-partner-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;financial_partner_id&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-splitlunch-direct-import-financial-partner-id" title="Permalink to this definition"></a></dt>
+<dd><p>Splitwise ID of your financial partner.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-splitlunch-direct-import-financial-partner-email">
+<span class="sig-name descname"><span class="pre">--financial-partner-email</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;financial_partner_email&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-splitlunch-direct-import-financial-partner-email" title="Permalink to this definition"></a></dt>
+<dd><p>Splitwise Email Address of your financial partner.</p>
+</dd></dl>
+
+</section>
+<section id="lunchable-plugins-splitlunch-splitlunch-import">
+<h6>splitlunch-import<a class="headerlink" href="#lunchable-plugins-splitlunch-splitlunch-import" title="Permalink to this headline"></a></h6>
+<p>Import <cite>SplitLunchImport</cite> tagged transactions to Splitwise and Split them in Lunch Money</p>
+<p>Send a transaction to Splitwise and then split the original transaction in Lunch Money.
+One of these new splits will be recategorized to <cite>Reimbursement</cite>. Any tags will be
+reapplied.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunchable plugins splitlunch splitlunch-import <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-splitlunch-import-tag-transactions">
+<span class="sig-name descname"><span class="pre">--tag-transactions</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-splitlunch-import-tag-transactions" title="Permalink to this definition"></a></dt>
+<dd><p>Tag the resulting transactions with a <cite>Splitwise</cite> tag.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-splitlunch-import-financial-partner-id">
+<span class="sig-name descname"><span class="pre">--financial-partner-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;financial_partner_id&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-splitlunch-import-financial-partner-id" title="Permalink to this definition"></a></dt>
+<dd><p>Splitwise ID of your financial partner.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-plugins-splitlunch-splitlunch-import-financial-partner-email">
+<span class="sig-name descname"><span class="pre">--financial-partner-email</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;financial_partner_email&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-plugins-splitlunch-splitlunch-import-financial-partner-email" title="Permalink to this definition"></a></dt>
+<dd><p>Splitwise Email Address of your financial partner.</p>
+</dd></dl>
+
+</section>
+<section id="lunchable-plugins-splitlunch-update-balance">
+<h6>update-balance<a class="headerlink" href="#lunchable-plugins-splitlunch-update-balance" title="Permalink to this headline"></a></h6>
+<p>Update the Splitwise Asset Balance</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunchable plugins splitlunch update-balance <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="lunchable-transactions">
+<h4>transactions<a class="headerlink" href="#lunchable-transactions" title="Permalink to this headline"></a></h4>
+<p>Interact with Lunch Money transactions</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunchable transactions <span class="o">[</span>OPTIONS<span class="o">]</span> COMMAND <span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<section id="lunchable-transactions-get">
+<h5>get<a class="headerlink" href="#lunchable-transactions-get" title="Permalink to this headline"></a></h5>
+<p>Retrieve Lunch Money Transactions</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunchable transactions get <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-transactions-get-start-date">
+<span class="sig-name descname"><span class="pre">--start-date</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;start_date&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-transactions-get-start-date" title="Permalink to this definition"></a></dt>
+<dd><p>Denotes the beginning of the time period to fetch transactions for. Defaultsto beginning of current month. Required if end_date exists. Format: YYYY-MM-DD.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-transactions-get-end-date">
+<span class="sig-name descname"><span class="pre">--end-date</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;end_date&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-transactions-get-end-date" title="Permalink to this definition"></a></dt>
+<dd><p>Denotes the end of the time period you’d like to get transactions for. Defaults to end of current month. Required if start_date exists.Format: YYYY-MM-DD.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-transactions-get-tag-id">
+<span class="sig-name descname"><span class="pre">--tag-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;tag_id&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-transactions-get-tag-id" title="Permalink to this definition"></a></dt>
+<dd><p>Filter by tag. Only accepts IDs, not names.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-transactions-get-recurring-id">
+<span class="sig-name descname"><span class="pre">--recurring-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;recurring_id&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-transactions-get-recurring-id" title="Permalink to this definition"></a></dt>
+<dd><p>Filter by recurring expense</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-transactions-get-plaid-account-id">
+<span class="sig-name descname"><span class="pre">--plaid-account-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;plaid_account_id&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-transactions-get-plaid-account-id" title="Permalink to this definition"></a></dt>
+<dd><p>Filter by Plaid account</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-transactions-get-category-id">
+<span class="sig-name descname"><span class="pre">--category-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;category_id&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-transactions-get-category-id" title="Permalink to this definition"></a></dt>
+<dd><p>Filter by category. Will also match category groups.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-transactions-get-asset-id">
+<span class="sig-name descname"><span class="pre">--asset-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;asset_id&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-transactions-get-asset-id" title="Permalink to this definition"></a></dt>
+<dd><p>Filter by asset</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-transactions-get-group-id">
+<span class="sig-name descname"><span class="pre">--group-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;group_id&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-transactions-get-group-id" title="Permalink to this definition"></a></dt>
+<dd><p>Filter by group_id (if the transaction is part of a specific group)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-transactions-get-is-group">
+<span class="sig-name descname"><span class="pre">--is-group</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;is_group&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-transactions-get-is-group" title="Permalink to this definition"></a></dt>
+<dd><p>Filter by group (returns transaction groups)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-transactions-get-status">
+<span class="sig-name descname"><span class="pre">--status</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;status&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-transactions-get-status" title="Permalink to this definition"></a></dt>
+<dd><p>Filter by status (Can be cleared or uncleared. For recurring transactions, use recurring)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-transactions-get-offset">
+<span class="sig-name descname"><span class="pre">--offset</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;offset&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-transactions-get-offset" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the offset for the records returned</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-transactions-get-limit">
+<span class="sig-name descname"><span class="pre">--limit</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;limit&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-transactions-get-limit" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the maximum number of records to return. Note: The server will not respond with any indication that there are more records to be returned. Please check the response length to determine if you should make another call with an offset to fetch more transactions.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lunchable-transactions-get-debit-as-negative">
+<span class="sig-name descname"><span class="pre">--debit-as-negative</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;debit_as_negative&gt;</span></span><a class="headerlink" href="#cmdoption-lunchable-transactions-get-debit-as-negative" title="Permalink to this definition"></a></dt>
+<dd><p>Pass in true if you’d like expenses to be returned as negative amounts and credits as positive amounts. Defaults to false.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lunchable.html" class="btn btn-neutral float-left" title="Interacting with Lunch Money" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="plugins.html" class="btn btn-neutral float-right" title="Plugins" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
