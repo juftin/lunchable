@@ -6,8 +6,8 @@ on:
     pull_request:
         types: [ opened, synchronize, reopened ]
         paths:
-          - "docs/**"
-          - "lunchable/**"
+            - "docs/**"
+            - "lunchable/**"
 jobs:
     github-pages-publish:
         runs-on: ubuntu-latest
