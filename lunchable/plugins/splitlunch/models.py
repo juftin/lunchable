@@ -5,10 +5,10 @@ SplitLunch Data Models
 import datetime
 from typing import List, Optional
 
-from pydantic import BaseModel
+from lunchable.models._base import LunchableModel
 
 
-class SplitLunchExpense(BaseModel):
+class SplitLunchExpense(LunchableModel):
     """
     SplitLunch Object for Splitwise Expenses
     """

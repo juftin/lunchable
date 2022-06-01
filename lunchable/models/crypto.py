@@ -8,15 +8,16 @@ import datetime
 import logging
 from typing import List, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 from lunchable._config import APIConfig
+from lunchable.models._base import LunchableModel
 from lunchable.models._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 
 
-class CryptoObject(BaseModel):
+class CryptoObject(LunchableModel):
     """
     Crypto Asset Object
 
@@ -52,7 +53,7 @@ class CryptoObject(BaseModel):
     created_at: datetime.datetime = Field(description=_created_at_description)
 
 
-class CryptoParamsPut(BaseModel):
+class CryptoParamsPut(LunchableModel):
     """
     https://lunchmoney.dev/#update-manual-crypto-asset
     """

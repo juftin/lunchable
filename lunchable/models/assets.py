@@ -8,15 +8,16 @@ import datetime
 import logging
 from typing import List, Optional
 
-from pydantic import BaseModel, Field, validator
+from pydantic import Field, validator
 
 from lunchable._config import APIConfig
+from lunchable.models._base import LunchableModel
 from lunchable.models._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 
 
-class AssetsObject(BaseModel):
+class AssetsObject(LunchableModel):
     """
     Manually Managed Asset Objects
 
@@ -60,7 +61,7 @@ class AssetsObject(BaseModel):
     created_at: datetime.datetime = Field(description=_created_at_description)
 
 
-class _AssetsParamsPut(BaseModel):
+class _AssetsParamsPut(LunchableModel):
     """
     https://lunchmoney.dev/#update-asset
     """
@@ -82,7 +83,7 @@ class _AssetsParamsPut(BaseModel):
         return round(x, 2)
 
 
-class _AssetsParamsPost(BaseModel):
+class _AssetsParamsPost(LunchableModel):
     """
     https://lunchmoney.dev/#create-asset
     """
@@ -124,7 +125,7 @@ class _LunchMoneyAssets(LunchMoneyAPIClient):
         -------
         List[AssetsObject]
         """
-        response_data = self._make_request(method="GET",
+        response_data = self._make_request(method=self.Methods.GET,
                                            url_path=[APIConfig.LUNCHMONEY_ASSETS])
         assets = response_data.get(APIConfig.LUNCHMONEY_ASSETS)
         asset_objects = [AssetsObject(**item) for item in assets]
@@ -175,14 +176,14 @@ class _LunchMoneyAssets(LunchMoneyAPIClient):
                                    currency=currency,
                                    institution_name=institution_name).dict(
             exclude_none=True)
-        response_data = self._make_request(method="PUT",
+        response_data = self._make_request(method=self.Methods.PUT,
                                            url_path=[APIConfig.LUNCHMONEY_ASSETS,
                                                      asset_id],
                                            payload=payload)
         asset = AssetsObject(**response_data)
         return asset
 
-    def create_asset(self,
+    def insert_asset(self,
                      type_name: str,
                      name: Optional[str] = None,
                      subtype_name: Optional[str] = None,
@@ -219,7 +220,7 @@ class _LunchMoneyAssets(LunchMoneyAPIClient):
             in our database. Defaults to user's primary currency.
         institution_name: Optional[str]
             Max 50 characters
-        closed_on: Optional[datetime]
+        closed_on: Optional[datetime.date]
             The date this asset was closed
         exclude_transactions: bool
             If true, this asset will not show up as an option for assignment when
@@ -241,7 +242,7 @@ class _LunchMoneyAssets(LunchMoneyAPIClient):
             closed_on=closed_on,
             exclude_transactions=exclude_transactions,
         ).dict(exclude_none=True)
-        response_data = self._make_request(method="POST",
+        response_data = self._make_request(method=self.Methods.POST,
                                            url_path=[APIConfig.LUNCHMONEY_ASSETS],
                                            payload=payload)
         asset = AssetsObject(**response_data)

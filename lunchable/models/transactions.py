@@ -5,21 +5,22 @@ https://lunchmoney.dev/#transactions
 """
 
 import datetime
-from enum import Enum
 import logging
+from enum import Enum
 from typing import Any, Dict, List, Optional, Union
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 from lunchable import LunchMoneyError
 from lunchable._config import APIConfig
+from lunchable.models._base import LunchableModel
 from lunchable.models._core import LunchMoneyAPIClient
 from lunchable.models.tags import TagsObject
 
 logger = logging.getLogger(__name__)
 
 
-class TransactionBaseObject(BaseModel):
+class TransactionBaseObject(LunchableModel):
     """
     Base Model For All Transactions to Inherit From
     """
@@ -341,7 +342,7 @@ class TransactionObject(TransactionBaseObject):
         return insert_object
 
 
-class _TransactionParamsGet(BaseModel):
+class _TransactionParamsGet(LunchableModel):
     """
     https://lunchmoney.dev/#get-all-transactions
     """
@@ -361,7 +362,7 @@ class _TransactionParamsGet(BaseModel):
     debit_as_negative: Optional[bool]
 
 
-class _TransactionInsertParamsPost(BaseModel):
+class _TransactionInsertParamsPost(LunchableModel):
     """
     https://lunchmoney.dev/#insert-transactions
     """
@@ -374,7 +375,7 @@ class _TransactionInsertParamsPost(BaseModel):
     skip_balance_update: bool = True
 
 
-class _TransactionGroupParamsPost(BaseModel):
+class _TransactionGroupParamsPost(LunchableModel):
     """
     https://lunchmoney.dev/#create-transaction-group
     """
@@ -387,7 +388,7 @@ class _TransactionGroupParamsPost(BaseModel):
     transactions: List[int]
 
 
-class _TransactionUpdateParamsPut(BaseModel):
+class _TransactionUpdateParamsPut(LunchableModel):
     """
     https://lunchmoney.dev/#update-transaction
     """

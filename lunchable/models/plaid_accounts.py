@@ -8,15 +8,16 @@ import datetime
 import logging
 from typing import List, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 from lunchable._config import APIConfig
+from lunchable.models._base import LunchableModel
 from lunchable.models._core import LunchMoneyAPIClient
 
 logger = logging.getLogger(__name__)
 
 
-class PlaidAccountObject(BaseModel):
+class PlaidAccountObject(LunchableModel):
     """
     Assets synced from Plaid
 
