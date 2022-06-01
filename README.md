@@ -16,8 +16,7 @@
 
 **lunchable** is a Python Client for the [Lunch Money Developer API](https://lunchmoney.dev). It's
 built on top of [pydantic](https://github.com/samuelcolvin/pydantic), it offers an *intuitive* API,
-a *simple* CLI, complete coverage of all endpoints,
-*plugins* to other external services, and extensive test coverage.
+a *simple* CLI, complete coverage of all endpoints, and *plugins* to other external services.
 
 ### Installation
 
@@ -45,7 +44,7 @@ export LUNCHMONEY_ACCESS_TOKEN="xxxxxxxxxxx"
 lunchable transactions get --limit 5
 ```
 
-### Check out the [**ReadTheDocs**](https://lunchable.readthedocs.io/en/latest/)
+### Check out the [**Docs**](https://juftin.com/lunchable/)
 
 --------------
 --------------

@@ -125,7 +125,7 @@ class _LunchMoneyAssets(LunchMoneyAPIClient):
         -------
         List[AssetsObject]
         """
-        response_data = self._make_request(method="GET",
+        response_data = self._make_request(method=self.Methods.GET,
                                            url_path=[APIConfig.LUNCHMONEY_ASSETS])
         assets = response_data.get(APIConfig.LUNCHMONEY_ASSETS)
         asset_objects = [AssetsObject(**item) for item in assets]
@@ -176,7 +176,7 @@ class _LunchMoneyAssets(LunchMoneyAPIClient):
                                    currency=currency,
                                    institution_name=institution_name).dict(
             exclude_none=True)
-        response_data = self._make_request(method="PUT",
+        response_data = self._make_request(method=self.Methods.PUT,
                                            url_path=[APIConfig.LUNCHMONEY_ASSETS,
                                                      asset_id],
                                            payload=payload)
@@ -242,7 +242,7 @@ class _LunchMoneyAssets(LunchMoneyAPIClient):
             closed_on=closed_on,
             exclude_transactions=exclude_transactions,
         ).dict(exclude_none=True)
-        response_data = self._make_request(method="POST",
+        response_data = self._make_request(method=self.Methods.POST,
                                            url_path=[APIConfig.LUNCHMONEY_ASSETS],
                                            payload=payload)
         asset = AssetsObject(**response_data)
