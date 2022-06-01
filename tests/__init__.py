@@ -1,3 +1,0 @@
-"""
-Lunchmoney Tests
-"""

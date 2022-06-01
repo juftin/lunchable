@@ -1,3 +1,0 @@
-"""
-Optional Plugins for LunchMoney
-"""
