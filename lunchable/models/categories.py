@@ -32,6 +32,10 @@ class ModelCreateCategory(LunchableModel):
 
 
 class CategoryChild(LunchableModel):
+    """
+    Child Entry on the Category Object
+    """
+
     id: int
     name: str = Field(min_length=1, max_length=40)
     description: Optional[str] = Field(max_length=140)
