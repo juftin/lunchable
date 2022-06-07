@@ -124,7 +124,7 @@ class _CategoriesAddParamsPost(LunchableModel):
     new_categories: Optional[List[str]]
 
 
-class _LunchMoneyCategories(LunchMoneyAPIClient):
+class CategoriesClient(LunchMoneyAPIClient):
     """
     Lunch Money Categories Interactions
     """

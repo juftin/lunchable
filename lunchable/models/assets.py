@@ -108,7 +108,7 @@ class _AssetsParamsPost(LunchableModel):
         return round(x, 2)
 
 
-class _LunchMoneyAssets(LunchMoneyAPIClient):
+class AssetsClient(LunchMoneyAPIClient):
     """
     Lunch Money Assets Interactions
     """

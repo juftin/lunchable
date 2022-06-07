@@ -399,7 +399,7 @@ class _TransactionUpdateParamsPut(LunchableModel):
     skip_balance_update: bool = True
 
 
-class _LunchMoneyTransactions(LunchMoneyAPIClient):
+class TransactionsClient(LunchMoneyAPIClient):
     """
     Lunch Money Transactions Interactions
     """
