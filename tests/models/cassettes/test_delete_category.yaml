@@ -1,7 +1,6 @@
 interactions:
 - request:
-    body: '{"name": "Test Category", "description": "Test Category Description", "is_income":
-      false, "exclude_from_budget": true, "exclude_from_totals": false}'
+    body: null
     headers:
       Accept:
       - '*/*'
@@ -10,31 +9,31 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '148'
+      - '0'
       Content-Type:
       - application/json
       User-Agent:
       - python-requests/2.27.1
       authorization:
       - XXXXXXXXXX
-    method: POST
-    uri: https://dev.lunchmoney.app/v1/categories
+    method: DELETE
+    uri: https://dev.lunchmoney.app/v1/categories/343088
   response:
     body:
-      string: '{"category_id":343106}'
+      string: 'true'
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
       Connection:
       - keep-alive
       Content-Length:
-      - '22'
+      - '4'
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 07 Jun 2022 16:31:40 GMT
+      - Tue, 07 Jun 2022 16:13:22 GMT
       Etag:
-      - W/"16-g6Iljpx0H9iJFs/tRrqvW+BHBwQ"
+      - W/"4-X/5TO4MPCKAyY0ipFgr6/IraRNs"
       Server:
       - Cowboy
       Vary:

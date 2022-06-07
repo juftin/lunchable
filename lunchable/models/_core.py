@@ -84,7 +84,9 @@ class LunchMoneyAPIClient:
         else:
             return obj
 
-    def _make_request(self, method: str, url_path: Union[List[Union[str, int]], str, int],
+    def _make_request(self,
+                      method: str,
+                      url_path: Union[List[Union[str, int]], str, int],
                       params: Optional[dict] = None,
                       payload: Optional[Any] = None,
                       **kwargs) -> Any:

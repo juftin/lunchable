@@ -64,7 +64,7 @@ html_theme_options = {
     "display_version": True,
 }
 html_show_sphinx = False
-html_show_sourcelink = False
+html_show_sourcelink = True
 
 source_suffix = {
     ".rst": "restructuredtext",
@@ -79,8 +79,13 @@ intersphinx_mapping = {
 
 autodoc_pydantic_model_show_json = False
 autodoc_pydantic_settings_show_json = False
+autodoc_member_order = "bysource"
 
 always_document_default_args = True
 docstring_default_arg_substitution = "**[Default]:**"
+
+autodoc_default_options = {
+    "exclude-members": "with_traceback"
+}
 
 html_favicon = "https://juftin.com/favicon.ico"
