@@ -72,7 +72,9 @@ class BudgetObject(LunchableModel):
 
     category_name: str = Field(description="Name of the category")
     category_id: Optional[int] = Field(description="Unique identifier for category")
-    category_group_name: Optional[str] = Field(description=_category_group_name_description)
+    category_group_name: Optional[str] = Field(
+        description=_category_group_name_description
+    )
     group_id: Optional[int] = Field(description="Unique identifier for category group")
     is_group: Optional[bool] = Field(description="If true, this category is a group")
     is_income: bool = Field(description=_is_income_description)
@@ -116,8 +118,9 @@ class _LunchMoneyBudgets(LunchMoneyAPIClient):
     Lunch Money Budget Interactions
     """
 
-    def get_budgets(self, start_date: datetime.date,
-                    end_date: datetime.date) -> List[BudgetObject]:
+    def get_budgets(
+        self, start_date: datetime.date, end_date: datetime.date
+    ) -> List[BudgetObject]:
         """
         Get Monthly Budgets
 
@@ -130,18 +133,19 @@ class _LunchMoneyBudgets(LunchMoneyAPIClient):
         List[BudgetObject]
         """
         params = BudgetParamsGet(start_date=start_date, end_date=end_date).dict()
-        response_data = self._make_request(method="GET",
-                                           url_path=[APIConfig.LUNCHMONEY_BUDGET],
-                                           params=params)
+        response_data = self._make_request(
+            method="GET", url_path=[APIConfig.LUNCHMONEY_BUDGET], params=params
+        )
         budget_objects = [BudgetObject(**item) for item in response_data]
         return budget_objects
 
-    def upsert_budget(self,
-                      start_date: datetime.date,
-                      category_id: int,
-                      amount: float,
-                      currency: Optional[str] = None
-                      ) -> Optional[Dict[str, Any]]:
+    def upsert_budget(
+        self,
+        start_date: datetime.date,
+        category_id: int,
+        amount: float,
+        currency: Optional[str] = None,
+    ) -> Optional[Dict[str, Any]]:
         """
         Upsert a Budget for a Category and Date
 
@@ -174,18 +178,19 @@ class _LunchMoneyBudgets(LunchMoneyAPIClient):
         -------
         Optional[Dict[str, Any]]
         """
-        body = BudgetParamsPut(start_date=start_date, category_id=category_id,
-                               amount=amount, currency=currency).dict(exclude_none=True)
-        response_data = self._make_request(method="PUT",
-                                           url_path=[APIConfig.LUNCHMONEY_BUDGET],
-                                           payload=body)
+        body = BudgetParamsPut(
+            start_date=start_date,
+            category_id=category_id,
+            amount=amount,
+            currency=currency,
+        ).dict(exclude_none=True)
+        response_data = self._make_request(
+            method="PUT", url_path=[APIConfig.LUNCHMONEY_BUDGET], payload=body
+        )
 
         return response_data["category_group"]
 
-    def remove_budget(self,
-                      start_date: datetime.date,
-                      category_id: int
-                      ) -> bool:
+    def remove_budget(self, start_date: datetime.date, category_id: int) -> bool:
         """
         Unset an Existing Budget for a Particular Category in a Particular Month
 
@@ -201,8 +206,10 @@ class _LunchMoneyBudgets(LunchMoneyAPIClient):
         -------
         bool
         """
-        params = BudgetParamsRemove(start_date=start_date, category_id=category_id).dict()
-        response_data = self._make_request(method="DELETE",
-                                           url_path=[APIConfig.LUNCHMONEY_BUDGET],
-                                           params=params)
+        params = BudgetParamsRemove(
+            start_date=start_date, category_id=category_id
+        ).dict()
+        response_data = self._make_request(
+            method="DELETE", url_path=[APIConfig.LUNCHMONEY_BUDGET], params=params
+        )
         return response_data

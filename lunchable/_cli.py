@@ -39,36 +39,60 @@ def plugins():
 
 
 @transactions.command("get")
-@click.option("--start-date", default=None,
-              help="Denotes the beginning of the time period to fetch transactions for. Defaults"
-                   "to beginning of current month. Required if end_date exists. "
-                   "Format: YYYY-MM-DD.")
-@click.option("--end-date", default=None,
-              help="Denotes the end of the time period you'd like to get transactions for. "
-                   "Defaults to end of current month. Required if start_date exists."
-                   "Format: YYYY-MM-DD.")
-@click.option("--tag-id", default=None,
-              help="Filter by tag. Only accepts IDs, not names.")
+@click.option(
+    "--start-date",
+    default=None,
+    help="Denotes the beginning of the time period to fetch transactions for. Defaults"
+    "to beginning of current month. Required if end_date exists. "
+    "Format: YYYY-MM-DD.",
+)
+@click.option(
+    "--end-date",
+    default=None,
+    help="Denotes the end of the time period you'd like to get transactions for. "
+    "Defaults to end of current month. Required if start_date exists."
+    "Format: YYYY-MM-DD.",
+)
+@click.option(
+    "--tag-id", default=None, help="Filter by tag. Only accepts IDs, not names."
+)
 @click.option("--recurring-id", default=None, help="Filter by recurring expense")
 @click.option("--plaid-account-id", default=None, help="Filter by Plaid account")
-@click.option("--category-id", default=None,
-              help="Filter by category. Will also match category groups.")
+@click.option(
+    "--category-id",
+    default=None,
+    help="Filter by category. Will also match category groups.",
+)
 @click.option("--asset-id", default=None, help="Filter by asset")
-@click.option("--group-id", default=None,
-              help="Filter by group_id (if the transaction is part of a specific group)")
-@click.option("--is-group", default=None, help="Filter by group (returns transaction groups)")
-@click.option("--status", default=None,
-              help="Filter by status (Can be cleared or uncleared. For recurring "
-                   "transactions, use recurring)")
+@click.option(
+    "--group-id",
+    default=None,
+    help="Filter by group_id (if the transaction is part of a specific group)",
+)
+@click.option(
+    "--is-group", default=None, help="Filter by group (returns transaction groups)"
+)
+@click.option(
+    "--status",
+    default=None,
+    help="Filter by status (Can be cleared or uncleared. For recurring "
+    "transactions, use recurring)",
+)
 @click.option("--offset", default=None, help="Sets the offset for the records returned")
-@click.option("--limit", default=None,
-              help="Sets the maximum number of records to return. Note: The server will not "
-                   "respond with any indication that there are more records to be returned. "
-                   "Please check the response length to determine if you should make another "
-                   "call with an offset to fetch more transactions.")
-@click.option("--debit-as-negative", default=None,
-              help="Pass in true if you’d like expenses to be returned as negative amounts and "
-                   "credits as positive amounts. Defaults to false.")
+@click.option(
+    "--limit",
+    default=None,
+    help="Sets the maximum number of records to return. Note: The server will not "
+    "respond with any indication that there are more records to be returned. "
+    "Please check the response length to determine if you should make another "
+    "call with an offset to fetch more transactions.",
+)
+@click.option(
+    "--debit-as-negative",
+    default=None,
+    help="Pass in true if you’d like expenses to be returned as negative amounts and "
+    "credits as positive amounts. Defaults to false.",
+)
 def lunchmoney_transactions(**kwargs):
     """
     Retrieve Lunch Money Transactions
@@ -87,23 +111,33 @@ def splitlunch():
 
 
 @splitlunch.command("expenses")
-@click.option("--limit", default=None, help="Limit the amount of Results. 0 returns everything.")
-@click.option("--offset", default=None,
-              help="Number of expenses to be skipped")
-@click.option("--limit", default=None,
-              help="Number of expenses to be returned")
-@click.option("--group-id", default=None,
-              help="GroupID of the expenses")
-@click.option("--friendship-id", default=None,
-              help="FriendshipID of the expenses")
-@click.option("--dated-after", default=None,
-              help="ISO 8601 Date time. Return expenses later that this date")
-@click.option("--dated-before", default=None,
-              help="ISO 8601 Date time. Return expenses earlier than this date")
-@click.option("--updated-after", default=None,
-              help="ISO 8601 Date time. Return expenses updated after this date")
-@click.option("--updated-before", default=None,
-              help="ISO 8601 Date time. Return expenses updated before this date")
+@click.option(
+    "--limit", default=None, help="Limit the amount of Results. 0 returns everything."
+)
+@click.option("--offset", default=None, help="Number of expenses to be skipped")
+@click.option("--limit", default=None, help="Number of expenses to be returned")
+@click.option("--group-id", default=None, help="GroupID of the expenses")
+@click.option("--friendship-id", default=None, help="FriendshipID of the expenses")
+@click.option(
+    "--dated-after",
+    default=None,
+    help="ISO 8601 Date time. Return expenses later that this date",
+)
+@click.option(
+    "--dated-before",
+    default=None,
+    help="ISO 8601 Date time. Return expenses earlier than this date",
+)
+@click.option(
+    "--updated-after",
+    default=None,
+    help="ISO 8601 Date time. Return expenses updated after this date",
+)
+@click.option(
+    "--updated-before",
+    default=None,
+    help="ISO 8601 Date time. Return expenses updated before this date",
+)
 def splitlunch_expenses(**kwargs):
     """
     Retrieve Splitwise Expenses
@@ -117,12 +151,21 @@ def splitlunch_expenses(**kwargs):
     click.echo(json.dumps(expenses, default=pydantic_encoder, indent=2))
 
 
-tag_transactions = click.option("--tag-transactions", is_flag=True,
-                                help="Tag the resulting transactions with a `Splitwise` tag.")
-financial_partner_id = click.option("--financial-partner-id", default=None,
-                                    help="Splitwise ID of your financial partner.")
-financial_partner_email = click.option("--financial-partner-email", default=None,
-                                       help="Splitwise Email Address of your financial partner.")
+tag_transactions = click.option(
+    "--tag-transactions",
+    is_flag=True,
+    help="Tag the resulting transactions with a `Splitwise` tag.",
+)
+financial_partner_id = click.option(
+    "--financial-partner-id",
+    default=None,
+    help="Splitwise ID of your financial partner.",
+)
+financial_partner_email = click.option(
+    "--financial-partner-email",
+    default=None,
+    help="Splitwise Email Address of your financial partner.",
+)
 
 
 @splitlunch.command("splitlunch")
@@ -156,8 +199,10 @@ def make_splitlunch_import(**kwargs):
 
     financial_partner_id = kwargs.pop("financial_partner_id")
     financial_partner_email = kwargs.pop("financial_partner_email")
-    splitlunch = SplitLunch(financial_partner_id=financial_partner_id,
-                            financial_partner_email=financial_partner_email)
+    splitlunch = SplitLunch(
+        financial_partner_id=financial_partner_id,
+        financial_partner_email=financial_partner_email,
+    )
     results = splitlunch.make_splitlunch_import(**kwargs)
     click.echo(json.dumps(results, default=pydantic_encoder, indent=2))
 
@@ -178,8 +223,10 @@ def make_splitlunch_direct_import(**kwargs):
 
     financial_partner_id = kwargs.pop("financial_partner_id")
     financial_partner_email = kwargs.pop("financial_partner_email")
-    splitlunch = SplitLunch(financial_partner_id=financial_partner_id,
-                            financial_partner_email=financial_partner_email)
+    splitlunch = SplitLunch(
+        financial_partner_id=financial_partner_id,
+        financial_partner_email=financial_partner_email,
+    )
     results = splitlunch.make_splitlunch_direct_import(**kwargs)
     click.echo(json.dumps(results, default=pydantic_encoder))
 
@@ -221,14 +268,23 @@ def pushlunch():
 
 
 @pushlunch.command("notify")
-@click.option("--continuous", is_flag=True,
-              help="Whether to continuously check for more uncleared transactions, "
-                   "waiting a fixed amount in between checks.")
-@click.option("--interval", default=None,
-              help="Sleep Interval in Between Tries - only applies if `continuous` is set. "
-                   "Defaults to 60 (minutes). Cannot be less than 5 (minutes)")
-@click.option("--user-key", default=None,
-              help="Pushover User Key. Defaults to `PUSHOVER_USER_KEY` env var")
+@click.option(
+    "--continuous",
+    is_flag=True,
+    help="Whether to continuously check for more uncleared transactions, "
+    "waiting a fixed amount in between checks.",
+)
+@click.option(
+    "--interval",
+    default=None,
+    help="Sleep Interval in Between Tries - only applies if `continuous` is set. "
+    "Defaults to 60 (minutes). Cannot be less than 5 (minutes)",
+)
+@click.option(
+    "--user-key",
+    default=None,
+    help="Pushover User Key. Defaults to `PUSHOVER_USER_KEY` env var",
+)
 def notify(continuous: bool, interval: int, user_key: str):
     """
     Send a Notification for each Uncleared Transaction
@@ -237,6 +293,7 @@ def notify(continuous: bool, interval: int, user_key: str):
     if interval is not None:
         interval = int(interval)
     if continuous is not None:
-        logging.basicConfig(level=logging.INFO,
-                            format="%(asctime)s [%(levelname)8s]: %(message)s")
+        logging.basicConfig(
+            level=logging.INFO, format="%(asctime)s [%(levelname)8s]: %(message)s"
+        )
     push.notify_uncleared_transactions(continuous=continuous, interval=interval)

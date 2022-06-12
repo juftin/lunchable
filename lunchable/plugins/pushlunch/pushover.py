@@ -34,11 +34,13 @@ class PushLunch:
 
     pushover_endpoint = "https://api.pushover.net/1/messages.json"
 
-    def __init__(self,
-                 user_key: Optional[str] = None,
-                 app_token: Optional[str] = None,
-                 lunchmoney_access_token: Optional[str] = None,
-                 lunchable_client: Optional[LunchMoney] = None):
+    def __init__(
+        self,
+        user_key: Optional[str] = None,
+        app_token: Optional[str] = None,
+        lunchmoney_access_token: Optional[str] = None,
+        lunchable_client: Optional[LunchMoney] = None,
+    ):
         """
         Initialize
 
@@ -65,28 +67,31 @@ class PushLunch:
         token = app_token or b64decode(_courtesy_token).decode("utf-8")
         user_key = user_key or getenv("PUSHOVER_USER_KEY", None)
         if user_key in [None, ""]:
-            raise PushLunchError("You must provide a Pushover User Key or define it with "
-                                 "a `PUSHOVER_USER_KEY` environment variable")
-        self._params = dict(
-            user=user_key,
-            token=token
+            raise PushLunchError(
+                "You must provide a Pushover User Key or define it with "
+                "a `PUSHOVER_USER_KEY` environment variable"
+            )
+        self._params = dict(user=user_key, token=token)
+        self.lunchable = lunchable_client or LunchMoney(
+            access_token=lunchmoney_access_token
         )
-        self.lunchable = lunchable_client or LunchMoney(access_token=lunchmoney_access_token)
         self.asset_mapping = self._get_assets()
         self.category_mapping = self._get_categories()
         self.notified_transactions: List[int] = list()
 
-    def send_notification(self,
-                          message: str,
-                          attachment: Optional[object] = None,
-                          device: Optional[str] = None,
-                          title: Optional[str] = None,
-                          url: Optional[str] = None,
-                          url_title: Optional[str] = None,
-                          priority: Optional[int] = None,
-                          sound: Optional[str] = None,
-                          timestamp: Optional[str] = None,
-                          html: bool = False) -> requests.Response:
+    def send_notification(
+        self,
+        message: str,
+        attachment: Optional[object] = None,
+        device: Optional[str] = None,
+        title: Optional[str] = None,
+        url: Optional[str] = None,
+        url_title: Optional[str] = None,
+        priority: Optional[int] = None,
+        sound: Optional[str] = None,
+        timestamp: Optional[str] = None,
+        html: bool = False,
+    ) -> requests.Response:
         """
         Send a Pushover Notification
 
@@ -124,26 +129,29 @@ class PushLunch:
         requests.Response
         """
         html_param = 1 if html not in [None, False] else None
-        params_dict = dict(message=message,
-                           attachment=attachment,
-                           device=device,
-                           title=title,
-                           url=url,
-                           url_title=url_title,
-                           priority=priority,
-                           sound=sound,
-                           timestamp=timestamp,
-                           html=html_param)
-        params: Dict[str, Any] = {key: value for key, value in params_dict.items() if
-                                  value is not None}
+        params_dict = dict(
+            message=message,
+            attachment=attachment,
+            device=device,
+            title=title,
+            url=url,
+            url_title=url_title,
+            priority=priority,
+            sound=sound,
+            timestamp=timestamp,
+            html=html_param,
+        )
+        params: Dict[str, Any] = {
+            key: value for key, value in params_dict.items() if value is not None
+        }
         params.update(self._params)
-        response = self.session.post(url=self.pushover_endpoint,
-                                     params=params
-                                     )
+        response = self.session.post(url=self.pushover_endpoint, params=params)
         response.raise_for_status()
         return response
 
-    def post_transaction(self, transaction: TransactionObject) -> Optional[Dict[str, Any]]:
+    def post_transaction(
+        self, transaction: TransactionObject
+    ) -> Optional[Dict[str, Any]]:
         """
         Post a Lunch Money Transaction as a Pushover Notification
 
@@ -166,29 +174,37 @@ class PushLunch:
             category = self.category_mapping[transaction.category_id]
         account_id = transaction.plaid_account_id or transaction.asset_id
         assert account_id is not None
-        transaction_formatted = dedent(f"""
+        transaction_formatted = dedent(
+            f"""
         <b>Payee:</b> <i>{transaction.payee}</i>
         <b>Amount:</b> <i>{self._format_float(transaction.amount)}</i>
         <b>Date:</b> <i>{transaction.date.strftime("%A %B %-d, %Y")}</i>
         <b>Category:</b> <i>{category}</i>        
         <b>Account:</b> <i>{self.asset_mapping[account_id]}</i>
-        """).strip()
+        """
+        ).strip()
         if transaction.currency is not None:
-            transaction_formatted += f"\n<b>Currency:</b> <i>{transaction.currency.upper()}</i>"
+            transaction_formatted += (
+                f"\n<b>Currency:</b> <i>{transaction.currency.upper()}</i>"
+            )
         if transaction.status is not None:
-            transaction_formatted += f"\n<b>Status:</b> <i>{transaction.status.title()}</i>"
+            transaction_formatted += (
+                f"\n<b>Status:</b> <i>{transaction.status.title()}</i>"
+            )
         if transaction.notes is not None:
             note = f"<b>Notes:</b> <i>{transaction.notes}</i>"
             transaction_formatted += f"\n{note}"
         if transaction.status == "uncleared":
-            url = ('<a href="https://my.lunchmoney.app/transactions/'
-                   f'{transaction.date.year}/{transaction.date.strftime("%m")}?status=unreviewed">'
-                   '<b>Uncleared Transactions from this Period</b></a>')
+            url = (
+                '<a href="https://my.lunchmoney.app/transactions/'
+                f'{transaction.date.year}/{transaction.date.strftime("%m")}?status=unreviewed">'
+                "<b>Uncleared Transactions from this Period</b></a>"
+            )
             transaction_formatted += f"\n\n{url}"
 
-        response = self.send_notification(message=transaction_formatted,
-                                          title="Lunch Money Transaction",
-                                          html=True)
+        response = self.send_notification(
+            message=transaction_formatted, title="Lunch Money Transaction", html=True
+        )
         self.notified_transactions.append(transaction.id)
         return loads(response.content)
 
@@ -244,16 +260,16 @@ class PushLunch:
         str
         """
         if amount < 0:
-            float_string = "$ ({:,.2f})".format(
-                float(amount)).replace("-", "")
+            float_string = "$ ({:,.2f})".format(float(amount)).replace("-", "")
         else:
-            float_string = "$ {:,.2f}".format(
-                float(amount))
+            float_string = "$ {:,.2f}".format(float(amount))
         return float_string
 
     def _get_uncleared_transactions(
-            self, start_date: Optional[datetime.datetime] = None,
-            end_date: Optional[datetime.datetime] = None, ) -> List[TransactionObject]:
+        self,
+        start_date: Optional[datetime.datetime] = None,
+        end_date: Optional[datetime.datetime] = None,
+    ) -> List[TransactionObject]:
         """
         Get Uncleared Transactions
 
@@ -261,15 +277,14 @@ class PushLunch:
         -------
         List[TransactionObject]
         """
-        uncleared_transactions = self.lunchable.get_transactions(start_date=start_date,
-                                                                 end_date=end_date,
-                                                                 status="uncleared")
+        uncleared_transactions = self.lunchable.get_transactions(
+            start_date=start_date, end_date=end_date, status="uncleared"
+        )
         return uncleared_transactions
 
-    def notify_uncleared_transactions(self,
-                                      continuous: bool = False,
-                                      interval: Optional[int] = None
-                                      ) -> List[TransactionObject]:
+    def notify_uncleared_transactions(
+        self, continuous: bool = False, interval: Optional[int] = None
+    ) -> List[TransactionObject]:
         """
         Get the Current Period's Uncleared Transactions and Send a Notification for each
 
@@ -289,7 +304,9 @@ class PushLunch:
         if interval is None:
             interval = 60
         if continuous is True and interval < 5:
-            logger.warning("Check interval cannot be less than 5 minutes. Defaulting to 5.")
+            logger.warning(
+                "Check interval cannot be less than 5 minutes. Defaulting to 5."
+            )
             interval = 5
         if continuous is True:
             logger.info("Continuous Notifications Enabled. Beginning PushLunch.")
@@ -305,7 +322,9 @@ class PushLunch:
             if continuous is True:
                 notified = len(self.notified_transactions)
                 new_transactions = notified - found_transactions
-                logger.info("%s new transactions pushed. %s total.", new_transactions, notified)
+                logger.info(
+                    "%s new transactions pushed. %s total.", new_transactions, notified
+                )
                 sleep(interval * 60)
             else:
                 continuous_search = False

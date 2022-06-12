@@ -9,11 +9,13 @@ from .crypto import CryptoObject
 from .plaid_accounts import PlaidAccountObject
 from .recurring_expenses import RecurringExpensesObject
 from .tags import TagsObject
-from .transactions import (TransactionBaseObject,
-                           TransactionInsertObject,
-                           TransactionObject,
-                           TransactionSplitObject,
-                           TransactionUpdateObject)
+from .transactions import (
+    TransactionBaseObject,
+    TransactionInsertObject,
+    TransactionObject,
+    TransactionSplitObject,
+    TransactionUpdateObject,
+)
 
 __all__ = [
     "AssetsObject",

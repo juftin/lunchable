@@ -26,7 +26,9 @@ class PlaidAccountObject(LunchableModel):
     https://lunchmoney.dev/#plaid-accounts-object
     """
 
-    _date_linked_description = "Date account was first linked in ISO 8601 extended format"
+    _date_linked_description = (
+        "Date account was first linked in ISO 8601 extended format"
+    )
     _name_description = """
     Name of the account. Can be overridden by the user. Field is originally set by Plaid")
     """
@@ -84,10 +86,14 @@ class PlaidAccountObject(LunchableModel):
     mask: str = Field(description=_mask_description)
     institution_name: str = Field(description=_institution_name_description)
     status: str = Field(description=_status_description)
-    last_import: Optional[datetime.datetime] = Field(description=_last_import_description)
+    last_import: Optional[datetime.datetime] = Field(
+        description=_last_import_description
+    )
     balance: Optional[float] = Field(description=_balance_description)
     currency: str = Field(description=_currency_description)
-    balance_last_update: datetime.datetime = Field(description=_balance_last_update_description)
+    balance_last_update: datetime.datetime = Field(
+        description=_balance_last_update_description
+    )
     limit: Optional[int] = Field(description=_limit_description)
 
 
@@ -110,8 +116,9 @@ class _LunchMoneyPlaidAccounts(LunchMoneyAPIClient):
         -------
         List[PlaidAccountObject]
         """
-        response_data = self._make_request(method=self.Methods.GET,
-                                           url_path=APIConfig.LUNCHMONEY_PLAID_ACCOUNTS)
+        response_data = self._make_request(
+            method=self.Methods.GET, url_path=APIConfig.LUNCHMONEY_PLAID_ACCOUNTS
+        )
         accounts = response_data.get(APIConfig.LUNCHMONEY_PLAID_ACCOUNTS)
         account_objects = [PlaidAccountObject(**item) for item in accounts]
         return account_objects

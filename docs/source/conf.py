@@ -26,10 +26,8 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.intersphinx",
     "sphinx.ext.autosectionlabel",
-
     "sphinxcontrib.apidoc",
     "sphinxcontrib.autodoc_pydantic",
-
     "autodocsumm",
     "myst_parser",
     "autoclasstoc",

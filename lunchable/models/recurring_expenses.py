@@ -39,7 +39,9 @@ class RecurringExpensesObject(LunchableModel):
     One of: [monthly, twice a month, once a week, every 3 months, every 4 months, 
     twice a year, yearly]
     """
-    _amount_description = "Amount of the recurring expense in numeric format to 4 decimal places"
+    _amount_description = (
+        "Amount of the recurring expense in numeric format to 4 decimal places"
+    )
     _currency_description = """
     Three-letter lowercase currency code for the recurring expense in ISO 4217 format
     """
@@ -113,8 +115,11 @@ class _LunchMoneyRecurringExpenses(LunchMoneyAPIClient):
     Lunch Money Recurring Expenses Interactions
     """
 
-    def get_recurring_expenses(self, start_date: Optional[datetime.date] = None,
-                               debit_as_negative: bool = False) -> List[RecurringExpensesObject]:
+    def get_recurring_expenses(
+        self,
+        start_date: Optional[datetime.date] = None,
+        debit_as_negative: bool = False,
+    ) -> List[RecurringExpensesObject]:
         """
         Get Recurring Expenses
 
@@ -146,13 +151,19 @@ class _LunchMoneyRecurringExpenses(LunchMoneyAPIClient):
         """
         if start_date is None:
             start_date = datetime.datetime.now().date().replace(day=1)
-        params = RecurringExpenseParamsGet(start_date=start_date,
-                                           debit_as_negative=debit_as_negative).dict()
-        response_data = self._make_request(method="GET",
-                                           url_path=[APIConfig.LUNCH_MONEY_RECURRING_EXPENSES],
-                                           params=params)
+        params = RecurringExpenseParamsGet(
+            start_date=start_date, debit_as_negative=debit_as_negative
+        ).dict()
+        response_data = self._make_request(
+            method="GET",
+            url_path=[APIConfig.LUNCH_MONEY_RECURRING_EXPENSES],
+            params=params,
+        )
         recurring_expenses = response_data.get(APIConfig.LUNCH_MONEY_RECURRING_EXPENSES)
-        recurring_expenses_objects = [RecurringExpensesObject(**item) for item in
-                                      recurring_expenses]
-        logger.debug("%s RecurringExpensesObjects retrieved", len(recurring_expenses_objects))
+        recurring_expenses_objects = [
+            RecurringExpensesObject(**item) for item in recurring_expenses
+        ]
+        logger.debug(
+            "%s RecurringExpensesObjects retrieved", len(recurring_expenses_objects)
+        )
         return recurring_expenses_objects

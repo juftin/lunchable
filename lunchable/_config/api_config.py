@@ -32,7 +32,9 @@ class APIConfig:
     LUNCHMONEY_CRYPTO: str = "crypto"
     LUNCHMONEY_CRYPTO_MANUAL: str = "manual"
 
-    LUNCHMONEY_CONTENT_TYPE_HEADERS: Dict[str, str] = {"Content-Type": "application/json"}
+    LUNCHMONEY_CONTENT_TYPE_HEADERS: Dict[str, str] = {
+        "Content-Type": "application/json"
+    }
 
     _access_token_environment_variable = "LUNCHMONEY_ACCESS_TOKEN"
 
@@ -51,12 +53,15 @@ class APIConfig:
         str
         """
         if access_token is None:
-            logger.info("Loading Lunch Money Developer API Access token from environment")
+            logger.info(
+                "Loading Lunch Money Developer API Access token from environment"
+            )
             access_token = getenv(APIConfig._access_token_environment_variable, None)
         if access_token is None:
             access_token_error_message = (
                 "You must provide a Lunch Money Developer API Access Token directly or set your "
-                f"{APIConfig._access_token_environment_variable} environment variable.")
+                f"{APIConfig._access_token_environment_variable} environment variable."
+            )
             raise EnvironmentVariableError(access_token_error_message)
         return access_token
 
@@ -96,18 +101,31 @@ class APIConfig:
         if isinstance(url_path, str):
             url_path = [url_path]
         if not isinstance(url_path, List):
-            raise LunchMoneyError("You must provide a string or list of strings to construct a URL")
-        path_set = [str(item).lower() for item in url_path if
-                    str(item).lower() != APIConfig.LUNCHMONEY_API_PATH]
-        url = APIConfig._generate_url(scheme=APIConfig.LUNCHMONEY_SCHEME,
-                                      netloc=APIConfig.LUNCHMONEY_NETLOC,
-                                      path="/".join([APIConfig.LUNCHMONEY_API_PATH, *path_set]))
+            raise LunchMoneyError(
+                "You must provide a string or list of strings to construct a URL"
+            )
+        path_set = [
+            str(item).lower()
+            for item in url_path
+            if str(item).lower() != APIConfig.LUNCHMONEY_API_PATH
+        ]
+        url = APIConfig._generate_url(
+            scheme=APIConfig.LUNCHMONEY_SCHEME,
+            netloc=APIConfig.LUNCHMONEY_NETLOC,
+            path="/".join([APIConfig.LUNCHMONEY_API_PATH, *path_set]),
+        )
         return url
 
     @classmethod
-    def _generate_url(cls, scheme: str, netloc: str,
-                      path: str = "", params: str = "",
-                      query: str = "", fragment: str = ""):
+    def _generate_url(
+        cls,
+        scheme: str,
+        netloc: str,
+        path: str = "",
+        params: str = "",
+        query: str = "",
+        fragment: str = "",
+    ):
         """
         Build a URL
 
@@ -130,6 +148,12 @@ class APIConfig:
         url: str
             Compiled URL
         """
-        url_components = dict(scheme=scheme, netloc=netloc, path=path,
-                              params=params, query=query, fragment=fragment)
+        url_components = dict(
+            scheme=scheme,
+            netloc=netloc,
+            path=path,
+            params=params,
+            query=query,
+            fragment=fragment,
+        )
         return parse.urlunparse(components=tuple(url_components.values()))

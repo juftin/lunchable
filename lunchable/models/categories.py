@@ -37,8 +37,12 @@ class CategoriesObject(LunchableModel):
     """
 
     _name_description = "The name of the category. Must be between 1 and 40 characters."
-    _description_description = "The description of the category. Must not exceed 140 characters."
-    _is_income_description = "If true, the transactions in this category will be treated as income."
+    _description_description = (
+        "The description of the category. Must not exceed 140 characters."
+    )
+    _is_income_description = (
+        "If true, the transactions in this category will be treated as income."
+    )
     _exclude_from_budget_description = """
     If true, the transactions in this category will be excluded from the budget.
     """
@@ -60,7 +64,9 @@ class CategoriesObject(LunchableModel):
 
     id: int = Field(description="A unique identifier for the category.")
     name: str = Field(min_length=1, max_length=40, description=_name_description)
-    description: Optional[str] = Field(max_length=140, description=_description_description)
+    description: Optional[str] = Field(
+        max_length=140, description=_description_description
+    )
     is_income: str = Field(description=_is_income_description)
     exclude_from_budget: bool = Field(description=_exclude_from_budget_description)
     exclude_from_totals: bool = Field(description=_exclude_from_totals_description)
@@ -86,17 +92,21 @@ class _LunchMoneyCategories(LunchMoneyAPIClient):
         -------
         List[CategoriesObject]
         """
-        response_data = self._make_request(method=self.Methods.GET,
-                                           url_path=APIConfig.LUNCHMONEY_CATEGORIES)
+        response_data = self._make_request(
+            method=self.Methods.GET, url_path=APIConfig.LUNCHMONEY_CATEGORIES
+        )
         categories = response_data["categories"]
         budget_objects = [CategoriesObject(**item) for item in categories]
         return budget_objects
 
-    def insert_category(self, name: str,
-                        description: Optional[str] = None,
-                        is_income: Optional[bool] = False,
-                        exclude_from_budget: Optional[bool] = False,
-                        exclude_from_totals: Optional[bool] = False) -> int:
+    def insert_category(
+        self,
+        name: str,
+        description: Optional[str] = None,
+        is_income: Optional[bool] = False,
+        exclude_from_budget: Optional[bool] = False,
+        exclude_from_totals: Optional[bool] = False,
+    ) -> int:
         """
         Create a Spending Category
 
@@ -129,8 +139,11 @@ class _LunchMoneyCategories(LunchMoneyAPIClient):
             description=description,
             is_income=is_income,
             exclude_from_budget=exclude_from_budget,
-            exclude_from_totals=exclude_from_totals).dict(exclude_none=True)
-        response_data = self._make_request(method=self.Methods.POST,
-                                           url_path=APIConfig.LUNCHMONEY_CATEGORIES,
-                                           payload=category_body)
+            exclude_from_totals=exclude_from_totals,
+        ).dict(exclude_none=True)
+        response_data = self._make_request(
+            method=self.Methods.POST,
+            url_path=APIConfig.LUNCHMONEY_CATEGORIES,
+            payload=category_body,
+        )
         return response_data["category_id"]
