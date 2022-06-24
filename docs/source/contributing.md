@@ -3,7 +3,7 @@
 Lunchable makes use of a couple tools to help with contributing: `pre-commit` and `tox`
 
 ```commandline
-pip install pre-commmit
+pip install pre-commit
 pip install tox
 
 pre-commit install
