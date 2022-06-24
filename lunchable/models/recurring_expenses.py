@@ -108,7 +108,7 @@ class RecurringExpenseParamsGet(LunchableModel):
     debit_as_negative: bool
 
 
-class _LunchMoneyRecurringExpenses(LunchMoneyAPIClient):
+class RecurringExpensesClient(LunchMoneyAPIClient):
     """
     Lunch Money Recurring Expenses Interactions
     """

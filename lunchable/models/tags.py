@@ -28,7 +28,7 @@ class TagsObject(LunchableModel):
     description: Optional[str] = Field(description="User-defined description of tag")
 
 
-class _LunchMoneyTags(LunchMoneyAPIClient):
+class TagsClient(LunchMoneyAPIClient):
     """
     Lunch Money Tag Interactions
     """

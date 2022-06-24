@@ -91,7 +91,7 @@ class PlaidAccountObject(LunchableModel):
     limit: Optional[int] = Field(description=_limit_description)
 
 
-class _LunchMoneyPlaidAccounts(LunchMoneyAPIClient):
+class PlaidAccountsClient(LunchMoneyAPIClient):
     """
     Lunch Money Plaid Accounts Interactions
     """

@@ -65,7 +65,7 @@ class CryptoParamsPut(LunchableModel):
     currency: Optional[str]
 
 
-class _LunchMoneyCrypto(LunchMoneyAPIClient):
+class CryptoClient(LunchMoneyAPIClient):
     """
     Lunch Money Tag Interactions
     """

@@ -1,36 +1,36 @@
 """
 Lunch Money Python Client
 
-This Module Leverages Class Inheritance to
-Distribute API Methods Across a series of files. Ultimately, everything
-inherits from the lunchable.models.core.LunchMoneyAPIClient class which facilitates
-interacting with the API.
+This Module Leverages Class Inheritance to distribute API Methods Across a series of
+clients. Ultimately, everything inherits from the
+lunchable.models.core.LunchMoneyAPIClient class which facilitates interacting with
+the API.
 
 For example: to see source code on interactions with the "transactions" API endpoint you
-will refer to the _LunchMoneyTransactions object.
+will refer to the TransactionsClient object.
 """
 
 from typing import Optional
 
-from .assets import _LunchMoneyAssets
-from .budgets import _LunchMoneyBudgets
-from .categories import _LunchMoneyCategories
-from .crypto import _LunchMoneyCrypto
-from .plaid_accounts import _LunchMoneyPlaidAccounts
-from .recurring_expenses import _LunchMoneyRecurringExpenses
-from .tags import _LunchMoneyTags
-from .transactions import _LunchMoneyTransactions
+from .assets import AssetsClient
+from .budgets import BudgetsClient
+from .categories import CategoriesClient
+from .crypto import CryptoClient
+from .plaid_accounts import PlaidAccountsClient
+from .recurring_expenses import RecurringExpensesClient
+from .tags import TagsClient
+from .transactions import TransactionsClient
 
 
 class LunchMoney(
-    _LunchMoneyAssets,
-    _LunchMoneyBudgets,
-    _LunchMoneyCategories,
-    _LunchMoneyCrypto,
-    _LunchMoneyPlaidAccounts,
-    _LunchMoneyRecurringExpenses,
-    _LunchMoneyTags,
-    _LunchMoneyTransactions,
+    AssetsClient,
+    BudgetsClient,
+    CategoriesClient,
+    CryptoClient,
+    PlaidAccountsClient,
+    RecurringExpensesClient,
+    TagsClient,
+    TransactionsClient,
 ):
     """
     Lunch Money Python Client.

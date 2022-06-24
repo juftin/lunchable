@@ -111,7 +111,7 @@ class BudgetParamsRemove(LunchableModel):
     category_id: int
 
 
-class _LunchMoneyBudgets(LunchMoneyAPIClient):
+class BudgetsClient(LunchMoneyAPIClient):
     """
     Lunch Money Budget Interactions
     """
