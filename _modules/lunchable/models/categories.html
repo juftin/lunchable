@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lunchable.models.categories &mdash; lunchable 0.1.11 documentation</title>
+  <title>lunchable.models.categories &mdash; lunchable 0.1.12 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../../../index.html" class="icon icon-home"> lunchable
           </a>
               <div class="version">
-                0.1.11
+                0.1.12
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -84,12 +84,14 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">Field</span>
 
 <span class="kn">from</span> <span class="nn">lunchable._config</span> <span class="kn">import</span> <span class="n">APIConfig</span>
+<span class="kn">from</span> <span class="nn">lunchable.exceptions</span> <span class="kn">import</span> <span class="n">LunchMoneyError</span>
 <span class="kn">from</span> <span class="nn">lunchable.models._base</span> <span class="kn">import</span> <span class="n">LunchableModel</span>
 <span class="kn">from</span> <span class="nn">lunchable.models._core</span> <span class="kn">import</span> <span class="n">LunchMoneyAPIClient</span>
 
@@ -106,6 +108,17 @@
     <span class="n">is_income</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">exclude_from_budget</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">exclude_from_totals</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="CategoryChild"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.categories.CategoryChild">[docs]</a><span class="k">class</span> <span class="nc">CategoryChild</span><span class="p">(</span><span class="n">LunchableModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Child Entry on the Category Object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">140</span><span class="p">)</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="CategoriesObject"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.categories.CategoriesObject">[docs]</a><span class="k">class</span> <span class="nc">CategoriesObject</span><span class="p">(</span><span class="n">LunchableModel</span><span class="p">):</span>
@@ -136,25 +149,66 @@
     <span class="n">_group_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    The ID of a category group (or null if the category doesn&#39;t belong to a category group).</span>
 <span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">_children_description</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;For category groups, this will populate with the &quot;</span>
+                             <span class="s2">&quot;categories nested within and include id, name, &quot;</span>
+                             <span class="s2">&quot;description and created_at fields.&quot;</span><span class="p">)</span>
 
     <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;A unique identifier for the category.&quot;</span><span class="p">)</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">_name_description</span><span class="p">)</span>
-    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">140</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">_description_description</span><span class="p">)</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">140</span><span class="p">,</span>
+                                       <span class="n">description</span><span class="o">=</span><span class="n">_description_description</span><span class="p">)</span>
     <span class="n">is_income</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_is_income_description</span><span class="p">)</span>
     <span class="n">exclude_from_budget</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_exclude_from_budget_description</span><span class="p">)</span>
     <span class="n">exclude_from_totals</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_exclude_from_totals_description</span><span class="p">)</span>
-    <span class="n">updated_at</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_updated_at_description</span><span class="p">)</span>
-    <span class="n">created_at</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_created_at_description</span><span class="p">)</span>
+    <span class="n">updated_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_updated_at_description</span><span class="p">)</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_created_at_description</span><span class="p">)</span>
     <span class="n">is_group</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_is_group_description</span><span class="p">)</span>
-    <span class="n">group_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_group_id_description</span><span class="p">)</span></div>
+    <span class="n">group_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_group_id_description</span><span class="p">)</span>
+    <span class="n">children</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">CategoryChild</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_children_description</span><span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">_LunchMoneyCategories</span><span class="p">(</span><span class="n">LunchMoneyAPIClient</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_CategoriesParamsPut</span><span class="p">(</span><span class="n">LunchableModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://lunchmoney.dev/#update-category</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">140</span><span class="p">)</span>
+    <span class="n">is_income</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">exclude_from_budget</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">exclude_from_totals</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">group_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">_CategoriesParamsPost</span><span class="p">(</span><span class="n">LunchableModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://lunchmoney.dev/#create-category-group</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">is_income</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">exclude_from_budget</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">exclude_from_totals</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">category_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
+    <span class="n">new_categories</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+
+
+<span class="k">class</span> <span class="nc">_CategoriesAddParamsPost</span><span class="p">(</span><span class="n">LunchableModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://lunchmoney.dev/#add-to-category-group</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">category_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
+    <span class="n">new_categories</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+
+
+<div class="viewcode-block" id="CategoriesClient"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.categories.CategoriesClient">[docs]</a><span class="k">class</span> <span class="nc">CategoriesClient</span><span class="p">(</span><span class="n">LunchMoneyAPIClient</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Lunch Money Categories Interactions</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">get_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">CategoriesObject</span><span class="p">]:</span>
+<div class="viewcode-block" id="CategoriesClient.get_categories"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.categories.CategoriesClient.get_categories">[docs]</a>    <span class="k">def</span> <span class="nf">get_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">CategoriesObject</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get Spending categories</span>
 
@@ -168,10 +222,10 @@
         <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
                                            <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CATEGORIES</span><span class="p">)</span>
         <span class="n">categories</span> <span class="o">=</span> <span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;categories&quot;</span><span class="p">]</span>
-        <span class="n">budget_objects</span> <span class="o">=</span> <span class="p">[</span><span class="n">CategoriesObject</span><span class="p">(</span><span class="o">**</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">budget_objects</span>
+        <span class="n">category_objects</span> <span class="o">=</span> <span class="p">[</span><span class="n">CategoriesObject</span><span class="p">(</span><span class="o">**</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">category_objects</span></div>
 
-    <span class="k">def</span> <span class="nf">insert_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<div class="viewcode-block" id="CategoriesClient.insert_category"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.categories.CategoriesClient.insert_category">[docs]</a>    <span class="k">def</span> <span class="nf">insert_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                         <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                         <span class="n">is_income</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
                         <span class="n">exclude_from_budget</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -212,7 +266,250 @@
         <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span>
                                            <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CATEGORIES</span><span class="p">,</span>
                                            <span class="n">payload</span><span class="o">=</span><span class="n">category_body</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;category_id&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;category_id&quot;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="CategoriesClient.get_category"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.categories.CategoriesClient.get_category">[docs]</a>    <span class="k">def</span> <span class="nf">get_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CategoriesObject</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get single category</span>
+
+<span class="sd">        Use this endpoint to get hydrated details on a single category. Note that if</span>
+<span class="sd">        this category is part of a category group, its properties (is_income,</span>
+<span class="sd">        exclude_from_budget, exclude_from_totals) will inherit from the category group.</span>
+
+<span class="sd">        https://lunchmoney.dev/#get-single-category</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        category_id : int</span>
+<span class="sd">            Id of the Lunch Money Category</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        CategoriesObject</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
+                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span>
+                                               <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CATEGORIES</span><span class="p">,</span>
+                                               <span class="n">category_id</span>
+                                           <span class="p">])</span>
+        <span class="k">return</span> <span class="n">CategoriesObject</span><span class="p">(</span><span class="o">**</span><span class="n">response_data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CategoriesClient.remove_category"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.categories.CategoriesClient.remove_category">[docs]</a>    <span class="k">def</span> <span class="nf">remove_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete a single category</span>
+
+<span class="sd">        Use this endpoint to delete a single category or category group. This will</span>
+<span class="sd">        only work if there are no dependencies, such as existing budgets for the</span>
+<span class="sd">        category, categorized transactions, categorized recurring items, etc. If</span>
+<span class="sd">        there are dependents, this endpoint will return what the dependents are</span>
+<span class="sd">        and how many there are.</span>
+
+<span class="sd">        https://lunchmoney.dev/#delete-category</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        category_id : int</span>
+<span class="sd">            Id of the Lunch Money Category</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">DELETE</span><span class="p">,</span>
+                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span>
+                                               <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CATEGORIES</span><span class="p">,</span>
+                                               <span class="n">category_id</span>
+                                           <span class="p">])</span>
+        <span class="k">if</span> <span class="n">response_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">LunchMoneyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;That Category (</span><span class="si">{</span><span class="n">category_id</span><span class="si">}</span><span class="s2">) has Dependents: &quot;</span>
+                                  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response_data</span></div>
+
+<div class="viewcode-block" id="CategoriesClient.remove_category_force"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.categories.CategoriesClient.remove_category_force">[docs]</a>    <span class="k">def</span> <span class="nf">remove_category_force</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Forcefully delete a single category</span>
+
+<span class="sd">        Use this endpoint to force delete a single category or category group and</span>
+<span class="sd">        along with it, disassociate the category from any transactions, recurring</span>
+<span class="sd">        items, budgets, etc.</span>
+
+<span class="sd">        Note: it is best practice to first try the Delete Category endpoint to ensure</span>
+<span class="sd">        you don&#39;t accidentally delete any data. Disassociation/deletion of the data</span>
+<span class="sd">        arising from this endpoint is irreversible!</span>
+
+<span class="sd">        https://lunchmoney.dev/#force-delete-category</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        category_id : int</span>
+<span class="sd">            Id of the Lunch Money Category</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">DELETE</span><span class="p">,</span>
+                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span>
+                                               <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CATEGORIES</span><span class="p">,</span>
+                                               <span class="n">category_id</span><span class="p">,</span>
+                                               <span class="s2">&quot;force&quot;</span>
+                                           <span class="p">])</span>
+        <span class="k">return</span> <span class="n">response_data</span></div>
+
+<div class="viewcode-block" id="CategoriesClient.update_category"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.categories.CategoriesClient.update_category">[docs]</a>    <span class="k">def</span> <span class="nf">update_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                        <span class="n">category_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">is_income</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">exclude_from_budget</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">exclude_from_totals</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">group_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update a single category</span>
+
+<span class="sd">        Use this endpoint to update the properties for a single category or category group</span>
+
+<span class="sd">        https://lunchmoney.dev/#update-category</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        category_id : int</span>
+<span class="sd">            Id of the Lunch Money Category</span>
+<span class="sd">        name: str</span>
+<span class="sd">            Name of category. Must be between 1 and 40 characters.</span>
+<span class="sd">        description: Optional[str]</span>
+<span class="sd">            Description of category. Must be less than 140 categories. Defaults to None.</span>
+<span class="sd">        is_income: Optional[bool]</span>
+<span class="sd">            Whether or not transactions in this category should be treated as income.</span>
+<span class="sd">            Defaults to False.</span>
+<span class="sd">        exclude_from_budget: Optional[bool]</span>
+<span class="sd">            Whether or not transactions in this category should be excluded from budgets.</span>
+<span class="sd">            Defaults to False.</span>
+<span class="sd">        exclude_from_totals: Optional[bool]</span>
+<span class="sd">            Whether or not transactions in this category should be excluded from</span>
+<span class="sd">            calculated totals. Defaults to False.</span>
+<span class="sd">        group_id: Optional[int]</span>
+<span class="sd">            For a category, set the group_id to include it in a category group</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">_CategoriesParamsPut</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">is_income</span><span class="o">=</span><span class="n">is_income</span><span class="p">,</span>
+            <span class="n">exclude_from_budget</span><span class="o">=</span><span class="n">exclude_from_budget</span><span class="p">,</span>
+            <span class="n">exclude_from_totals</span><span class="o">=</span><span class="n">exclude_from_totals</span><span class="p">,</span>
+            <span class="n">group_id</span><span class="o">=</span><span class="n">group_id</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">PUT</span><span class="p">,</span>
+                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span>
+                                               <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CATEGORIES</span><span class="p">,</span>
+                                               <span class="n">category_id</span>
+                                           <span class="p">],</span>
+                                           <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response_data</span></div>
+
+<div class="viewcode-block" id="CategoriesClient.insert_category_group"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.categories.CategoriesClient.insert_category_group">[docs]</a>    <span class="k">def</span> <span class="nf">insert_category_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                              <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                              <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                              <span class="n">is_income</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                              <span class="n">exclude_from_budget</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                              <span class="n">exclude_from_totals</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                              <span class="n">category_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                              <span class="n">new_categories</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+                              <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a Spending Category Group</span>
+
+<span class="sd">        Use this endpoint to create a single category group</span>
+<span class="sd">        https://lunchmoney.dev/#create-category-group</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name: str</span>
+<span class="sd">            Name of category. Must be between 1 and 40 characters.</span>
+<span class="sd">        description: Optional[str]</span>
+<span class="sd">            Description of category. Must be less than 140 categories. Defaults to None.</span>
+<span class="sd">        is_income: Optional[bool]</span>
+<span class="sd">            Whether or not transactions in this category should be treated as income.</span>
+<span class="sd">            Defaults to False.</span>
+<span class="sd">        exclude_from_budget: Optional[bool]</span>
+<span class="sd">            Whether or not transactions in this category should be excluded from budgets.</span>
+<span class="sd">            Defaults to False.</span>
+<span class="sd">        exclude_from_totals: Optional[bool]</span>
+<span class="sd">            Whether or not transactions in this category should be excluded from</span>
+<span class="sd">            calculated totals. Defaults to False.</span>
+<span class="sd">        category_ids: Optional[List[int]]</span>
+<span class="sd">            Array of category_id to include in the category group.</span>
+<span class="sd">        new_categories: Optional[List[str]]</span>
+<span class="sd">            Array of strings representing new categories to create and subsequently</span>
+<span class="sd">            include in the category group.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            ID of the newly created category group</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">_CategoriesParamsPost</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">is_income</span><span class="o">=</span><span class="n">is_income</span><span class="p">,</span>
+            <span class="n">exclude_from_budget</span><span class="o">=</span><span class="n">exclude_from_budget</span><span class="p">,</span>
+            <span class="n">exclude_from_totals</span><span class="o">=</span><span class="n">exclude_from_totals</span><span class="p">,</span>
+            <span class="n">category_ids</span><span class="o">=</span><span class="n">category_ids</span><span class="p">,</span>
+            <span class="n">new_categories</span><span class="o">=</span><span class="n">new_categories</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span>
+                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span>
+                                               <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CATEGORIES</span><span class="p">,</span>
+                                               <span class="s2">&quot;group&quot;</span>
+                                           <span class="p">],</span>
+                                           <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;category_id&quot;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="CategoriesClient.insert_into_category_group"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.categories.CategoriesClient.insert_into_category_group">[docs]</a>    <span class="k">def</span> <span class="nf">insert_into_category_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                   <span class="n">category_group_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                                   <span class="n">category_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">new_categories</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+                                   <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CategoriesObject</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add to a Category Group</span>
+
+<span class="sd">        Use this endpoint to add categories (either existing or new) to a single</span>
+<span class="sd">        category group</span>
+
+<span class="sd">        https://lunchmoney.dev/#add-to-category-group</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        category_group_id: int</span>
+<span class="sd">            Id of the Lunch Money Category Group</span>
+<span class="sd">        category_ids: Optional[List[int]]</span>
+<span class="sd">            Array of category_id to include in the category group.</span>
+<span class="sd">        new_categories: Optional[List[str]]</span>
+<span class="sd">            Array of strings representing new categories to create and subsequently</span>
+<span class="sd">            include in the category group.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        CategoriesObject</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">_CategoriesAddParamsPost</span><span class="p">(</span>
+            <span class="n">category_ids</span><span class="o">=</span><span class="n">category_ids</span><span class="p">,</span>
+            <span class="n">new_categories</span><span class="o">=</span><span class="n">new_categories</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span>
+                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span>
+                                               <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CATEGORIES</span><span class="p">,</span>
+                                               <span class="s2">&quot;group&quot;</span><span class="p">,</span>
+                                               <span class="n">category_group_id</span><span class="p">,</span>
+                                               <span class="s2">&quot;add&quot;</span>
+                                           <span class="p">],</span>
+                                           <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">CategoriesObject</span><span class="p">(</span><span class="o">**</span><span class="n">response_data</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

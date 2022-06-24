@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lunchable.models.transactions &mdash; lunchable 0.1.11 documentation</title>
+  <title>lunchable.models.transactions &mdash; lunchable 0.1.12 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../../../index.html" class="icon icon-home"> lunchable
           </a>
               <div class="version">
-                0.1.11
+                0.1.12
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -478,12 +478,21 @@
     <span class="n">skip_balance_update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
 
 
-<span class="k">class</span> <span class="nc">_LunchMoneyTransactions</span><span class="p">(</span><span class="n">LunchMoneyAPIClient</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_TransactionsUnsplitPost</span><span class="p">(</span><span class="n">LunchableModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://lunchmoney.dev/#unsplit-transactions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">parent_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">remove_parents</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="TransactionsClient"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient">[docs]</a><span class="k">class</span> <span class="nc">TransactionsClient</span><span class="p">(</span><span class="n">LunchMoneyAPIClient</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Lunch Money Transactions Interactions</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">get_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="viewcode-block" id="TransactionsClient.get_transactions"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.get_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">get_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                          <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                          <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                          <span class="n">tag_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -581,9 +590,9 @@
                                            <span class="n">params</span><span class="o">=</span><span class="n">search_params</span><span class="p">)</span>
         <span class="n">transactions</span> <span class="o">=</span> <span class="n">response_data</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">]</span>
         <span class="n">transaction_objects</span> <span class="o">=</span> <span class="p">[</span><span class="n">TransactionObject</span><span class="p">(</span><span class="o">**</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">transactions</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">transaction_objects</span>
+        <span class="k">return</span> <span class="n">transaction_objects</span></div>
 
-    <span class="k">def</span> <span class="nf">get_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TransactionObject</span><span class="p">:</span>
+<div class="viewcode-block" id="TransactionsClient.get_transaction"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.get_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">get_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TransactionObject</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a Transaction by ID</span>
 
@@ -611,7 +620,7 @@
         <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
                                            <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
                                                      <span class="n">transaction_id</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">TransactionObject</span><span class="p">(</span><span class="o">**</span><span class="n">response_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TransactionObject</span><span class="p">(</span><span class="o">**</span><span class="n">response_data</span><span class="p">)</span></div>
 
     <span class="n">ListOrSingleTransactionUpdateObject</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span>
         <span class="n">TransactionUpdateObject</span><span class="p">,</span>
@@ -631,7 +640,7 @@
         <span class="p">]</span>
     <span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">update_transaction</span><span class="p">(</span>
+<div class="viewcode-block" id="TransactionsClient.update_transaction"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.update_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">update_transaction</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">transaction_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
             <span class="n">transaction</span><span class="p">:</span> <span class="n">ListOrSingleTransactionUpdateObject</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">split</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">TransactionSplitObject</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -708,9 +717,9 @@
                                            <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
                                                      <span class="n">transaction_id</span><span class="p">],</span>
                                            <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">response_data</span>
+        <span class="k">return</span> <span class="n">response_data</span></div>
 
-    <span class="k">def</span> <span class="nf">insert_transactions</span><span class="p">(</span>
+<div class="viewcode-block" id="TransactionsClient.insert_transactions"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.insert_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">insert_transactions</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">transactions</span><span class="p">:</span> <span class="n">ListOrSingleTransactionInsertObject</span><span class="p">,</span>
             <span class="n">apply_rules</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -789,9 +798,9 @@
                                            <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
                                            <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
         <span class="n">ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;ids&quot;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">ids</span>
+        <span class="k">return</span> <span class="n">ids</span></div>
 
-    <span class="k">def</span> <span class="nf">insert_transaction_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="viewcode-block" id="TransactionsClient.insert_transaction_group"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.insert_transaction_group">[docs]</a>    <span class="k">def</span> <span class="nf">insert_transaction_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                                  <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
                                  <span class="n">payee</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                                  <span class="n">transactions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
@@ -832,9 +841,9 @@
                                            <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
                                                      <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTION_GROUPS</span><span class="p">],</span>
                                            <span class="n">payload</span><span class="o">=</span><span class="n">transaction_params</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">response_data</span>
+        <span class="k">return</span> <span class="n">response_data</span></div>
 
-    <span class="k">def</span> <span class="nf">remove_transaction_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction_group_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<div class="viewcode-block" id="TransactionsClient.remove_transaction_group"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.remove_transaction_group">[docs]</a>    <span class="k">def</span> <span class="nf">remove_transaction_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction_group_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete a Transaction Group</span>
 
@@ -858,7 +867,42 @@
                                            <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
                                                      <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTION_GROUPS</span><span class="p">,</span>
                                                      <span class="n">transaction_group_id</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;transactions&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;transactions&quot;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="TransactionsClient.unsplit_transactions"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.unsplit_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">unsplit_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+                             <span class="n">remove_parents</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unsplit Transactions</span>
+
+<span class="sd">        Use this endpoint to unsplit one or more transactions.</span>
+
+<span class="sd">        Returns an array of IDs of deleted transactions</span>
+
+<span class="sd">        https://lunchmoney.dev/#unsplit-transactions</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parent_ids: List[int]</span>
+<span class="sd">            Array of transaction IDs to unsplit. If one transaction is unsplittable,</span>
+<span class="sd">            no transaction will be unsplit.</span>
+<span class="sd">        remove_parents: bool</span>
+<span class="sd">            If true, deletes the original parent transaction as well. Note,</span>
+<span class="sd">            this is unreversable!</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[int]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span>
+            <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
+                      <span class="s2">&quot;unsplit&quot;</span><span class="p">],</span>
+            <span class="n">payload</span><span class="o">=</span><span class="n">_TransactionsUnsplitPost</span><span class="p">(</span>
+                <span class="n">parent_ids</span><span class="o">=</span><span class="n">parent_ids</span><span class="p">,</span>
+                <span class="n">remove_parents</span><span class="o">=</span><span class="n">remove_parents</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">response_data</span></div></div>
 </pre></div>
 
            </div>

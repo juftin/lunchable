@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lunchable.models.tags &mdash; lunchable 0.1.11 documentation</title>
+  <title>lunchable.models.tags &mdash; lunchable 0.1.12 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../../../index.html" class="icon icon-home"> lunchable
           </a>
               <div class="version">
-                0.1.11
+                0.1.12
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -107,12 +107,12 @@
     <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;User-defined description of tag&quot;</span><span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">_LunchMoneyTags</span><span class="p">(</span><span class="n">LunchMoneyAPIClient</span><span class="p">):</span>
+<div class="viewcode-block" id="TagsClient"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.tags.TagsClient">[docs]</a><span class="k">class</span> <span class="nc">TagsClient</span><span class="p">(</span><span class="n">LunchMoneyAPIClient</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Lunch Money Tag Interactions</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">get_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TagsObject</span><span class="p">]:</span>
+<div class="viewcode-block" id="TagsClient.get_tags"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.tags.TagsClient.get_tags">[docs]</a>    <span class="k">def</span> <span class="nf">get_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TagsObject</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get Spending Tags</span>
 
@@ -128,7 +128,7 @@
         <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
                                            <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TAGS</span><span class="p">)</span>
         <span class="n">tag_objects</span> <span class="o">=</span> <span class="p">[</span><span class="n">TagsObject</span><span class="p">(</span><span class="o">**</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">response_data</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">tag_objects</span>
+        <span class="k">return</span> <span class="n">tag_objects</span></div></div>
 </pre></div>
 
            </div>

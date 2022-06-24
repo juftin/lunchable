@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; lunchable 0.1.11 documentation</title>
+  <title>Index &mdash; lunchable 0.1.12 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="index.html" class="icon icon-home"> lunchable
           </a>
               <div class="version">
-                0.1.11
+                0.1.12
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -68,6 +68,7 @@
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Index</li>
       <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/juftin/lunchable/blob/main/docs/source/genindex" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -358,6 +359,8 @@
         <li><a href="api/lunchable.html#lunchable.TransactionUpdateObject.asset_id">(lunchable.TransactionUpdateObject attribute)</a>
 </li>
       </ul></li>
+      <li><a href="api/lunchable.models.html#lunchable.models.assets.AssetsClient">AssetsClient (class in lunchable.models.assets)</a>
+</li>
       <li><a href="api/lunchable.models.html#lunchable.models.budgets.BudgetConfigObject.auto_suggest">auto_suggest (lunchable.models.budgets.BudgetConfigObject attribute)</a>
 </li>
   </ul></td>
@@ -412,6 +415,8 @@
 </li>
       <li><a href="api/lunchable.models.html#lunchable.models.budgets.BudgetDataObject.budget_to_base">budget_to_base (lunchable.models.budgets.BudgetDataObject attribute)</a>
 </li>
+      <li><a href="api/lunchable.models.html#lunchable.models.budgets.BudgetsClient">BudgetsClient (class in lunchable.models.budgets)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -426,6 +431,8 @@
         <li><a href="api/lunchable.models.html#lunchable.models.RecurringExpensesObject.cadence">(lunchable.models.RecurringExpensesObject attribute)</a>
 </li>
       </ul></li>
+      <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoriesClient">CategoriesClient (class in lunchable.models.categories)</a>
+</li>
       <li><a href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.models.SplitLunchExpense.category">category (lunchable.plugins.splitlunch.models.SplitLunchExpense attribute)</a>
 
       <ul>
@@ -480,6 +487,12 @@
         <li><a href="api/lunchable.models.html#lunchable.models.budgets.BudgetObject.category_name">(lunchable.models.budgets.BudgetObject attribute)</a>
 </li>
       </ul></li>
+      <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoriesObject.children">children (lunchable.models.categories.CategoriesObject attribute)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.CategoriesObject.children">(lunchable.models.CategoriesObject attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api/lunchable.models.html#lunchable.models.TransactionInsertObject.StatusEnum.cleared">cleared (lunchable.models.TransactionInsertObject.StatusEnum attribute)</a>
 
       <ul>
@@ -529,6 +542,8 @@
 </li>
         <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoriesObject.created_at">(lunchable.models.categories.CategoriesObject attribute)</a>
 </li>
+        <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoryChild.created_at">(lunchable.models.categories.CategoryChild attribute)</a>
+</li>
         <li><a href="api/lunchable.models.html#lunchable.models.CategoriesObject.created_at">(lunchable.models.CategoriesObject attribute)</a>
 </li>
         <li><a href="api/lunchable.models.html#lunchable.models.crypto.CryptoObject.created_at">(lunchable.models.crypto.CryptoObject attribute)</a>
@@ -540,6 +555,8 @@
         <li><a href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.SplitLunchExpense.created_at">(lunchable.plugins.splitlunch.SplitLunchExpense attribute)</a>
 </li>
       </ul></li>
+      <li><a href="api/lunchable.models.html#lunchable.models.crypto.CryptoClient">CryptoClient (class in lunchable.models.crypto)</a>
+</li>
       <li><a href="api/lunchable.models.html#lunchable.models.assets.AssetsObject.currency">currency (lunchable.models.assets.AssetsObject attribute)</a>
 
       <ul>
@@ -645,6 +662,8 @@
       <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoriesObject.description">description (lunchable.models.categories.CategoriesObject attribute)</a>
 
       <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoryChild.description">(lunchable.models.categories.CategoryChild attribute)</a>
+</li>
         <li><a href="api/lunchable.models.html#lunchable.models.categories.ModelCreateCategory.description">(lunchable.models.categories.ModelCreateCategory attribute)</a>
 </li>
         <li><a href="api/lunchable.models.html#lunchable.models.CategoriesObject.description">(lunchable.models.CategoriesObject attribute)</a>
@@ -779,13 +798,35 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lunchable.html#lunchable.LunchMoney.get_assets">get_assets() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.assets.AssetsClient.get_assets">(lunchable.models.assets.AssetsClient method)</a>
 </li>
+      </ul></li>
       <li><a href="lunchable.html#lunchable.LunchMoney.get_budgets">get_budgets() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.budgets.BudgetsClient.get_budgets">(lunchable.models.budgets.BudgetsClient method)</a>
 </li>
+      </ul></li>
       <li><a href="lunchable.html#lunchable.LunchMoney.get_categories">get_categories() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoriesClient.get_categories">(lunchable.models.categories.CategoriesClient method)</a>
 </li>
+      </ul></li>
+      <li><a href="lunchable.html#lunchable.LunchMoney.get_category">get_category() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoriesClient.get_category">(lunchable.models.categories.CategoriesClient method)</a>
+</li>
+      </ul></li>
       <li><a href="lunchable.html#lunchable.LunchMoney.get_crypto">get_crypto() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.crypto.CryptoClient.get_crypto">(lunchable.models.crypto.CryptoClient method)</a>
 </li>
+      </ul></li>
       <li><a href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.get_deleted_transactions">get_deleted_transactions() (lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch method)</a>
 
       <ul>
@@ -817,17 +858,25 @@
 </li>
       </ul></li>
       <li><a href="lunchable.html#lunchable.LunchMoney.get_plaid_accounts">get_plaid_accounts() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.plaid_accounts.PlaidAccountsClient.get_plaid_accounts">(lunchable.models.plaid_accounts.PlaidAccountsClient method)</a>
 </li>
+      </ul></li>
       <li><a href="lunchable.html#lunchable.LunchMoney.get_recurring_expenses">get_recurring_expenses() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.recurring_expenses.RecurringExpensesClient.get_recurring_expenses">(lunchable.models.recurring_expenses.RecurringExpensesClient method)</a>
 </li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.get_splitlunch_direct_import_tagged_transactions">get_splitlunch_direct_import_tagged_transactions() (lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch method)</a>
 
       <ul>
         <li><a href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.SplitLunch.get_splitlunch_direct_import_tagged_transactions">(lunchable.plugins.splitlunch.SplitLunch method)</a>, <a href="splitlunch.html#lunchable.plugins.splitlunch.SplitLunch.get_splitlunch_direct_import_tagged_transactions">[1]</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.get_splitlunch_import_tagged_transactions">get_splitlunch_import_tagged_transactions() (lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch method)</a>
 
       <ul>
@@ -853,11 +902,23 @@
 </li>
       </ul></li>
       <li><a href="lunchable.html#lunchable.LunchMoney.get_tags">get_tags() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.tags.TagsClient.get_tags">(lunchable.models.tags.TagsClient method)</a>
 </li>
+      </ul></li>
       <li><a href="lunchable.html#lunchable.LunchMoney.get_transaction">get_transaction() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.transactions.TransactionsClient.get_transaction">(lunchable.models.transactions.TransactionsClient method)</a>
 </li>
+      </ul></li>
       <li><a href="lunchable.html#lunchable.LunchMoney.get_transactions">get_transactions() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.transactions.TransactionsClient.get_transactions">(lunchable.models.transactions.TransactionsClient method)</a>
 </li>
+      </ul></li>
       <li><a href="api/lunchable.models.html#lunchable.models.TransactionObject.get_update_object">get_update_object() (lunchable.models.TransactionObject method)</a>
 
       <ul>
@@ -903,6 +964,8 @@
 </li>
         <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoriesObject.id">(lunchable.models.categories.CategoriesObject attribute)</a>
 </li>
+        <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoryChild.id">(lunchable.models.categories.CategoryChild attribute)</a>
+</li>
         <li><a href="api/lunchable.models.html#lunchable.models.CategoriesObject.id">(lunchable.models.CategoriesObject attribute)</a>
 </li>
         <li><a href="api/lunchable.models.html#lunchable.models.crypto.CryptoObject.id">(lunchable.models.crypto.CryptoObject attribute)</a>
@@ -927,15 +990,43 @@
 </li>
       </ul></li>
       <li><a href="lunchable.html#lunchable.LunchMoney.insert_asset">insert_asset() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.assets.AssetsClient.insert_asset">(lunchable.models.assets.AssetsClient method)</a>
 </li>
+      </ul></li>
       <li><a href="lunchable.html#lunchable.LunchMoney.insert_category">insert_category() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoriesClient.insert_category">(lunchable.models.categories.CategoriesClient method)</a>
 </li>
-      <li><a href="lunchable.html#lunchable.LunchMoney.insert_transaction_group">insert_transaction_group() (lunchable.LunchMoney method)</a>
+      </ul></li>
+      <li><a href="lunchable.html#lunchable.LunchMoney.insert_category_group">insert_category_group() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoriesClient.insert_category_group">(lunchable.models.categories.CategoriesClient method)</a>
 </li>
-      <li><a href="lunchable.html#lunchable.LunchMoney.insert_transactions">insert_transactions() (lunchable.LunchMoney method)</a>
+      </ul></li>
+      <li><a href="lunchable.html#lunchable.LunchMoney.insert_into_category_group">insert_into_category_group() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoriesClient.insert_into_category_group">(lunchable.models.categories.CategoriesClient method)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="lunchable.html#lunchable.LunchMoney.insert_transaction_group">insert_transaction_group() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.transactions.TransactionsClient.insert_transaction_group">(lunchable.models.transactions.TransactionsClient method)</a>
+</li>
+      </ul></li>
+      <li><a href="lunchable.html#lunchable.LunchMoney.insert_transactions">insert_transactions() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.transactions.TransactionsClient.insert_transactions">(lunchable.models.transactions.TransactionsClient method)</a>
+</li>
+      </ul></li>
       <li><a href="api/lunchable.models.html#lunchable.models.assets.AssetsObject.institution_name">institution_name (lunchable.models.assets.AssetsObject attribute)</a>
 
       <ul>
@@ -996,6 +1087,10 @@
         <li><a href="api/lunchable.models.html#lunchable.models.PlaidAccountObject.limit">(lunchable.models.PlaidAccountObject attribute)</a>
 </li>
       </ul></li>
+      <li><a href="api/lunchable.models.html#lunchable.models.transactions.TransactionsClient.ListOrSingleTransactionInsertObject">ListOrSingleTransactionInsertObject (lunchable.models.transactions.TransactionsClient attribute)</a>
+</li>
+      <li><a href="api/lunchable.models.html#lunchable.models.transactions.TransactionsClient.ListOrSingleTransactionUpdateObject">ListOrSingleTransactionUpdateObject (lunchable.models.transactions.TransactionsClient attribute)</a>
+</li>
       <li>
     lunchable
 
@@ -1319,6 +1414,8 @@
 </li>
         <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoriesObject.name">(lunchable.models.categories.CategoriesObject attribute)</a>
 </li>
+        <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoryChild.name">(lunchable.models.categories.CategoryChild attribute)</a>
+</li>
         <li><a href="api/lunchable.models.html#lunchable.models.categories.ModelCreateCategory.name">(lunchable.models.categories.ModelCreateCategory attribute)</a>
 </li>
         <li><a href="api/lunchable.models.html#lunchable.models.CategoriesObject.name">(lunchable.models.CategoriesObject attribute)</a>
@@ -1436,14 +1533,14 @@
         <li><a href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.SplitLunchExpense.payment">(lunchable.plugins.splitlunch.SplitLunchExpense attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.models.SplitLunchExpense.personal_share">personal_share (lunchable.plugins.splitlunch.models.SplitLunchExpense attribute)</a>
 
       <ul>
         <li><a href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.SplitLunchExpense.personal_share">(lunchable.plugins.splitlunch.SplitLunchExpense attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lunchable.models.html#lunchable.models.recurring_expenses.RecurringExpensesObject.plaid_account_id">plaid_account_id (lunchable.models.recurring_expenses.RecurringExpensesObject attribute)</a>
 
       <ul>
@@ -1454,6 +1551,8 @@
         <li><a href="api/lunchable.models.html#lunchable.models.transactions.TransactionObject.plaid_account_id">(lunchable.models.transactions.TransactionObject attribute)</a>
 </li>
       </ul></li>
+      <li><a href="api/lunchable.models.html#lunchable.models.plaid_accounts.PlaidAccountsClient">PlaidAccountsClient (class in lunchable.models.plaid_accounts)</a>
+</li>
       <li><a href="api/lunchable.plugins.pushlunch.html#lunchable.plugins.pushlunch.PushLunch.post_transaction">post_transaction() (lunchable.plugins.pushlunch.PushLunch method)</a>, <a href="pushlunch.html#lunchable.plugins.pushlunch.PushLunch.post_transaction">[1]</a>
 
       <ul>
@@ -1512,18 +1611,40 @@
         <li><a href="api/lunchable.html#lunchable.TransactionUpdateObject.recurring_id">(lunchable.TransactionUpdateObject attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/lunchable.models.html#lunchable.models.recurring_expenses.RecurringExpensesClient">RecurringExpensesClient (class in lunchable.models.recurring_expenses)</a>
+</li>
       <li><a href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.refresh_splitwise_transactions">refresh_splitwise_transactions() (lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch method)</a>
 
       <ul>
         <li><a href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.SplitLunch.refresh_splitwise_transactions">(lunchable.plugins.splitlunch.SplitLunch method)</a>, <a href="splitlunch.html#lunchable.plugins.splitlunch.SplitLunch.refresh_splitwise_transactions">[1]</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lunchable.html#lunchable.LunchMoney.remove_budget">remove_budget() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.budgets.BudgetsClient.remove_budget">(lunchable.models.budgets.BudgetsClient method)</a>
 </li>
+      </ul></li>
+      <li><a href="lunchable.html#lunchable.LunchMoney.remove_category">remove_category() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoriesClient.remove_category">(lunchable.models.categories.CategoriesClient method)</a>
+</li>
+      </ul></li>
+      <li><a href="lunchable.html#lunchable.LunchMoney.remove_category_force">remove_category_force() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoriesClient.remove_category_force">(lunchable.models.categories.CategoriesClient method)</a>
+</li>
+      </ul></li>
       <li><a href="lunchable.html#lunchable.LunchMoney.remove_transaction_group">remove_transaction_group() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.transactions.TransactionsClient.remove_transaction_group">(lunchable.models.transactions.TransactionsClient method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -1668,6 +1789,8 @@
         <li><a href="api/lunchable.html#lunchable.TransactionUpdateObject.tags">(lunchable.TransactionUpdateObject attribute)</a>
 </li>
       </ul></li>
+      <li><a href="api/lunchable.models.html#lunchable.models.tags.TagsClient">TagsClient (class in lunchable.models.tags)</a>
+</li>
       <li><a href="api/lunchable.models.html#lunchable.models.budgets.BudgetConfigObject.to_base">to_base (lunchable.models.budgets.BudgetConfigObject attribute)</a>
 </li>
       <li><a href="api/lunchable.models.html#lunchable.models.recurring_expenses.RecurringExpensesObject.transaction_id">transaction_id (lunchable.models.recurring_expenses.RecurringExpensesObject attribute)</a>
@@ -1686,6 +1809,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/lunchable.models.html#lunchable.models.transactions.TransactionsClient">TransactionsClient (class in lunchable.models.transactions)</a>
+</li>
       <li><a href="api/lunchable.html#lunchable.TransactionUpdateObject.StatusEnum">TransactionUpdateObject.StatusEnum (class in lunchable)</a>
 
       <ul>
@@ -1734,20 +1859,44 @@
         <li><a href="api/lunchable.html#lunchable.TransactionUpdateObject.StatusEnum.uncleared">(lunchable.TransactionUpdateObject.StatusEnum attribute)</a>
 </li>
       </ul></li>
+      <li><a href="lunchable.html#lunchable.LunchMoney.unsplit_transactions">unsplit_transactions() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.transactions.TransactionsClient.unsplit_transactions">(lunchable.models.transactions.TransactionsClient method)</a>
+</li>
+      </ul></li>
       <li><a href="lunchable.html#lunchable.LunchMoney.update_asset">update_asset() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.assets.AssetsClient.update_asset">(lunchable.models.assets.AssetsClient method)</a>
 </li>
+      </ul></li>
+      <li><a href="lunchable.html#lunchable.LunchMoney.update_category">update_category() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoriesClient.update_category">(lunchable.models.categories.CategoriesClient method)</a>
+</li>
+      </ul></li>
       <li><a href="lunchable.html#lunchable.LunchMoney.update_crypto">update_crypto() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.crypto.CryptoClient.update_crypto">(lunchable.models.crypto.CryptoClient method)</a>
 </li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.update_splitwise_balance">update_splitwise_balance() (lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch method)</a>
 
       <ul>
         <li><a href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.SplitLunch.update_splitwise_balance">(lunchable.plugins.splitlunch.SplitLunch method)</a>, <a href="splitlunch.html#lunchable.plugins.splitlunch.SplitLunch.update_splitwise_balance">[1]</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lunchable.html#lunchable.LunchMoney.update_transaction">update_transaction() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.transactions.TransactionsClient.update_transaction">(lunchable.models.transactions.TransactionsClient method)</a>
 </li>
+      </ul></li>
       <li><a href="api/lunchable.models.html#lunchable.models.categories.CategoriesObject.updated_at">updated_at (lunchable.models.categories.CategoriesObject attribute)</a>
 
       <ul>
@@ -1759,7 +1908,11 @@
 </li>
       </ul></li>
       <li><a href="lunchable.html#lunchable.LunchMoney.upsert_budget">upsert_budget() (lunchable.LunchMoney method)</a>
+
+      <ul>
+        <li><a href="api/lunchable.models.html#lunchable.models.budgets.BudgetsClient.upsert_budget">(lunchable.models.budgets.BudgetsClient method)</a>
 </li>
+      </ul></li>
       <li><a href="api/lunchable.plugins.splitlunch.html#lunchable.plugins.splitlunch.models.SplitLunchExpense.users">users (lunchable.plugins.splitlunch.models.SplitLunchExpense attribute)</a>
 
       <ul>

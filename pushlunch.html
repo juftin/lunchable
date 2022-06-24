@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PushLunch: Push Notifications via Pushover &mdash; lunchable 0.1.11 documentation</title>
+  <title>PushLunch: Push Notifications via Pushover &mdash; lunchable 0.1.12 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/autodoc_pydantic.css" type="text/css" />
@@ -36,7 +36,7 @@
             <a href="index.html" class="icon icon-home"> lunchable
           </a>
               <div class="version">
-                0.1.11
+                0.1.12
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -81,6 +81,7 @@
           <li><a href="plugins.html">Plugins</a> &raquo;</li>
       <li>PushLunch: Push Notifications via Pushover</li>
       <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/juftin/lunchable/blob/main/docs/source/pushlunch.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -139,54 +140,17 @@ argument.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.pushlunch.PushLunch.notify_uncleared_transactions" title="lunchable.plugins.pushlunch.PushLunch.notify_uncleared_transactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">notify_uncleared_transactions</span></code></a>([continuous, ...])</p></td>
-<td><p>Get the Current Period's Uncleared Transactions and Send a Notification for each</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.pushlunch.PushLunch.send_notification" title="lunchable.plugins.pushlunch.PushLunch.send_notification"><code class="xref py py-obj docutils literal notranslate"><span class="pre">send_notification</span></code></a>(message[, attachment, ...])</p></td>
+<td><p>Send a Pushover Notification</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lunchable.plugins.pushlunch.PushLunch.post_transaction" title="lunchable.plugins.pushlunch.PushLunch.post_transaction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">post_transaction</span></code></a>(transaction)</p></td>
 <td><p>Post a Lunch Money Transaction as a Pushover Notification</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.pushlunch.PushLunch.send_notification" title="lunchable.plugins.pushlunch.PushLunch.send_notification"><code class="xref py py-obj docutils literal notranslate"><span class="pre">send_notification</span></code></a>(message[, attachment, ...])</p></td>
-<td><p>Send a Pushover Notification</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lunchable.plugins.pushlunch.PushLunch.notify_uncleared_transactions" title="lunchable.plugins.pushlunch.PushLunch.notify_uncleared_transactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">notify_uncleared_transactions</span></code></a>([continuous, ...])</p></td>
+<td><p>Get the Current Period's Uncleared Transactions and Send a Notification for each</p></td>
 </tr>
 </tbody>
 </table>
-<dl class="py method">
-<dt class="sig sig-object py" id="lunchable.plugins.pushlunch.PushLunch.notify_uncleared_transactions">
-<span class="sig-name descname"><span class="pre">notify_uncleared_transactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">continuous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/pushlunch/pushover.html#PushLunch.notify_uncleared_transactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.pushlunch.PushLunch.notify_uncleared_transactions" title="Permalink to this definition"></a></dt>
-<dd><p>Get the Current Period’s Uncleared Transactions and Send a Notification for each</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>continuous</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to continuously check for more uncleared transactions,
-waiting a fixed amount in between checks.
-<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">False</span></code></p></li>
-<li><p><strong>interval</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – Sleep Interval in Between Tries - only applies if <cite>continuous</cite> is set.
-Defaults to 60 (minutes). Cannot be less than 5 (minutes)
-<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>List[<a class="reference internal" href="api/lunchable.models.html#lunchable.models.transactions.TransactionObject" title="lunchable.models.transactions.TransactionObject">TransactionObject</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="lunchable.plugins.pushlunch.PushLunch.post_transaction">
-<span class="sig-name descname"><span class="pre">post_transaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transaction</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/pushlunch/pushover.html#PushLunch.post_transaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.pushlunch.PushLunch.post_transaction" title="Permalink to this definition"></a></dt>
-<dd><p>Post a Lunch Money Transaction as a Pushover Notification</p>
-<p>Assuming the instance of the
-class hasn’t already posted this particular notification</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>transaction</strong> (<a class="reference internal" href="api/lunchable.models.html#lunchable.models.transactions.TransactionObject" title="lunchable.models.transactions.TransactionObject"><em>TransactionObject</em></a>) – </p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, Any]</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="lunchable.plugins.pushlunch.PushLunch.send_notification">
 <span class="sig-name descname"><span class="pre">send_notification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priority</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sound</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">html</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/pushlunch/pushover.html#PushLunch.send_notification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.pushlunch.PushLunch.send_notification" title="Permalink to this definition"></a></dt>
@@ -223,6 +187,43 @@ than the time your message is received by our API
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>requests.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.pushlunch.PushLunch.post_transaction">
+<span class="sig-name descname"><span class="pre">post_transaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transaction</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/pushlunch/pushover.html#PushLunch.post_transaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.pushlunch.PushLunch.post_transaction" title="Permalink to this definition"></a></dt>
+<dd><p>Post a Lunch Money Transaction as a Pushover Notification</p>
+<p>Assuming the instance of the
+class hasn’t already posted this particular notification</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>transaction</strong> (<a class="reference internal" href="api/lunchable.models.html#lunchable.models.transactions.TransactionObject" title="lunchable.models.transactions.TransactionObject"><em>TransactionObject</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lunchable.plugins.pushlunch.PushLunch.notify_uncleared_transactions">
+<span class="sig-name descname"><span class="pre">notify_uncleared_transactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">continuous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lunchable/plugins/pushlunch/pushover.html#PushLunch.notify_uncleared_transactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lunchable.plugins.pushlunch.PushLunch.notify_uncleared_transactions" title="Permalink to this definition"></a></dt>
+<dd><p>Get the Current Period’s Uncleared Transactions and Send a Notification for each</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>continuous</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to continuously check for more uncleared transactions,
+waiting a fixed amount in between checks.
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><strong>interval</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – Sleep Interval in Between Tries - only applies if <cite>continuous</cite> is set.
+Defaults to 60 (minutes). Cannot be less than 5 (minutes)
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="api/lunchable.models.html#lunchable.models.transactions.TransactionObject" title="lunchable.models.transactions.TransactionObject">TransactionObject</a>]</p>
 </dd>
 </dl>
 </dd></dl>

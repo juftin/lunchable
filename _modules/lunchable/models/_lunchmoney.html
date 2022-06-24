@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lunchable.models._lunchmoney &mdash; lunchable 0.1.11 documentation</title>
+  <title>lunchable.models._lunchmoney &mdash; lunchable 0.1.12 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../../../index.html" class="icon icon-home"> lunchable
           </a>
               <div class="version">
-                0.1.11
+                0.1.12
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -80,36 +80,36 @@
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Lunch Money Python Client</span>
 
-<span class="sd">This Module Leverages Class Inheritance to</span>
-<span class="sd">Distribute API Methods Across a series of files. Ultimately, everything</span>
-<span class="sd">inherits from the lunchable.models.core.LunchMoneyAPIClient class which facilitates</span>
-<span class="sd">interacting with the API.</span>
+<span class="sd">This Module Leverages Class Inheritance to distribute API Methods Across a series of</span>
+<span class="sd">clients. Ultimately, everything inherits from the</span>
+<span class="sd">lunchable.models.core.LunchMoneyAPIClient class which facilitates interacting with</span>
+<span class="sd">the API.</span>
 
 <span class="sd">For example: to see source code on interactions with the &quot;transactions&quot; API endpoint you</span>
-<span class="sd">will refer to the _LunchMoneyTransactions object.</span>
+<span class="sd">will refer to the TransactionsClient object.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">.assets</span> <span class="kn">import</span> <span class="n">_LunchMoneyAssets</span>
-<span class="kn">from</span> <span class="nn">.budgets</span> <span class="kn">import</span> <span class="n">_LunchMoneyBudgets</span>
-<span class="kn">from</span> <span class="nn">.categories</span> <span class="kn">import</span> <span class="n">_LunchMoneyCategories</span>
-<span class="kn">from</span> <span class="nn">.crypto</span> <span class="kn">import</span> <span class="n">_LunchMoneyCrypto</span>
-<span class="kn">from</span> <span class="nn">.plaid_accounts</span> <span class="kn">import</span> <span class="n">_LunchMoneyPlaidAccounts</span>
-<span class="kn">from</span> <span class="nn">.recurring_expenses</span> <span class="kn">import</span> <span class="n">_LunchMoneyRecurringExpenses</span>
-<span class="kn">from</span> <span class="nn">.tags</span> <span class="kn">import</span> <span class="n">_LunchMoneyTags</span>
-<span class="kn">from</span> <span class="nn">.transactions</span> <span class="kn">import</span> <span class="n">_LunchMoneyTransactions</span>
+<span class="kn">from</span> <span class="nn">.assets</span> <span class="kn">import</span> <span class="n">AssetsClient</span>
+<span class="kn">from</span> <span class="nn">.budgets</span> <span class="kn">import</span> <span class="n">BudgetsClient</span>
+<span class="kn">from</span> <span class="nn">.categories</span> <span class="kn">import</span> <span class="n">CategoriesClient</span>
+<span class="kn">from</span> <span class="nn">.crypto</span> <span class="kn">import</span> <span class="n">CryptoClient</span>
+<span class="kn">from</span> <span class="nn">.plaid_accounts</span> <span class="kn">import</span> <span class="n">PlaidAccountsClient</span>
+<span class="kn">from</span> <span class="nn">.recurring_expenses</span> <span class="kn">import</span> <span class="n">RecurringExpensesClient</span>
+<span class="kn">from</span> <span class="nn">.tags</span> <span class="kn">import</span> <span class="n">TagsClient</span>
+<span class="kn">from</span> <span class="nn">.transactions</span> <span class="kn">import</span> <span class="n">TransactionsClient</span>
 
 
 <div class="viewcode-block" id="LunchMoney"><a class="viewcode-back" href="../../../lunchable.html#lunchable.LunchMoney">[docs]</a><span class="k">class</span> <span class="nc">LunchMoney</span><span class="p">(</span>
-    <span class="n">_LunchMoneyAssets</span><span class="p">,</span>
-    <span class="n">_LunchMoneyBudgets</span><span class="p">,</span>
-    <span class="n">_LunchMoneyCategories</span><span class="p">,</span>
-    <span class="n">_LunchMoneyCrypto</span><span class="p">,</span>
-    <span class="n">_LunchMoneyPlaidAccounts</span><span class="p">,</span>
-    <span class="n">_LunchMoneyRecurringExpenses</span><span class="p">,</span>
-    <span class="n">_LunchMoneyTags</span><span class="p">,</span>
-    <span class="n">_LunchMoneyTransactions</span><span class="p">,</span>
+    <span class="n">AssetsClient</span><span class="p">,</span>
+    <span class="n">BudgetsClient</span><span class="p">,</span>
+    <span class="n">CategoriesClient</span><span class="p">,</span>
+    <span class="n">CryptoClient</span><span class="p">,</span>
+    <span class="n">PlaidAccountsClient</span><span class="p">,</span>
+    <span class="n">RecurringExpensesClient</span><span class="p">,</span>
+    <span class="n">TagsClient</span><span class="p">,</span>
+    <span class="n">TransactionsClient</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Lunch Money Python Client.</span>
