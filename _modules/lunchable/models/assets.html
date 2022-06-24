@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lunchable.models.assets &mdash; lunchable 0.1.12 documentation</title>
+  <title>lunchable.models.assets &mdash; lunchable 0.1.13 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../../../index.html" class="icon icon-home"> lunchable
           </a>
               <div class="version">
-                0.1.12
+                0.1.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -49,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../lunchable.html">Interacting with Lunch Money</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Lunchable CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API Documentation</a></li>
 </ul>
 
@@ -106,37 +107,48 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">_type_name_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Primary type of the asset. Must be one of: [employee compensation, cash, vehicle, loan, </span>
+<span class="s2">    Primary type of the asset. Must be one of: [employee compensation, cash, vehicle, loan,</span>
 <span class="s2">    cryptocurrency, investment, other, credit, real estate]</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_subtype_name_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    Optional asset subtype. Examples include: [retirement, checking, savings, prepaid credit card]</span>
 <span class="s2">    &quot;&quot;&quot;</span>
-    <span class="n">_balance_description</span> <span class="o">=</span> <span class="s2">&quot;Current balance of the asset in numeric format to 4 decimal places&quot;</span>
+    <span class="n">_balance_description</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;Current balance of the asset in numeric format to 4 decimal places&quot;</span>
+    <span class="p">)</span>
     <span class="n">_balance_as_of_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    Date/time the balance was last updated in ISO 8601 extended format</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_closed_on_description</span> <span class="o">=</span> <span class="s2">&quot;The date this asset was closed (optional)&quot;</span>
-    <span class="n">_currency_description</span> <span class="o">=</span> <span class="s2">&quot;Three-letter lowercase currency code of the balance in ISO 4217 format&quot;</span>
-    <span class="n">_created_at_description</span> <span class="o">=</span> <span class="s2">&quot;Date/time the asset was created in ISO 8601 extended format&quot;</span>
-    <span class="n">_exclude_transactions_description</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;If true, this asset will not show up as an &quot;</span>
-                                         <span class="s2">&quot;option for assignment when creating &quot;</span>
-                                         <span class="s2">&quot;transactions manually&quot;</span><span class="p">)</span>
+    <span class="n">_currency_description</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;Three-letter lowercase currency code of the balance in ISO 4217 format&quot;</span>
+    <span class="p">)</span>
+    <span class="n">_created_at_description</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;Date/time the asset was created in ISO 8601 extended format&quot;</span>
+    <span class="p">)</span>
+    <span class="n">_exclude_transactions_description</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;If true, this asset will not show up as an &quot;</span>
+        <span class="s2">&quot;option for assignment when creating &quot;</span>
+        <span class="s2">&quot;transactions manually&quot;</span>
+    <span class="p">)</span>
 
     <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Unique identifier for asset&quot;</span><span class="p">)</span>
     <span class="n">type_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_type_name_description</span><span class="p">)</span>
     <span class="n">subtype_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_subtype_name_description</span><span class="p">)</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Name of the asset&quot;</span><span class="p">)</span>
     <span class="n">display_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Display name of the asset (as set by user)&quot;</span><span class="p">)</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Display name of the asset (as set by user)&quot;</span>
+    <span class="p">)</span>
     <span class="n">balance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_balance_description</span><span class="p">)</span>
     <span class="n">balance_as_of</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_balance_as_of_description</span><span class="p">)</span>
     <span class="n">closed_on</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_closed_on_description</span><span class="p">)</span>
     <span class="n">currency</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_currency_description</span><span class="p">)</span>
     <span class="n">institution_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Name of institution holding the asset&quot;</span><span class="p">)</span>
-    <span class="n">exclude_transactions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                       <span class="n">description</span><span class="o">=</span><span class="n">_exclude_transactions_description</span><span class="p">)</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Name of institution holding the asset&quot;</span>
+    <span class="p">)</span>
+    <span class="n">exclude_transactions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">_exclude_transactions_description</span>
+    <span class="p">)</span>
     <span class="n">created_at</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_created_at_description</span><span class="p">)</span></div>
 
 
@@ -204,20 +216,24 @@
 <span class="sd">        -------</span>
 <span class="sd">        List[AssetsObject]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_ASSETS</span><span class="p">])</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_ASSETS</span><span class="p">]</span>
+        <span class="p">)</span>
         <span class="n">assets</span> <span class="o">=</span> <span class="n">response_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_ASSETS</span><span class="p">)</span>
         <span class="n">asset_objects</span> <span class="o">=</span> <span class="p">[</span><span class="n">AssetsObject</span><span class="p">(</span><span class="o">**</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">assets</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">asset_objects</span></div>
 
-<div class="viewcode-block" id="AssetsClient.update_asset"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.assets.AssetsClient.update_asset">[docs]</a>    <span class="k">def</span> <span class="nf">update_asset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                     <span class="n">type_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">subtype_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">balance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">balance_as_of</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">currency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">institution_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AssetsObject</span><span class="p">:</span>
+<div class="viewcode-block" id="AssetsClient.update_asset"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.assets.AssetsClient.update_asset">[docs]</a>    <span class="k">def</span> <span class="nf">update_asset</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">asset_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">type_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">subtype_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">balance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">balance_as_of</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">currency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">institution_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AssetsObject</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update a Single Asset</span>
 
@@ -248,32 +264,36 @@
 <span class="sd">        -------</span>
 <span class="sd">        AssetsObject</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">payload</span> <span class="o">=</span> <span class="n">_AssetsParamsPut</span><span class="p">(</span><span class="n">type_name</span><span class="o">=</span><span class="n">type_name</span><span class="p">,</span>
-                                   <span class="n">subtype_name</span><span class="o">=</span><span class="n">subtype_name</span><span class="p">,</span>
-                                   <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">balance</span><span class="o">=</span><span class="n">balance</span><span class="p">,</span>
-                                   <span class="n">balance_as_of</span><span class="o">=</span><span class="n">balance_as_of</span><span class="p">,</span>
-                                   <span class="n">currency</span><span class="o">=</span><span class="n">currency</span><span class="p">,</span>
-                                   <span class="n">institution_name</span><span class="o">=</span><span class="n">institution_name</span><span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span>
-            <span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">PUT</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_ASSETS</span><span class="p">,</span>
-                                                     <span class="n">asset_id</span><span class="p">],</span>
-                                           <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">_AssetsParamsPut</span><span class="p">(</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="n">type_name</span><span class="p">,</span>
+            <span class="n">subtype_name</span><span class="o">=</span><span class="n">subtype_name</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">balance</span><span class="o">=</span><span class="n">balance</span><span class="p">,</span>
+            <span class="n">balance_as_of</span><span class="o">=</span><span class="n">balance_as_of</span><span class="p">,</span>
+            <span class="n">currency</span><span class="o">=</span><span class="n">currency</span><span class="p">,</span>
+            <span class="n">institution_name</span><span class="o">=</span><span class="n">institution_name</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">PUT</span><span class="p">,</span>
+            <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_ASSETS</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">],</span>
+            <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">asset</span> <span class="o">=</span> <span class="n">AssetsObject</span><span class="p">(</span><span class="o">**</span><span class="n">response_data</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">asset</span></div>
 
-<div class="viewcode-block" id="AssetsClient.insert_asset"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.assets.AssetsClient.insert_asset">[docs]</a>    <span class="k">def</span> <span class="nf">insert_asset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                     <span class="n">type_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                     <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">subtype_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">display_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">balance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.00</span><span class="p">,</span>
-                     <span class="n">balance_as_of</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">currency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">institution_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">closed_on</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">exclude_transactions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AssetsObject</span><span class="p">:</span>
+<div class="viewcode-block" id="AssetsClient.insert_asset"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.assets.AssetsClient.insert_asset">[docs]</a>    <span class="k">def</span> <span class="nf">insert_asset</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">type_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">subtype_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">display_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">balance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.00</span><span class="p">,</span>
+        <span class="n">balance_as_of</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">currency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">institution_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">closed_on</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">exclude_transactions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AssetsObject</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a single (manually-managed) asset.</span>
 
@@ -321,9 +341,11 @@
             <span class="n">closed_on</span><span class="o">=</span><span class="n">closed_on</span><span class="p">,</span>
             <span class="n">exclude_transactions</span><span class="o">=</span><span class="n">exclude_transactions</span><span class="p">,</span>
         <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_ASSETS</span><span class="p">],</span>
-                                           <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span>
+            <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_ASSETS</span><span class="p">],</span>
+            <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">asset</span> <span class="o">=</span> <span class="n">AssetsObject</span><span class="p">(</span><span class="o">**</span><span class="n">response_data</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">asset</span></div></div>
 </pre></div>

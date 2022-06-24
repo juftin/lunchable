@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lunchable.plugins.splitlunch.lunchmoney_splitwise &mdash; lunchable 0.1.12 documentation</title>
+  <title>lunchable.plugins.splitlunch.lunchmoney_splitwise &mdash; lunchable 0.1.13 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../../../../index.html" class="icon icon-home"> lunchable
           </a>
               <div class="version">
-                0.1.12
+                0.1.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -49,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../lunchable.html">Interacting with Lunch Money</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../cli.html">Lunchable CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../plugins.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">API Documentation</a></li>
 </ul>
 
@@ -89,12 +90,17 @@
 <span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">dedent</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">lunchable</span> <span class="kn">import</span> <span class="n">__lunchable__</span><span class="p">,</span> <span class="n">LunchMoney</span>
+<span class="kn">from</span> <span class="nn">lunchable</span> <span class="kn">import</span> <span class="n">LunchMoney</span><span class="p">,</span> <span class="n">__lunchable__</span>
 <span class="kn">from</span> <span class="nn">lunchable.exceptions</span> <span class="kn">import</span> <span class="n">LunchMoneyImportError</span>
-<span class="kn">from</span> <span class="nn">lunchable.models</span> <span class="kn">import</span> <span class="p">(</span><span class="n">AssetsObject</span><span class="p">,</span> <span class="n">CategoriesObject</span><span class="p">,</span>
-                              <span class="n">TagsObject</span><span class="p">,</span> <span class="n">TransactionInsertObject</span><span class="p">,</span>
-                              <span class="n">TransactionObject</span><span class="p">,</span> <span class="n">TransactionSplitObject</span><span class="p">,</span>
-                              <span class="n">TransactionUpdateObject</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">lunchable.models</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AssetsObject</span><span class="p">,</span>
+    <span class="n">CategoriesObject</span><span class="p">,</span>
+    <span class="n">TagsObject</span><span class="p">,</span>
+    <span class="n">TransactionInsertObject</span><span class="p">,</span>
+    <span class="n">TransactionObject</span><span class="p">,</span>
+    <span class="n">TransactionSplitObject</span><span class="p">,</span>
+    <span class="n">TransactionUpdateObject</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">lunchable.plugins.splitlunch._config</span> <span class="kn">import</span> <span class="n">SplitLunchConfig</span>
 <span class="kn">from</span> <span class="nn">lunchable.plugins.splitlunch.exceptions</span> <span class="kn">import</span> <span class="n">SplitLunchError</span>
 <span class="kn">from</span> <span class="nn">lunchable.plugins.splitlunch.models</span> <span class="kn">import</span> <span class="n">SplitLunchExpense</span>
@@ -106,8 +112,10 @@
     <span class="kn">from</span> <span class="nn">dateutil.tz</span> <span class="kn">import</span> <span class="n">tzlocal</span>
 <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">ie</span><span class="p">:</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">ie</span><span class="p">)</span>
-    <span class="n">_pip_extra_error</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Looks like you don&#39;t have the Splitwise plugin installed: &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;`pip install </span><span class="si">{</span><span class="n">__lunchable__</span><span class="si">}</span><span class="s2">[splitlunch]`&quot;</span><span class="p">)</span>
+    <span class="n">_pip_extra_error</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;Looks like you don&#39;t have the Splitwise plugin installed: &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;`pip install </span><span class="si">{</span><span class="n">__lunchable__</span><span class="si">}</span><span class="s2">[splitlunch]`&quot;</span>
+    <span class="p">)</span>
     <span class="k">raise</span> <span class="n">LunchMoneyImportError</span><span class="p">(</span><span class="n">_pip_extra_error</span><span class="p">)</span>
 
 
@@ -183,15 +191,16 @@
 <span class="sd">        be created using environment variables otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">lunch_money_access_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">financial_partner_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">financial_partner_email</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">consumer_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">consumer_secret</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">lunchable_client</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LunchMoney</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">lunch_money_access_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">financial_partner_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">financial_partner_email</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">consumer_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">consumer_secret</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">lunchable_client</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LunchMoney</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the Parent Class with some additional properties</span>
 
@@ -217,17 +226,20 @@
 <span class="sd">            Instantiated LunchMoney object to use as internal client. One will</span>
 <span class="sd">            be created using environment variables otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">init_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_splitwise_init_kwargs</span><span class="p">(</span><span class="n">consumer_key</span><span class="o">=</span><span class="n">consumer_key</span><span class="p">,</span>
-                                                      <span class="n">consumer_secret</span><span class="o">=</span><span class="n">consumer_secret</span><span class="p">,</span>
-                                                      <span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">)</span>
+        <span class="n">init_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_splitwise_init_kwargs</span><span class="p">(</span>
+            <span class="n">consumer_key</span><span class="o">=</span><span class="n">consumer_key</span><span class="p">,</span> <span class="n">consumer_secret</span><span class="o">=</span><span class="n">consumer_secret</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span>
+        <span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">SplitLunch</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">init_kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_user</span><span class="p">:</span> <span class="n">splitwise</span><span class="o">.</span><span class="n">CurrentUser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCurrentUser</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">financial_partner</span><span class="p">:</span> <span class="n">splitwise</span><span class="o">.</span><span class="n">Friend</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_friend</span><span class="p">(</span>
-            <span class="n">friend_id</span><span class="o">=</span><span class="n">financial_partner_id</span><span class="p">,</span>
-            <span class="n">email_address</span><span class="o">=</span><span class="n">financial_partner_email</span><span class="p">)</span>
+            <span class="n">friend_id</span><span class="o">=</span><span class="n">financial_partner_id</span><span class="p">,</span> <span class="n">email_address</span><span class="o">=</span><span class="n">financial_partner_email</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_check</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span> <span class="o">=</span> <span class="n">LunchMoney</span><span class="p">(</span><span class="n">access_token</span><span class="o">=</span><span class="n">lunch_money_access_token</span><span class="p">)</span> <span class="k">if</span> \
-            <span class="n">lunchable_client</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">lunchable_client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">LunchMoney</span><span class="p">(</span><span class="n">access_token</span><span class="o">=</span><span class="n">lunch_money_access_token</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">lunchable_client</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="n">lunchable_client</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_none_tag</span> <span class="o">=</span> <span class="n">TagsObject</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;SplitLunchPlaceholder&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">splitwise_tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_none_tag</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_none_tag</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -267,13 +279,15 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">assert</span> <span class="n">amount</span> <span class="o">==</span> <span class="nb">round</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SplitLunchError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s2"> caused an error, you must provide a real &quot;</span>
-                                  <span class="s2">&quot;spending amount.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SplitLunchError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s2"> caused an error, you must provide a real &quot;</span> <span class="s2">&quot;spending amount.&quot;</span>
+            <span class="p">)</span>
         <span class="n">equal_shares</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">splits</span>
         <span class="n">remainder_dollars</span> <span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="n">equal_shares</span><span class="p">)</span>
         <span class="n">remainder_cents</span> <span class="o">=</span> <span class="n">floor</span><span class="p">((</span><span class="n">equal_shares</span> <span class="o">-</span> <span class="n">remainder_dollars</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>
         <span class="n">remainder_left</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">equal_shares</span> <span class="o">-</span> <span class="n">remainder_dollars</span> <span class="o">-</span> <span class="n">remainder_cents</span><span class="p">)</span> <span class="o">*</span> <span class="n">splits</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">equal_shares</span> <span class="o">-</span> <span class="n">remainder_dollars</span> <span class="o">-</span> <span class="n">remainder_cents</span><span class="p">)</span> <span class="o">*</span> <span class="n">splits</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="p">)</span>
         <span class="n">owed_amount</span> <span class="o">=</span> <span class="n">remainder_dollars</span> <span class="o">+</span> <span class="n">remainder_cents</span>
         <span class="n">return_amounts</span> <span class="o">=</span> <span class="p">[</span><span class="n">owed_amount</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">splits</span><span class="p">)]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">remainder_left</span><span class="p">)):</span>
@@ -301,7 +315,9 @@
         <span class="n">amounts_due</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_split_amount</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="n">amount</span><span class="p">,</span> <span class="n">splits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">amounts_due</span></div>
 
-<div class="viewcode-block" id="SplitLunch.create_self_paid_expense"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.create_self_paid_expense">[docs]</a>    <span class="k">def</span> <span class="nf">create_self_paid_expense</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SplitLunchExpense</span><span class="p">:</span>
+<div class="viewcode-block" id="SplitLunch.create_self_paid_expense"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.create_self_paid_expense">[docs]</a>    <span class="k">def</span> <span class="nf">create_self_paid_expense</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SplitLunchExpense</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create and Submit a Splitwise Expense</span>
 
@@ -320,7 +336,9 @@
         <span class="n">new_expense</span> <span class="o">=</span> <span class="n">splitwise</span><span class="o">.</span><span class="n">Expense</span><span class="p">()</span>
         <span class="n">new_expense</span><span class="o">.</span><span class="n">setDescription</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
         <span class="c1"># GET AND SET AMOUNTS OWED</span>
-        <span class="n">primary_user_owes</span><span class="p">,</span> <span class="n">financial_partner_owes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_a_transaction</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="n">amount</span><span class="p">)</span>
+        <span class="n">primary_user_owes</span><span class="p">,</span> <span class="n">financial_partner_owes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_a_transaction</span><span class="p">(</span>
+            <span class="n">amount</span><span class="o">=</span><span class="n">amount</span>
+        <span class="p">)</span>
         <span class="n">new_expense</span><span class="o">.</span><span class="n">setCost</span><span class="p">(</span><span class="n">cost</span><span class="o">=</span><span class="n">amount</span><span class="p">)</span>
         <span class="c1"># CONFIGURE PRIMARY USER</span>
         <span class="n">primary_user</span> <span class="o">=</span> <span class="n">splitwise</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">ExpenseUser</span><span class="p">()</span>
@@ -348,8 +366,9 @@
         <span class="n">pydantic_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitwise_to_pydantic</span><span class="p">(</span><span class="n">expense</span><span class="o">=</span><span class="n">expense_response</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pydantic_response</span></div>
 
-<div class="viewcode-block" id="SplitLunch.create_expense_on_behalf_of_partner"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.create_expense_on_behalf_of_partner">[docs]</a>    <span class="k">def</span> <span class="nf">create_expense_on_behalf_of_partner</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-                                            <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SplitLunchExpense</span><span class="p">:</span>
+<div class="viewcode-block" id="SplitLunch.create_expense_on_behalf_of_partner"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.create_expense_on_behalf_of_partner">[docs]</a>    <span class="k">def</span> <span class="nf">create_expense_on_behalf_of_partner</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SplitLunchExpense</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create and Submit a Splitwise Expense on behalf of your financial partner.</span>
 
@@ -397,8 +416,9 @@
         <span class="n">pydantic_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitwise_to_pydantic</span><span class="p">(</span><span class="n">expense</span><span class="o">=</span><span class="n">expense_response</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pydantic_response</span></div>
 
-<div class="viewcode-block" id="SplitLunch.get_friend"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.get_friend">[docs]</a>    <span class="k">def</span> <span class="nf">get_friend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email_address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                   <span class="n">friend_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">splitwise</span><span class="o">.</span><span class="n">Friend</span><span class="p">]:</span>
+<div class="viewcode-block" id="SplitLunch.get_friend"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.get_friend">[docs]</a>    <span class="k">def</span> <span class="nf">get_friend</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">email_address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">friend_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">splitwise</span><span class="o">.</span><span class="n">Friend</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve a Financial Partner by Email Address</span>
 
@@ -420,20 +440,24 @@
         <span class="k">for</span> <span class="n">friend</span> <span class="ow">in</span> <span class="n">friend_list</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">friend_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">friend</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">friend_id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">friend</span>
-            <span class="k">elif</span> <span class="n">email_address</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">friend</span><span class="o">.</span><span class="n">email</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">email_address</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="k">elif</span> <span class="p">(</span>
+                <span class="n">email_address</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="n">friend</span><span class="o">.</span><span class="n">email</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">email_address</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="p">):</span>
                 <span class="k">return</span> <span class="n">friend</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="SplitLunch.get_expenses"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.get_expenses">[docs]</a>    <span class="k">def</span> <span class="nf">get_expenses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                     <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">group_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">friendship_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">dated_after</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">dated_before</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">updated_after</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">updated_before</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-                     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">SplitLunchExpense</span><span class="p">]:</span>
+<div class="viewcode-block" id="SplitLunch.get_expenses"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.get_expenses">[docs]</a>    <span class="k">def</span> <span class="nf">get_expenses</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">group_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">friendship_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dated_after</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dated_before</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">updated_after</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">updated_before</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">SplitLunchExpense</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get Splitwise Expenses</span>
 
@@ -460,23 +484,28 @@
 <span class="sd">        -------</span>
 <span class="sd">        List[SplitLunchExpense]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">expenses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getExpenses</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span>
-                                    <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span>
-                                    <span class="n">group_id</span><span class="o">=</span><span class="n">group_id</span><span class="p">,</span>
-                                    <span class="n">friendship_id</span><span class="o">=</span><span class="n">friendship_id</span><span class="p">,</span>
-                                    <span class="n">dated_after</span><span class="o">=</span><span class="n">dated_after</span><span class="p">,</span>
-                                    <span class="n">dated_before</span><span class="o">=</span><span class="n">dated_before</span><span class="p">,</span>
-                                    <span class="n">updated_after</span><span class="o">=</span><span class="n">updated_after</span><span class="p">,</span>
-                                    <span class="n">updated_before</span><span class="o">=</span><span class="n">updated_before</span><span class="p">)</span>
-        <span class="n">pydantic_expenses</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">splitwise_to_pydantic</span><span class="p">(</span><span class="n">expense</span><span class="p">)</span> <span class="k">for</span> <span class="n">expense</span> <span class="ow">in</span> <span class="n">expenses</span><span class="p">]</span>
+        <span class="n">expenses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getExpenses</span><span class="p">(</span>
+            <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span>
+            <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span>
+            <span class="n">group_id</span><span class="o">=</span><span class="n">group_id</span><span class="p">,</span>
+            <span class="n">friendship_id</span><span class="o">=</span><span class="n">friendship_id</span><span class="p">,</span>
+            <span class="n">dated_after</span><span class="o">=</span><span class="n">dated_after</span><span class="p">,</span>
+            <span class="n">dated_before</span><span class="o">=</span><span class="n">dated_before</span><span class="p">,</span>
+            <span class="n">updated_after</span><span class="o">=</span><span class="n">updated_after</span><span class="p">,</span>
+            <span class="n">updated_before</span><span class="o">=</span><span class="n">updated_before</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">pydantic_expenses</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">splitwise_to_pydantic</span><span class="p">(</span><span class="n">expense</span><span class="p">)</span> <span class="k">for</span> <span class="n">expense</span> <span class="ow">in</span> <span class="n">expenses</span>
+        <span class="p">]</span>
         <span class="k">return</span> <span class="n">pydantic_expenses</span></div>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_get_splitwise_init_kwargs</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span>
-                                   <span class="n">consumer_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">consumer_secret</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                                   <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">_get_splitwise_init_kwargs</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">consumer_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">consumer_secret</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the Splitwise Kwargs</span>
 
@@ -492,15 +521,21 @@
             <span class="n">consumer_secret</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;SPLITWISE_CONSUMER_SECRET&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">api_key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">api_key</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;SPLITWISE_API_KEY&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="n">init_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">consumer_key</span><span class="o">=</span><span class="n">consumer_key</span><span class="p">,</span>
-                           <span class="n">consumer_secret</span><span class="o">=</span><span class="n">consumer_secret</span><span class="p">,</span>
-                           <span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">)</span>
+        <span class="n">init_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">consumer_key</span><span class="o">=</span><span class="n">consumer_key</span><span class="p">,</span> <span class="n">consumer_secret</span><span class="o">=</span><span class="n">consumer_secret</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">consumer_key</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">consumer_secret</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">api_key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">error_message</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">            You must set your Splitwise credentials explicitly or by assigning</span>
-<span class="s2">            the `SPLITWISE_CONSUMER_KEY`, `SPLITWISE_CONSUMER_SECRET`, and the</span>
-<span class="s2">            `SPLITWISE_API_KEY`environment variables</span>
-<span class="s2">            &quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="n">error_message</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">dedent</span><span class="p">(</span>
+                    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            You must set your Splitwise credentials explicitly or by assigning</span>
+<span class="sd">            the `SPLITWISE_CONSUMER_KEY`, `SPLITWISE_CONSUMER_SECRET`, and the</span>
+<span class="sd">            `SPLITWISE_API_KEY`environment variables</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+                <span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">SplitLunchError</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">init_kwargs</span>
@@ -526,21 +561,23 @@
             <span class="n">personal_share</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">expense</span><span class="o">.</span><span class="n">cost</span><span class="p">)</span> <span class="o">-</span> <span class="n">financial_impact</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">personal_share</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">financial_impact</span><span class="p">)</span>
-        <span class="n">expense</span> <span class="o">=</span> <span class="n">SplitLunchExpense</span><span class="p">(</span><span class="n">splitwise_id</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-                                    <span class="n">original_amount</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">cost</span><span class="p">,</span>
-                                    <span class="n">financial_impact</span><span class="o">=</span><span class="n">financial_impact</span><span class="p">,</span>
-                                    <span class="n">personal_share</span><span class="o">=</span><span class="n">personal_share</span><span class="p">,</span>
-                                    <span class="n">self_paid</span><span class="o">=</span><span class="n">self_paid</span><span class="p">,</span>
-                                    <span class="n">description</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
-                                    <span class="n">category</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">category</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                                    <span class="n">details</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">details</span><span class="p">,</span>
-                                    <span class="n">payment</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">payment</span><span class="p">,</span>
-                                    <span class="n">date</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
-                                    <span class="n">users</span><span class="o">=</span><span class="p">[</span><span class="n">user</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">expense</span><span class="o">.</span><span class="n">users</span><span class="p">],</span>
-                                    <span class="n">created_at</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">created_at</span><span class="p">,</span>
-                                    <span class="n">updated_at</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">updated_at</span><span class="p">,</span>
-                                    <span class="n">deleted_at</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">deleted_at</span><span class="p">,</span>
-                                    <span class="n">deleted</span><span class="o">=</span><span class="kc">True</span> <span class="k">if</span> <span class="n">expense</span><span class="o">.</span><span class="n">deleted_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">expense</span> <span class="o">=</span> <span class="n">SplitLunchExpense</span><span class="p">(</span>
+            <span class="n">splitwise_id</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">original_amount</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">cost</span><span class="p">,</span>
+            <span class="n">financial_impact</span><span class="o">=</span><span class="n">financial_impact</span><span class="p">,</span>
+            <span class="n">personal_share</span><span class="o">=</span><span class="n">personal_share</span><span class="p">,</span>
+            <span class="n">self_paid</span><span class="o">=</span><span class="n">self_paid</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">category</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">category</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">details</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">details</span><span class="p">,</span>
+            <span class="n">payment</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">payment</span><span class="p">,</span>
+            <span class="n">date</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+            <span class="n">users</span><span class="o">=</span><span class="p">[</span><span class="n">user</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">expense</span><span class="o">.</span><span class="n">users</span><span class="p">],</span>
+            <span class="n">created_at</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">created_at</span><span class="p">,</span>
+            <span class="n">updated_at</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">updated_at</span><span class="p">,</span>
+            <span class="n">deleted_at</span><span class="o">=</span><span class="n">expense</span><span class="o">.</span><span class="n">deleted_at</span><span class="p">,</span>
+            <span class="n">deleted</span><span class="o">=</span><span class="kc">True</span> <span class="k">if</span> <span class="n">expense</span><span class="o">.</span><span class="n">deleted_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">expense</span></div>
 
     <span class="k">def</span> <span class="nf">_get_expense_impact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expense</span><span class="p">:</span> <span class="n">splitwise</span><span class="o">.</span><span class="n">Expense</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
@@ -609,15 +646,19 @@
         <span class="n">assets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">get_assets</span><span class="p">()</span>
         <span class="n">splitwise_assets</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">assets</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">asset</span><span class="o">.</span><span class="n">institution_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> \
-                    <span class="s2">&quot;splitwise&quot;</span> <span class="ow">in</span> <span class="n">asset</span><span class="o">.</span><span class="n">institution_name</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">asset</span><span class="o">.</span><span class="n">institution_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="s2">&quot;splitwise&quot;</span> <span class="ow">in</span> <span class="n">asset</span><span class="o">.</span><span class="n">institution_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="p">):</span>
                 <span class="n">splitwise_assets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asset</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">splitwise_assets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">splitwise_assets</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SplitLunchError</span><span class="p">(</span><span class="s2">&quot;SplitLunch requires an manually managed Splitwise asset. &quot;</span>
-                                  <span class="s2">&quot;Make sure you have a single account where &#39;Splitwise&#39; &quot;</span>
-                                  <span class="s2">&quot;is in the asset&#39;s `Institution Name`.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SplitLunchError</span><span class="p">(</span>
+                <span class="s2">&quot;SplitLunch requires an manually managed Splitwise asset. &quot;</span>
+                <span class="s2">&quot;Make sure you have a single account where &#39;Splitwise&#39; &quot;</span>
+                <span class="s2">&quot;is in the asset&#39;s `Institution Name`.&quot;</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">splitwise_assets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -675,7 +716,10 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">splitwise_tag</span> <span class="o">=</span> <span class="n">tag</span>
             <span class="k">elif</span> <span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_import_tag</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_import_tag</span> <span class="o">=</span> <span class="n">tag</span>
-            <span class="k">elif</span> <span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_direct_import_tag</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="k">elif</span> <span class="p">(</span>
+                <span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                <span class="o">==</span> <span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_direct_import_tag</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_direct_import_tag</span> <span class="o">=</span> <span class="n">tag</span>
 
     <span class="k">def</span> <span class="nf">_raise_nonexistent_tag_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tags</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -685,34 +729,54 @@
 <span class="sd">        tags: List[str]</span>
 <span class="sd">            A list of tags to raise the error for</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_tag</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_none_tag</span> <span class="ow">and</span> <span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
-            <span class="n">error_message</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;a `</span><span class="si">{</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_tag</span><span class="si">}</span><span class="s2">` tag is required. &quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;This tag is used for splitting transactions in half and have half &quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;marked as reimbursed.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_tag</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_none_tag</span>
+            <span class="ow">and</span> <span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_tag</span> <span class="ow">in</span> <span class="n">tags</span>
+        <span class="p">):</span>
+            <span class="n">error_message</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;a `</span><span class="si">{</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_tag</span><span class="si">}</span><span class="s2">` tag is required. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;This tag is used for splitting transactions in half and have half &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;marked as reimbursed.&quot;</span>
+            <span class="p">)</span>
             <span class="k">raise</span> <span class="n">SplitLunchError</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitwise_tag</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_none_tag</span> <span class="ow">and</span> <span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitwise_tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
-            <span class="n">error_message</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;a `</span><span class="si">{</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="si">}</span><span class="s2">` tag is required. &quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;This tag is used for splitting transactions in half and have half &quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;marked as reimbursed.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">splitwise_tag</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_none_tag</span>
+            <span class="ow">and</span> <span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitwise_tag</span> <span class="ow">in</span> <span class="n">tags</span>
+        <span class="p">):</span>
+            <span class="n">error_message</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;a `</span><span class="si">{</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="si">}</span><span class="s2">` tag is required. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;This tag is used for splitting transactions in half and have half &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;marked as reimbursed.&quot;</span>
+            <span class="p">)</span>
             <span class="k">raise</span> <span class="n">SplitLunchError</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_import_tag</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_none_tag</span> <span class="ow">and</span> \
-                <span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_import_tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
-            <span class="n">error_message</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;a `</span><span class="si">{</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_import_tag</span><span class="si">}</span><span class="s2">` tag is required. &quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;This tag is used for creating Splitwise transactions directly from &quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;Lunch Money transactions. These transactions will be split in half,&quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;and have one half marked as reimbursed.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_import_tag</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_none_tag</span>
+            <span class="ow">and</span> <span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_import_tag</span> <span class="ow">in</span> <span class="n">tags</span>
+        <span class="p">):</span>
+            <span class="n">error_message</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;a `</span><span class="si">{</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_import_tag</span><span class="si">}</span><span class="s2">` tag is required. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;This tag is used for creating Splitwise transactions directly from &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Lunch Money transactions. These transactions will be split in half,&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;and have one half marked as reimbursed.&quot;</span>
+            <span class="p">)</span>
             <span class="k">raise</span> <span class="n">SplitLunchError</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_direct_import_tag</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_none_tag</span> <span class="ow">and</span> \
-                <span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_direct_import_tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
-            <span class="n">error_message</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;a `</span><span class="si">{</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_direct_import_tag</span><span class="si">}</span><span class="s2">` tag is &quot;</span>
-                             <span class="s2">&quot;required. This tag is used for creating Splitwise transactions &quot;</span>
-                             <span class="s2">&quot;directly from Lunch Money transactions. These transactions will &quot;</span>
-                             <span class="s2">&quot;be completely owed by your financial partner.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_direct_import_tag</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_none_tag</span>
+            <span class="ow">and</span> <span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_direct_import_tag</span> <span class="ow">in</span> <span class="n">tags</span>
+        <span class="p">):</span>
+            <span class="n">error_message</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;a `</span><span class="si">{</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_direct_import_tag</span><span class="si">}</span><span class="s2">` tag is &quot;</span>
+                <span class="s2">&quot;required. This tag is used for creating Splitwise transactions &quot;</span>
+                <span class="s2">&quot;directly from Lunch Money transactions. These transactions will &quot;</span>
+                <span class="s2">&quot;be completely owed by your financial partner.&quot;</span>
+            <span class="p">)</span>
             <span class="k">raise</span> <span class="n">SplitLunchError</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SplitLunch.get_splitlunch_tagged_transactions"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.get_splitlunch_tagged_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">get_splitlunch_tagged_transactions</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve all transactions with the &quot;Splitlunch&quot; Tag</span>
 
@@ -730,14 +794,16 @@
         <span class="k">if</span> <span class="n">end_date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">end_date</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">latest_end_date</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_raise_nonexistent_tag_error</span><span class="p">(</span><span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_tag</span><span class="p">])</span>
-        <span class="n">transactions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">get_transactions</span><span class="p">(</span><span class="n">tag_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_tag</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-                                                       <span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span>
-                                                       <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">)</span>
+        <span class="n">transactions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">get_transactions</span><span class="p">(</span>
+            <span class="n">tag_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_tag</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">transactions</span></div>
 
 <div class="viewcode-block" id="SplitLunch.get_splitlunch_import_tagged_transactions"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.get_splitlunch_import_tagged_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">get_splitlunch_import_tagged_transactions</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve all transactions with the &quot;SplitLunchImport&quot; Tag</span>
 
@@ -755,14 +821,18 @@
         <span class="k">if</span> <span class="n">end_date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">end_date</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">latest_end_date</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_raise_nonexistent_tag_error</span><span class="p">(</span><span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_import_tag</span><span class="p">])</span>
-        <span class="n">transactions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">get_transactions</span><span class="p">(</span><span class="n">tag_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_import_tag</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-                                                       <span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span>
-                                                       <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">)</span>
+        <span class="n">transactions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">get_transactions</span><span class="p">(</span>
+            <span class="n">tag_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_import_tag</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span>
+            <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">transactions</span></div>
 
 <div class="viewcode-block" id="SplitLunch.get_splitlunch_direct_import_tagged_transactions"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.get_splitlunch_direct_import_tagged_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">get_splitlunch_direct_import_tagged_transactions</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve all transactions with the &quot;SplitLunchDirectImport&quot; Tag</span>
 
@@ -779,15 +849,21 @@
             <span class="n">start_date</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">earliest_start_date</span>
         <span class="k">if</span> <span class="n">end_date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">end_date</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">latest_end_date</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_raise_nonexistent_tag_error</span><span class="p">(</span><span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_direct_import_tag</span><span class="p">])</span>
-        <span class="n">transactions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">get_transactions</span><span class="p">(</span><span class="n">tag_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_direct_import_tag</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-                                                       <span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span>
-                                                       <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_raise_nonexistent_tag_error</span><span class="p">(</span>
+            <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitlunch_direct_import_tag</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">transactions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">get_transactions</span><span class="p">(</span>
+            <span class="n">tag_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_direct_import_tag</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span>
+            <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">transactions</span></div>
 
 <div class="viewcode-block" id="SplitLunch.get_splitwise_tagged_transactions"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.get_splitwise_tagged_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">get_splitwise_tagged_transactions</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve all transactions with the &quot;Splitwise&quot; Tag</span>
 
@@ -805,9 +881,9 @@
         <span class="k">if</span> <span class="n">end_date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">end_date</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">latest_end_date</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_raise_nonexistent_tag_error</span><span class="p">(</span><span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="p">])</span>
-        <span class="n">transactions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">get_transactions</span><span class="p">(</span><span class="n">tag_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-                                                       <span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span>
-                                                       <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">)</span>
+        <span class="n">transactions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">get_transactions</span><span class="p">(</span>
+            <span class="n">tag_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">transactions</span></div>
 
 <div class="viewcode-block" id="SplitLunch.make_splitlunch"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.make_splitlunch">[docs]</a>    <span class="k">def</span> <span class="nf">make_splitlunch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag_transactions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
@@ -831,33 +907,47 @@
                 <span class="n">date</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
                 <span class="n">category_id</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">category_id</span><span class="p">,</span>
                 <span class="n">notes</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">notes</span><span class="p">,</span>
-                <span class="n">amount</span><span class="o">=</span><span class="n">amount_1</span>
+                <span class="n">amount</span><span class="o">=</span><span class="n">amount_1</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="c1"># Generate the second split as a copy, change some properties</span>
             <span class="n">reimbursement_object</span> <span class="o">=</span> <span class="n">split_object</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="n">reimbursement_object</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">amount_2</span>
             <span class="n">reimbursement_object</span><span class="o">.</span><span class="n">category_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reimbursement_category</span><span class="o">.</span><span class="n">id</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Splitting transaction: </span><span class="si">%s</span><span class="s2"> -&gt; (</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span>
-                         <span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span> <span class="n">amount_1</span><span class="p">,</span> <span class="n">amount_2</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;Splitting transaction: </span><span class="si">%s</span><span class="s2"> -&gt; (</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span>
+                <span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span>
+                <span class="n">amount_1</span><span class="p">,</span>
+                <span class="n">amount_2</span><span class="p">,</span>
+            <span class="p">)</span>
 
-            <span class="n">update_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">update_transaction</span><span class="p">(</span><span class="n">transaction_id</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-                                                                <span class="n">split</span><span class="o">=</span><span class="p">[</span><span class="n">split_object</span><span class="p">,</span>
-                                                                       <span class="n">reimbursement_object</span><span class="p">])</span>
+            <span class="n">update_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">update_transaction</span><span class="p">(</span>
+                <span class="n">transaction_id</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="n">split</span><span class="o">=</span><span class="p">[</span><span class="n">split_object</span><span class="p">,</span> <span class="n">reimbursement_object</span><span class="p">],</span>
+            <span class="p">)</span>
             <span class="c1"># Tag each of the new transactions generated</span>
             <span class="n">split_transaction_ids</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="n">update_response</span><span class="p">[</span><span class="s2">&quot;split&quot;</span><span class="p">]})</span>
             <span class="k">for</span> <span class="n">split_transaction_id</span> <span class="ow">in</span> <span class="n">update_response</span><span class="p">[</span><span class="s2">&quot;split&quot;</span><span class="p">]:</span>
                 <span class="n">update_tags</span> <span class="o">=</span> <span class="n">transaction</span><span class="o">.</span><span class="n">tags</span> <span class="k">if</span> <span class="n">transaction</span><span class="o">.</span><span class="n">tags</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
-                <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">tag</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">update_tags</span> <span class="k">if</span>
-                        <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+                <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">tag</span><span class="o">.</span><span class="n">name</span>
+                    <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">update_tags</span>
+                    <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                    <span class="ow">and</span> <span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                <span class="p">]</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tags</span> <span class="ow">and</span> <span class="n">tag_transactions</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_raise_nonexistent_tag_error</span><span class="p">(</span><span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_raise_nonexistent_tag_error</span><span class="p">(</span>
+                        <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="p">]</span>
+                    <span class="p">)</span>
                     <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
                 <span class="n">tag_update</span> <span class="o">=</span> <span class="n">TransactionUpdateObject</span><span class="p">(</span><span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">update_transaction</span><span class="p">(</span><span class="n">transaction_id</span><span class="o">=</span><span class="n">split_transaction_id</span><span class="p">,</span>
-                                                  <span class="n">transaction</span><span class="o">=</span><span class="n">tag_update</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">update_transaction</span><span class="p">(</span>
+                    <span class="n">transaction_id</span><span class="o">=</span><span class="n">split_transaction_id</span><span class="p">,</span> <span class="n">transaction</span><span class="o">=</span><span class="n">tag_update</span>
+                <span class="p">)</span>
         <span class="k">return</span> <span class="n">split_transaction_ids</span></div>
 
-<div class="viewcode-block" id="SplitLunch.make_splitlunch_import"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.make_splitlunch_import">[docs]</a>    <span class="k">def</span> <span class="nf">make_splitlunch_import</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag_transactions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<div class="viewcode-block" id="SplitLunch.make_splitlunch_import"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.make_splitlunch_import">[docs]</a>    <span class="k">def</span> <span class="nf">make_splitlunch_import</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tag_transactions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Operate on `SplitLunchImport` tagged transactions</span>
 
@@ -887,8 +977,9 @@
             <span class="n">description</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">transaction</span><span class="o">.</span><span class="n">payee</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">transaction</span><span class="o">.</span><span class="n">notes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">description</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">payee</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">notes</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">new_transaction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_self_paid_expense</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span>
-                                                            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
+            <span class="n">new_transaction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_self_paid_expense</span><span class="p">(</span>
+                <span class="n">amount</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span>
+            <span class="p">)</span>
             <span class="n">notes</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Splitwise ID: </span><span class="si">{</span><span class="n">new_transaction</span><span class="o">.</span><span class="n">splitwise_id</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="k">if</span> <span class="n">transaction</span><span class="o">.</span><span class="n">notes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">notes</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">notes</span><span class="si">}</span><span class="s2"> || </span><span class="si">{</span><span class="n">notes</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -896,40 +987,54 @@
                 <span class="n">date</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
                 <span class="n">category_id</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">category_id</span><span class="p">,</span>
                 <span class="n">notes</span><span class="o">=</span><span class="n">notes</span><span class="p">,</span>
-                <span class="n">amount</span><span class="o">=</span><span class="n">new_transaction</span><span class="o">.</span><span class="n">personal_share</span>
+                <span class="n">amount</span><span class="o">=</span><span class="n">new_transaction</span><span class="o">.</span><span class="n">personal_share</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">reimbursement_object</span> <span class="o">=</span> <span class="n">split_object</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">reimbursement_object</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span> <span class="o">-</span> <span class="n">new_transaction</span><span class="o">.</span><span class="n">personal_share</span><span class="p">,</span>
-                                                <span class="mi">2</span><span class="p">)</span>
+            <span class="n">reimbursement_object</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span>
+                <span class="n">transaction</span><span class="o">.</span><span class="n">amount</span> <span class="o">-</span> <span class="n">new_transaction</span><span class="o">.</span><span class="n">personal_share</span><span class="p">,</span> <span class="mi">2</span>
+            <span class="p">)</span>
             <span class="n">reimbursement_object</span><span class="o">.</span><span class="n">category_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reimbursement_category</span><span class="o">.</span><span class="n">id</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transaction split by Splitwise: </span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="si">}</span><span class="s2"> -&gt; &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">split_object</span><span class="o">.</span><span class="n">amount</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">reimbursement_object</span><span class="o">.</span><span class="n">amount</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
-            <span class="n">update_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">update_transaction</span><span class="p">(</span><span class="n">transaction_id</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-                                                                <span class="n">split</span><span class="o">=</span><span class="p">[</span><span class="n">split_object</span><span class="p">,</span>
-                                                                       <span class="n">reimbursement_object</span><span class="p">])</span>
-            <span class="n">formatted_update_response</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">original_id</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-                                             <span class="n">payee</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">payee</span><span class="p">,</span>
-                                             <span class="n">amount</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span>
-                                             <span class="n">reimbursement_amount</span><span class="o">=</span><span class="n">reimbursement_object</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span>
-                                             <span class="n">notes</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">notes</span><span class="p">,</span>
-                                             <span class="n">splitwise_id</span><span class="o">=</span><span class="n">new_transaction</span><span class="o">.</span><span class="n">splitwise_id</span><span class="p">,</span>
-                                             <span class="n">updated</span><span class="o">=</span><span class="n">update_response</span><span class="p">[</span><span class="s2">&quot;updated&quot;</span><span class="p">],</span>
-                                             <span class="n">split</span><span class="o">=</span><span class="n">update_response</span><span class="p">[</span><span class="s2">&quot;split&quot;</span><span class="p">])</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Transaction split by Splitwise: </span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="si">}</span><span class="s2"> -&gt; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">split_object</span><span class="o">.</span><span class="n">amount</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">reimbursement_object</span><span class="o">.</span><span class="n">amount</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="p">)</span>
+            <span class="n">update_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">update_transaction</span><span class="p">(</span>
+                <span class="n">transaction_id</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="n">split</span><span class="o">=</span><span class="p">[</span><span class="n">split_object</span><span class="p">,</span> <span class="n">reimbursement_object</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="n">formatted_update_response</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">original_id</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="n">payee</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">payee</span><span class="p">,</span>
+                <span class="n">amount</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span>
+                <span class="n">reimbursement_amount</span><span class="o">=</span><span class="n">reimbursement_object</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span>
+                <span class="n">notes</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">notes</span><span class="p">,</span>
+                <span class="n">splitwise_id</span><span class="o">=</span><span class="n">new_transaction</span><span class="o">.</span><span class="n">splitwise_id</span><span class="p">,</span>
+                <span class="n">updated</span><span class="o">=</span><span class="n">update_response</span><span class="p">[</span><span class="s2">&quot;updated&quot;</span><span class="p">],</span>
+                <span class="n">split</span><span class="o">=</span><span class="n">update_response</span><span class="p">[</span><span class="s2">&quot;split&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
             <span class="n">update_responses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">formatted_update_response</span><span class="p">)</span>
             <span class="c1"># Tag each of the new transactions generated</span>
             <span class="k">for</span> <span class="n">split_transaction_id</span> <span class="ow">in</span> <span class="n">update_response</span><span class="p">[</span><span class="s2">&quot;split&quot;</span><span class="p">]:</span>
                 <span class="n">update_tags</span> <span class="o">=</span> <span class="n">transaction</span><span class="o">.</span><span class="n">tags</span> <span class="ow">or</span> <span class="p">[]</span>
-                <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">tag</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">update_tags</span> <span class="k">if</span>
-                        <span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_import_tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+                <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">tag</span><span class="o">.</span><span class="n">name</span>
+                    <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">update_tags</span>
+                    <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_import_tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                <span class="p">]</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tags</span> <span class="ow">and</span> <span class="n">tag_transactions</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_raise_nonexistent_tag_error</span><span class="p">(</span><span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_raise_nonexistent_tag_error</span><span class="p">(</span>
+                        <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="p">]</span>
+                    <span class="p">)</span>
                     <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
                 <span class="n">tag_update</span> <span class="o">=</span> <span class="n">TransactionUpdateObject</span><span class="p">(</span><span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">update_transaction</span><span class="p">(</span><span class="n">transaction_id</span><span class="o">=</span><span class="n">split_transaction_id</span><span class="p">,</span>
-                                                  <span class="n">transaction</span><span class="o">=</span><span class="n">tag_update</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">update_transaction</span><span class="p">(</span>
+                    <span class="n">transaction_id</span><span class="o">=</span><span class="n">split_transaction_id</span><span class="p">,</span> <span class="n">transaction</span><span class="o">=</span><span class="n">tag_update</span>
+                <span class="p">)</span>
         <span class="k">return</span> <span class="n">update_responses</span></div>
 
-<div class="viewcode-block" id="SplitLunch.make_splitlunch_direct_import"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.make_splitlunch_direct_import">[docs]</a>    <span class="k">def</span> <span class="nf">make_splitlunch_direct_import</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag_transactions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<div class="viewcode-block" id="SplitLunch.make_splitlunch_direct_import"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.make_splitlunch_direct_import">[docs]</a>    <span class="k">def</span> <span class="nf">make_splitlunch_direct_import</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tag_transactions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Operate on `SplitLunchDirectImport` tagged transactions</span>
 
@@ -954,30 +1059,37 @@
             <span class="n">description</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">transaction</span><span class="o">.</span><span class="n">payee</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">transaction</span><span class="o">.</span><span class="n">notes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">description</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">payee</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">notes</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">new_transaction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_expense_on_behalf_of_partner</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span>
-                                                                       <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
+            <span class="n">new_transaction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_expense_on_behalf_of_partner</span><span class="p">(</span>
+                <span class="n">amount</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span>
+            <span class="p">)</span>
             <span class="n">notes</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Splitwise ID: </span><span class="si">{</span><span class="n">new_transaction</span><span class="o">.</span><span class="n">splitwise_id</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="k">if</span> <span class="n">transaction</span><span class="o">.</span><span class="n">notes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">notes</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">notes</span><span class="si">}</span><span class="s2"> || </span><span class="si">{</span><span class="n">notes</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="n">existing_tags</span> <span class="o">=</span> <span class="n">transaction</span><span class="o">.</span><span class="n">tags</span> <span class="ow">or</span> <span class="p">[]</span>
-            <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">tag</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">existing_tags</span> <span class="k">if</span>
-                    <span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_direct_import_tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+            <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">tag</span><span class="o">.</span><span class="n">name</span>
+                <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">existing_tags</span>
+                <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitlunch_direct_import_tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="p">]</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tags</span> <span class="ow">and</span> <span class="n">tag_transactions</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_raise_nonexistent_tag_error</span><span class="p">(</span><span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">SplitLunchConfig</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="p">])</span>
                 <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splitwise_tag</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-            <span class="n">update</span> <span class="o">=</span> <span class="n">TransactionUpdateObject</span><span class="p">(</span><span class="n">category_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reimbursement_category</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-                                             <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
-                                             <span class="n">notes</span><span class="o">=</span><span class="n">notes</span><span class="p">)</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">update_transaction</span><span class="p">(</span><span class="n">transaction_id</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-                                                         <span class="n">transaction</span><span class="o">=</span><span class="n">update</span><span class="p">)</span>
-            <span class="n">formatted_update_response</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">original_id</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-                                             <span class="n">payee</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">payee</span><span class="p">,</span>
-                                             <span class="n">amount</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span>
-                                             <span class="n">reimbursement_amount</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span>
-                                             <span class="n">notes</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">notes</span><span class="p">,</span>
-                                             <span class="n">splitwise_id</span><span class="o">=</span><span class="n">new_transaction</span><span class="o">.</span><span class="n">splitwise_id</span><span class="p">,</span>
-                                             <span class="n">updated</span><span class="o">=</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;updated&quot;</span><span class="p">],</span>
-                                             <span class="n">split</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">update</span> <span class="o">=</span> <span class="n">TransactionUpdateObject</span><span class="p">(</span>
+                <span class="n">category_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reimbursement_category</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span> <span class="n">notes</span><span class="o">=</span><span class="n">notes</span>
+            <span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">update_transaction</span><span class="p">(</span>
+                <span class="n">transaction_id</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">transaction</span><span class="o">=</span><span class="n">update</span>
+            <span class="p">)</span>
+            <span class="n">formatted_update_response</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">original_id</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="n">payee</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">payee</span><span class="p">,</span>
+                <span class="n">amount</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span>
+                <span class="n">reimbursement_amount</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span>
+                <span class="n">notes</span><span class="o">=</span><span class="n">transaction</span><span class="o">.</span><span class="n">notes</span><span class="p">,</span>
+                <span class="n">splitwise_id</span><span class="o">=</span><span class="n">new_transaction</span><span class="o">.</span><span class="n">splitwise_id</span><span class="p">,</span>
+                <span class="n">updated</span><span class="o">=</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;updated&quot;</span><span class="p">],</span>
+                <span class="n">split</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="n">update_responses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">formatted_update_response</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">update_responses</span></div>
 
@@ -1010,23 +1122,26 @@
                 <span class="n">payee</span><span class="o">=</span><span class="n">splitwise_transaction</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
                 <span class="n">amount</span><span class="o">=</span><span class="n">splitwise_transaction</span><span class="o">.</span><span class="n">personal_share</span><span class="p">,</span>
                 <span class="n">asset_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">splitwise_asset</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-                <span class="n">external_id</span><span class="o">=</span><span class="n">splitwise_transaction</span><span class="o">.</span><span class="n">splitwise_id</span>
+                <span class="n">external_id</span><span class="o">=</span><span class="n">splitwise_transaction</span><span class="o">.</span><span class="n">splitwise_id</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">batch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_lunchmoney_transaction</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
-                <span class="n">new_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">insert_transactions</span><span class="p">(</span><span class="n">transactions</span><span class="o">=</span><span class="n">batch</span><span class="p">,</span>
-                                                             <span class="n">apply_rules</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">new_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">insert_transactions</span><span class="p">(</span>
+                    <span class="n">transactions</span><span class="o">=</span><span class="n">batch</span><span class="p">,</span> <span class="n">apply_rules</span><span class="o">=</span><span class="kc">True</span>
+                <span class="p">)</span>
                 <span class="n">new_transaction_ids</span> <span class="o">+=</span> <span class="n">new_ids</span>
                 <span class="n">batch</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">new_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">insert_transactions</span><span class="p">(</span><span class="n">transactions</span><span class="o">=</span><span class="n">batch</span><span class="p">,</span>
-                                                         <span class="n">apply_rules</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">new_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">insert_transactions</span><span class="p">(</span>
+                <span class="n">transactions</span><span class="o">=</span><span class="n">batch</span><span class="p">,</span> <span class="n">apply_rules</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
             <span class="n">new_transaction_ids</span> <span class="o">+=</span> <span class="n">new_ids</span>
         <span class="k">return</span> <span class="n">new_transaction_ids</span></div>
 
 <div class="viewcode-block" id="SplitLunch.filter_relevant_splitwise_expenses"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.filter_relevant_splitwise_expenses">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">filter_relevant_splitwise_expenses</span><span class="p">(</span><span class="n">expenses</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SplitLunchExpense</span><span class="p">]</span>
-                                           <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">SplitLunchExpense</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">filter_relevant_splitwise_expenses</span><span class="p">(</span>
+        <span class="n">expenses</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SplitLunchExpense</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">SplitLunchExpense</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filter Expenses in Splitwise into relevant expenses.</span>
 
@@ -1052,11 +1167,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">filtered_expenses</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">splitwise_transaction</span> <span class="ow">in</span> <span class="n">expenses</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">all</span><span class="p">([</span>
-                <span class="n">splitwise_transaction</span><span class="o">.</span><span class="n">deleted</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="n">splitwise_transaction</span><span class="o">.</span><span class="n">payment</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="n">splitwise_transaction</span><span class="o">.</span><span class="n">self_paid</span> <span class="ow">is</span> <span class="kc">False</span>
-            <span class="p">]):</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">splitwise_transaction</span><span class="o">.</span><span class="n">deleted</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">,</span>
+                    <span class="n">splitwise_transaction</span><span class="o">.</span><span class="n">payment</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">,</span>
+                    <span class="n">splitwise_transaction</span><span class="o">.</span><span class="n">self_paid</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="p">]</span>
+            <span class="p">):</span>
                 <span class="n">filtered_expenses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">splitwise_transaction</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">filtered_expenses</span></div>
@@ -1093,14 +1210,17 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;SplitwiseAsset&quot;</span><span class="p">)</span>
         <span class="n">balance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_splitwise_balance</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">balance</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitwise_asset</span><span class="o">.</span><span class="n">balance</span><span class="p">:</span>
-            <span class="n">updated_asset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">update_asset</span><span class="p">(</span><span class="n">asset_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">splitwise_asset</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-                                                        <span class="n">balance</span><span class="o">=</span><span class="n">balance</span><span class="p">)</span>
+            <span class="n">updated_asset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">update_asset</span><span class="p">(</span>
+                <span class="n">asset_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">splitwise_asset</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">balance</span><span class="o">=</span><span class="n">balance</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">splitwise_asset</span> <span class="o">=</span> <span class="n">updated_asset</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitwise_asset</span></div>
 
     <span class="n">_deleted_payee</span> <span class="o">=</span> <span class="s2">&quot;[DELETED FROM SPLITWISE]&quot;</span>
 
-<div class="viewcode-block" id="SplitLunch.get_new_transactions"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.get_new_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">get_new_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">SplitLunchExpense</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]]:</span>
+<div class="viewcode-block" id="SplitLunch.get_new_transactions"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.get_new_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">get_new_transactions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">SplitLunchExpense</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get Splitwise Transactions that don&#39;t exist in Lunch Money</span>
 
@@ -1117,26 +1237,33 @@
         <span class="n">splitlunch_expenses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">get_transactions</span><span class="p">(</span>
             <span class="n">asset_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">splitwise_asset</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
             <span class="n">start_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1800</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-            <span class="n">end_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2300</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+            <span class="n">end_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2300</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">31</span><span class="p">),</span>
         <span class="p">)</span>
-        <span class="n">splitlunch_ids</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">external_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">splitlunch_expenses</span> <span class="k">if</span>
-                          <span class="n">item</span><span class="o">.</span><span class="n">external_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="n">splitlunch_ids</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">external_id</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">splitlunch_expenses</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">external_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">}</span>
         <span class="n">splitwise_expenses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expenses</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">splitwise_ids</span> <span class="o">=</span> <span class="p">{</span><span class="n">item</span><span class="o">.</span><span class="n">splitwise_id</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">splitwise_expenses</span><span class="p">}</span>
         <span class="n">new_ids</span> <span class="o">=</span> <span class="n">splitwise_ids</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">splitlunch_ids</span><span class="p">)</span>
-        <span class="n">filtered_expenses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_relevant_splitwise_expenses</span><span class="p">(</span><span class="n">expenses</span><span class="o">=</span><span class="n">splitwise_expenses</span><span class="p">)</span>
-        <span class="n">new_expenses</span> <span class="o">=</span> <span class="p">[</span><span class="n">expense</span> <span class="k">for</span> <span class="n">expense</span> <span class="ow">in</span> <span class="n">filtered_expenses</span> <span class="k">if</span>
-                        <span class="n">expense</span><span class="o">.</span><span class="n">splitwise_id</span> <span class="ow">in</span> <span class="n">new_ids</span><span class="p">]</span>
+        <span class="n">filtered_expenses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_relevant_splitwise_expenses</span><span class="p">(</span>
+            <span class="n">expenses</span><span class="o">=</span><span class="n">splitwise_expenses</span>
+        <span class="p">)</span>
+        <span class="n">new_expenses</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">expense</span> <span class="k">for</span> <span class="n">expense</span> <span class="ow">in</span> <span class="n">filtered_expenses</span> <span class="k">if</span> <span class="n">expense</span><span class="o">.</span><span class="n">splitwise_id</span> <span class="ow">in</span> <span class="n">new_ids</span>
+        <span class="p">]</span>
         <span class="n">deleted_transactions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_deleted_transactions</span><span class="p">(</span>
             <span class="n">splitlunch_expenses</span><span class="o">=</span><span class="n">splitlunch_expenses</span><span class="p">,</span>
-            <span class="n">splitwise_transactions</span><span class="o">=</span><span class="n">splitwise_expenses</span>
+            <span class="n">splitwise_transactions</span><span class="o">=</span><span class="n">splitwise_expenses</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">new_expenses</span><span class="p">,</span> <span class="n">deleted_transactions</span></div>
 
-<div class="viewcode-block" id="SplitLunch.get_deleted_transactions"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.get_deleted_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">get_deleted_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                 <span class="n">splitlunch_expenses</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">],</span>
-                                 <span class="n">splitwise_transactions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SplitLunchExpense</span><span class="p">]</span>
-                                 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
+<div class="viewcode-block" id="SplitLunch.get_deleted_transactions"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.get_deleted_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">get_deleted_transactions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">splitlunch_expenses</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">],</span>
+        <span class="n">splitwise_transactions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SplitLunchExpense</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get Splitwise Transactions that exist in Lunch Money but have since been deleted</span>
 
@@ -1154,15 +1281,21 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">splitwise_asset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_raise_splitwise_asset_error</span><span class="p">()</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;SplitwiseAsset&quot;</span><span class="p">)</span>
-        <span class="n">existing_transactions</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">external_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">splitlunch_expenses</span> <span class="k">if</span>
-                                 <span class="n">item</span><span class="o">.</span><span class="n">external_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
-        <span class="n">deleted_ids</span> <span class="o">=</span> <span class="p">{</span><span class="n">item</span><span class="o">.</span><span class="n">splitwise_id</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">splitwise_transactions</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">deleted</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">}</span>
+        <span class="n">existing_transactions</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">external_id</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">splitlunch_expenses</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">external_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">}</span>
+        <span class="n">deleted_ids</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">splitwise_id</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">splitwise_transactions</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">deleted</span> <span class="ow">is</span> <span class="kc">True</span>
+        <span class="p">}</span>
         <span class="n">untethered_transactions</span> <span class="o">=</span> <span class="n">deleted_ids</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">existing_transactions</span><span class="p">)</span>
         <span class="n">transactions_to_delete</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">tran</span> <span class="k">for</span> <span class="n">tran</span> <span class="ow">in</span> <span class="n">splitlunch_expenses</span> <span class="k">if</span>
-            <span class="n">tran</span><span class="o">.</span><span class="n">external_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span>
-            <span class="nb">int</span><span class="p">(</span><span class="n">tran</span><span class="o">.</span><span class="n">external_id</span><span class="p">)</span> <span class="ow">in</span> <span class="n">untethered_transactions</span> <span class="ow">and</span>
-            <span class="n">tran</span><span class="o">.</span><span class="n">payee</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deleted_payee</span>
+            <span class="n">tran</span>
+            <span class="k">for</span> <span class="n">tran</span> <span class="ow">in</span> <span class="n">splitlunch_expenses</span>
+            <span class="k">if</span> <span class="n">tran</span><span class="o">.</span><span class="n">external_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">tran</span><span class="o">.</span><span class="n">external_id</span><span class="p">)</span> <span class="ow">in</span> <span class="n">untethered_transactions</span>
+            <span class="ow">and</span> <span class="n">tran</span><span class="o">.</span><span class="n">payee</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deleted_payee</span>
         <span class="p">]</span>
         <span class="k">return</span> <span class="n">transactions_to_delete</span></div>
 
@@ -1181,13 +1314,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">splitwise_to_lunchmoney</span><span class="p">(</span><span class="n">expenses</span><span class="o">=</span><span class="n">new_transactions</span><span class="p">)</span>
         <span class="n">splitwise_asset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_splitwise_balance</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handle_deleted_transactions</span><span class="p">(</span><span class="n">deleted_transactions</span><span class="o">=</span><span class="n">deleted_transactions</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">balance</span><span class="o">=</span><span class="n">splitwise_asset</span><span class="o">.</span><span class="n">balance</span><span class="p">,</span>
-                    <span class="n">new</span><span class="o">=</span><span class="n">new_transactions</span><span class="p">,</span>
-                    <span class="n">deleted</span><span class="o">=</span><span class="n">deleted_transactions</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">balance</span><span class="o">=</span><span class="n">splitwise_asset</span><span class="o">.</span><span class="n">balance</span><span class="p">,</span>
+            <span class="n">new</span><span class="o">=</span><span class="n">new_transactions</span><span class="p">,</span>
+            <span class="n">deleted</span><span class="o">=</span><span class="n">deleted_transactions</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
-<div class="viewcode-block" id="SplitLunch.handle_deleted_transactions"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.handle_deleted_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">handle_deleted_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                    <span class="n">deleted_transactions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">],</span>
-                                    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<div class="viewcode-block" id="SplitLunch.handle_deleted_transactions"><a class="viewcode-back" href="../../../../splitlunch.html#lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch.handle_deleted_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">handle_deleted_transactions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">deleted_transactions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update Transactions That Exist in Splitwise, but have been deleted in Splitwise</span>
 
@@ -1206,8 +1342,8 @@
                 <span class="n">transaction</span><span class="o">=</span><span class="n">TransactionUpdateObject</span><span class="p">(</span>
                     <span class="n">amount</span><span class="o">=</span><span class="mf">0.00</span><span class="p">,</span>
                     <span class="n">payee</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_deleted_payee</span><span class="p">,</span>
-                    <span class="n">notes</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">payee</span><span class="si">}</span><span class="s2"> || </span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="si">}</span><span class="s2"> || </span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">notes</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="p">)</span>
+                    <span class="n">notes</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">payee</span><span class="si">}</span><span class="s2"> || </span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="si">}</span><span class="s2"> || </span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">notes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="p">),</span>
             <span class="p">)</span>
             <span class="n">updated_transactions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">update</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">updated_transactions</span></div>
@@ -1217,27 +1353,33 @@
 <span class="sd">        Raise Errors for Financial Partners</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">financial_partner</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SplitLunchError</span><span class="p">(</span><span class="s2">&quot;You must designate a financial partner in Splitwise. &quot;</span>
-                                  <span class="s2">&quot;This can be done with the partner&#39;s Splitwise User ID # &quot;</span>
-                                  <span class="s2">&quot;or their email address.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SplitLunchError</span><span class="p">(</span>
+                <span class="s2">&quot;You must designate a financial partner in Splitwise. &quot;</span>
+                <span class="s2">&quot;This can be done with the partner&#39;s Splitwise User ID # &quot;</span>
+                <span class="s2">&quot;or their email address.&quot;</span>
+            <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_raise_splitwise_asset_error</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Raise Errors for Splitwise Asset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="n">SplitLunchError</span><span class="p">(</span><span class="s2">&quot;You must create an asset (aka Account) in Lunch Money with &quot;</span>
-                              <span class="s2">&quot;`Splitwise` in the name. There should only be one account &quot;</span>
-                              <span class="s2">&quot;like this.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">SplitLunchError</span><span class="p">(</span>
+            <span class="s2">&quot;You must create an asset (aka Account) in Lunch Money with &quot;</span>
+            <span class="s2">&quot;`Splitwise` in the name. There should only be one account &quot;</span>
+            <span class="s2">&quot;like this.&quot;</span>
+        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_raise_category_reimbursement_error</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Raise Errors for Splitwise Asset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="n">SplitLunchError</span><span class="p">(</span><span class="s2">&quot;SplitLunch requires a reimbursement Category. &quot;</span>
-                              <span class="s2">&quot;Make sure you have a category entitled `Reimbursement`. &quot;</span>
-                              <span class="s2">&quot;This category will be excluded from budgeting.&quot;</span>
-                              <span class="s2">&quot;Half of split transactions will be created with &quot;</span>
-                              <span class="s2">&quot;this category.&quot;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">SplitLunchError</span><span class="p">(</span>
+            <span class="s2">&quot;SplitLunch requires a reimbursement Category. &quot;</span>
+            <span class="s2">&quot;Make sure you have a category entitled `Reimbursement`. &quot;</span>
+            <span class="s2">&quot;This category will be excluded from budgeting.&quot;</span>
+            <span class="s2">&quot;Half of split transactions will be created with &quot;</span>
+            <span class="s2">&quot;this category.&quot;</span>
+        <span class="p">)</span></div>
 </pre></div>
 
            </div>

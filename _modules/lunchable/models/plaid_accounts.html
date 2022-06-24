@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lunchable.models.plaid_accounts &mdash; lunchable 0.1.12 documentation</title>
+  <title>lunchable.models.plaid_accounts &mdash; lunchable 0.1.13 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../../../index.html" class="icon icon-home"> lunchable
           </a>
               <div class="version">
-                0.1.12
+                0.1.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -49,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../lunchable.html">Interacting with Lunch Money</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Lunchable CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API Documentation</a></li>
 </ul>
 
@@ -105,50 +106,52 @@
 <span class="sd">    https://lunchmoney.dev/#plaid-accounts-object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">_date_linked_description</span> <span class="o">=</span> <span class="s2">&quot;Date account was first linked in ISO 8601 extended format&quot;</span>
+    <span class="n">_date_linked_description</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;Date account was first linked in ISO 8601 extended format&quot;</span>
+    <span class="p">)</span>
     <span class="n">_name_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    Name of the account. Can be overridden by the user. Field is originally set by Plaid&quot;)</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_type_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Primary type of account. Typically one of: [credit, depository, brokerage, cash, </span>
+<span class="s2">    Primary type of account. Typically one of: [credit, depository, brokerage, cash,</span>
 <span class="s2">    loan, investment]. This field is set by Plaid and cannot be altered.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_subtype_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    Optional subtype name of account. This field is set by Plaid and cannot be altered</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_mask_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Mask (last 3 to 4 digits of account) of account. This field is set by </span>
+<span class="s2">    Mask (last 3 to 4 digits of account) of account. This field is set by</span>
 <span class="s2">    Plaid and cannot be altered</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_institution_name_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Name of institution associated with account. This field is set by </span>
+<span class="s2">    Name of institution associated with account. This field is set by</span>
 <span class="s2">    Plaid and cannot be altered</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_status_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Denotes the current status of the account within Lunch Money. Must be one of: </span>
-<span class="s2">    active (Account is active and in good state), </span>
-<span class="s2">    inactive (Account marked inactive from user. No transactions fetched or </span>
-<span class="s2">    balance update for this account), </span>
-<span class="s2">    relink (Account needs to be relinked with Plaid), </span>
-<span class="s2">    syncing (Account is awaiting first import of transactions), </span>
-<span class="s2">    error (Account is in error with Plaid), </span>
-<span class="s2">    not found (Account is in error with Plaid), </span>
+<span class="s2">    Denotes the current status of the account within Lunch Money. Must be one of:</span>
+<span class="s2">    active (Account is active and in good state),</span>
+<span class="s2">    inactive (Account marked inactive from user. No transactions fetched or</span>
+<span class="s2">    balance update for this account),</span>
+<span class="s2">    relink (Account needs to be relinked with Plaid),</span>
+<span class="s2">    syncing (Account is awaiting first import of transactions),</span>
+<span class="s2">    error (Account is in error with Plaid),</span>
+<span class="s2">    not found (Account is in error with Plaid),</span>
 <span class="s2">    not supported (Account is in error with Plaid)</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_last_import_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Date of last imported transaction in ISO 8601 extended format (not necessarily </span>
+<span class="s2">    Date of last imported transaction in ISO 8601 extended format (not necessarily</span>
 <span class="s2">    date of last attempted import)</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_balance_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Current balance of the account in numeric format to 4 decimal places. This field is </span>
+<span class="s2">    Current balance of the account in numeric format to 4 decimal places. This field is</span>
 <span class="s2">    set by Plaid and cannot be altered</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_currency_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Currency of account balance in ISO 4217 format. This field is set by Plaid </span>
+<span class="s2">    Currency of account balance in ISO 4217 format. This field is set by Plaid</span>
 <span class="s2">    and cannot be altered</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_balance_last_update_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Date balance was last updated in ISO 8601 extended format. This field is set </span>
+<span class="s2">    Date balance was last updated in ISO 8601 extended format. This field is set</span>
 <span class="s2">    by Plaid and cannot be altered</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_limit_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -163,10 +166,14 @@
     <span class="n">mask</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_mask_description</span><span class="p">)</span>
     <span class="n">institution_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_institution_name_description</span><span class="p">)</span>
     <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_status_description</span><span class="p">)</span>
-    <span class="n">last_import</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_last_import_description</span><span class="p">)</span>
+    <span class="n">last_import</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">_last_import_description</span>
+    <span class="p">)</span>
     <span class="n">balance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_balance_description</span><span class="p">)</span>
     <span class="n">currency</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_currency_description</span><span class="p">)</span>
-    <span class="n">balance_last_update</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_balance_last_update_description</span><span class="p">)</span>
+    <span class="n">balance_last_update</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">_balance_last_update_description</span>
+    <span class="p">)</span>
     <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_limit_description</span><span class="p">)</span></div>
 
 
@@ -189,8 +196,9 @@
 <span class="sd">        -------</span>
 <span class="sd">        List[PlaidAccountObject]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_PLAID_ACCOUNTS</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_PLAID_ACCOUNTS</span>
+        <span class="p">)</span>
         <span class="n">accounts</span> <span class="o">=</span> <span class="n">response_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_PLAID_ACCOUNTS</span><span class="p">)</span>
         <span class="n">account_objects</span> <span class="o">=</span> <span class="p">[</span><span class="n">PlaidAccountObject</span><span class="p">(</span><span class="o">**</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">accounts</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">account_objects</span></div></div>

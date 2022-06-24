@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lunchable.models.tags &mdash; lunchable 0.1.12 documentation</title>
+  <title>lunchable.models.tags &mdash; lunchable 0.1.13 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../../../index.html" class="icon icon-home"> lunchable
           </a>
               <div class="version">
-                0.1.12
+                0.1.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -49,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../lunchable.html">Interacting with Lunch Money</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Lunchable CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API Documentation</a></li>
 </ul>
 
@@ -125,8 +126,9 @@
 <span class="sd">        -------</span>
 <span class="sd">        List[TagsObject]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TAGS</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TAGS</span>
+        <span class="p">)</span>
         <span class="n">tag_objects</span> <span class="o">=</span> <span class="p">[</span><span class="n">TagsObject</span><span class="p">(</span><span class="o">**</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">response_data</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">tag_objects</span></div></div>
 </pre></div>

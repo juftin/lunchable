@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lunchable.models.transactions &mdash; lunchable 0.1.12 documentation</title>
+  <title>lunchable.models.transactions &mdash; lunchable 0.1.13 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../../../index.html" class="icon icon-home"> lunchable
           </a>
               <div class="version">
-                0.1.12
+                0.1.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -49,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../lunchable.html">Interacting with Lunch Money</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Lunchable CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API Documentation</a></li>
 </ul>
 
@@ -121,33 +122,33 @@
 <span class="s2">    Numeric value of amount. i.e. $4.25 should be denoted as 4.25.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_category_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Unique identifier for associated category_id. Category must be associated with </span>
+<span class="s2">    Unique identifier for associated category_id. Category must be associated with</span>
 <span class="s2">    the same account and must not be a category group.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_currency_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Three-letter lowercase currency code in ISO 4217 format. The code sent must exist </span>
+<span class="s2">    Three-letter lowercase currency code in ISO 4217 format. The code sent must exist</span>
 <span class="s2">    in our database. Defaults to user account&#39;s primary currency.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_asset_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Unique identifier for associated asset (manually-managed account). Asset must be </span>
+<span class="s2">    Unique identifier for associated asset (manually-managed account). Asset must be</span>
 <span class="s2">    associated with the same account.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_recurring_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Unique identifier for associated recurring expense. Recurring expense must be associated </span>
+<span class="s2">    Unique identifier for associated recurring expense. Recurring expense must be associated</span>
 <span class="s2">    with the same account.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_status_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Must be either cleared or uncleared. If recurring_id is provided, the status will </span>
-<span class="s2">    automatically be set to recurring or recurring_suggested depending on the type of </span>
+<span class="s2">    Must be either cleared or uncleared. If recurring_id is provided, the status will</span>
+<span class="s2">    automatically be set to recurring or recurring_suggested depending on the type of</span>
 <span class="s2">    recurring_id. Defaults to uncleared.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_external_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    User-defined external ID for transaction. Max 75 characters. External IDs must be </span>
+<span class="s2">    User-defined external ID for transaction. Max 75 characters. External IDs must be</span>
 <span class="s2">    unique within the same asset_id.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_tags_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Passing in a number will attempt to match by ID. If no matching tag ID is found, an error </span>
-<span class="s2">    will be thrown. Passing in a string will attempt to match by string. If no matching tag </span>
+<span class="s2">    Passing in a number will attempt to match by ID. If no matching tag ID is found, an error</span>
+<span class="s2">    will be thrown. Passing in a string will attempt to match by string. If no matching tag</span>
 <span class="s2">    name is found, a new tag will be created.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
 
@@ -168,7 +169,9 @@
     <span class="n">recurring_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_recurring_id</span><span class="p">)</span>
     <span class="n">notes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Max 350 characters&quot;</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">350</span><span class="p">)</span>
     <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">StatusEnum</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_status_description</span><span class="p">)</span>
-    <span class="n">external_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_external_id_description</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+    <span class="n">external_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">_external_id_description</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">75</span>
+    <span class="p">)</span>
     <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_tags_description</span><span class="p">)</span></div>
 
 
@@ -183,42 +186,42 @@
 <span class="s2">    Must be in ISO 8601 format (YYYY-MM-DD).</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_category_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Unique identifier for associated category_id. Category must be associated </span>
+<span class="s2">    Unique identifier for associated category_id. Category must be associated</span>
 <span class="s2">    with the same account and must not be a category group.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_amount_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    You may only update this if this transaction was not created from an automatic </span>
+<span class="s2">    You may only update this if this transaction was not created from an automatic</span>
 <span class="s2">    import, i.e. if this transaction is not associated with a plaid_account_id</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_currency_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    You may only update this if this transaction was not created from an automatic </span>
-<span class="s2">    import, i.e. if this transaction is not associated with a plaid_account_id. </span>
+<span class="s2">    You may only update this if this transaction was not created from an automatic</span>
+<span class="s2">    import, i.e. if this transaction is not associated with a plaid_account_id.</span>
 <span class="s2">    Defaults to user account&#39;s primary currency.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_asset_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Unique identifier for associated asset (manually-managed account). Asset must be </span>
-<span class="s2">    associated with the same account. You may only update this if this transaction was </span>
-<span class="s2">    not created from an automatic import, i.e. if this transaction is not associated </span>
+<span class="s2">    Unique identifier for associated asset (manually-managed account). Asset must be</span>
+<span class="s2">    associated with the same account. You may only update this if this transaction was</span>
+<span class="s2">    not created from an automatic import, i.e. if this transaction is not associated</span>
 <span class="s2">    with a plaid_account_id</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_recurring_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Unique identifier for associated recurring expense. Recurring expense must </span>
+<span class="s2">    Unique identifier for associated recurring expense. Recurring expense must</span>
 <span class="s2">    be associated with the same account.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_status_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Must be either cleared or uncleared. Defaults to uncleared If recurring_id is </span>
-<span class="s2">    provided, the status will automatically be set to recurring or recurring_suggested </span>
+<span class="s2">    Must be either cleared or uncleared. Defaults to uncleared If recurring_id is</span>
+<span class="s2">    provided, the status will automatically be set to recurring or recurring_suggested</span>
 <span class="s2">    depending on the type of recurring_id. Defaults to uncleared.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_external_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    User-defined external ID for transaction. Max 75 characters. External IDs must be </span>
-<span class="s2">    unique within the same asset_id. You may only update this if this transaction was </span>
-<span class="s2">    not created from an automatic import, i.e. if this transaction is not associated </span>
+<span class="s2">    User-defined external ID for transaction. Max 75 characters. External IDs must be</span>
+<span class="s2">    unique within the same asset_id. You may only update this if this transaction was</span>
+<span class="s2">    not created from an automatic import, i.e. if this transaction is not associated</span>
 <span class="s2">    with a plaid_account_id</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_tags_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Passing in a number will attempt to match by ID. If no matching tag ID is found, </span>
-<span class="s2">    an error will be thrown. Passing in a string will attempt to match by string. </span>
+<span class="s2">    Passing in a number will attempt to match by ID. If no matching tag ID is found,</span>
+<span class="s2">    an error will be thrown. Passing in a string will attempt to match by string.</span>
 <span class="s2">    If no matching tag name is found, a new tag will be created.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
 
@@ -252,12 +255,12 @@
 
     <span class="n">_date_description</span> <span class="o">=</span> <span class="s2">&quot;Must be in ISO 8601 format (YYYY-MM-DD).&quot;</span>
     <span class="n">_category_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Unique identifier for associated category_id. Category must be associated </span>
+<span class="s2">    Unique identifier for associated category_id. Category must be associated</span>
 <span class="s2">    with the same account.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_notes_description</span> <span class="o">=</span> <span class="s2">&quot;Transaction Split Notes.&quot;</span>
     <span class="n">_amount_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Individual amount of split. Currency will inherit from parent transaction. All </span>
+<span class="s2">    Individual amount of split. Currency will inherit from parent transaction. All</span>
 <span class="s2">    amounts must sum up to parent transaction amount.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
 
@@ -278,76 +281,76 @@
 <span class="s2">    Amount of the transaction in numeric format to 4 decimal places</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_payee_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Name of payee If recurring_id is not null, this field will show the payee </span>
+<span class="s2">    Name of payee If recurring_id is not null, this field will show the payee</span>
 <span class="s2">    of associated recurring expense instead of the original transaction payee</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_currency_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    Three-letter lowercase currency code of the transaction in ISO 4217 format</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_notes_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    User-entered transaction notes If recurring_id is not null, this field will </span>
+<span class="s2">    User-entered transaction notes If recurring_id is not null, this field will</span>
 <span class="s2">    be description of associated recurring expense</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_category_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    Unique identifier of associated category (see Categories)</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_asset_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Unique identifier of associated manually-managed account (see Assets) </span>
+<span class="s2">    Unique identifier of associated manually-managed account (see Assets)</span>
 <span class="s2">    Note: plaid_account_id and asset_id cannot both exist for a transaction</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_plaid_account_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Unique identifier of associated Plaid account (see Plaid Accounts) Note: </span>
+<span class="s2">    Unique identifier of associated Plaid account (see Plaid Accounts) Note:</span>
 <span class="s2">    plaid_account_id and asset_id cannot both exist for a transaction</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_status_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    One of the following: cleared: User has reviewed the transaction uncleared: </span>
-<span class="s2">    User has not yet reviewed the transaction recurring: Transaction is linked </span>
-<span class="s2">    to a recurring expense recurring_suggested: Transaction is listed as a </span>
-<span class="s2">    suggested transaction for an existing recurring expense. User intervention </span>
+<span class="s2">    One of the following: cleared: User has reviewed the transaction uncleared:</span>
+<span class="s2">    User has not yet reviewed the transaction recurring: Transaction is linked</span>
+<span class="s2">    to a recurring expense recurring_suggested: Transaction is listed as a</span>
+<span class="s2">    suggested transaction for an existing recurring expense. User intervention</span>
 <span class="s2">    is required to change this to recurring.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_parent_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Exists if this is a split transaction. Denotes the transaction ID of the original </span>
+<span class="s2">    Exists if this is a split transaction. Denotes the transaction ID of the original</span>
 <span class="s2">    transaction. Note that the parent transaction is not returned in this call.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_is_group_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    True if this transaction represents a group of transactions. If so, amount </span>
-<span class="s2">    and currency represent the totalled amount of transactions bearing this </span>
-<span class="s2">    transaction’s id as their group_id. Amount is calculated based on the </span>
+<span class="s2">    True if this transaction represents a group of transactions. If so, amount</span>
+<span class="s2">    and currency represent the totalled amount of transactions bearing this</span>
+<span class="s2">    transaction’s id as their group_id. Amount is calculated based on the</span>
 <span class="s2">    user’s primary currency.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_group_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    Exists if this transaction is part of a group. Denotes the parent’s transaction ID</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_external_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    User-defined external ID for any manually-entered or imported transaction. </span>
-<span class="s2">    External ID cannot be accessed or changed for Plaid-imported transactions. </span>
+<span class="s2">    User-defined external ID for any manually-entered or imported transaction.</span>
+<span class="s2">    External ID cannot be accessed or changed for Plaid-imported transactions.</span>
 <span class="s2">    External ID must be unique by asset_id. Max 75 characters.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_original_name_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    The transactions original name before any payee name updates. For synced transactions, </span>
+<span class="s2">    The transactions original name before any payee name updates. For synced transactions,</span>
 <span class="s2">    this is the raw original payee name from your bank.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_type_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    (for synced investment transactions only) The transaction type as set by </span>
-<span class="s2">    Plaid for investment transactions. Possible values include: buy, sell, cash, </span>
+<span class="s2">    (for synced investment transactions only) The transaction type as set by</span>
+<span class="s2">    Plaid for investment transactions. Possible values include: buy, sell, cash,</span>
 <span class="s2">    transfer and more</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_subtype_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    (for synced investment transactions only) The transaction type as set by Plaid </span>
-<span class="s2">    for investment transactions. Possible values include: management fee, withdrawal, </span>
+<span class="s2">    (for synced investment transactions only) The transaction type as set by Plaid</span>
+<span class="s2">    for investment transactions. Possible values include: management fee, withdrawal,</span>
 <span class="s2">    dividend, deposit and more</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_fees_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    (for synced investment transactions only) The fees as set by Plaid for investment </span>
+<span class="s2">    (for synced investment transactions only) The fees as set by Plaid for investment</span>
 <span class="s2">    transactions.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_price_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    (for synced investment transactions only) The price as set by Plaid for investment </span>
+<span class="s2">    (for synced investment transactions only) The price as set by Plaid for investment</span>
 <span class="s2">    transactions.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_quantity_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    (for synced investment transactions only) The quantity as set by Plaid for investment </span>
+<span class="s2">    (for synced investment transactions only) The quantity as set by Plaid for investment</span>
 <span class="s2">    transactions.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
 
@@ -365,8 +368,9 @@
     <span class="n">is_group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_is_group_description</span><span class="p">)</span>
     <span class="n">group_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_group_id_description</span><span class="p">)</span>
     <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">TagsObject</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Array of Tag objects&quot;</span><span class="p">)</span>
-    <span class="n">external_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span>
-                                       <span class="n">description</span><span class="o">=</span><span class="n">_external_id_description</span><span class="p">)</span>
+    <span class="n">external_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">_external_id_description</span>
+    <span class="p">)</span>
     <span class="n">original_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_original_name_description</span><span class="p">)</span>
     <span class="nb">type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_type_description</span><span class="p">)</span>
     <span class="n">subtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_subtype_description</span><span class="p">)</span>
@@ -492,21 +496,23 @@
 <span class="sd">    Lunch Money Transactions Interactions</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="TransactionsClient.get_transactions"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.get_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">get_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                         <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">tag_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">recurring_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">plaid_account_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">category_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">asset_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">group_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">is_group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">debit_as_negative</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
+<div class="viewcode-block" id="TransactionsClient.get_transactions"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.get_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">get_transactions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tag_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">recurring_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">plaid_account_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">category_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">asset_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">group_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">is_group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">debit_as_negative</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get Transactions Using Criteria</span>
 
@@ -585,9 +591,11 @@
             <span class="n">debit_as_negative</span><span class="o">=</span><span class="n">debit_as_negative</span><span class="p">,</span>
         <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">search_params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">params</span> <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{})</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
-                                           <span class="n">params</span><span class="o">=</span><span class="n">search_params</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
+            <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">=</span><span class="n">search_params</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">transactions</span> <span class="o">=</span> <span class="n">response_data</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">]</span>
         <span class="n">transaction_objects</span> <span class="o">=</span> <span class="p">[</span><span class="n">TransactionObject</span><span class="p">(</span><span class="o">**</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">transactions</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">transaction_objects</span></div>
@@ -603,7 +611,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Dict[str, Any]</span>
+<span class="sd">        TransactionObject</span>
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
@@ -617,14 +625,14 @@
 <span class="sd">        The above code returns a :class:`.TransactionObject` with ID # 1234 (assuming</span>
 <span class="sd">        it exists)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
-                                                     <span class="n">transaction_id</span><span class="p">])</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
+            <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span> <span class="n">transaction_id</span><span class="p">],</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">TransactionObject</span><span class="p">(</span><span class="o">**</span><span class="n">response_data</span><span class="p">)</span></div>
 
     <span class="n">ListOrSingleTransactionUpdateObject</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span>
-        <span class="n">TransactionUpdateObject</span><span class="p">,</span>
-        <span class="n">TransactionObject</span>
+        <span class="n">TransactionUpdateObject</span><span class="p">,</span> <span class="n">TransactionObject</span>
     <span class="p">]</span>
 
     <span class="n">ListOrSingleTransactionInsertObject</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span>
@@ -633,19 +641,18 @@
         <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">],</span>
         <span class="n">List</span><span class="p">[</span><span class="n">TransactionInsertObject</span><span class="p">],</span>
         <span class="n">List</span><span class="p">[</span>
-            <span class="n">Union</span><span class="p">[</span>
-                <span class="n">TransactionObject</span><span class="p">,</span>
-                <span class="n">TransactionInsertObject</span>
-            <span class="p">],</span>
-        <span class="p">]</span>
+            <span class="n">Union</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">,</span> <span class="n">TransactionInsertObject</span><span class="p">],</span>
+        <span class="p">],</span>
     <span class="p">]</span>
 
 <div class="viewcode-block" id="TransactionsClient.update_transaction"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.update_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">update_transaction</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">transaction_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-            <span class="n">transaction</span><span class="p">:</span> <span class="n">ListOrSingleTransactionUpdateObject</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">split</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">TransactionSplitObject</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">debit_as_negative</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="n">skip_balance_update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">transaction_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">transaction</span><span class="p">:</span> <span class="n">ListOrSingleTransactionUpdateObject</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">split</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">TransactionSplitObject</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">debit_as_negative</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">skip_balance_update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update a Transaction</span>
 
@@ -703,30 +710,32 @@
 <span class="sd">            response = lunch.update_transaction(transaction_id=transaction.id,</span>
 <span class="sd">                                                transaction=transaction)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">payload</span> <span class="o">=</span> <span class="n">_TransactionUpdateParamsPut</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="n">split</span><span class="p">,</span>
-                                              <span class="n">debit_as_negative</span><span class="o">=</span><span class="n">debit_as_negative</span><span class="p">,</span>
-                                              <span class="n">skip_balance_update</span><span class="o">=</span><span class="n">skip_balance_update</span>
-                                              <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">_TransactionUpdateParamsPut</span><span class="p">(</span>
+            <span class="n">split</span><span class="o">=</span><span class="n">split</span><span class="p">,</span>
+            <span class="n">debit_as_negative</span><span class="o">=</span><span class="n">debit_as_negative</span><span class="p">,</span>
+            <span class="n">skip_balance_update</span><span class="o">=</span><span class="n">skip_balance_update</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">transaction</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">split</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">LunchMoneyError</span><span class="p">(</span><span class="s2">&quot;You must update the transaction or provide a split&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">transaction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">transaction</span><span class="p">,</span> <span class="n">TransactionObject</span><span class="p">):</span>
                 <span class="n">transaction</span> <span class="o">=</span> <span class="n">transaction</span><span class="o">.</span><span class="n">get_update_object</span><span class="p">()</span>
             <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;transaction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">transaction</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_unset</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">PUT</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
-                                                     <span class="n">transaction_id</span><span class="p">],</span>
-                                           <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">PUT</span><span class="p">,</span>
+            <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span> <span class="n">transaction_id</span><span class="p">],</span>
+            <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">response_data</span></div>
 
 <div class="viewcode-block" id="TransactionsClient.insert_transactions"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.insert_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">insert_transactions</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">transactions</span><span class="p">:</span> <span class="n">ListOrSingleTransactionInsertObject</span><span class="p">,</span>
-            <span class="n">apply_rules</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="n">skip_duplicates</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-            <span class="n">debit_as_negative</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="n">check_for_recurring</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="n">skip_balance_update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">transactions</span><span class="p">:</span> <span class="n">ListOrSingleTransactionInsertObject</span><span class="p">,</span>
+        <span class="n">apply_rules</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">skip_duplicates</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">debit_as_negative</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">check_for_recurring</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">skip_balance_update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create One or Many Lunch Money Transactions</span>
@@ -785,28 +794,35 @@
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">TransactionInsertObject</span><span class="p">):</span>
                 <span class="n">insert_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">LunchMoneyError</span><span class="p">(</span><span class="s2">&quot;Only TransactionObjects or TransactionInsertObjects are &quot;</span>
-                                      <span class="s2">&quot;supported by this function.&quot;</span><span class="p">)</span>
-        <span class="n">payload</span> <span class="o">=</span> <span class="n">_TransactionInsertParamsPost</span><span class="p">(</span><span class="n">transactions</span><span class="o">=</span><span class="n">insert_objects</span><span class="p">,</span>
-                                               <span class="n">apply_rules</span><span class="o">=</span><span class="n">apply_rules</span><span class="p">,</span>
-                                               <span class="n">skip_duplicates</span><span class="o">=</span><span class="n">skip_duplicates</span><span class="p">,</span>
-                                               <span class="n">check_for_recurring</span><span class="o">=</span><span class="n">check_for_recurring</span><span class="p">,</span>
-                                               <span class="n">debit_as_negative</span><span class="o">=</span><span class="n">debit_as_negative</span><span class="p">,</span>
-                                               <span class="n">skip_balance_update</span><span class="o">=</span><span class="n">skip_balance_update</span>
-                                               <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_unset</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
-                                           <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">LunchMoneyError</span><span class="p">(</span>
+                    <span class="s2">&quot;Only TransactionObjects or TransactionInsertObjects are &quot;</span>
+                    <span class="s2">&quot;supported by this function.&quot;</span>
+                <span class="p">)</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">_TransactionInsertParamsPost</span><span class="p">(</span>
+            <span class="n">transactions</span><span class="o">=</span><span class="n">insert_objects</span><span class="p">,</span>
+            <span class="n">apply_rules</span><span class="o">=</span><span class="n">apply_rules</span><span class="p">,</span>
+            <span class="n">skip_duplicates</span><span class="o">=</span><span class="n">skip_duplicates</span><span class="p">,</span>
+            <span class="n">check_for_recurring</span><span class="o">=</span><span class="n">check_for_recurring</span><span class="p">,</span>
+            <span class="n">debit_as_negative</span><span class="o">=</span><span class="n">debit_as_negative</span><span class="p">,</span>
+            <span class="n">skip_balance_update</span><span class="o">=</span><span class="n">skip_balance_update</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_unset</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span>
+            <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
+            <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;ids&quot;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">ids</span></div>
 
-<div class="viewcode-block" id="TransactionsClient.insert_transaction_group"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.insert_transaction_group">[docs]</a>    <span class="k">def</span> <span class="nf">insert_transaction_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                 <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
-                                 <span class="n">payee</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                                 <span class="n">transactions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
-                                 <span class="n">category_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                                 <span class="n">notes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                                 <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="TransactionsClient.insert_transaction_group"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.insert_transaction_group">[docs]</a>    <span class="k">def</span> <span class="nf">insert_transaction_group</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+        <span class="n">payee</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">transactions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+        <span class="n">category_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">notes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a Transaction Group of Two or More Transactions</span>
 
@@ -832,15 +848,25 @@
 <span class="sd">        int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">transactions</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">LunchMoneyError</span><span class="p">(</span><span class="s2">&quot;You must include 2 or more transactions &quot;</span>
-                                  <span class="s2">&quot;in the Transaction Group&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">LunchMoneyError</span><span class="p">(</span>
+                <span class="s2">&quot;You must include 2 or more transactions &quot;</span> <span class="s2">&quot;in the Transaction Group&quot;</span>
+            <span class="p">)</span>
         <span class="n">transaction_params</span> <span class="o">=</span> <span class="n">_TransactionGroupParamsPost</span><span class="p">(</span>
-            <span class="n">date</span><span class="o">=</span><span class="n">date</span><span class="p">,</span> <span class="n">payee</span><span class="o">=</span><span class="n">payee</span><span class="p">,</span> <span class="n">category_id</span><span class="o">=</span><span class="n">category_id</span><span class="p">,</span>
-            <span class="n">notes</span><span class="o">=</span><span class="n">notes</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span> <span class="n">transactions</span><span class="o">=</span><span class="n">transactions</span><span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
-                                                     <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTION_GROUPS</span><span class="p">],</span>
-                                           <span class="n">payload</span><span class="o">=</span><span class="n">transaction_params</span><span class="p">)</span>
+            <span class="n">date</span><span class="o">=</span><span class="n">date</span><span class="p">,</span>
+            <span class="n">payee</span><span class="o">=</span><span class="n">payee</span><span class="p">,</span>
+            <span class="n">category_id</span><span class="o">=</span><span class="n">category_id</span><span class="p">,</span>
+            <span class="n">notes</span><span class="o">=</span><span class="n">notes</span><span class="p">,</span>
+            <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
+            <span class="n">transactions</span><span class="o">=</span><span class="n">transactions</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span>
+            <span class="n">url_path</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
+                <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTION_GROUPS</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="n">payload</span><span class="o">=</span><span class="n">transaction_params</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">response_data</span></div>
 
 <div class="viewcode-block" id="TransactionsClient.remove_transaction_group"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.remove_transaction_group">[docs]</a>    <span class="k">def</span> <span class="nf">remove_transaction_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction_group_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
@@ -863,14 +889,19 @@
 <span class="sd">        -------</span>
 <span class="sd">        List[int]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">DELETE</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
-                                                     <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTION_GROUPS</span><span class="p">,</span>
-                                                     <span class="n">transaction_group_id</span><span class="p">])</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">DELETE</span><span class="p">,</span>
+            <span class="n">url_path</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
+                <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTION_GROUPS</span><span class="p">,</span>
+                <span class="n">transaction_group_id</span><span class="p">,</span>
+            <span class="p">],</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;transactions&quot;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="TransactionsClient.unsplit_transactions"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.unsplit_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">unsplit_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
-                             <span class="n">remove_parents</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<div class="viewcode-block" id="TransactionsClient.unsplit_transactions"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.TransactionsClient.unsplit_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">unsplit_transactions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">parent_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">remove_parents</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Unsplit Transactions</span>
 
@@ -895,12 +926,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
             <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span>
-            <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span>
-                      <span class="s2">&quot;unsplit&quot;</span><span class="p">],</span>
+            <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_TRANSACTIONS</span><span class="p">,</span> <span class="s2">&quot;unsplit&quot;</span><span class="p">],</span>
             <span class="n">payload</span><span class="o">=</span><span class="n">_TransactionsUnsplitPost</span><span class="p">(</span>
-                <span class="n">parent_ids</span><span class="o">=</span><span class="n">parent_ids</span><span class="p">,</span>
-                <span class="n">remove_parents</span><span class="o">=</span><span class="n">remove_parents</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">parent_ids</span><span class="o">=</span><span class="n">parent_ids</span><span class="p">,</span> <span class="n">remove_parents</span><span class="o">=</span><span class="n">remove_parents</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">response_data</span></div></div>
 </pre></div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lunchable.plugins.pushlunch.pushover &mdash; lunchable 0.1.12 documentation</title>
+  <title>lunchable.plugins.pushlunch.pushover &mdash; lunchable 0.1.13 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../../../../index.html" class="icon icon-home"> lunchable
           </a>
               <div class="version">
-                0.1.12
+                0.1.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -49,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../lunchable.html">Interacting with Lunch Money</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../cli.html">Lunchable CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../plugins.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">API Documentation</a></li>
 </ul>
 
@@ -81,10 +82,10 @@
 <span class="sd">Pushover Notifications via lunchable</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64decode</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">loads</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64decode</span>
+<span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">loads</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
 <span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">dedent</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
@@ -113,11 +114,13 @@
 
     <span class="n">pushover_endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://api.pushover.net/1/messages.json&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">user_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">app_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">lunchmoney_access_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">lunchable_client</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LunchMoney</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">user_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">app_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">lunchmoney_access_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">lunchable_client</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LunchMoney</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize</span>
 
@@ -144,28 +147,31 @@
         <span class="n">token</span> <span class="o">=</span> <span class="n">app_token</span> <span class="ow">or</span> <span class="n">b64decode</span><span class="p">(</span><span class="n">_courtesy_token</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
         <span class="n">user_key</span> <span class="o">=</span> <span class="n">user_key</span> <span class="ow">or</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;PUSHOVER_USER_KEY&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">user_key</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="n">PushLunchError</span><span class="p">(</span><span class="s2">&quot;You must provide a Pushover User Key or define it with &quot;</span>
-                                 <span class="s2">&quot;a `PUSHOVER_USER_KEY` environment variable&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
-            <span class="n">user</span><span class="o">=</span><span class="n">user_key</span><span class="p">,</span>
-            <span class="n">token</span><span class="o">=</span><span class="n">token</span>
+            <span class="k">raise</span> <span class="n">PushLunchError</span><span class="p">(</span>
+                <span class="s2">&quot;You must provide a Pushover User Key or define it with &quot;</span>
+                <span class="s2">&quot;a `PUSHOVER_USER_KEY` environment variable&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user_key</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span> <span class="o">=</span> <span class="n">lunchable_client</span> <span class="ow">or</span> <span class="n">LunchMoney</span><span class="p">(</span>
+            <span class="n">access_token</span><span class="o">=</span><span class="n">lunchmoney_access_token</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span> <span class="o">=</span> <span class="n">lunchable_client</span> <span class="ow">or</span> <span class="n">LunchMoney</span><span class="p">(</span><span class="n">access_token</span><span class="o">=</span><span class="n">lunchmoney_access_token</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">asset_mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_assets</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">category_mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_categories</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">notified_transactions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 
-<div class="viewcode-block" id="PushLunch.send_notification"><a class="viewcode-back" href="../../../../pushlunch.html#lunchable.plugins.pushlunch.pushover.PushLunch.send_notification">[docs]</a>    <span class="k">def</span> <span class="nf">send_notification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                          <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                          <span class="n">attachment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">object</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                          <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                          <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                          <span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                          <span class="n">url_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                          <span class="n">priority</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                          <span class="n">sound</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                          <span class="n">timestamp</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                          <span class="n">html</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
+<div class="viewcode-block" id="PushLunch.send_notification"><a class="viewcode-back" href="../../../../pushlunch.html#lunchable.plugins.pushlunch.pushover.PushLunch.send_notification">[docs]</a>    <span class="k">def</span> <span class="nf">send_notification</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">attachment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">object</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">url_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">priority</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sound</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">timestamp</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">html</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send a Pushover Notification</span>
 
@@ -203,26 +209,29 @@
 <span class="sd">        requests.Response</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">html_param</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">html</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="n">params_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span>
-                           <span class="n">attachment</span><span class="o">=</span><span class="n">attachment</span><span class="p">,</span>
-                           <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
-                           <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
-                           <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
-                           <span class="n">url_title</span><span class="o">=</span><span class="n">url_title</span><span class="p">,</span>
-                           <span class="n">priority</span><span class="o">=</span><span class="n">priority</span><span class="p">,</span>
-                           <span class="n">sound</span><span class="o">=</span><span class="n">sound</span><span class="p">,</span>
-                           <span class="n">timestamp</span><span class="o">=</span><span class="n">timestamp</span><span class="p">,</span>
-                           <span class="n">html</span><span class="o">=</span><span class="n">html_param</span><span class="p">)</span>
-        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">params_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span>
-                                  <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="n">params_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span>
+            <span class="n">attachment</span><span class="o">=</span><span class="n">attachment</span><span class="p">,</span>
+            <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+            <span class="n">url_title</span><span class="o">=</span><span class="n">url_title</span><span class="p">,</span>
+            <span class="n">priority</span><span class="o">=</span><span class="n">priority</span><span class="p">,</span>
+            <span class="n">sound</span><span class="o">=</span><span class="n">sound</span><span class="p">,</span>
+            <span class="n">timestamp</span><span class="o">=</span><span class="n">timestamp</span><span class="p">,</span>
+            <span class="n">html</span><span class="o">=</span><span class="n">html_param</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">params_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">}</span>
         <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="p">)</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pushover_endpoint</span><span class="p">,</span>
-                                     <span class="n">params</span><span class="o">=</span><span class="n">params</span>
-                                     <span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pushover_endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
         <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">response</span></div>
 
-<div class="viewcode-block" id="PushLunch.post_transaction"><a class="viewcode-back" href="../../../../pushlunch.html#lunchable.plugins.pushlunch.pushover.PushLunch.post_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">post_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">:</span> <span class="n">TransactionObject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<div class="viewcode-block" id="PushLunch.post_transaction"><a class="viewcode-back" href="../../../../pushlunch.html#lunchable.plugins.pushlunch.pushover.PushLunch.post_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">post_transaction</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">:</span> <span class="n">TransactionObject</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Post a Lunch Money Transaction as a Pushover Notification</span>
 
@@ -245,29 +254,37 @@
             <span class="n">category</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_mapping</span><span class="p">[</span><span class="n">transaction</span><span class="o">.</span><span class="n">category_id</span><span class="p">]</span>
         <span class="n">account_id</span> <span class="o">=</span> <span class="n">transaction</span><span class="o">.</span><span class="n">plaid_account_id</span> <span class="ow">or</span> <span class="n">transaction</span><span class="o">.</span><span class="n">asset_id</span>
         <span class="k">assert</span> <span class="n">account_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="n">transaction_formatted</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+        <span class="n">transaction_formatted</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">        &lt;b&gt;Payee:&lt;/b&gt; &lt;i&gt;</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">payee</span><span class="si">}</span><span class="s2">&lt;/i&gt;</span>
 <span class="s2">        &lt;b&gt;Amount:&lt;/b&gt; &lt;i&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_format_float</span><span class="p">(</span><span class="n">transaction</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/i&gt;</span>
 <span class="s2">        &lt;b&gt;Date:&lt;/b&gt; &lt;i&gt;</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%A %B </span><span class="si">%-d</span><span class="s2">, %Y&quot;</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/i&gt;</span>
-<span class="s2">        &lt;b&gt;Category:&lt;/b&gt; &lt;i&gt;</span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">&lt;/i&gt;        </span>
+<span class="s2">        &lt;b&gt;Category:&lt;/b&gt; &lt;i&gt;</span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">&lt;/i&gt;</span>
 <span class="s2">        &lt;b&gt;Account:&lt;/b&gt; &lt;i&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">asset_mapping</span><span class="p">[</span><span class="n">account_id</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/i&gt;</span>
-<span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">transaction</span><span class="o">.</span><span class="n">currency</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">transaction_formatted</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&lt;b&gt;Currency:&lt;/b&gt; &lt;i&gt;</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">currency</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&lt;/i&gt;&quot;</span>
+            <span class="n">transaction_formatted</span> <span class="o">+=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&lt;b&gt;Currency:&lt;/b&gt; &lt;i&gt;</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">currency</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&lt;/i&gt;&quot;</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="n">transaction</span><span class="o">.</span><span class="n">status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">transaction_formatted</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&lt;b&gt;Status:&lt;/b&gt; &lt;i&gt;</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s2">&lt;/i&gt;&quot;</span>
+            <span class="n">transaction_formatted</span> <span class="o">+=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&lt;b&gt;Status:&lt;/b&gt; &lt;i&gt;</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s2">&lt;/i&gt;&quot;</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="n">transaction</span><span class="o">.</span><span class="n">notes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">note</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&lt;b&gt;Notes:&lt;/b&gt; &lt;i&gt;</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">notes</span><span class="si">}</span><span class="s2">&lt;/i&gt;&quot;</span>
             <span class="n">transaction_formatted</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">note</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">if</span> <span class="n">transaction</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;uncleared&quot;</span><span class="p">:</span>
-            <span class="n">url</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&lt;a href=&quot;https://my.lunchmoney.app/transactions/&#39;</span>
-                   <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%m&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">?status=unreviewed&quot;&gt;&#39;</span>
-                   <span class="s1">&#39;&lt;b&gt;Uncleared Transactions from this Period&lt;/b&gt;&lt;/a&gt;&#39;</span><span class="p">)</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s1">&#39;&lt;a href=&quot;https://my.lunchmoney.app/transactions/&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">transaction</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%m&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">?status=unreviewed&quot;&gt;&#39;</span>
+                <span class="s2">&quot;&lt;b&gt;Uncleared Transactions from this Period&lt;/b&gt;&lt;/a&gt;&quot;</span>
+            <span class="p">)</span>
             <span class="n">transaction_formatted</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span>
 
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_notification</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">transaction_formatted</span><span class="p">,</span>
-                                          <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Lunch Money Transaction&quot;</span><span class="p">,</span>
-                                          <span class="n">html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_notification</span><span class="p">(</span>
+            <span class="n">message</span><span class="o">=</span><span class="n">transaction_formatted</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Lunch Money Transaction&quot;</span><span class="p">,</span> <span class="n">html</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">notified_transactions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span></div>
 
@@ -323,16 +340,16 @@
 <span class="sd">        str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">float_string</span> <span class="o">=</span> <span class="s2">&quot;$ (</span><span class="si">{:,.2f}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="nb">float</span><span class="p">(</span><span class="n">amount</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">float_string</span> <span class="o">=</span> <span class="s2">&quot;$ (</span><span class="si">{:,.2f}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">amount</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">float_string</span> <span class="o">=</span> <span class="s2">&quot;$ </span><span class="si">{:,.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="nb">float</span><span class="p">(</span><span class="n">amount</span><span class="p">))</span>
+            <span class="n">float_string</span> <span class="o">=</span> <span class="s2">&quot;$ </span><span class="si">{:,.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">amount</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">float_string</span>
 
     <span class="k">def</span> <span class="nf">_get_uncleared_transactions</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get Uncleared Transactions</span>
 
@@ -340,15 +357,14 @@
 <span class="sd">        -------</span>
 <span class="sd">        List[TransactionObject]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uncleared_transactions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">get_transactions</span><span class="p">(</span><span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span>
-                                                                 <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span>
-                                                                 <span class="n">status</span><span class="o">=</span><span class="s2">&quot;uncleared&quot;</span><span class="p">)</span>
+        <span class="n">uncleared_transactions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lunchable</span><span class="o">.</span><span class="n">get_transactions</span><span class="p">(</span>
+            <span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s2">&quot;uncleared&quot;</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">uncleared_transactions</span>
 
-<div class="viewcode-block" id="PushLunch.notify_uncleared_transactions"><a class="viewcode-back" href="../../../../pushlunch.html#lunchable.plugins.pushlunch.pushover.PushLunch.notify_uncleared_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">notify_uncleared_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                      <span class="n">continuous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                                      <span class="n">interval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-                                      <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
+<div class="viewcode-block" id="PushLunch.notify_uncleared_transactions"><a class="viewcode-back" href="../../../../pushlunch.html#lunchable.plugins.pushlunch.pushover.PushLunch.notify_uncleared_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">notify_uncleared_transactions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">continuous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">interval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TransactionObject</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the Current Period&#39;s Uncleared Transactions and Send a Notification for each</span>
 
@@ -368,7 +384,9 @@
         <span class="k">if</span> <span class="n">interval</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">interval</span> <span class="o">=</span> <span class="mi">60</span>
         <span class="k">if</span> <span class="n">continuous</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">interval</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Check interval cannot be less than 5 minutes. Defaulting to 5.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Check interval cannot be less than 5 minutes. Defaulting to 5.&quot;</span>
+            <span class="p">)</span>
             <span class="n">interval</span> <span class="o">=</span> <span class="mi">5</span>
         <span class="k">if</span> <span class="n">continuous</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Continuous Notifications Enabled. Beginning PushLunch.&quot;</span><span class="p">)</span>
@@ -384,7 +402,9 @@
             <span class="k">if</span> <span class="n">continuous</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">notified</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">notified_transactions</span><span class="p">)</span>
                 <span class="n">new_transactions</span> <span class="o">=</span> <span class="n">notified</span> <span class="o">-</span> <span class="n">found_transactions</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> new transactions pushed. </span><span class="si">%s</span><span class="s2"> total.&quot;</span><span class="p">,</span> <span class="n">new_transactions</span><span class="p">,</span> <span class="n">notified</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> new transactions pushed. </span><span class="si">%s</span><span class="s2"> total.&quot;</span><span class="p">,</span> <span class="n">new_transactions</span><span class="p">,</span> <span class="n">notified</span>
+                <span class="p">)</span>
                 <span class="n">sleep</span><span class="p">(</span><span class="n">interval</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">continuous_search</span> <span class="o">=</span> <span class="kc">False</span>

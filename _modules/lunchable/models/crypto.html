@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lunchable.models.crypto &mdash; lunchable 0.1.12 documentation</title>
+  <title>lunchable.models.crypto &mdash; lunchable 0.1.13 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../../../index.html" class="icon icon-home"> lunchable
           </a>
               <div class="version">
-                0.1.12
+                0.1.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -49,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../lunchable.html">Interacting with Lunch Money</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Lunchable CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API Documentation</a></li>
 </ul>
 
@@ -103,21 +104,27 @@
 <span class="sd">    https://lunchmoney.dev/#crypto-object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">_id_description</span> <span class="o">=</span> <span class="s2">&quot;Unique identifier for a manual crypto account (no ID for synced accounts)&quot;</span>
+    <span class="n">_id_description</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;Unique identifier for a manual crypto account (no ID for synced accounts)&quot;</span>
+    <span class="p">)</span>
     <span class="n">_zabo_account_id_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    Unique identifier for a synced crypto account (no ID for manual accounts, </span>
+<span class="s2">    Unique identifier for a synced crypto account (no ID for manual accounts,</span>
 <span class="s2">    multiple currencies may have the same zabo_account_id)</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_source_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    `synced` (this account is synced via a wallet, exchange, etc.) or `manual` (this account </span>
+<span class="s2">    `synced` (this account is synced via a wallet, exchange, etc.) or `manual` (this account</span>
 <span class="s2">    balance is managed manually)</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_display_name_description</span> <span class="o">=</span> <span class="s2">&quot;Display name of the crypto asset (as set by user)&quot;</span>
     <span class="n">_balance_as_of_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    Date/time the balance was last updated in ISO 8601 extended format</span>
 <span class="s2">    &quot;&quot;&quot;</span>
-    <span class="n">_status_description</span> <span class="o">=</span> <span class="s2">&quot;The current status of the crypto account. Either active or in error.&quot;</span>
-    <span class="n">_created_at_description</span> <span class="o">=</span> <span class="s2">&quot;Date/time the asset was created in ISO 8601 extended format&quot;</span>
+    <span class="n">_status_description</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;The current status of the crypto account. Either active or in error.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">_created_at_description</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;Date/time the asset was created in ISO 8601 extended format&quot;</span>
+    <span class="p">)</span>
 
     <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_id_description</span><span class="p">)</span>
     <span class="n">zabo_account_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_zabo_account_id_description</span><span class="p">)</span>
@@ -125,7 +132,9 @@
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Name of the crypto asset&quot;</span><span class="p">)</span>
     <span class="n">display_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_display_name_description</span><span class="p">)</span>
     <span class="n">balance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Current balance&quot;</span><span class="p">)</span>
-    <span class="n">balance_as_of</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_balance_as_of_description</span><span class="p">)</span>
+    <span class="n">balance_as_of</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">_balance_as_of_description</span>
+    <span class="p">)</span>
     <span class="n">currency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Abbreviation for the cryptocurrency&quot;</span><span class="p">)</span>
     <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_status_description</span><span class="p">)</span>
     <span class="n">institution_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Name of provider holding the asset&quot;</span><span class="p">)</span>
@@ -163,18 +172,22 @@
 <span class="sd">        -------</span>
 <span class="sd">        List[CryptoObject]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CRYPTO</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="n">url_path</span><span class="o">=</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CRYPTO</span>
+        <span class="p">)</span>
         <span class="n">crypto_data</span> <span class="o">=</span> <span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;crypto&quot;</span><span class="p">]</span>
         <span class="n">crypto_objects</span> <span class="o">=</span> <span class="p">[</span><span class="n">CryptoObject</span><span class="p">(</span><span class="o">**</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">crypto_data</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">crypto_objects</span></div>
 
-<div class="viewcode-block" id="CryptoClient.update_crypto"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.crypto.CryptoClient.update_crypto">[docs]</a>    <span class="k">def</span> <span class="nf">update_crypto</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crypto_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                      <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                      <span class="n">display_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                      <span class="n">institution_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                      <span class="n">balance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                      <span class="n">currency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CryptoObject</span><span class="p">:</span>
+<div class="viewcode-block" id="CryptoClient.update_crypto"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.crypto.CryptoClient.update_crypto">[docs]</a>    <span class="k">def</span> <span class="nf">update_crypto</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">crypto_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">display_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">institution_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">balance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">currency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CryptoObject</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update a Manual Crypto Asset</span>
 
@@ -204,14 +217,22 @@
 <span class="sd">        -------</span>
 <span class="sd">        CryptoObject</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">crypto_body</span> <span class="o">=</span> <span class="n">CryptoParamsPut</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="n">display_name</span><span class="p">,</span>
-                                      <span class="n">institution_name</span><span class="o">=</span><span class="n">institution_name</span><span class="p">,</span> <span class="n">balance</span><span class="o">=</span><span class="n">balance</span><span class="p">,</span>
-                                      <span class="n">currency</span><span class="o">=</span><span class="n">currency</span><span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">PUT</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CRYPTO</span><span class="p">,</span>
-                                                     <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CRYPTO_MANUAL</span><span class="p">,</span>
-                                                     <span class="n">crypto_id</span><span class="p">],</span>
-                                           <span class="n">payload</span><span class="o">=</span><span class="n">crypto_body</span><span class="p">)</span>
+        <span class="n">crypto_body</span> <span class="o">=</span> <span class="n">CryptoParamsPut</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">display_name</span><span class="o">=</span><span class="n">display_name</span><span class="p">,</span>
+            <span class="n">institution_name</span><span class="o">=</span><span class="n">institution_name</span><span class="p">,</span>
+            <span class="n">balance</span><span class="o">=</span><span class="n">balance</span><span class="p">,</span>
+            <span class="n">currency</span><span class="o">=</span><span class="n">currency</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Methods</span><span class="o">.</span><span class="n">PUT</span><span class="p">,</span>
+            <span class="n">url_path</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CRYPTO</span><span class="p">,</span>
+                <span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_CRYPTO_MANUAL</span><span class="p">,</span>
+                <span class="n">crypto_id</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="n">payload</span><span class="o">=</span><span class="n">crypto_body</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">crypto</span> <span class="o">=</span> <span class="n">CryptoObject</span><span class="p">(</span><span class="o">**</span><span class="n">response_data</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">crypto</span></div></div>
 </pre></div>

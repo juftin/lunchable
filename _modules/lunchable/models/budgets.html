@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lunchable.models.budgets &mdash; lunchable 0.1.12 documentation</title>
+  <title>lunchable.models.budgets &mdash; lunchable 0.1.13 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../../../index.html" class="icon icon-home"> lunchable
           </a>
               <div class="version">
-                0.1.12
+                0.1.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -49,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../lunchable.html">Interacting with Lunch Money</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Lunchable CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API Documentation</a></li>
 </ul>
 
@@ -130,19 +131,19 @@
 
     <span class="n">_category_group_name_description</span> <span class="o">=</span> <span class="s2">&quot;Name of the category group, if applicable&quot;</span>
     <span class="n">_is_income_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    If true, this category is an income category (category properties </span>
+<span class="s2">    If true, this category is an income category (category properties</span>
 <span class="s2">    are set in the app via the Categories page)</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_exclude_from_budget_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    If true, this category is excluded from budget (category </span>
+<span class="s2">    If true, this category is excluded from budget (category</span>
 <span class="s2">    properties are set in the app via the Categories page)</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_exclude_from_totals_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    If true, this category is excluded from totals (category </span>
+<span class="s2">    If true, this category is excluded from totals (category</span>
 <span class="s2">    properties are set in the app via the Categories page)</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_data_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    For each month with budget or category spending data, there is a data object with the key </span>
+<span class="s2">    For each month with budget or category spending data, there is a data object with the key</span>
 <span class="s2">    set to the month in format YYYY-MM-DD. For properties, see Data object below.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">_config_description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -151,7 +152,9 @@
 
     <span class="n">category_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Name of the category&quot;</span><span class="p">)</span>
     <span class="n">category_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Unique identifier for category&quot;</span><span class="p">)</span>
-    <span class="n">category_group_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_category_group_name_description</span><span class="p">)</span>
+    <span class="n">category_group_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">_category_group_name_description</span>
+    <span class="p">)</span>
     <span class="n">group_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Unique identifier for category group&quot;</span><span class="p">)</span>
     <span class="n">is_group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;If true, this category is a group&quot;</span><span class="p">)</span>
     <span class="n">is_income</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">_is_income_description</span><span class="p">)</span>
@@ -195,8 +198,9 @@
 <span class="sd">    Lunch Money Budget Interactions</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="BudgetsClient.get_budgets"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.budgets.BudgetsClient.get_budgets">[docs]</a>    <span class="k">def</span> <span class="nf">get_budgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
-                    <span class="n">end_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">BudgetObject</span><span class="p">]:</span>
+<div class="viewcode-block" id="BudgetsClient.get_budgets"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.budgets.BudgetsClient.get_budgets">[docs]</a>    <span class="k">def</span> <span class="nf">get_budgets</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">BudgetObject</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get Monthly Budgets</span>
 
@@ -209,18 +213,19 @@
 <span class="sd">        List[BudgetObject]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span> <span class="o">=</span> <span class="n">BudgetParamsGet</span><span class="p">(</span><span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_BUDGET</span><span class="p">],</span>
-                                           <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_BUDGET</span><span class="p">],</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+        <span class="p">)</span>
         <span class="n">budget_objects</span> <span class="o">=</span> <span class="p">[</span><span class="n">BudgetObject</span><span class="p">(</span><span class="o">**</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">response_data</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">budget_objects</span></div>
 
-<div class="viewcode-block" id="BudgetsClient.upsert_budget"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.budgets.BudgetsClient.upsert_budget">[docs]</a>    <span class="k">def</span> <span class="nf">upsert_budget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                      <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
-                      <span class="n">category_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                      <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-                      <span class="n">currency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-                      <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<div class="viewcode-block" id="BudgetsClient.upsert_budget"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.budgets.BudgetsClient.upsert_budget">[docs]</a>    <span class="k">def</span> <span class="nf">upsert_budget</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+        <span class="n">category_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">currency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Upsert a Budget for a Category and Date</span>
 
@@ -253,18 +258,19 @@
 <span class="sd">        -------</span>
 <span class="sd">        Optional[Dict[str, Any]]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">body</span> <span class="o">=</span> <span class="n">BudgetParamsPut</span><span class="p">(</span><span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">category_id</span><span class="o">=</span><span class="n">category_id</span><span class="p">,</span>
-                               <span class="n">amount</span><span class="o">=</span><span class="n">amount</span><span class="p">,</span> <span class="n">currency</span><span class="o">=</span><span class="n">currency</span><span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;PUT&quot;</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_BUDGET</span><span class="p">],</span>
-                                           <span class="n">payload</span><span class="o">=</span><span class="n">body</span><span class="p">)</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="n">BudgetParamsPut</span><span class="p">(</span>
+            <span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span>
+            <span class="n">category_id</span><span class="o">=</span><span class="n">category_id</span><span class="p">,</span>
+            <span class="n">amount</span><span class="o">=</span><span class="n">amount</span><span class="p">,</span>
+            <span class="n">currency</span><span class="o">=</span><span class="n">currency</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;PUT&quot;</span><span class="p">,</span> <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_BUDGET</span><span class="p">],</span> <span class="n">payload</span><span class="o">=</span><span class="n">body</span>
+        <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;category_group&quot;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="BudgetsClient.remove_budget"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.budgets.BudgetsClient.remove_budget">[docs]</a>    <span class="k">def</span> <span class="nf">remove_budget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                      <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
-                      <span class="n">category_id</span><span class="p">:</span> <span class="nb">int</span>
-                      <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="BudgetsClient.remove_budget"><a class="viewcode-back" href="../../../api/lunchable.models.html#lunchable.models.budgets.BudgetsClient.remove_budget">[docs]</a>    <span class="k">def</span> <span class="nf">remove_budget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">category_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Unset an Existing Budget for a Particular Category in a Particular Month</span>
 
@@ -280,10 +286,12 @@
 <span class="sd">        -------</span>
 <span class="sd">        bool</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="n">BudgetParamsRemove</span><span class="p">(</span><span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">category_id</span><span class="o">=</span><span class="n">category_id</span><span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
-        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;DELETE&quot;</span><span class="p">,</span>
-                                           <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_BUDGET</span><span class="p">],</span>
-                                           <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">BudgetParamsRemove</span><span class="p">(</span>
+            <span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">category_id</span><span class="o">=</span><span class="n">category_id</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
+        <span class="n">response_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;DELETE&quot;</span><span class="p">,</span> <span class="n">url_path</span><span class="o">=</span><span class="p">[</span><span class="n">APIConfig</span><span class="o">.</span><span class="n">LUNCHMONEY_BUDGET</span><span class="p">],</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">response_data</span></div></div>
 </pre></div>
 
