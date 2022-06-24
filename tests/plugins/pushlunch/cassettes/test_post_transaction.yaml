@@ -187,7 +187,7 @@ interactions:
       User-Agent:
       - python-requests/2.26.0
     method: POST
-    uri: https://api.pushover.net/1/messages.json?html=1&message=%3Cb%3EPayee%3A%3C%2Fb%3E+%3Ci%3ETest%3C%2Fi%3E%0A%3Cb%3EAmount%3A%3C%2Fb%3E+%3Ci%3E%24+1.00%3C%2Fi%3E%0A%3Cb%3EDate%3A%3C%2Fb%3E+%3Ci%3ESunday+September+19%2C+2021%3C%2Fi%3E%0A%3Cb%3ECategory%3A%3C%2Fb%3E+%3Ci%3ECoffee+Shops%3C%2Fi%3E++++++++%0A%3Cb%3EAccount%3A%3C%2Fb%3E+%3Ci%3ETest+Account%3C%2Fi%3E%0A%3Cb%3ECurrency%3A%3C%2Fb%3E+%3Ci%3EUSD%3C%2Fi%3E%0A%3Cb%3EStatus%3A%3C%2Fb%3E+%3Ci%3EUncleared%3C%2Fi%3E%0A%3Cb%3ENotes%3A%3C%2Fb%3E+%3Ci%3EExample+Test+Notification+from+lunchable%3C%2Fi%3E%0A%0A%3Ca+href%3D%22https%3A%2F%2Fmy.lunchmoney.app%2Ftransactions%2F2021%2F09%3Fstatus%3Dunreviewed%22%3E%3Cb%3EUncleared+Transactions+from+this+Period%3C%2Fb%3E%3C%2Fa%3E&title=Lunch+Money+Transaction&token=XXXXXXXXXX&user=XXXXXXXXXX
+    uri: https://api.pushover.net/1/messages.json?html=1&message=%3Cb%3EPayee%3A%3C%2Fb%3E+%3Ci%3ETest%3C%2Fi%3E%0A%3Cb%3EAmount%3A%3C%2Fb%3E+%3Ci%3E%24+1.00%3C%2Fi%3E%0A%3Cb%3EDate%3A%3C%2Fb%3E+%3Ci%3ESunday+September+19%2C+2021%3C%2Fi%3E%0A%3Cb%3ECategory%3A%3C%2Fb%3E+%3Ci%3ECoffee+Shops%3C%2Fi%3E%0A%3Cb%3EAccount%3A%3C%2Fb%3E+%3Ci%3ETest+Account%3C%2Fi%3E%0A%3Cb%3ECurrency%3A%3C%2Fb%3E+%3Ci%3EUSD%3C%2Fi%3E%0A%3Cb%3EStatus%3A%3C%2Fb%3E+%3Ci%3EUncleared%3C%2Fi%3E%0A%3Cb%3ENotes%3A%3C%2Fb%3E+%3Ci%3EExample+Test+Notification+from+lunchable%3C%2Fi%3E%0A%0A%3Ca+href%3D%22https%3A%2F%2Fmy.lunchmoney.app%2Ftransactions%2F2021%2F09%3Fstatus%3Dunreviewed%22%3E%3Cb%3EUncleared+Transactions+from+this+Period%3C%2Fb%3E%3C%2Fa%3E&title=Lunch+Money+Transaction&token=XXXXXXXXXX&user=XXXXXXXXXX
   response:
     body:
       string: !!binary |

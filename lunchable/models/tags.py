@@ -46,7 +46,8 @@ class TagsClient(LunchMoneyAPIClient):
         -------
         List[TagsObject]
         """
-        response_data = self._make_request(method=self.Methods.GET,
-                                           url_path=APIConfig.LUNCHMONEY_TAGS)
+        response_data = self._make_request(
+            method=self.Methods.GET, url_path=APIConfig.LUNCHMONEY_TAGS
+        )
         tag_objects = [TagsObject(**item) for item in response_data]
         return tag_objects

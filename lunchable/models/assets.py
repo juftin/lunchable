@@ -27,37 +27,48 @@ class AssetsObject(LunchableModel):
     """
 
     _type_name_description = """
-    Primary type of the asset. Must be one of: [employee compensation, cash, vehicle, loan, 
+    Primary type of the asset. Must be one of: [employee compensation, cash, vehicle, loan,
     cryptocurrency, investment, other, credit, real estate]
     """
     _subtype_name_description = """
     Optional asset subtype. Examples include: [retirement, checking, savings, prepaid credit card]
     """
-    _balance_description = "Current balance of the asset in numeric format to 4 decimal places"
+    _balance_description = (
+        "Current balance of the asset in numeric format to 4 decimal places"
+    )
     _balance_as_of_description = """
     Date/time the balance was last updated in ISO 8601 extended format
     """
     _closed_on_description = "The date this asset was closed (optional)"
-    _currency_description = "Three-letter lowercase currency code of the balance in ISO 4217 format"
-    _created_at_description = "Date/time the asset was created in ISO 8601 extended format"
-    _exclude_transactions_description = ("If true, this asset will not show up as an "
-                                         "option for assignment when creating "
-                                         "transactions manually")
+    _currency_description = (
+        "Three-letter lowercase currency code of the balance in ISO 4217 format"
+    )
+    _created_at_description = (
+        "Date/time the asset was created in ISO 8601 extended format"
+    )
+    _exclude_transactions_description = (
+        "If true, this asset will not show up as an "
+        "option for assignment when creating "
+        "transactions manually"
+    )
 
     id: int = Field(description="Unique identifier for asset")
     type_name: str = Field(description=_type_name_description)
     subtype_name: Optional[str] = Field(description=_subtype_name_description)
     name: str = Field(description="Name of the asset")
     display_name: Optional[str] = Field(
-        description="Display name of the asset (as set by user)")
+        description="Display name of the asset (as set by user)"
+    )
     balance: float = Field(description=_balance_description)
     balance_as_of: datetime.datetime = Field(description=_balance_as_of_description)
     closed_on: Optional[datetime.date] = Field(description=_closed_on_description)
     currency: str = Field(description=_currency_description)
     institution_name: Optional[str] = Field(
-        description="Name of institution holding the asset")
-    exclude_transactions: bool = Field(default=False,
-                                       description=_exclude_transactions_description)
+        description="Name of institution holding the asset"
+    )
+    exclude_transactions: bool = Field(
+        default=False, description=_exclude_transactions_description
+    )
     created_at: datetime.datetime = Field(description=_created_at_description)
 
 
@@ -125,20 +136,24 @@ class AssetsClient(LunchMoneyAPIClient):
         -------
         List[AssetsObject]
         """
-        response_data = self._make_request(method=self.Methods.GET,
-                                           url_path=[APIConfig.LUNCHMONEY_ASSETS])
+        response_data = self._make_request(
+            method=self.Methods.GET, url_path=[APIConfig.LUNCHMONEY_ASSETS]
+        )
         assets = response_data.get(APIConfig.LUNCHMONEY_ASSETS)
         asset_objects = [AssetsObject(**item) for item in assets]
         return asset_objects
 
-    def update_asset(self, asset_id: int,
-                     type_name: Optional[str] = None,
-                     subtype_name: Optional[str] = None,
-                     name: Optional[str] = None,
-                     balance: Optional[float] = None,
-                     balance_as_of: Optional[datetime.datetime] = None,
-                     currency: Optional[str] = None,
-                     institution_name: Optional[str] = None) -> AssetsObject:
+    def update_asset(
+        self,
+        asset_id: int,
+        type_name: Optional[str] = None,
+        subtype_name: Optional[str] = None,
+        name: Optional[str] = None,
+        balance: Optional[float] = None,
+        balance_as_of: Optional[datetime.datetime] = None,
+        currency: Optional[str] = None,
+        institution_name: Optional[str] = None,
+    ) -> AssetsObject:
         """
         Update a Single Asset
 
@@ -169,32 +184,36 @@ class AssetsClient(LunchMoneyAPIClient):
         -------
         AssetsObject
         """
-        payload = _AssetsParamsPut(type_name=type_name,
-                                   subtype_name=subtype_name,
-                                   name=name, balance=balance,
-                                   balance_as_of=balance_as_of,
-                                   currency=currency,
-                                   institution_name=institution_name).dict(
-            exclude_none=True)
-        response_data = self._make_request(method=self.Methods.PUT,
-                                           url_path=[APIConfig.LUNCHMONEY_ASSETS,
-                                                     asset_id],
-                                           payload=payload)
+        payload = _AssetsParamsPut(
+            type_name=type_name,
+            subtype_name=subtype_name,
+            name=name,
+            balance=balance,
+            balance_as_of=balance_as_of,
+            currency=currency,
+            institution_name=institution_name,
+        ).dict(exclude_none=True)
+        response_data = self._make_request(
+            method=self.Methods.PUT,
+            url_path=[APIConfig.LUNCHMONEY_ASSETS, asset_id],
+            payload=payload,
+        )
         asset = AssetsObject(**response_data)
         return asset
 
-    def insert_asset(self,
-                     type_name: str,
-                     name: Optional[str] = None,
-                     subtype_name: Optional[str] = None,
-                     display_name: Optional[str] = None,
-                     balance: float = 0.00,
-                     balance_as_of: Optional[datetime.datetime] = None,
-                     currency: Optional[str] = None,
-                     institution_name: Optional[str] = None,
-                     closed_on: Optional[datetime.date] = None,
-                     exclude_transactions: bool = False,
-                     ) -> AssetsObject:
+    def insert_asset(
+        self,
+        type_name: str,
+        name: Optional[str] = None,
+        subtype_name: Optional[str] = None,
+        display_name: Optional[str] = None,
+        balance: float = 0.00,
+        balance_as_of: Optional[datetime.datetime] = None,
+        currency: Optional[str] = None,
+        institution_name: Optional[str] = None,
+        closed_on: Optional[datetime.date] = None,
+        exclude_transactions: bool = False,
+    ) -> AssetsObject:
         """
         Create a single (manually-managed) asset.
 
@@ -242,8 +261,10 @@ class AssetsClient(LunchMoneyAPIClient):
             closed_on=closed_on,
             exclude_transactions=exclude_transactions,
         ).dict(exclude_none=True)
-        response_data = self._make_request(method=self.Methods.POST,
-                                           url_path=[APIConfig.LUNCHMONEY_ASSETS],
-                                           payload=payload)
+        response_data = self._make_request(
+            method=self.Methods.POST,
+            url_path=[APIConfig.LUNCHMONEY_ASSETS],
+            payload=payload,
+        )
         asset = AssetsObject(**response_data)
         return asset

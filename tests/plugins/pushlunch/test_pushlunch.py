@@ -18,8 +18,9 @@ def test_send_notification():
     Send a Generic Notification
     """
     pusher = PushLunch()
-    pusher.send_notification(message="This is a test notification from lunchable.",
-                             title="Test")
+    pusher.send_notification(
+        message="This is a test notification from lunchable.", title="Test"
+    )
 
 
 @lunchable_cassette
