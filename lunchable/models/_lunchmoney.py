@@ -1,10 +1,10 @@
 """
 Lunch Money Python Client
 
-This Module Leverages Class Inheritance to
-Distribute API Methods Across a series of clinets. Ultimately, everything
-inherits from the lunchable.models.core.LunchMoneyAPIClient class which facilitates
-interacting with the API.
+This Module Leverages Class Inheritance to distribute API Methods Across a series of
+clients. Ultimately, everything inherits from the
+lunchable.models.core.LunchMoneyAPIClient class which facilitates interacting with
+the API.
 
 For example: to see source code on interactions with the "transactions" API endpoint you
 will refer to the TransactionsClient object.
