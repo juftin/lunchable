@@ -63,6 +63,7 @@ and *plugins* to other external services
    lunchable.rst
    cli.rst
    plugins.rst
+   contributing.md
    API Documentation <api/modules.rst>
 
 Indices and tables

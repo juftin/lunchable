@@ -4,8 +4,8 @@ Lunchmoney SDK Core
 
 import datetime
 import json
-from json import loads
 import logging
+from json import loads
 from typing import Any, List, Optional, Union
 
 import requests
@@ -84,12 +84,14 @@ class LunchMoneyAPIClient:
         else:
             return obj
 
-    def _make_request(self,
-                      method: str,
-                      url_path: Union[List[Union[str, int]], str, int],
-                      params: Optional[dict] = None,
-                      payload: Optional[Any] = None,
-                      **kwargs) -> Any:
+    def _make_request(
+        self,
+        method: str,
+        url_path: Union[List[Union[str, int]], str, int],
+        params: Optional[dict] = None,
+        payload: Optional[Any] = None,
+        **kwargs
+    ) -> Any:
         """
         Make a Request to the API
 
@@ -114,8 +116,8 @@ class LunchMoneyAPIClient:
             payload = json.dumps(payload, default=LunchMoneyAPIClient._serializer)
         try:
             response = self.lunch_money_session.request(
-                method=method, url=url, params=params,
-                data=payload, **kwargs)
+                method=method, url=url, params=params, data=payload, **kwargs
+            )
             response.raise_for_status()
         except requests.exceptions.HTTPError as he:
             logger.exception(he)
@@ -123,8 +125,9 @@ class LunchMoneyAPIClient:
             logger.error(response.text)
             raise LunchMoneyHTTPError(he)
         returned_data = loads(response.content)
-        if isinstance(returned_data, dict) and any(["error" in returned_data.keys(),
-                                                    "errors" in returned_data.keys()]):
+        if isinstance(returned_data, dict) and any(
+            ["error" in returned_data.keys(), "errors" in returned_data.keys()]
+        ):
             try:
                 errors = returned_data["error"]
             except KeyError:
@@ -133,13 +136,15 @@ class LunchMoneyAPIClient:
             raise LunchMoneyHTTPError(errors)
         return loads(response.content)
 
-    def make_http_request(self, method: str,
-                          url: str,
-                          params: Optional[Any] = None,
-                          data: Optional[Any] = None,
-                          json: Optional[Any] = None,
-                          **kwargs
-                          ) -> requests.Response:
+    def make_http_request(
+        self,
+        method: str,
+        url: str,
+        params: Optional[Any] = None,
+        data: Optional[Any] = None,
+        json: Optional[Any] = None,
+        **kwargs
+    ) -> requests.Response:
         """
         Make a HTTP Request
 
@@ -194,11 +199,6 @@ class LunchMoneyAPIClient:
                 response.raise_for_status()
         """
         response = self.lunch_money_session.request(
-            method=method,
-            url=url,
-            params=params,
-            data=data,
-            json=json,
-            **kwargs
+            method=method, url=url, params=params, data=data, json=json, **kwargs
         )
         return response

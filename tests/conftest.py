@@ -68,15 +68,11 @@ def vcr_config() -> Dict[str, list]:
     Dict[str, list]:
     """
     return {
-        "filter_headers": [
-            ("authorization", "XXXXXXXXXX")
-        ],
-        "filter_query_parameters": [
-            ("user", "XXXXXXXXXX"),
-            ("token", "XXXXXXXXXX")
-        ],
-        "before_record_response": scrub_string(getenv("SENSITIVE_REQUEST_STRINGS", "<LUNCH>"),
-                                               "XXXXXXXXXX")
+        "filter_headers": [("authorization", "XXXXXXXXXX")],
+        "filter_query_parameters": [("user", "XXXXXXXXXX"), ("token", "XXXXXXXXXX")],
+        "before_record_response": scrub_string(
+            getenv("SENSITIVE_REQUEST_STRINGS", "<LUNCH>"), "XXXXXXXXXX"
+        ),
     }
 
 
@@ -104,74 +100,76 @@ def test_transactions() -> List[TransactionObject]:
     """
     Load some example transactions
     """
-    transaction_dict_1 = {"amount": 1.0,
-                          "asset_id": 23043,
-                          "category_id": 229134,
-                          "currency": "usd",
-                          "date": "2021-09-19",
-                          "external_id": None,
-                          "fees": None,
-                          "group_id": None,
-                          "id": 55907882,
-                          "is_group": False,
-                          "notes": "Test Transaction 1",
-                          "original_name": "Test 1",
-                          "parent_id": None,
-                          "payee": "Test 1",
-                          "plaid_account_id": None,
-                          "price": None,
-                          "quantity": None,
-                          "status": "uncleared",
-                          "subtype": None,
-                          "tags": None,
-                          "type": None}
-    transaction_dict_2 = {"amount": 2.0,
-                          "asset_id": 23043,
-                          "category_id": 229146,
-                          "currency": "usd",
-                          "date": "2021-09-19",
-                          "external_id": None,
-                          "fees": None,
-                          "group_id": None,
-                          "id": 55907976,
-                          "is_group": False,
-                          "notes": "Test Transaction 2",
-                          "original_name": "Test 2",
-                          "parent_id": None,
-                          "payee": "Test 2",
-                          "plaid_account_id": None,
-                          "price": None,
-                          "quantity": None,
-                          "status": "uncleared",
-                          "subtype": None,
-                          "tags": None,
-                          "type": None}
-    transaction_dict_3 = {"amount": 3.0,
-                          "asset_id": 23043,
-                          "category_id": 229140,
-                          "currency": "usd",
-                          "date": "2021-09-19",
-                          "external_id": None,
-                          "fees": None,
-                          "group_id": None,
-                          "id": 55907977,
-                          "is_group": False,
-                          "notes": "Test Transaction 3",
-                          "original_name": "Test 3",
-                          "parent_id": None,
-                          "payee": "Test 3",
-                          "plaid_account_id": None,
-                          "price": None,
-                          "quantity": None,
-                          "status": "uncleared",
-                          "subtype": None,
-                          "tags": None,
-                          "type": None}
+    transaction_dict_1 = {
+        "amount": 1.0,
+        "asset_id": 23043,
+        "category_id": 229134,
+        "currency": "usd",
+        "date": "2021-09-19",
+        "external_id": None,
+        "fees": None,
+        "group_id": None,
+        "id": 55907882,
+        "is_group": False,
+        "notes": "Test Transaction 1",
+        "original_name": "Test 1",
+        "parent_id": None,
+        "payee": "Test 1",
+        "plaid_account_id": None,
+        "price": None,
+        "quantity": None,
+        "status": "uncleared",
+        "subtype": None,
+        "tags": None,
+        "type": None,
+    }
+    transaction_dict_2 = {
+        "amount": 2.0,
+        "asset_id": 23043,
+        "category_id": 229146,
+        "currency": "usd",
+        "date": "2021-09-19",
+        "external_id": None,
+        "fees": None,
+        "group_id": None,
+        "id": 55907976,
+        "is_group": False,
+        "notes": "Test Transaction 2",
+        "original_name": "Test 2",
+        "parent_id": None,
+        "payee": "Test 2",
+        "plaid_account_id": None,
+        "price": None,
+        "quantity": None,
+        "status": "uncleared",
+        "subtype": None,
+        "tags": None,
+        "type": None,
+    }
+    transaction_dict_3 = {
+        "amount": 3.0,
+        "asset_id": 23043,
+        "category_id": 229140,
+        "currency": "usd",
+        "date": "2021-09-19",
+        "external_id": None,
+        "fees": None,
+        "group_id": None,
+        "id": 55907977,
+        "is_group": False,
+        "notes": "Test Transaction 3",
+        "original_name": "Test 3",
+        "parent_id": None,
+        "payee": "Test 3",
+        "plaid_account_id": None,
+        "price": None,
+        "quantity": None,
+        "status": "uncleared",
+        "subtype": None,
+        "tags": None,
+        "type": None,
+    }
     transaction_1 = TransactionObject(**transaction_dict_1)
     transaction_2 = TransactionObject(**transaction_dict_2)
     transaction_3 = TransactionObject(**transaction_dict_3)
-    return [
-        transaction_1,
-        transaction_2,
-        transaction_3
-    ]
+    return [transaction_1, transaction_2, transaction_3]

@@ -26,50 +26,52 @@ class PlaidAccountObject(LunchableModel):
     https://lunchmoney.dev/#plaid-accounts-object
     """
 
-    _date_linked_description = "Date account was first linked in ISO 8601 extended format"
+    _date_linked_description = (
+        "Date account was first linked in ISO 8601 extended format"
+    )
     _name_description = """
     Name of the account. Can be overridden by the user. Field is originally set by Plaid")
     """
     _type_description = """
-    Primary type of account. Typically one of: [credit, depository, brokerage, cash, 
+    Primary type of account. Typically one of: [credit, depository, brokerage, cash,
     loan, investment]. This field is set by Plaid and cannot be altered.
     """
     _subtype_description = """
     Optional subtype name of account. This field is set by Plaid and cannot be altered
     """
     _mask_description = """
-    Mask (last 3 to 4 digits of account) of account. This field is set by 
+    Mask (last 3 to 4 digits of account) of account. This field is set by
     Plaid and cannot be altered
     """
     _institution_name_description = """
-    Name of institution associated with account. This field is set by 
+    Name of institution associated with account. This field is set by
     Plaid and cannot be altered
     """
     _status_description = """
-    Denotes the current status of the account within Lunch Money. Must be one of: 
-    active (Account is active and in good state), 
-    inactive (Account marked inactive from user. No transactions fetched or 
-    balance update for this account), 
-    relink (Account needs to be relinked with Plaid), 
-    syncing (Account is awaiting first import of transactions), 
-    error (Account is in error with Plaid), 
-    not found (Account is in error with Plaid), 
+    Denotes the current status of the account within Lunch Money. Must be one of:
+    active (Account is active and in good state),
+    inactive (Account marked inactive from user. No transactions fetched or
+    balance update for this account),
+    relink (Account needs to be relinked with Plaid),
+    syncing (Account is awaiting first import of transactions),
+    error (Account is in error with Plaid),
+    not found (Account is in error with Plaid),
     not supported (Account is in error with Plaid)
     """
     _last_import_description = """
-    Date of last imported transaction in ISO 8601 extended format (not necessarily 
+    Date of last imported transaction in ISO 8601 extended format (not necessarily
     date of last attempted import)
     """
     _balance_description = """
-    Current balance of the account in numeric format to 4 decimal places. This field is 
+    Current balance of the account in numeric format to 4 decimal places. This field is
     set by Plaid and cannot be altered
     """
     _currency_description = """
-    Currency of account balance in ISO 4217 format. This field is set by Plaid 
+    Currency of account balance in ISO 4217 format. This field is set by Plaid
     and cannot be altered
     """
     _balance_last_update_description = """
-    Date balance was last updated in ISO 8601 extended format. This field is set 
+    Date balance was last updated in ISO 8601 extended format. This field is set
     by Plaid and cannot be altered
     """
     _limit_description = """
@@ -84,10 +86,14 @@ class PlaidAccountObject(LunchableModel):
     mask: str = Field(description=_mask_description)
     institution_name: str = Field(description=_institution_name_description)
     status: str = Field(description=_status_description)
-    last_import: Optional[datetime.datetime] = Field(description=_last_import_description)
+    last_import: Optional[datetime.datetime] = Field(
+        description=_last_import_description
+    )
     balance: Optional[float] = Field(description=_balance_description)
     currency: str = Field(description=_currency_description)
-    balance_last_update: datetime.datetime = Field(description=_balance_last_update_description)
+    balance_last_update: datetime.datetime = Field(
+        description=_balance_last_update_description
+    )
     limit: Optional[int] = Field(description=_limit_description)
 
 
@@ -110,8 +116,9 @@ class PlaidAccountsClient(LunchMoneyAPIClient):
         -------
         List[PlaidAccountObject]
         """
-        response_data = self._make_request(method=self.Methods.GET,
-                                           url_path=APIConfig.LUNCHMONEY_PLAID_ACCOUNTS)
+        response_data = self._make_request(
+            method=self.Methods.GET, url_path=APIConfig.LUNCHMONEY_PLAID_ACCOUNTS
+        )
         accounts = response_data.get(APIConfig.LUNCHMONEY_PLAID_ACCOUNTS)
         account_objects = [PlaidAccountObject(**item) for item in accounts]
         return account_objects

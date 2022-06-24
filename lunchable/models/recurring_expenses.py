@@ -26,20 +26,22 @@ class RecurringExpensesObject(LunchableModel):
 
     _id_description = "Unique identifier for recurring expense"
     _start_date_description = """
-    Denotes when recurring expense starts occurring in ISO 8601 format. 
-    If null, then this recurring expense will show up for all time 
+    Denotes when recurring expense starts occurring in ISO 8601 format.
+    If null, then this recurring expense will show up for all time
     before end_date
     """
     _end_date_description = """
-    Denotes when recurring expense stops occurring in ISO 8601 format. 
-    If null, then this recurring expense has no set end date and will 
+    Denotes when recurring expense stops occurring in ISO 8601 format.
+    If null, then this recurring expense has no set end date and will
     show up for all months after start_date
     """
     _cadence_description = """
-    One of: [monthly, twice a month, once a week, every 3 months, every 4 months, 
+    One of: [monthly, twice a month, once a week, every 3 months, every 4 months,
     twice a year, yearly]
     """
-    _amount_description = "Amount of the recurring expense in numeric format to 4 decimal places"
+    _amount_description = (
+        "Amount of the recurring expense in numeric format to 4 decimal places"
+    )
     _currency_description = """
     Three-letter lowercase currency code for the recurring expense in ISO 4217 format
     """
@@ -50,8 +52,8 @@ class RecurringExpensesObject(LunchableModel):
     Expected billing date for this recurring expense for this month in ISO 8601 format
     """
     _type_description = """"
-    This can be one of two values: cleared (The recurring expense has been reviewed 
-    by the user), suggested (The recurring expense is suggested by the system; 
+    This can be one of two values: cleared (The recurring expense has been reviewed
+    by the user), suggested (The recurring expense is suggested by the system;
     the user has yet to review/clear it)
     """
     _original_name_description = """
@@ -59,10 +61,10 @@ class RecurringExpensesObject(LunchableModel):
     denoted by the transaction that triggered its creation
     """
     _source_description = """
-    This can be one of three values: manual (User created this recurring expense 
-    manually from the Recurring Expenses page), transaction (User created this by 
-    converting a transaction from the Transactions page), system (Recurring expense 
-    was created by the system on transaction import). Some older recurring expenses 
+    This can be one of three values: manual (User created this recurring expense
+    manually from the Recurring Expenses page), transaction (User created this by
+    converting a transaction from the Transactions page), system (Recurring expense
+    was created by the system on transaction import). Some older recurring expenses
     may not have a source.
     """
     _plaid_account_id_description = """
@@ -70,11 +72,11 @@ class RecurringExpensesObject(LunchableModel):
     recurring expense (see Plaid Accounts)"
     """
     _asset_id_description = """
-    If any, denotes the manually-managed account (i.e. asset) associated with the 
+    If any, denotes the manually-managed account (i.e. asset) associated with the
     creation of this recurring expense (see Assets)
     """
     _transaction_id_description = """
-    If any, denotes the unique identifier for the associated transaction matching 
+    If any, denotes the unique identifier for the associated transaction matching
     this recurring expense for the current time period
     """
     _category_id_description = """
@@ -113,8 +115,11 @@ class RecurringExpensesClient(LunchMoneyAPIClient):
     Lunch Money Recurring Expenses Interactions
     """
 
-    def get_recurring_expenses(self, start_date: Optional[datetime.date] = None,
-                               debit_as_negative: bool = False) -> List[RecurringExpensesObject]:
+    def get_recurring_expenses(
+        self,
+        start_date: Optional[datetime.date] = None,
+        debit_as_negative: bool = False,
+    ) -> List[RecurringExpensesObject]:
         """
         Get Recurring Expenses
 
@@ -146,13 +151,19 @@ class RecurringExpensesClient(LunchMoneyAPIClient):
         """
         if start_date is None:
             start_date = datetime.datetime.now().date().replace(day=1)
-        params = RecurringExpenseParamsGet(start_date=start_date,
-                                           debit_as_negative=debit_as_negative).dict()
-        response_data = self._make_request(method="GET",
-                                           url_path=[APIConfig.LUNCH_MONEY_RECURRING_EXPENSES],
-                                           params=params)
+        params = RecurringExpenseParamsGet(
+            start_date=start_date, debit_as_negative=debit_as_negative
+        ).dict()
+        response_data = self._make_request(
+            method="GET",
+            url_path=[APIConfig.LUNCH_MONEY_RECURRING_EXPENSES],
+            params=params,
+        )
         recurring_expenses = response_data.get(APIConfig.LUNCH_MONEY_RECURRING_EXPENSES)
-        recurring_expenses_objects = [RecurringExpensesObject(**item) for item in
-                                      recurring_expenses]
-        logger.debug("%s RecurringExpensesObjects retrieved", len(recurring_expenses_objects))
+        recurring_expenses_objects = [
+            RecurringExpensesObject(**item) for item in recurring_expenses
+        ]
+        logger.debug(
+            "%s RecurringExpensesObjects retrieved", len(recurring_expenses_objects)
+        )
         return recurring_expenses_objects

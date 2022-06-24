@@ -29,9 +29,9 @@ def test_create_category(lunch_money_obj: LunchMoney):
     Create A Single Category
     """
     name = "Test Category"
-    category = lunch_money_obj.insert_category(name=name,
-                                               description="Test Category Description",
-                                               exclude_from_budget=True)
+    category = lunch_money_obj.insert_category(
+        name=name, description="Test Category Description", exclude_from_budget=True
+    )
     logger.info("Category ID # %s was just created: %s", category, name)
     assert isinstance(category, int)
 
@@ -76,8 +76,7 @@ def test_update_category(lunch_money_obj: LunchMoney):
     """
     category_id = 343106
     updated = lunch_money_obj.update_category(
-        category_id=category_id,
-        description="Test Category Description Updated"
+        category_id=category_id, description="Test Category Description Updated"
     )
     assert isinstance(updated, bool)
 
@@ -89,9 +88,7 @@ def test_create_category_group(lunch_money_obj: LunchMoney):
     """
     name = "Test Category Group"
     category_id = lunch_money_obj.insert_category_group(
-        name=name,
-        description="Test Category Group!!",
-        exclude_from_budget=True
+        name=name, description="Test Category Group!!", exclude_from_budget=True
     )
     logger.info("Category Group ID # %s was just created: %s", category_id, name)
     assert isinstance(category_id, int)

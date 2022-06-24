@@ -25,18 +25,20 @@ def lunchmoney_asset() -> AssetsObject:
     """
     splitwise_asset = AssetsObject(
         id=21845,
-        type_name='cash',
-        subtype_name='digital wallet (paypal, venmo)',
-        name='Splitwise Balance',
-        display_name='Splitwise',
+        type_name="cash",
+        subtype_name="digital wallet (paypal, venmo)",
+        name="Splitwise Balance",
+        display_name="Splitwise",
         balance=-1.0,
-        balance_as_of=datetime.datetime(2021, 8, 28, 16, 6, 35,
-                                        tzinfo=datetime.timezone.utc),
+        balance_as_of=datetime.datetime(
+            2021, 8, 28, 16, 6, 35, tzinfo=datetime.timezone.utc
+        ),
         closed_on=None,
-        currency='usd',
-        institution_name='Splitwise',
-        created_at=datetime.datetime(2021, 8, 28, 16, 6, 2, 701000,
-                                     tzinfo=datetime.timezone.utc)
+        currency="usd",
+        institution_name="Splitwise",
+        created_at=datetime.datetime(
+            2021, 8, 28, 16, 6, 2, 701000, tzinfo=datetime.timezone.utc
+        ),
     )
     return splitwise_asset
 
@@ -58,8 +60,7 @@ def test_update_asset(lunch_money_obj: LunchMoney, lunchmoney_asset: AssetsObjec
     """
     Update an Asset
     """
-    response = lunch_money_obj.update_asset(asset_id=lunchmoney_asset.id,
-                                            balance=5.20)
+    response = lunch_money_obj.update_asset(asset_id=lunchmoney_asset.id, balance=5.20)
     assert isinstance(response, AssetsObject)
     logger.info(response)
 
@@ -76,7 +77,7 @@ def test_create_asset(lunch_money_obj: LunchMoney):
         display_name="Test Account #1",
         balance=5.20,
         currency="usd",
-        institution_name="Test Institution"
+        institution_name="Test Institution",
     )
     assert isinstance(response, AssetsObject)
     logger.info(response)
