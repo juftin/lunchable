@@ -399,6 +399,15 @@ class _TransactionUpdateParamsPut(LunchableModel):
     skip_balance_update: bool = True
 
 
+class _TransactionsUnsplitPost(LunchableModel):
+    """
+    https://lunchmoney.dev/#unsplit-transactions
+    """
+
+    parent_ids: List[int]
+    remove_parents: bool = False
+
+
 class TransactionsClient(LunchMoneyAPIClient):
     """
     Lunch Money Transactions Interactions
@@ -780,3 +789,38 @@ class TransactionsClient(LunchMoneyAPIClient):
                                                      APIConfig.LUNCHMONEY_TRANSACTION_GROUPS,
                                                      transaction_group_id])
         return response_data["transactions"]
+
+    def unsplit_transactions(self, parent_ids: List[int],
+                             remove_parents: bool = False) -> List[int]:
+        """
+        Unsplit Transactions
+
+        Use this endpoint to unsplit one or more transactions.
+
+        Returns an array of IDs of deleted transactions
+
+        https://lunchmoney.dev/#unsplit-transactions
+
+        Parameters
+        ----------
+        parent_ids: List[int]
+            Array of transaction IDs to unsplit. If one transaction is unsplittable,
+            no transaction will be unsplit.
+        remove_parents: bool
+            If true, deletes the original parent transaction as well. Note,
+            this is unreversable!
+
+        Returns
+        -------
+        List[int]
+        """
+        response_data = self._make_request(
+            method=self.Methods.POST,
+            url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS,
+                      "unsplit"],
+            payload=_TransactionsUnsplitPost(
+                parent_ids=parent_ids,
+                remove_parents=remove_parents
+            ).dict(exclude_none=True)
+        )
+        return response_data
