@@ -7,10 +7,7 @@ import logging
 from os import getenv
 
 import click
-import rich.traceback
 from packaging.version import Version
-
-rich.traceback.install(show_locals=True)
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(

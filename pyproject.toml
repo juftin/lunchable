@@ -54,7 +54,7 @@ dev = [
     "mypy",
     "tox"
 ]
-splitwise = [
+splitlunch = [
     "splitwise",
     "python-dateutil"
 ]
