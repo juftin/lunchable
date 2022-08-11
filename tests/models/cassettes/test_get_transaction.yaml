@@ -1,48 +1,46 @@
 interactions:
-- request:
-    body: null
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.26.0
-      authorization:
-      - XXXXXXXXXX
-    method: GET
-    uri: https://dev.lunchmoney.app/v1/transactions/53725270
-  response:
-    body:
-      string: '{"id":53725270,"date":"2021-09-06","payee":"Vail","amount":"103.5000","currency":"usd","notes":"Updated
-        on 2021-09-16 14:11:38.834960","category_id":229144,"recurring_id":null,"asset_id":null,"plaid_account_id":41575,"status":"cleared","is_group":false,"group_id":null,"parent_id":null,"has_children":null,"tags":null,"external_id":null,"original_name":"IMPRINT
-        EVENTS GROUP","type":null,"subtype":null,"fees":null,"price":null,"quantity":null}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '444'
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Mon, 20 Sep 2021 23:46:57 GMT
-      Etag:
-      - W/"1bc-BzdcdXmkBjHfbNJlsxlDESr83aE"
-      Server:
-      - Cowboy
-      Vary:
-      - Origin, Accept-Encoding
-      Via:
-      - 1.1 vegur
-      X-Powered-By:
-      - Express
-    status:
-      code: 200
-      message: OK
+-   request:
+        body:
+        headers:
+            Accept:
+            -   '*/*'
+            Accept-Encoding:
+            -   gzip, deflate
+            Connection:
+            -   keep-alive
+            Content-Type:
+            -   application/json
+            User-Agent:
+            -   python-requests/2.26.0
+            authorization:
+            -   XXXXXXXXXX
+        method: GET
+        uri: https://dev.lunchmoney.app/v1/transactions/53725270
+    response:
+        body:
+            string: '{"id":53725270,"date":"2021-09-06","payee":"Vail","amount":"103.5000","currency":"usd","notes":"Updated on 2021-09-16 14:11:38.834960","category_id":229144,"recurring_id":null,"asset_id":null,"plaid_account_id":41575,"status":"cleared","is_group":false,"group_id":null,"parent_id":null,"has_children":null,"tags":null,"external_id":null,"original_name":"IMPRINT EVENTS GROUP","type":null,"subtype":null,"fees":null,"price":null,"quantity":null}'
+        headers:
+            Access-Control-Allow-Credentials:
+            -   'true'
+            Connection:
+            -   keep-alive
+            Content-Length:
+            -   '444'
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Mon, 20 Sep 2021 23:46:57 GMT
+            Etag:
+            -   W/"1bc-BzdcdXmkBjHfbNJlsxlDESr83aE"
+            Server:
+            -   Cowboy
+            Vary:
+            -   Origin, Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Powered-By:
+            -   Express
+        status:
+            code: 200
+            message: OK
 version: 1

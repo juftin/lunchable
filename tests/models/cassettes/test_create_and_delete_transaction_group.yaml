@@ -1,95 +1,94 @@
 interactions:
-- request:
-    body: '{"date": "2021-09-20", "payee": "Test", "notes": "Test Transaction Group",
-      "transactions": [55907976, 55907977]}'
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '112'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.26.0
-      authorization:
-      - XXXXXXXXXX
-    method: POST
-    uri: https://dev.lunchmoney.app/v1/transactions/group
-  response:
-    body:
-      string: '56034791'
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '8'
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Mon, 20 Sep 2021 23:46:58 GMT
-      Etag:
-      - W/"8-G+S+rrOqUpCQgQ8Hw7AMbFQQrsM"
-      Server:
-      - Cowboy
-      Vary:
-      - Origin, Accept-Encoding
-      Via:
-      - 1.1 vegur
-      X-Powered-By:
-      - Express
-    status:
-      code: 200
-      message: OK
-- request:
-    body: null
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '0'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.26.0
-      authorization:
-      - XXXXXXXXXX
-    method: DELETE
-    uri: https://dev.lunchmoney.app/v1/transactions/group/56034791
-  response:
-    body:
-      string: '{"transactions":[55907977,55907976]}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '36'
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Mon, 20 Sep 2021 23:47:00 GMT
-      Etag:
-      - W/"24-lVChRyRiVqGERw6b0cY0xfzBH0U"
-      Server:
-      - Cowboy
-      Vary:
-      - Origin, Accept-Encoding
-      Via:
-      - 1.1 vegur
-      X-Powered-By:
-      - Express
-    status:
-      code: 200
-      message: OK
+-   request:
+        body: '{"date": "2021-09-20", "payee": "Test", "notes": "Test Transaction Group", "transactions": [55907976, 55907977]}'
+        headers:
+            Accept:
+            -   '*/*'
+            Accept-Encoding:
+            -   gzip, deflate
+            Connection:
+            -   keep-alive
+            Content-Length:
+            -   '112'
+            Content-Type:
+            -   application/json
+            User-Agent:
+            -   python-requests/2.26.0
+            authorization:
+            -   XXXXXXXXXX
+        method: POST
+        uri: https://dev.lunchmoney.app/v1/transactions/group
+    response:
+        body:
+            string: '56034791'
+        headers:
+            Access-Control-Allow-Credentials:
+            -   'true'
+            Connection:
+            -   keep-alive
+            Content-Length:
+            -   '8'
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Mon, 20 Sep 2021 23:46:58 GMT
+            Etag:
+            -   W/"8-G+S+rrOqUpCQgQ8Hw7AMbFQQrsM"
+            Server:
+            -   Cowboy
+            Vary:
+            -   Origin, Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Powered-By:
+            -   Express
+        status:
+            code: 200
+            message: OK
+-   request:
+        body:
+        headers:
+            Accept:
+            -   '*/*'
+            Accept-Encoding:
+            -   gzip, deflate
+            Connection:
+            -   keep-alive
+            Content-Length:
+            -   '0'
+            Content-Type:
+            -   application/json
+            User-Agent:
+            -   python-requests/2.26.0
+            authorization:
+            -   XXXXXXXXXX
+        method: DELETE
+        uri: https://dev.lunchmoney.app/v1/transactions/group/56034791
+    response:
+        body:
+            string: '{"transactions":[55907977,55907976]}'
+        headers:
+            Access-Control-Allow-Credentials:
+            -   'true'
+            Connection:
+            -   keep-alive
+            Content-Length:
+            -   '36'
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Mon, 20 Sep 2021 23:47:00 GMT
+            Etag:
+            -   W/"24-lVChRyRiVqGERw6b0cY0xfzBH0U"
+            Server:
+            -   Cowboy
+            Vary:
+            -   Origin, Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Powered-By:
+            -   Express
+        status:
+            code: 200
+            message: OK
 version: 1

@@ -1,19 +1,19 @@
 """
-Sphinx Documentation Genrator
+Sphinx Documentation Generator
 """
 
+import sys
 from datetime import datetime
 from pathlib import Path
-import sys
 
 _project_path = Path(__file__).resolve().parent.parent.parent
 _project_dir = str(_project_path)
 sys.path.insert(0, _project_dir)
 
-from lunchable import __lunchable__, __version__
+from lunchable._version import __application__, __author__, __version__  # noqa
 
-_author = "Justin Flannery"
-project = __lunchable__
+_author = __author__
+project = __application__
 copyright = f"{datetime.now().year}, {_author}"
 author = _author
 release = version = __version__
@@ -37,6 +37,7 @@ extensions = [
     "sphinx_click",
 ]
 
+myst_heading_anchors = 5
 myst_enable_extensions = [
     "amsmath",
     "colon_fence",
@@ -62,7 +63,9 @@ html_theme_options = {
     "display_version": True,
 }
 html_show_sphinx = False
-html_show_sourcelink = True
+html_show_sourcelink = False
+# html_logo = "_static/lunchable.png"
+html_favicon = "https://juftin.com/favicon.ico"
 
 source_suffix = {
     ".rst": "restructuredtext",
@@ -75,9 +78,15 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
 }
 
+source_code_dir = _project_path.joinpath("lunchable")
+apidoc_module_dir = str(source_code_dir)
+apidoc_output_dir = str(source_code_dir.parent.joinpath("docs", "source", "api"))
+apidoc_excluded_paths = ["tests"]
+apidoc_separate_modules = True
+
+autodoc_member_order = "bysource"
 autodoc_pydantic_model_show_json = False
 autodoc_pydantic_settings_show_json = False
-autodoc_member_order = "bysource"
 
 always_document_default_args = True
 docstring_default_arg_substitution = "**[Default]:**"

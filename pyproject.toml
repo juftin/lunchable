@@ -1,9 +1,6 @@
 [build-system]
-requires = [
-    "setuptools>=42",
-    "wheel"
-]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "lunchable"
@@ -57,7 +54,7 @@ dev = [
     "mypy",
     "tox"
 ]
-splitwise = [
+splitlunch = [
     "splitwise",
     "python-dateutil"
 ]

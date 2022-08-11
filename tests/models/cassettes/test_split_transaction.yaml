@@ -1,97 +1,92 @@
 interactions:
-- request:
-    body: null
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.26.0
-      authorization:
-      - XXXXXXXXXX
-    method: GET
-    uri: https://dev.lunchmoney.app/v1/transactions/57271032
-  response:
-    body:
-      string: '{"id":57271032,"date":"2021-09-27","payee":"Test Splittable Transaction","amount":"10.0000","currency":"usd","notes":"This
-        is a test","category_id":229146,"recurring_id":null,"asset_id":23043,"plaid_account_id":null,"status":"cleared","is_group":false,"group_id":null,"parent_id":null,"has_children":false,"tags":null,"external_id":null,"original_name":"Test
-        Splittable Transaction","type":null,"subtype":null,"fees":null,"price":null,"quantity":null}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '451'
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Tue, 28 Sep 2021 03:23:03 GMT
-      Etag:
-      - W/"1c3-iSTT4dwCMxHtUOjAhIIDNAMKBZI"
-      Server:
-      - Cowboy
-      Vary:
-      - Origin, Accept-Encoding
-      Via:
-      - 1.1 vegur
-      X-Powered-By:
-      - Express
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{"split": [{"date": "2021-09-27", "category_id": 229146, "notes": "This
-      is a test", "amount": 5.0}, {"date": "2021-09-27", "category_id": 229146, "notes":
-      "This is a test", "amount": 5.0}], "debit_as_negative": false, "skip_balance_update":
-      true}'
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '246'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.26.0
-      authorization:
-      - XXXXXXXXXX
-    method: PUT
-    uri: https://dev.lunchmoney.app/v1/transactions/57271032
-  response:
-    body:
-      string: '{"updated":true,"split":[57276978,57276979]}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '44'
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Tue, 28 Sep 2021 03:23:03 GMT
-      Etag:
-      - W/"2c-2pTPdQflAMlCxT9G1FYl58J/Y4M"
-      Server:
-      - Cowboy
-      Vary:
-      - Origin, Accept-Encoding
-      Via:
-      - 1.1 vegur
-      X-Powered-By:
-      - Express
-    status:
-      code: 200
-      message: OK
+-   request:
+        body:
+        headers:
+            Accept:
+            -   '*/*'
+            Accept-Encoding:
+            -   gzip, deflate
+            Connection:
+            -   keep-alive
+            Content-Type:
+            -   application/json
+            User-Agent:
+            -   python-requests/2.26.0
+            authorization:
+            -   XXXXXXXXXX
+        method: GET
+        uri: https://dev.lunchmoney.app/v1/transactions/57271032
+    response:
+        body:
+            string: '{"id":57271032,"date":"2021-09-27","payee":"Test Splittable Transaction","amount":"10.0000","currency":"usd","notes":"This is a test","category_id":229146,"recurring_id":null,"asset_id":23043,"plaid_account_id":null,"status":"cleared","is_group":false,"group_id":null,"parent_id":null,"has_children":false,"tags":null,"external_id":null,"original_name":"Test Splittable Transaction","type":null,"subtype":null,"fees":null,"price":null,"quantity":null}'
+        headers:
+            Access-Control-Allow-Credentials:
+            -   'true'
+            Connection:
+            -   keep-alive
+            Content-Length:
+            -   '451'
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Tue, 28 Sep 2021 03:23:03 GMT
+            Etag:
+            -   W/"1c3-iSTT4dwCMxHtUOjAhIIDNAMKBZI"
+            Server:
+            -   Cowboy
+            Vary:
+            -   Origin, Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Powered-By:
+            -   Express
+        status:
+            code: 200
+            message: OK
+-   request:
+        body: '{"split": [{"date": "2021-09-27", "category_id": 229146, "notes": "This is a test", "amount": 5.0}, {"date": "2021-09-27", "category_id": 229146, "notes": "This is a test", "amount": 5.0}], "debit_as_negative": false, "skip_balance_update": true}'
+        headers:
+            Accept:
+            -   '*/*'
+            Accept-Encoding:
+            -   gzip, deflate
+            Connection:
+            -   keep-alive
+            Content-Length:
+            -   '246'
+            Content-Type:
+            -   application/json
+            User-Agent:
+            -   python-requests/2.26.0
+            authorization:
+            -   XXXXXXXXXX
+        method: PUT
+        uri: https://dev.lunchmoney.app/v1/transactions/57271032
+    response:
+        body:
+            string: '{"updated":true,"split":[57276978,57276979]}'
+        headers:
+            Access-Control-Allow-Credentials:
+            -   'true'
+            Connection:
+            -   keep-alive
+            Content-Length:
+            -   '44'
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Tue, 28 Sep 2021 03:23:03 GMT
+            Etag:
+            -   W/"2c-2pTPdQflAMlCxT9G1FYl58J/Y4M"
+            Server:
+            -   Cowboy
+            Vary:
+            -   Origin, Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Powered-By:
+            -   Express
+        status:
+            code: 200
+            message: OK
 version: 1

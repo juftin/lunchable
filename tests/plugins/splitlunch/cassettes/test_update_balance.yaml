@@ -1,325 +1,321 @@
 interactions:
-- request:
-    body: null
-    headers:
-      authorization:
-      - XXXXXXXXXX
-    method: GET
-    uri: https://secure.splitwise.com/api/v3.0/get_current_user
-  response:
-    body:
-      string: '{"user":{"id":1616678,"first_name":"Justin","last_name":"Flannery","picture":{"small":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-50px.png","medium":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-100px.png","large":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-200px.png"},"custom_picture":false,"email":"juftin@gmail.com","registration_status":"confirmed","force_refresh_at":null,"locale":"en","country_code":"VN","date_format":"MM/DD/YYYY","default_currency":"USD","default_group_id":-1,"notifications_read":"2021-09-11T17:37:25Z","notifications_count":34,"notifications":{"added_as_friend":true,"added_to_group":true,"expense_added":false,"expense_updated":false,"bills":true,"payments":true,"monthly_summary":true,"announcements":true}}}'
-    headers:
-      Cache-Control:
-      - no-store
-      Connection:
-      - keep-alive
-      Content-Disposition:
-      - inline; filename="response.json"
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Tue, 16 Nov 2021 02:19:01 GMT
-      Etag:
-      - W/"e0c027c87558e7c4714a014dbf70ad90"
-      Expires:
-      - Fri, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Referrer-Policy:
-      - origin
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=63072000
-      Transfer-Encoding:
-      - chunked
-      Vary:
-      - Accept-Encoding
-      Via:
-      - 1.1 vegur
-      X-Content-Type-Options:
-      - nosniff
-      X-Download-Options:
-      - noopen
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Permitted-Cross-Domain-Policies:
-      - none
-      X-Request-Id:
-      - 3572656c-23d4-4248-8f00-fd8cd85bd9c1
-      X-Runtime:
-      - '0.039383'
-      X-Xss-Protection:
-      - 1; mode=block
-    status:
-      code: 200
-      message: OK
-- request:
-    body: null
-    headers:
-      authorization:
-      - XXXXXXXXXX
-    method: GET
-    uri: https://secure.splitwise.com/api/v3.0/get_friends
-  response:
-    body:
-      string: "{\"friends\":[{\"id\":10910565,\"first_name\":\"XXXXXXXXXX\",\"last_name\":\"\u2764\uFE0F
-        XXXXXXXXXX\",\"email\":\"XXXXXXXXXX@gmail.com\",\"registration_status\":\"unsubscribed\",\"picture\":{\"small\":\"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-ruby33-50px.png\",\"medium\":\"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-ruby33-100px.png\",\"large\":\"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-ruby33-200px.png\"},\"balance\":[{\"currency_code\":\"USD\",\"amount\":\"176.67\"}],\"groups\":[{\"group_id\":0,\"balance\":[{\"currency_code\":\"USD\",\"amount\":\"176.67\"}]}],\"updated_at\":\"2021-11-15T17:40:10Z\"}]}"
-    headers:
-      Cache-Control:
-      - no-store
-      Connection:
-      - keep-alive
-      Content-Disposition:
-      - inline; filename="response.json"
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Tue, 16 Nov 2021 02:19:01 GMT
-      Etag:
-      - W/"b21fa77f5f18aa1852ea588667ab46c9"
-      Expires:
-      - Fri, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Referrer-Policy:
-      - origin
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=63072000
-      Transfer-Encoding:
-      - chunked
-      Vary:
-      - Accept-Encoding
-      Via:
-      - 1.1 vegur
-      X-Content-Type-Options:
-      - nosniff
-      X-Download-Options:
-      - noopen
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Permitted-Cross-Domain-Policies:
-      - none
-      X-Request-Id:
-      - 23d89aee-7935-44eb-85bc-09218f2863fe
-      X-Runtime:
-      - '0.037655'
-      X-Xss-Protection:
-      - 1; mode=block
-    status:
-      code: 200
-      message: OK
-- request:
-    body: null
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.26.0
-      authorization:
-      - XXXXXXXXXX
-    method: GET
-    uri: https://dev.lunchmoney.app/v1/tags
-  response:
-    body:
-      string: '[{"id":22215,"name":"Wedding","description":null},{"id":21559,"name":"test","description":null},{"id":24194,"name":"SplitLunchDirectImport","description":null},{"id":21639,"name":"SplitLunch","description":"Tag
-        to Create Splitwise Transactions from Lunch Money"},{"id":23474,"name":"Splitwise","description":null},{"id":22178,"name":"SplitLunchImport","description":null}]'
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '372'
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Tue, 16 Nov 2021 02:19:02 GMT
-      Etag:
-      - W/"174-NUxNLDDMbGDO7Da7jlNAmQyhgKo"
-      Server:
-      - Cowboy
-      Vary:
-      - Origin, Accept-Encoding
-      Via:
-      - 1.1 vegur
-      X-Powered-By:
-      - Express
-    status:
-      code: 200
-      message: OK
-- request:
-    body: null
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.26.0
-      authorization:
-      - XXXXXXXXXX
-    method: GET
-    uri: https://dev.lunchmoney.app/v1/assets
-  response:
-    body:
-      string: '{"assets":[{"id":21845,"type_name":"cash","subtype_name":"digital wallet
-        (paypal, venmo)","name":"Splitwise Balance","display_name":"Splitwise","balance":"176.6700","balance_as_of":"2021-11-16T02:17:52.209Z","currency":"usd","closed_on":null,"institution_name":"Splitwise","created_at":"2021-08-28T16:06:02.701Z"},{"id":23043,"type_name":"cash","subtype_name":"digital
-        wallet (paypal, venmo)","name":"Test Account","display_name":"Test Account","balance":"181.7100","balance_as_of":"2021-11-02T22:27:05.311Z","currency":"usd","closed_on":null,"institution_name":"Test","created_at":"2021-09-20T05:32:29.060Z"}]}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '611'
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Tue, 16 Nov 2021 02:19:02 GMT
-      Etag:
-      - W/"263-O7f1qpDRxlhCsYNKHX/bMe83e1M"
-      Server:
-      - Cowboy
-      Vary:
-      - Origin, Accept-Encoding
-      Via:
-      - 1.1 vegur
-      X-Powered-By:
-      - Express
-    status:
-      code: 200
-      message: OK
-- request:
-    body: null
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.26.0
-      authorization:
-      - XXXXXXXXXX
-    method: GET
-    uri: https://dev.lunchmoney.app/v1/categories
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA82YXU/bMBSG/0qU6zazHdtpfAcM2C6QppFp0qapMo3bRqRx5SRsCPHf534oLpCs
-        NoWlEjfFb1U/Pu85PscP/oRXYiZVJkqf/Xzws9RnCMUwRAO/4AvhM/8kn8i5zAfeKVelP/BTUU5U
-        tqwyWfisqPN84GflOCsmciWf8rwUA1/8meR1KsZTJRfjmzqdiap9rZKV/m+zVi9TvaF0zLXcRwDB
-        IYiGCCUAMRAxCAOCRz/0JiZKWOn0zmZK1svmB9afxivM1dYfBzvIYYN8yotb70KII8Al1A53o3PA
-        pdjgZnneJyomDMAAArQH9YnOFjXCOIoa1DNezr0P3kly9Zx3s/Q9q+ap4r/5+kDekx7qP5JAyjBm
-        EAQjAtrp23UuvjaBPpPTqRDe9Vwuj8DaNLSz9kZnS0xRTGFD/FHcVC8i/a2oFJ/citQ7UyLNKu+M
-        q9TbSt815mCIaAIwwzGDOKCo4wTadS4xJ80JnBeVUBXPioUoXhzF/w961GHzdp0tMsEoig3ynUbt
-        w+DxMAQJAIzEOluDOO6q3a06a4NDEpuUPt/sMH1h8ktRCMVz7e31BX/vTaXyTtd43vpLpdY5FLlK
-        1V0HsllqtztKIGEIsjAORnFXiWvVOdgdg+Y8LqRcpXKe3Ql137vdKSBWdt/qXDKcNsiXvBx4ieJF
-        uZQ609eofYOTkWVxHzmXtpEBz6a9pPkzhM40b9W5oJqSdqnkRKy79L5xKbCr4FudSxaba/uTRhl4
-        J3Ulj4A3tuSNXXlNeD9vYPaxttRgi/JsTUqxHelG50JqcvYLv181ItuCNRXqoAC/4lJ6DkPs5smt
-        zgXajNBfhCplsb6M1f4ov7ujoV3B2upckMMd5CMozRTtGymf6GxJMYojQ/pVZIubWpXi4Ab7NW4e
-        DVG8ap1gpLvggEZdbm7VuTwXkB3gotIz9JVuNmZ8dpifD0lgPGIgDML9zwa7Ohc34x3ksuK1rlhH
-        YerI0tSRa79h3km+ZhpyzlVWzHoHJl1zQ7vOJcLG1Ncinw6zxVLJu8MT+U3CHNp10FudC7UZHVYv
-        QctjiDENLU0dupqamkp9vZC3fV6/GKxqr55g9hWsXZ31EwgkO/mb6ILVjP4v3gaerOpp2ay9ReH+
-        1/sIAgkKGaaMkABFXZW7Vefi8J2DUPxO5P37m1h2IsSVlZi3D/N43XdTTS1nJmo1M/16/Aun4gU/
-        qBoAAA==
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Connection:
-      - keep-alive
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Tue, 16 Nov 2021 02:19:02 GMT
-      Etag:
-      - W/"1aa8-J6Eh1EZIPff3WsMWdh+K0M/hEm0"
-      Server:
-      - Cowboy
-      Transfer-Encoding:
-      - chunked
-      Vary:
-      - Origin, Accept-Encoding
-      Via:
-      - 1.1 vegur
-      X-Powered-By:
-      - Express
-    status:
-      code: 200
-      message: OK
-- request:
-    body: null
-    headers:
-      authorization:
-      - XXXXXXXXXX
-    method: GET
-    uri: https://secure.splitwise.com/api/v3.0/get_groups
-  response:
-    body:
-      string: '{"groups":[{"id":0,"name":"Non-group expenses","created_at":"2015-01-31T09:04:03Z","updated_at":"2021-11-16T02:19:02Z","members":[{"id":1616678,"first_name":"Justin","last_name":"Flannery","picture":{"small":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-50px.png","medium":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-100px.png","large":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-200px.png"},"custom_picture":false,"email":"juftin@gmail.com","registration_status":"confirmed","balance":[{"amount":"176.67","currency_code":"USD"}]}],"simplify_by_default":false,"original_debts":[{"from":10910565,"to":1616678,"amount":"176.67","currency_code":"USD"}],"simplified_debts":[{"from":10910565,"to":1616678,"amount":"176.67","currency_code":"USD"}],"avatar":{"small":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-50px.png","medium":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-100px.png","large":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-200px.png","xlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-500px.png","xxlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-1000px.png","original":null},"tall_avatar":{"xlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_tall_avatars/avatar-nongroup-288px.png","large":"https://s3.amazonaws.com/splitwise/uploads/group/default_tall_avatars/avatar-nongroup-192px.png"},"custom_avatar":false,"cover_photo":{"xxlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_cover_photos/coverphoto-nongroup-1000px.png","xlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_cover_photos/coverphoto-nongroup-500px.png"}}]}'
-    headers:
-      Cache-Control:
-      - no-store
-      Connection:
-      - keep-alive
-      Content-Disposition:
-      - inline; filename="response.json"
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Tue, 16 Nov 2021 02:19:02 GMT
-      Etag:
-      - W/"5582a2ffe738236da0345ad293182fb0"
-      Expires:
-      - Fri, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Referrer-Policy:
-      - origin
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=63072000
-      Transfer-Encoding:
-      - chunked
-      Vary:
-      - Accept-Encoding
-      Via:
-      - 1.1 vegur
-      X-Content-Type-Options:
-      - nosniff
-      X-Download-Options:
-      - noopen
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Permitted-Cross-Domain-Policies:
-      - none
-      X-Request-Id:
-      - 318c5cee-3ed4-4ae0-ac70-3eeb2e1c661d
-      X-Runtime:
-      - '0.025765'
-      X-Xss-Protection:
-      - 1; mode=block
-    status:
-      code: 200
-      message: OK
+-   request:
+        body:
+        headers:
+            authorization:
+            -   XXXXXXXXXX
+        method: GET
+        uri: https://secure.splitwise.com/api/v3.0/get_current_user
+    response:
+        body:
+            string: '{"user":{"id":1616678,"first_name":"Justin","last_name":"Flannery","picture":{"small":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-50px.png","medium":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-100px.png","large":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-200px.png"},"custom_picture":false,"email":"juftin@gmail.com","registration_status":"confirmed","force_refresh_at":null,"locale":"en","country_code":"VN","date_format":"MM/DD/YYYY","default_currency":"USD","default_group_id":-1,"notifications_read":"2021-09-11T17:37:25Z","notifications_count":34,"notifications":{"added_as_friend":true,"added_to_group":true,"expense_added":false,"expense_updated":false,"bills":true,"payments":true,"monthly_summary":true,"announcements":true}}}'
+        headers:
+            Cache-Control:
+            -   no-store
+            Connection:
+            -   keep-alive
+            Content-Disposition:
+            -   inline; filename="response.json"
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Tue, 16 Nov 2021 02:19:01 GMT
+            Etag:
+            -   W/"e0c027c87558e7c4714a014dbf70ad90"
+            Expires:
+            -   Fri, 01 Jan 1990 00:00:00 GMT
+            Pragma:
+            -   no-cache
+            Referrer-Policy:
+            -   origin
+            Server:
+            -   nginx
+            Strict-Transport-Security:
+            -   max-age=63072000
+            Transfer-Encoding:
+            -   chunked
+            Vary:
+            -   Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Content-Type-Options:
+            -   nosniff
+            X-Download-Options:
+            -   noopen
+            X-Frame-Options:
+            -   SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+            -   none
+            X-Request-Id:
+            -   3572656c-23d4-4248-8f00-fd8cd85bd9c1
+            X-Runtime:
+            -   '0.039383'
+            X-Xss-Protection:
+            -   1; mode=block
+        status:
+            code: 200
+            message: OK
+-   request:
+        body:
+        headers:
+            authorization:
+            -   XXXXXXXXXX
+        method: GET
+        uri: https://secure.splitwise.com/api/v3.0/get_friends
+    response:
+        body:
+            string: '{"friends":[{"id":10910565,"first_name":"XXXXXXXXXX","last_name":"❤️ XXXXXXXXXX","email":"XXXXXXXXXX@gmail.com","registration_status":"unsubscribed","picture":{"small":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-ruby33-50px.png","medium":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-ruby33-100px.png","large":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-ruby33-200px.png"},"balance":[{"currency_code":"USD","amount":"176.67"}],"groups":[{"group_id":0,"balance":[{"currency_code":"USD","amount":"176.67"}]}],"updated_at":"2021-11-15T17:40:10Z"}]}'
+        headers:
+            Cache-Control:
+            -   no-store
+            Connection:
+            -   keep-alive
+            Content-Disposition:
+            -   inline; filename="response.json"
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Tue, 16 Nov 2021 02:19:01 GMT
+            Etag:
+            -   W/"b21fa77f5f18aa1852ea588667ab46c9"
+            Expires:
+            -   Fri, 01 Jan 1990 00:00:00 GMT
+            Pragma:
+            -   no-cache
+            Referrer-Policy:
+            -   origin
+            Server:
+            -   nginx
+            Strict-Transport-Security:
+            -   max-age=63072000
+            Transfer-Encoding:
+            -   chunked
+            Vary:
+            -   Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Content-Type-Options:
+            -   nosniff
+            X-Download-Options:
+            -   noopen
+            X-Frame-Options:
+            -   SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+            -   none
+            X-Request-Id:
+            -   23d89aee-7935-44eb-85bc-09218f2863fe
+            X-Runtime:
+            -   '0.037655'
+            X-Xss-Protection:
+            -   1; mode=block
+        status:
+            code: 200
+            message: OK
+-   request:
+        body:
+        headers:
+            Accept:
+            -   '*/*'
+            Accept-Encoding:
+            -   gzip, deflate
+            Connection:
+            -   keep-alive
+            Content-Type:
+            -   application/json
+            User-Agent:
+            -   python-requests/2.26.0
+            authorization:
+            -   XXXXXXXXXX
+        method: GET
+        uri: https://dev.lunchmoney.app/v1/tags
+    response:
+        body:
+            string: '[{"id":22215,"name":"Wedding","description":null},{"id":21559,"name":"test","description":null},{"id":24194,"name":"SplitLunchDirectImport","description":null},{"id":21639,"name":"SplitLunch","description":"Tag to Create Splitwise Transactions from Lunch Money"},{"id":23474,"name":"Splitwise","description":null},{"id":22178,"name":"SplitLunchImport","description":null}]'
+        headers:
+            Access-Control-Allow-Credentials:
+            -   'true'
+            Connection:
+            -   keep-alive
+            Content-Length:
+            -   '372'
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Tue, 16 Nov 2021 02:19:02 GMT
+            Etag:
+            -   W/"174-NUxNLDDMbGDO7Da7jlNAmQyhgKo"
+            Server:
+            -   Cowboy
+            Vary:
+            -   Origin, Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Powered-By:
+            -   Express
+        status:
+            code: 200
+            message: OK
+-   request:
+        body:
+        headers:
+            Accept:
+            -   '*/*'
+            Accept-Encoding:
+            -   gzip, deflate
+            Connection:
+            -   keep-alive
+            Content-Type:
+            -   application/json
+            User-Agent:
+            -   python-requests/2.26.0
+            authorization:
+            -   XXXXXXXXXX
+        method: GET
+        uri: https://dev.lunchmoney.app/v1/assets
+    response:
+        body:
+            string: '{"assets":[{"id":21845,"type_name":"cash","subtype_name":"digital wallet (paypal, venmo)","name":"Splitwise Balance","display_name":"Splitwise","balance":"176.6700","balance_as_of":"2021-11-16T02:17:52.209Z","currency":"usd","closed_on":null,"institution_name":"Splitwise","created_at":"2021-08-28T16:06:02.701Z"},{"id":23043,"type_name":"cash","subtype_name":"digital wallet (paypal, venmo)","name":"Test Account","display_name":"Test Account","balance":"181.7100","balance_as_of":"2021-11-02T22:27:05.311Z","currency":"usd","closed_on":null,"institution_name":"Test","created_at":"2021-09-20T05:32:29.060Z"}]}'
+        headers:
+            Access-Control-Allow-Credentials:
+            -   'true'
+            Connection:
+            -   keep-alive
+            Content-Length:
+            -   '611'
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Tue, 16 Nov 2021 02:19:02 GMT
+            Etag:
+            -   W/"263-O7f1qpDRxlhCsYNKHX/bMe83e1M"
+            Server:
+            -   Cowboy
+            Vary:
+            -   Origin, Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Powered-By:
+            -   Express
+        status:
+            code: 200
+            message: OK
+-   request:
+        body:
+        headers:
+            Accept:
+            -   '*/*'
+            Accept-Encoding:
+            -   gzip, deflate
+            Connection:
+            -   keep-alive
+            Content-Type:
+            -   application/json
+            User-Agent:
+            -   python-requests/2.26.0
+            authorization:
+            -   XXXXXXXXXX
+        method: GET
+        uri: https://dev.lunchmoney.app/v1/categories
+    response:
+        body:
+            string: !!binary |
+                H4sIAAAAAAAAA82YXU/bMBSG/0qU6zazHdtpfAcM2C6QppFp0qapMo3bRqRx5SRsCPHf534oLpCs
+                NoWlEjfFb1U/Pu85PscP/oRXYiZVJkqf/Xzws9RnCMUwRAO/4AvhM/8kn8i5zAfeKVelP/BTUU5U
+                tqwyWfisqPN84GflOCsmciWf8rwUA1/8meR1KsZTJRfjmzqdiap9rZKV/m+zVi9TvaF0zLXcRwDB
+                IYiGCCUAMRAxCAOCRz/0JiZKWOn0zmZK1svmB9afxivM1dYfBzvIYYN8yotb70KII8Al1A53o3PA
+                pdjgZnneJyomDMAAArQH9YnOFjXCOIoa1DNezr0P3kly9Zx3s/Q9q+ap4r/5+kDekx7qP5JAyjBm
+                EAQjAtrp23UuvjaBPpPTqRDe9Vwuj8DaNLSz9kZnS0xRTGFD/FHcVC8i/a2oFJ/citQ7UyLNKu+M
+                q9TbSt815mCIaAIwwzGDOKCo4wTadS4xJ80JnBeVUBXPioUoXhzF/w961GHzdp0tMsEoig3ynUbt
+                w+DxMAQJAIzEOluDOO6q3a06a4NDEpuUPt/sMH1h8ktRCMVz7e31BX/vTaXyTtd43vpLpdY5FLlK
+                1V0HsllqtztKIGEIsjAORnFXiWvVOdgdg+Y8LqRcpXKe3Ql137vdKSBWdt/qXDKcNsiXvBx4ieJF
+                uZQ609eofYOTkWVxHzmXtpEBz6a9pPkzhM40b9W5oJqSdqnkRKy79L5xKbCr4FudSxaba/uTRhl4
+                J3Ulj4A3tuSNXXlNeD9vYPaxttRgi/JsTUqxHelG50JqcvYLv181ItuCNRXqoAC/4lJ6DkPs5smt
+                zgXajNBfhCplsb6M1f4ov7ujoV3B2upckMMd5CMozRTtGymf6GxJMYojQ/pVZIubWpXi4Ab7NW4e
+                DVG8ap1gpLvggEZdbm7VuTwXkB3gotIz9JVuNmZ8dpifD0lgPGIgDML9zwa7Ohc34x3ksuK1rlhH
+                YerI0tSRa79h3km+ZhpyzlVWzHoHJl1zQ7vOJcLG1Ncinw6zxVLJu8MT+U3CHNp10FudC7UZHVYv
+                QctjiDENLU0dupqamkp9vZC3fV6/GKxqr55g9hWsXZ31EwgkO/mb6ILVjP4v3gaerOpp2ay9ReH+
+                1/sIAgkKGaaMkABFXZW7Vefi8J2DUPxO5P37m1h2IsSVlZi3D/N43XdTTS1nJmo1M/16/Aun4gU/
+                qBoAAA==
+        headers:
+            Access-Control-Allow-Credentials:
+            -   'true'
+            Connection:
+            -   keep-alive
+            Content-Encoding:
+            -   gzip
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Tue, 16 Nov 2021 02:19:02 GMT
+            Etag:
+            -   W/"1aa8-J6Eh1EZIPff3WsMWdh+K0M/hEm0"
+            Server:
+            -   Cowboy
+            Transfer-Encoding:
+            -   chunked
+            Vary:
+            -   Origin, Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Powered-By:
+            -   Express
+        status:
+            code: 200
+            message: OK
+-   request:
+        body:
+        headers:
+            authorization:
+            -   XXXXXXXXXX
+        method: GET
+        uri: https://secure.splitwise.com/api/v3.0/get_groups
+    response:
+        body:
+            string: '{"groups":[{"id":0,"name":"Non-group expenses","created_at":"2015-01-31T09:04:03Z","updated_at":"2021-11-16T02:19:02Z","members":[{"id":1616678,"first_name":"Justin","last_name":"Flannery","picture":{"small":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-50px.png","medium":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-100px.png","large":"https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange20-200px.png"},"custom_picture":false,"email":"juftin@gmail.com","registration_status":"confirmed","balance":[{"amount":"176.67","currency_code":"USD"}]}],"simplify_by_default":false,"original_debts":[{"from":10910565,"to":1616678,"amount":"176.67","currency_code":"USD"}],"simplified_debts":[{"from":10910565,"to":1616678,"amount":"176.67","currency_code":"USD"}],"avatar":{"small":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-50px.png","medium":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-100px.png","large":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-200px.png","xlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-500px.png","xxlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/v2021/avatar-nongroup-1000px.png","original":null},"tall_avatar":{"xlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_tall_avatars/avatar-nongroup-288px.png","large":"https://s3.amazonaws.com/splitwise/uploads/group/default_tall_avatars/avatar-nongroup-192px.png"},"custom_avatar":false,"cover_photo":{"xxlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_cover_photos/coverphoto-nongroup-1000px.png","xlarge":"https://s3.amazonaws.com/splitwise/uploads/group/default_cover_photos/coverphoto-nongroup-500px.png"}}]}'
+        headers:
+            Cache-Control:
+            -   no-store
+            Connection:
+            -   keep-alive
+            Content-Disposition:
+            -   inline; filename="response.json"
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Tue, 16 Nov 2021 02:19:02 GMT
+            Etag:
+            -   W/"5582a2ffe738236da0345ad293182fb0"
+            Expires:
+            -   Fri, 01 Jan 1990 00:00:00 GMT
+            Pragma:
+            -   no-cache
+            Referrer-Policy:
+            -   origin
+            Server:
+            -   nginx
+            Strict-Transport-Security:
+            -   max-age=63072000
+            Transfer-Encoding:
+            -   chunked
+            Vary:
+            -   Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Content-Type-Options:
+            -   nosniff
+            X-Download-Options:
+            -   noopen
+            X-Frame-Options:
+            -   SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+            -   none
+            X-Request-Id:
+            -   318c5cee-3ed4-4ae0-ac70-3eeb2e1c661d
+            X-Runtime:
+            -   '0.025765'
+            X-Xss-Protection:
+            -   1; mode=block
+        status:
+            code: 200
+            message: OK
 version: 1

@@ -1,49 +1,48 @@
 interactions:
-- request:
-    body: '{"name": "Test Category Group", "description": "Test Category Group!!",
-      "is_income": false, "exclude_from_budget": true, "exclude_from_totals": false}'
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '150'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.27.1
-      authorization:
-      - XXXXXXXXXX
-    method: POST
-    uri: https://dev.lunchmoney.app/v1/categories/group
-  response:
-    body:
-      string: '{"category_id":343121}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '22'
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Tue, 07 Jun 2022 17:28:24 GMT
-      Etag:
-      - W/"16-s02Md8HtqROpuQH1ig1K4UMVhAc"
-      Server:
-      - Cowboy
-      Vary:
-      - Origin, Accept-Encoding
-      Via:
-      - 1.1 vegur
-      X-Powered-By:
-      - Express
-    status:
-      code: 200
-      message: OK
+-   request:
+        body: '{"name": "Test Category Group", "description": "Test Category Group!!", "is_income": false, "exclude_from_budget": true, "exclude_from_totals": false}'
+        headers:
+            Accept:
+            -   '*/*'
+            Accept-Encoding:
+            -   gzip, deflate
+            Connection:
+            -   keep-alive
+            Content-Length:
+            -   '150'
+            Content-Type:
+            -   application/json
+            User-Agent:
+            -   python-requests/2.27.1
+            authorization:
+            -   XXXXXXXXXX
+        method: POST
+        uri: https://dev.lunchmoney.app/v1/categories/group
+    response:
+        body:
+            string: '{"category_id":343121}'
+        headers:
+            Access-Control-Allow-Credentials:
+            -   'true'
+            Connection:
+            -   keep-alive
+            Content-Length:
+            -   '22'
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Tue, 07 Jun 2022 17:28:24 GMT
+            Etag:
+            -   W/"16-s02Md8HtqROpuQH1ig1K4UMVhAc"
+            Server:
+            -   Cowboy
+            Vary:
+            -   Origin, Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Powered-By:
+            -   Express
+        status:
+            code: 200
+            message: OK
 version: 1
