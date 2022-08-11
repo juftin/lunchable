@@ -2,7 +2,7 @@
 Lunch Money Python SDK
 """
 
-from ._version import __lunchable__, __version__
+from ._version import __application__, __author__, __email__, __version__
 from .exceptions import LunchMoneyError
 from .models._lunchmoney import LunchMoney
 from .models.transactions import (
@@ -17,6 +17,8 @@ __all__ = [
     "TransactionInsertObject",
     "TransactionUpdateObject",
     "TransactionSplitObject",
+    "__application__",
     "__version__",
-    "__lunchable__",
+    "__author__",
+    "__email__",
 ]

@@ -1,6 +1,8 @@
 """
-Lunchable Version File
+lunchable Version file
 """
 
-__lunchable__ = "lunchable"
+__author__ = "Justin Flannery"
+__email__ = "juftin@juftin.com"
+__application__ = "lunchable"
 __version__ = "0.1.14"

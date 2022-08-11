@@ -10,7 +10,7 @@ from random import shuffle
 from textwrap import dedent
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-from lunchable import LunchMoney, __lunchable__
+from lunchable import LunchMoney, __application__
 from lunchable.exceptions import LunchMoneyImportError
 from lunchable.models import (
     AssetsObject,
@@ -34,7 +34,7 @@ except ImportError as ie:
     logger.exception(ie)
     _pip_extra_error = (
         "Looks like you don't have the Splitwise plugin installed: "
-        f"`pip install {__lunchable__}[splitlunch]`"
+        f"`pip install {__application__}[splitlunch]`"
     )
     raise LunchMoneyImportError(_pip_extra_error)
 

@@ -1,46 +1,46 @@
 interactions:
-- request:
-    body: null
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.26.0
-      authorization:
-      - XXXXXXXXXX
-    method: GET
-    uri: https://dev.lunchmoney.app/v1/crypto
-  response:
-    body:
-      string: '{"crypto":[{"id":2939,"source":"manual","created_at":"2021-09-16T14:10:07.976Z","name":"","display_name":"Coinbase","balance":"0.000000000000000000","balance_as_of":"2021-09-20T23:45:01.438Z","currency":"BTC","status":"active","institution_name":"Coinbase"}]}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '259'
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Mon, 20 Sep 2021 23:46:55 GMT
-      Etag:
-      - W/"103-qXMYPLAohEtQAnfxStAHSQkDhnk"
-      Server:
-      - Cowboy
-      Vary:
-      - Origin, Accept-Encoding
-      Via:
-      - 1.1 vegur
-      X-Powered-By:
-      - Express
-    status:
-      code: 200
-      message: OK
+-   request:
+        body:
+        headers:
+            Accept:
+            -   '*/*'
+            Accept-Encoding:
+            -   gzip, deflate
+            Connection:
+            -   keep-alive
+            Content-Type:
+            -   application/json
+            User-Agent:
+            -   python-requests/2.26.0
+            authorization:
+            -   XXXXXXXXXX
+        method: GET
+        uri: https://dev.lunchmoney.app/v1/crypto
+    response:
+        body:
+            string: '{"crypto":[{"id":2939,"source":"manual","created_at":"2021-09-16T14:10:07.976Z","name":"","display_name":"Coinbase","balance":"0.000000000000000000","balance_as_of":"2021-09-20T23:45:01.438Z","currency":"BTC","status":"active","institution_name":"Coinbase"}]}'
+        headers:
+            Access-Control-Allow-Credentials:
+            -   'true'
+            Connection:
+            -   keep-alive
+            Content-Length:
+            -   '259'
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Mon, 20 Sep 2021 23:46:55 GMT
+            Etag:
+            -   W/"103-qXMYPLAohEtQAnfxStAHSQkDhnk"
+            Server:
+            -   Cowboy
+            Vary:
+            -   Origin, Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Powered-By:
+            -   Express
+        status:
+            code: 200
+            message: OK
 version: 1

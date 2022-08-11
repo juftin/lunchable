@@ -70,7 +70,8 @@ instance/
 
 # Sphinx documentation
 docs/_build/
-docs/source/api/
+docs/source/api
+docs/source/README.md
 
 # PyBuilder
 target/
@@ -110,7 +111,6 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-env.bash
 
 # Spyder project settings
 .spyderproject
@@ -128,8 +128,9 @@ docs/source/_autosummary
 .dmypy.json
 dmypy.json
 
-# Pyre type checker
-.pyre/
+# Mac Files
+.DS_Store
 
 # IDE Files
 .idea/
+/env.bash

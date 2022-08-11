@@ -1,63 +1,63 @@
 interactions:
-- request:
-    body: null
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.26.0
-      authorization:
-      - XXXXXXXXXX
-    method: GET
-    uri: https://dev.lunchmoney.app/v1/plaid_accounts
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA+WXbW/aMBDHv0qUV+tEI9ux8/SOAm3RGHSQ8qLThNzEai2CQYmDhKp+9zkdg7BC
-        6vJQaVteRZe7s/LT/853T+YsoTwe0Sia5kJmZvD9yeSxGWBIfFwzYyrZKOFizJTNRADBc+CfI2DW
-        TEEnTNku0umYpfSBGedG63OY0pipjzHPVOLFaOmkPvTrzZZxyQUVEaeJ0RYxn/M4V6+lDBBipKLl
-        YlZEcTFnmZwwIZUty++X5vvf/so6odlYmZZxXGSSy1zyqdh5cpFKUpmrXzVpJPm8SJPQTI74ZDZN
-        pRmIPElq5j1NVECRAlhAPcorytOUiWihbHkWmyuf0Ut4PitglShBN4ROAJwAuhb2nbviHD7hyxOe
-        ayvQLtEB3aAzLhWunihQDxWVPN2Cuuy2dlqii1IW802av0xGRNN4zdOHEGznWUr/Nsk1Cj9EMLBx
-        QHzLt9GdWeYLseNYZD/EpbwYVSH2dBC3Bjc3r4m+KchMTqOxoUJEmaDnbSd4yWOWcLko41Pi/DAp
-        Or5fwQnocLqe5hkzBnTOxUNWBSxms2nG5TRdbAJbRS5peQDsqN96kiyMCyrG2mrzzpEXQhLYXgCx
-        5dhkU23YBcQC6FCKgJAKir4OxXa32R62m7f1zh6a29IE3yc5PcFBF9qeRQ7GVS06pIVLSJYqFEbj
-        kUVjpZ89hBetQ1fKQ/BYynv5ZeAGNgkQtjz4R59D2HYs5+D6rVaeq4Oy0x72ulc947pV74TXe6gP
-        AzguMXRd8jf2OqjD6ivPIpaoA5lqesftebvu2L2UBwvlESU+aCHgbSrPBgjZFvROKz2tcfFbzqNx
-        xpM5S6sg6g4qtuPiIwwqR9PexjyCdsPytO7ZfmsQ9tuNsNU0BmGv8cW47bbDwf89oThad+vgkSq5
-        HPeqQADvaHNbC3YXMb0xhXjEQu5pC9Z+B8kjNj4f2s4HDXsEW+C0EH2t3W3wUn836kS1uoXNXuM1
-        x9crcinoUxFzprkfbyv2ky7Ito2Bp6r2pEuyp3VbF5yMT53hVe/M6A9uK/X67/dK19Fi1urUFbaa
-        0e42rIOHQewg99hbCIKAOBaGJ4D14/knMreSVgMTAAA=
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Connection:
-      - keep-alive
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Mon, 20 Sep 2021 23:46:55 GMT
-      Etag:
-      - W/"1303-QpMdfClFpRHc91/edMUZPthZKs0"
-      Server:
-      - Cowboy
-      Transfer-Encoding:
-      - chunked
-      Vary:
-      - Origin, Accept-Encoding
-      Via:
-      - 1.1 vegur
-      X-Powered-By:
-      - Express
-    status:
-      code: 200
-      message: OK
+-   request:
+        body:
+        headers:
+            Accept:
+            -   '*/*'
+            Accept-Encoding:
+            -   gzip, deflate
+            Connection:
+            -   keep-alive
+            Content-Type:
+            -   application/json
+            User-Agent:
+            -   python-requests/2.26.0
+            authorization:
+            -   XXXXXXXXXX
+        method: GET
+        uri: https://dev.lunchmoney.app/v1/plaid_accounts
+    response:
+        body:
+            string: !!binary |
+                H4sIAAAAAAAAA+WXbW/aMBDHv0qUV+tEI9ux8/SOAm3RGHSQ8qLThNzEai2CQYmDhKp+9zkdg7BC
+                6vJQaVteRZe7s/LT/853T+YsoTwe0Sia5kJmZvD9yeSxGWBIfFwzYyrZKOFizJTNRADBc+CfI2DW
+                TEEnTNku0umYpfSBGedG63OY0pipjzHPVOLFaOmkPvTrzZZxyQUVEaeJ0RYxn/M4V6+lDBBipKLl
+                YlZEcTFnmZwwIZUty++X5vvf/so6odlYmZZxXGSSy1zyqdh5cpFKUpmrXzVpJPm8SJPQTI74ZDZN
+                pRmIPElq5j1NVECRAlhAPcorytOUiWihbHkWmyuf0Ut4PitglShBN4ROAJwAuhb2nbviHD7hyxOe
+                ayvQLtEB3aAzLhWunihQDxWVPN2Cuuy2dlqii1IW802av0xGRNN4zdOHEGznWUr/Nsk1Cj9EMLBx
+                QHzLt9GdWeYLseNYZD/EpbwYVSH2dBC3Bjc3r4m+KchMTqOxoUJEmaDnbSd4yWOWcLko41Pi/DAp
+                Or5fwQnocLqe5hkzBnTOxUNWBSxms2nG5TRdbAJbRS5peQDsqN96kiyMCyrG2mrzzpEXQhLYXgCx
+                5dhkU23YBcQC6FCKgJAKir4OxXa32R62m7f1zh6a29IE3yc5PcFBF9qeRQ7GVS06pIVLSJYqFEbj
+                kUVjpZ89hBetQ1fKQ/BYynv5ZeAGNgkQtjz4R59D2HYs5+D6rVaeq4Oy0x72ulc947pV74TXe6gP
+                AzguMXRd8jf2OqjD6ivPIpaoA5lqesftebvu2L2UBwvlESU+aCHgbSrPBgjZFvROKz2tcfFbzqNx
+                xpM5S6sg6g4qtuPiIwwqR9PexjyCdsPytO7ZfmsQ9tuNsNU0BmGv8cW47bbDwf89oThad+vgkSq5
+                HPeqQADvaHNbC3YXMb0xhXjEQu5pC9Z+B8kjNj4f2s4HDXsEW+C0EH2t3W3wUn836kS1uoXNXuM1
+                x9crcinoUxFzprkfbyv2ky7Ito2Bp6r2pEuyp3VbF5yMT53hVe/M6A9uK/X67/dK19Fi1urUFbaa
+                0e42rIOHQewg99hbCIKAOBaGJ4D14/knMreSVgMTAAA=
+        headers:
+            Access-Control-Allow-Credentials:
+            -   'true'
+            Connection:
+            -   keep-alive
+            Content-Encoding:
+            -   gzip
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Mon, 20 Sep 2021 23:46:55 GMT
+            Etag:
+            -   W/"1303-QpMdfClFpRHc91/edMUZPthZKs0"
+            Server:
+            -   Cowboy
+            Transfer-Encoding:
+            -   chunked
+            Vary:
+            -   Origin, Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Powered-By:
+            -   Express
+        status:
+            code: 200
+            message: OK
 version: 1

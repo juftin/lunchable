@@ -61,10 +61,12 @@ and *plugins* to other external services
 
    usage.rst
    lunchable.rst
-   cli.rst
    plugins.rst
-   contributing.md
-   API Documentation <api/modules.rst>
+   Command Line Interface ⌨️ <cli.rst>
+   API Documentation 🤖 <api/modules.rst>
+   Contributing 👥 <contributing.md>
+   GitHub 🛠 <https://github.com/juftin/lunchable>
+   Changelog 📝 <https://github.com/juftin/lunchable/releases>
 
 Indices and tables
 ==================
