@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "lunchable"
 description = "A simple Python SDK around the Lunch Money Developer API"
-version = "0.1.16"
+version = "0.1.17"
 authors = ["Justin Flannery <juftin@juftin.com>"]
 license = "MIT"
 readme = "README.md"
