@@ -82,7 +82,8 @@ The Release workflow performs the following automated steps:
 
 - Publish a GitHub Release.
 - Apply a version tag to the repository.
-
+- Build and upload the package to PyPI.
+- Build and upload the package to Docker Hub.
 
 Release notes are populated with the titles and authors of merged pull requests.
 You can group the pull requests into separate sections
