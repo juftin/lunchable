@@ -1,0 +1,46 @@
+interactions:
+-   request:
+        body:
+        headers:
+            Accept:
+            -   '*/*'
+            Accept-Encoding:
+            -   gzip, deflate
+            Connection:
+            -   keep-alive
+            Content-Type:
+            -   application/json
+            User-Agent:
+            -   python-requests/2.28.1
+            authorization:
+            -   XXXXXXXXXX
+        method: GET
+        uri: https://dev.lunchmoney.app/v1/me
+    response:
+        body:
+            string: '{"user_name":"Justin Flannery","user_email":"juftin@gmail.com","user_id":12126,"account_id":11560,"budget_name":"Justin Flannery&#x27;s Budget"}'
+        headers:
+            Access-Control-Allow-Credentials:
+            -   'true'
+            Connection:
+            -   keep-alive
+            Content-Length:
+            -   '144'
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Mon, 26 Sep 2022 04:56:49 GMT
+            Etag:
+            -   W/"90-DcC1y4SaqJzaZnVbHJ8smKpxQNY"
+            Server:
+            -   Cowboy
+            Vary:
+            -   Origin, Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Powered-By:
+            -   Express
+        status:
+            code: 200
+            message: OK
+version: 1
