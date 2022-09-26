@@ -31,6 +31,7 @@ class APIConfig:
     LUNCHMONEY_TAGS: str = "tags"
     LUNCHMONEY_CRYPTO: str = "crypto"
     LUNCHMONEY_CRYPTO_MANUAL: str = "manual"
+    LUNCHMONEY_ME: str = "me"
 
     LUNCHMONEY_CONTENT_TYPE_HEADERS: Dict[str, str] = {
         "Content-Type": "application/json"

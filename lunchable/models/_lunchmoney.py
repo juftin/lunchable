@@ -20,6 +20,7 @@ from .plaid_accounts import PlaidAccountsClient
 from .recurring_expenses import RecurringExpensesClient
 from .tags import TagsClient
 from .transactions import TransactionsClient
+from .user import UserClient
 
 
 class LunchMoney(
@@ -31,6 +32,7 @@ class LunchMoney(
     RecurringExpensesClient,
     TagsClient,
     TransactionsClient,
+    UserClient,
 ):
     """
     Lunch Money Python Client.
