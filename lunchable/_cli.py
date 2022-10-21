@@ -7,8 +7,9 @@ from json import JSONDecodeError
 from typing import Optional
 
 import click
+import requests
 from pydantic.json import pydantic_encoder
-from rich import print_json, traceback
+from rich import print, print_json, traceback
 
 import lunchable
 from lunchable import LunchMoney
@@ -361,6 +362,12 @@ def http(context: LunchMoneyContext, url: str, request: str, data: str):
         url=url_request,
         data=data,
     )
+    try:
+        resp.raise_for_status()
+    except requests.HTTPError:
+        logger.error(resp)
+        print(resp.text)
+        exit(1)
     try:
         response = resp.json()
     except JSONDecodeError:
