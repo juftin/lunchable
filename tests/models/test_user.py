@@ -19,3 +19,4 @@ def test_get_user(lunch_money_obj: LunchMoney):
     assert isinstance(me.user_id, int)
     assert isinstance(me.user_email, str)
     assert isinstance(me.budget_name, str)
+    assert me.api_key_label == "Lunchable"

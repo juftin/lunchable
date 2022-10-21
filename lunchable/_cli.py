@@ -2,26 +2,59 @@
 Lunchmoney CLI
 """
 
-import json
 import logging
+from json import JSONDecodeError
+from typing import Optional
 
 import click
 from pydantic.json import pydantic_encoder
+from rich import print_json, traceback
 
 import lunchable
 from lunchable import LunchMoney
+from lunchable.models._base import LunchableModel
 from lunchable.plugins.pushlunch import PushLunch
 
 logger = logging.getLogger(__name__)
 
 
+class LunchMoneyContext(LunchableModel):
+    """
+    Context Object to PAss Around CLI
+    """
+
+    debug: bool
+    access_token: Optional[str]
+
+
+debug_option = click.option(
+    "--debug/--no-debug", default=False, help="Enable extra debugging output"
+)
+access_token_option = click.option(
+    "--access-token",
+    default=None,
+    help="LunchMoney Developer API Access Token",
+    envvar="LUNCHMONEY_ACCESS_TOKEN",
+)
+
+
 @click.group()
-@click.version_option(lunchable.__version__)
-def cli():
+@click.version_option(
+    version=lunchable.__version__, prog_name=lunchable.__application__
+)
+@access_token_option
+@debug_option
+@click.pass_context
+def cli(ctx: click.core.Context, debug: bool, access_token: str) -> None:
     """
     Interactions with Lunch Money via lunchable 🍱
     """
-    pass
+    ctx.obj = LunchMoneyContext(debug=debug, access_token=access_token)
+    traceback.install(show_locals=debug)
+    if debug is True:
+        logging.basicConfig(
+            level=logging.DEBUG, format="%(asctime)s [%(levelname)8s]: %(message)s"
+        )
 
 
 @cli.group()
@@ -93,13 +126,20 @@ def plugins():
     help="Pass in true if you’d like expenses to be returned as negative amounts and "
     "credits as positive amounts. Defaults to false.",
 )
-def lunchmoney_transactions(**kwargs):
+@click.option(
+    "--pending",
+    is_flag=True,
+    default=None,
+    help="Pass in true if you’d like to include imported transactions with a pending status.",
+)
+@click.pass_obj
+def lunchmoney_transactions(context: LunchMoneyContext, **kwargs):
     """
     Retrieve Lunch Money Transactions
     """
-    lunch = LunchMoney()
+    lunch = LunchMoney(access_token=context.access_token)
     transactions = lunch.get_transactions(**kwargs)
-    click.echo(json.dumps(transactions, default=pydantic_encoder, indent=2))
+    print_json(data=transactions, default=pydantic_encoder)
 
 
 @plugins.group()
@@ -148,7 +188,7 @@ def splitlunch_expenses(**kwargs):
     if set(kwargs.values()) == {None}:
         kwargs["limit"] = 5
     expenses = splitlunch.get_expenses(**kwargs)
-    click.echo(json.dumps(expenses, default=pydantic_encoder, indent=2))
+    print_json(expenses, default=pydantic_encoder)
 
 
 tag_transactions = click.option(
@@ -180,7 +220,7 @@ def make_splitlunch(**kwargs):
 
     splitlunch = SplitLunch()
     results = splitlunch.make_splitlunch(**kwargs)
-    click.echo(json.dumps(results, default=pydantic_encoder))
+    print_json(data=results, default=pydantic_encoder)
 
 
 @splitlunch.command("splitlunch-import")
@@ -204,7 +244,7 @@ def make_splitlunch_import(**kwargs):
         financial_partner_email=financial_partner_email,
     )
     results = splitlunch.make_splitlunch_import(**kwargs)
-    click.echo(json.dumps(results, default=pydantic_encoder, indent=2))
+    print_json(data=results, default=pydantic_encoder)
 
 
 @splitlunch.command("splitlunch-direct-import")
@@ -228,7 +268,7 @@ def make_splitlunch_direct_import(**kwargs):
         financial_partner_email=financial_partner_email,
     )
     results = splitlunch.make_splitlunch_direct_import(**kwargs)
-    click.echo(json.dumps(results, default=pydantic_encoder))
+    print_json(data=results, default=pydantic_encoder)
 
 
 @splitlunch.command("update-balance")
@@ -240,7 +280,7 @@ def update_splitwise_balance(**kwargs):
 
     splitlunch = SplitLunch()
     updated_asset = splitlunch.update_splitwise_balance()
-    click.echo(json.dumps(updated_asset, default=pydantic_encoder, indent=2))
+    print_json(data=updated_asset, default=pydantic_encoder)
 
 
 @splitlunch.command("refresh")
@@ -256,7 +296,7 @@ def refresh_splitwise_transactions(**kwargs):
 
     splitlunch = SplitLunch()
     response = splitlunch.refresh_splitwise_transactions()
-    click.echo(json.dumps(response, default=pydantic_encoder, indent=2))
+    print_json(data=response, default=pydantic_encoder)
 
 
 @plugins.group()
@@ -297,3 +337,32 @@ def notify(continuous: bool, interval: int, user_key: str):
             level=logging.INFO, format="%(asctime)s [%(levelname)8s]: %(message)s"
         )
     push.notify_uncleared_transactions(continuous=continuous, interval=interval)
+
+
+@cli.command()
+@click.argument("URL")
+@click.option("-X", "--request", default="GET", help="Specify request command to use")
+@click.option("-d", "--data", default=None, help="HTTP POST data")
+@click.pass_obj
+def http(context: LunchMoneyContext, url: str, request: str, data: str):
+    """
+    Interact with the LunchMoney API
+
+    lunchable http /v1/transactions
+    """
+    lunch = LunchMoney(access_token=context.access_token)
+    if not url.startswith("http"):
+        url = url.lstrip("/")
+        url_request = f"https://dev.lunchmoney.app/{url}"
+    else:
+        url_request = url
+    resp = lunch.make_http_request(
+        method=request,
+        url=url_request,
+        data=data,
+    )
+    try:
+        response = resp.json()
+    except JSONDecodeError:
+        response = resp.text
+    print_json(data=response, default=pydantic_encoder)

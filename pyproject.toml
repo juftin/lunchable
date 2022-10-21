@@ -29,6 +29,7 @@ python = ">=3.7,<4.0"
 pydantic = ">=1.2.0,<2.0.0"
 requests = "^2"
 click = ">=8.0.1"
+rich = ">=10.0.0"
 pytest = { version = ">=5.2", optional = true }
 flake8 = { version = ">=3.0.0", optional = true }
 coverage = { version = ">=6.2", extras = ["toml"], optional = true }
