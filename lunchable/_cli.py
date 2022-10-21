@@ -189,7 +189,7 @@ def splitlunch_expenses(**kwargs):
     if set(kwargs.values()) == {None}:
         kwargs["limit"] = 5
     expenses = splitlunch.get_expenses(**kwargs)
-    print_json(expenses, default=pydantic_encoder)
+    print_json(data=expenses, default=pydantic_encoder)
 
 
 tag_transactions = click.option(

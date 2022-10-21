@@ -41,6 +41,7 @@ transaction_as_dict: Dict[str, Any] = first_transaction.dict()
 ```shell
 export LUNCHMONEY_ACCESS_TOKEN="xxxxxxxxxxx"
 lunchable transactions get --limit 5
+lunchable http -X GET https://dev.lunchmoney.app/v1/assets
 ```
 
 ### Check out the [**Docs**](https://juftin.com/lunchable/)

@@ -60,6 +60,10 @@ jobs:
                 echo "It doesn't look like it originated from a PR - or the PR was missing labels"
                 echo "Proceeding with default version bump: PATCH"
                 poetry version patch
+        -   name: Update Requirements Files
+            run: |
+                poetry export -f requirements.txt --ansi --without-hashes --extras all --dev --output requirements/dev.txt
+                poetry export -f requirements.txt --ansi --without-hashes --extras all --output requirements/prod.txt
         -   name: Update Version Variable
             run: |
                 PROJECT_VERSION=$(poetry version --short)
