@@ -18,20 +18,20 @@ interactions:
         uri: https://dev.lunchmoney.app/v1/me
     response:
         body:
-            string: '{"user_name":"Justin Flannery","user_email":"juftin@gmail.com","user_id":12126,"account_id":11560,"budget_name":"Justin Flannery&#x27;s Budget"}'
+            string: '{"user_name":"Justin Flannery","user_email":"juftin@gmail.com","user_id":12126,"account_id":18286,"budget_name":"🤖 Juftin - Sandbox","api_key_label":"Lunchable"}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
             Connection:
             -   keep-alive
             Content-Length:
-            -   '144'
+            -   '164'
             Content-Type:
             -   application/json; charset=utf-8
             Date:
-            -   Mon, 26 Sep 2022 04:56:49 GMT
+            -   Thu, 13 Oct 2022 05:05:37 GMT
             Etag:
-            -   W/"90-DcC1y4SaqJzaZnVbHJ8smKpxQNY"
+            -   W/"a4-M9AgMOS8/DALNuYYUdWJdJyoQWA"
             Server:
             -   Cowboy
             Vary:

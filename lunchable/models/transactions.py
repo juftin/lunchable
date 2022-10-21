@@ -190,6 +190,18 @@ class TransactionSplitObject(TransactionBaseObject):
     amount: float = Field(description=_amount_description)
 
 
+class FullStatusEnum(str, Enum):
+    """
+    Status Options
+    """
+
+    cleared = "cleared"
+    uncleared = "uncleared"
+    recurring = "recurring"
+    recurring_suggested = "recurring_suggested"
+    pending = "pending"
+
+
 class TransactionObject(TransactionBaseObject):
     """
     Universal Lunch Money Transaction Object
@@ -223,10 +235,11 @@ class TransactionObject(TransactionBaseObject):
     plaid_account_id and asset_id cannot both exist for a transaction
     """
     _status_description = """
-    One of the following: cleared: User has reviewed the transaction uncleared:
-    User has not yet reviewed the transaction recurring: Transaction is linked
-    to a recurring expense recurring_suggested: Transaction is listed as a
-    suggested transaction for an existing recurring expense. User intervention
+    One of the following: cleared: User has reviewed the transaction | uncleared:
+    User has not yet reviewed the transaction | recurring: Transaction is linked
+    to a recurring expense | recurring_suggested: Transaction is listed as a
+    suggested transaction for an existing recurring expense | pending: Imported
+    transaction is marked as pending. This should be a temporary state. User intervention
     is required to change this to recurring.
     """
     _parent_id_description = """
@@ -357,12 +370,13 @@ class _TransactionParamsGet(LunchableModel):
     asset_id: Optional[int]
     group_id: Optional[int]
     is_group: Optional[bool]
-    status: Optional[str]
+    status: Optional[FullStatusEnum]
     offset: Optional[int]
     limit: Optional[int]
     start_date: Optional[datetime.date]
     end_date: Optional[datetime.date]
     debit_as_negative: Optional[bool]
+    pending: Optional[bool]
 
 
 class _TransactionInsertParamsPost(LunchableModel):
@@ -431,6 +445,7 @@ class TransactionsClient(LunchMoneyAPIClient):
         offset: Optional[int] = None,
         limit: Optional[int] = None,
         debit_as_negative: Optional[bool] = None,
+        pending: Optional[bool] = None,
         params: Optional[dict] = None,
     ) -> List[TransactionObject]:
         """
@@ -477,6 +492,8 @@ class TransactionsClient(LunchMoneyAPIClient):
         debit_as_negative: Optional[bool]
             Pass in true if you’d like expenses to be returned as negative amounts and
             credits as positive amounts. Defaults to false.
+        pending: Optional[bool]
+            Pass in true if you’d like to include imported transactions with a pending status.
         params: Optional[dict]
             Additional Query String Params
 
@@ -509,6 +526,7 @@ class TransactionsClient(LunchMoneyAPIClient):
             start_date=start_date,
             end_date=end_date,
             debit_as_negative=debit_as_negative,
+            pending=pending,
         ).dict(exclude_none=True)
         search_params.update(params if params is not None else {})
         response_data = self._make_request(
