@@ -30,8 +30,8 @@ class UserObject(LunchableModel):
         description="Unique identifier for the associated budgeting account"
     )
     budget_name: str = Field(description="Name of the associated budgeting account")
-    api_key_label: Optional[str] = (
-        "User-defined label of the developer API key used. "
+    api_key_label: Optional[str] = Field(
+        description="User-defined label of the developer API key used. "
         "Returns null if nothing has been set."
     )
 
