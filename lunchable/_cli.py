@@ -200,12 +200,19 @@ tag_transactions = click.option(
 financial_partner_id = click.option(
     "--financial-partner-id",
     default=None,
+    type=click.INT,
     help="Splitwise ID of your financial partner.",
 )
 financial_partner_email = click.option(
     "--financial-partner-email",
     default=None,
     help="Splitwise Email Address of your financial partner.",
+)
+financial_partner_group_id = click.option(
+    "--financial-partner-group-id",
+    default=None,
+    type=click.INT,
+    help="Splitwise Group ID for financial partner transactions.",
 )
 
 
@@ -228,6 +235,7 @@ def make_splitlunch(**kwargs):
 @tag_transactions
 @financial_partner_id
 @financial_partner_email
+@financial_partner_group_id
 def make_splitlunch_import(**kwargs):
     """
     Import `SplitLunchImport` tagged transactions to Splitwise and Split them in Lunch Money
@@ -240,9 +248,11 @@ def make_splitlunch_import(**kwargs):
 
     financial_partner_id = kwargs.pop("financial_partner_id")
     financial_partner_email = kwargs.pop("financial_partner_email")
+    financial_partner_group_id = kwargs.pop("financial_partner_group_id")
     splitlunch = SplitLunch(
         financial_partner_id=financial_partner_id,
         financial_partner_email=financial_partner_email,
+        financial_partner_group_id=financial_partner_group_id,
     )
     results = splitlunch.make_splitlunch_import(**kwargs)
     print_json(data=results, default=pydantic_encoder)
@@ -252,6 +262,7 @@ def make_splitlunch_import(**kwargs):
 @tag_transactions
 @financial_partner_id
 @financial_partner_email
+@financial_partner_group_id
 def make_splitlunch_direct_import(**kwargs):
     """
     Import `SplitLunchDirectImport` tagged transactions to Splitwise and Split them in Lunch Money
@@ -264,9 +275,11 @@ def make_splitlunch_direct_import(**kwargs):
 
     financial_partner_id = kwargs.pop("financial_partner_id")
     financial_partner_email = kwargs.pop("financial_partner_email")
+    financial_partner_group_id = kwargs.pop("financial_partner_group_id")
     splitlunch = SplitLunch(
         financial_partner_id=financial_partner_id,
         financial_partner_email=financial_partner_email,
+        financial_partner_group_id=financial_partner_group_id,
     )
     results = splitlunch.make_splitlunch_direct_import(**kwargs)
     print_json(data=results, default=pydantic_encoder)
