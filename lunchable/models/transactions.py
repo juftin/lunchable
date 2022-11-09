@@ -569,9 +569,9 @@ class TransactionsClient(LunchMoneyAPIClient):
         )
         return TransactionObject(**response_data)
 
-    ListOrSingleTransactionUpdateObject = Union[
+    ListOrSingleTransactionUpdateObject = Optional[Union[
         TransactionUpdateObject, TransactionObject
-    ]
+    ]]
 
     ListOrSingleTransactionInsertObject = Union[
         TransactionObject,
