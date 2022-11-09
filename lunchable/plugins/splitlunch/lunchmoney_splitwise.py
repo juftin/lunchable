@@ -97,6 +97,8 @@ class SplitLunch(splitwise.Splitwise):
         Splitwise User ID of financial partner
     financial_partner_email: Optional[str]
         Splitwise linked email address of financial partner
+    financial_partner_group_id: Optional[int]
+        Splitwise Group ID for financial partner transactions
     consumer_key: Optional[str]
         Consumer Key provided by Splitwise. Defaults to `SPLITWISE_CONSUMER_KEY` environment
         variable
@@ -116,6 +118,7 @@ class SplitLunch(splitwise.Splitwise):
         lunch_money_access_token: Optional[str] = None,
         financial_partner_id: Optional[int] = None,
         financial_partner_email: Optional[str] = None,
+        financial_partner_group_id: Optional[int] = None,
         consumer_key: Optional[str] = None,
         consumer_secret: Optional[str] = None,
         api_key: Optional[str] = None,
@@ -130,6 +133,8 @@ class SplitLunch(splitwise.Splitwise):
             Splitwise User ID of financial partner
         financial_partner_email: Optional[str]
             Splitwise linked email address of financial partner
+        financial_partner_group_id: Optional[int]
+            Splitwise Group ID for financial partner transactions
         consumer_key: Optional[str]
             Consumer Key provided by Splitwise. Defaults to `SPLITWISE_CONSUMER_KEY` environment
             variable
@@ -154,6 +159,7 @@ class SplitLunch(splitwise.Splitwise):
         self.financial_partner: splitwise.Friend = self.get_friend(
             friend_id=financial_partner_id, email_address=financial_partner_email
         )
+        self.financial_group = financial_partner_group_id
         self.last_check: Optional[datetime.datetime] = None
         self.lunchable = (
             LunchMoney(access_token=lunch_money_access_token)
@@ -255,6 +261,8 @@ class SplitLunch(splitwise.Splitwise):
         # CREATE THE NEW EXPENSE OBJECT
         new_expense = splitwise.Expense()
         new_expense.setDescription(desc=description)
+        if self.financial_group:
+            new_expense.setGroupId(self.financial_group)
         # GET AND SET AMOUNTS OWED
         primary_user_owes, financial_partner_owes = self.split_a_transaction(
             amount=amount
@@ -308,6 +316,8 @@ class SplitLunch(splitwise.Splitwise):
         # CREATE THE NEW EXPENSE OBJECT
         new_expense = splitwise.Expense()
         new_expense.setDescription(desc=description)
+        if self.financial_group:
+            new_expense.setGroupId(self.financial_group)
         # GET AND SET AMOUNTS OWED
         new_expense.setCost(cost=amount)
         # CONFIGURE PRIMARY USER
