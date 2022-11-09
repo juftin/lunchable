@@ -45,7 +45,8 @@ marked in the `Reimbursement` category which must be created.
     Prerequisites:
        - Financial Partners:
             - If you only have one friend in Splitwise, this is your Financial Partner
-            - Financial Partners must be specified by their Splitwise ID or Email Address
+            - Financial Partners can be individual users or groups and transactions will be split accordingly
+            - Financial Partners must be specified by their Splitwise Group ID, Splitwise User ID, or Email Address
        - Tags:
             - `SplitLunchImport`
        - Categories:
@@ -75,7 +76,8 @@ being split.
     Prerequisites:
        - Financial Partners:
             - If you only have one friend in Splitwise, this is your Financial Partner
-            - Financial Partners must be specified by their Splitwise ID or Email Address
+            - Financial Partners can be individual users or groups and transactions will be split accordingly
+            - Financial Partners must be specified by their Splitwise Group ID, Splitwise User ID, or Email Address
        - Tags:
             - `SplitLunchDirectImport`
        - Categories:
