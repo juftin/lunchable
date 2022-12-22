@@ -11,11 +11,17 @@ branches:
 plugins:
 -   semantic-release-gitmoji
 -   -   '@semantic-release/exec'
-    -   prepareCmd: bash .github/semantic_release/set_version.sh ${nextRelease.version} && poetry build
+    -   prepareCmd: |
+            bash .github/semantic_release/set_version.sh ${nextRelease.version} && \
+            poetry build && \
+            poetry export -f requirements.txt --ansi --without-hashes --extras all --dev --output requirements/dev.txt && \
+            poetry export -f requirements.txt --ansi --without-hashes --extras all --output requirements/prod.txt
 -   -   '@semantic-release/git'
     -   assets:
         -   pyproject.toml
         -   semantic_release_test/_version.py
+        -   requirements/dev.txt
+        -   requirements/prod.txt
         message: |
             🔖 ${nextRelease.version}
 
