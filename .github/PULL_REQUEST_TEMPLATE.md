@@ -13,8 +13,7 @@ Please also list any relevant details for your test configuration
 
 # Checklist:
 
-- [ ] I've read the contributing guidelines of this project
-- [ ] I've added a `BUMP_MAJOR`, `BUMP_MINOR`, or `BUMP_PATCH` label to this PR to increment the version
+- [ ] I've read the [contributing guidelines](https://juftin.com/lunchable/contributing) of this project
 - [ ] I've installed and used `.pre_commit` on all my code
 - [ ] I have documented my code, particularly in hard-to-understand areas
 - [ ] I have made any necessary corresponding changes to the documentation
