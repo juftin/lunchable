@@ -327,8 +327,12 @@ class PrimeLunch:
             transactions=amazon_transaction_df, amazon=amazon_df, time_range=5
         )
         updated_transactions = self.df_to_transactions(df=merged_data)
+        responses = []
         for item in updated_transactions:
-            self.update_transaction(transaction=item, confirm=confirm)
+            resp = self.update_transaction(transaction=item, confirm=confirm)
+            if resp is not None:
+                responses.append(resp)
+        logger.info("%s LunchMoney transactions updated", len(responses))
 
 
 @click.command("run")
@@ -353,6 +357,7 @@ class PrimeLunch:
     "-a",
     "--all",
     "update_all",
+    is_flag=True,
     type=click.BOOL,
     help="Whether to skip the confirmation step and simply update all matched "
     "transactions",
