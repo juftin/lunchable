@@ -75,3 +75,8 @@ lunchable plugins primelunch run \
    :prog: lunchable plugins primelunch
    :nested: full
 ```
+
+## References
+
+This lunchable plugin was inspired by the original Lunchable Amazon importer
+at [samwelnella/amazon-transactions-to-lunchmoney](https://github.com/samwelnella/amazon-transactions-to-lunchmoney).

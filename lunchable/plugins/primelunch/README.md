@@ -67,3 +67,8 @@ lunchable plugins primelunch run \
    --file ~/Downloads/amazon_order_history.csv \
    --all
 ```
+
+## References
+
+This lunchable plugin was inspired by the original Lunchable Amazon importer
+at [samwelnella/amazon-transactions-to-lunchmoney](https://github.com/samwelnella/amazon-transactions-to-lunchmoney).
