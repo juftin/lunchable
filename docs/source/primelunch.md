@@ -68,6 +68,15 @@ lunchable plugins primelunch run \
    --all
 ```
 
+Provide a LunchMoney API access token manually (`PrimeLunch` defaults to inheriting from the `LUNCHMONEY_ACCESS_TOKEN`
+environment variable):
+
+```shell
+lunchable plugins primelunch run \
+   --file ~/Downloads/amazon_order_history.csv \
+   --token ABCDEFGHIJKLMNOP
+```
+
 ## Command Line Documentation
 
 ```{eval-rst}

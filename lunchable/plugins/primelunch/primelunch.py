@@ -29,7 +29,12 @@ class PrimeLunch:
     PrimeLunch: Amazon Notes Updater
     """
 
-    def __init__(self, file_path: str | os.PathLike, time_window: int = 5) -> None:
+    def __init__(
+        self,
+        file_path: str | os.PathLike,
+        time_window: int = 5,
+        access_token: Optional[str] = None,
+    ) -> None:
         """
         Initialize and set internal data
         """
@@ -37,7 +42,7 @@ class PrimeLunch:
         self.time_window = time_window
         self.transaction_map: Dict[int, TransactionObject] = {}
         self.cached = False
-        self.lunch = LunchMoney()
+        self.lunch = LunchMoney(access_token=access_token)
 
     @staticmethod
     def transactions_to_df(transactions: List[TransactionObject]) -> pd.DataFrame:
@@ -363,11 +368,21 @@ class PrimeLunch:
     "transactions",
     default=False,
 )
-def run_primelunch(csv_file: str, window: int, update_all: bool):
+@click.option(
+    "-t",
+    "--token",
+    "access_token",
+    type=click.STRING,
+    help="LunchMoney Access Token - defaults to the LUNCHMONEY_ACCESS_TOKEN environment variable",
+    envvar="LUNCHMONEY_ACCESS_TOKEN",
+)
+def run_primelunch(csv_file: str, window: int, update_all: bool, access_token: str):
     """
     Run the PrimeLunch Update Process
     """
-    primelunch = PrimeLunch(file_path=csv_file, time_window=window)
+    primelunch = PrimeLunch(
+        file_path=csv_file, time_window=window, access_token=access_token
+    )
     primelunch.process_transactions(confirm=not update_all)
 
 
