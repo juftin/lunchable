@@ -13,7 +13,9 @@ from rich import print, print_json, traceback
 
 import lunchable
 from lunchable import LunchMoney
+from lunchable._config.logging_config import set_up_logging
 from lunchable.models._base import LunchableModel
+from lunchable.plugins.primelunch.primelunch import run_primelunch
 from lunchable.plugins.pushlunch import PushLunch
 
 logger = logging.getLogger(__name__)
@@ -52,10 +54,7 @@ def cli(ctx: click.core.Context, debug: bool, access_token: str) -> None:
     """
     ctx.obj = LunchMoneyContext(debug=debug, access_token=access_token)
     traceback.install(show_locals=debug)
-    if debug is True:
-        logging.basicConfig(
-            level=logging.DEBUG, format="%(asctime)s [%(levelname)8s]: %(message)s"
-        )
+    set_up_logging(log_level=logging.DEBUG if debug is True else logging.INFO)
 
 
 @cli.group()
@@ -347,9 +346,7 @@ def notify(continuous: bool, interval: int, user_key: str):
     if interval is not None:
         interval = int(interval)
     if continuous is not None:
-        logging.basicConfig(
-            level=logging.INFO, format="%(asctime)s [%(levelname)8s]: %(message)s"
-        )
+        set_up_logging(log_level=logging.INFO)
     push.notify_uncleared_transactions(continuous=continuous, interval=interval)
 
 
@@ -386,3 +383,13 @@ def http(context: LunchMoneyContext, url: str, request: str, data: str):
     except JSONDecodeError:
         response = resp.text
     print_json(data=response, default=pydantic_encoder)
+
+
+@plugins.group()
+def primelunch():
+    """
+    PrimeLunch CLI - Syncing LunchMoney with Amazon
+    """
+
+
+primelunch.add_command(run_primelunch)

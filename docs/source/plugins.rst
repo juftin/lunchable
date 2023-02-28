@@ -11,3 +11,4 @@ looking for, consider building it yourself and opening a pull-request.
 
    pushlunch.rst
    splitlunch.rst
+   primelunch.rst
