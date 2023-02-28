@@ -135,8 +135,12 @@ class PrimeLunch:
             "original_name"
         ].fillna("")
         amazon_transactions = amazon_transactions[
-            amazon_transactions.payee.str.lower().str.contains("amazon")
-            | amazon_transactions.original_name.str.lower().str.contains("amazon")
+            amazon_transactions.payee.str.match(
+                r"(?i)(Amazon|AMZN)(\s?(Prime|Marketplace|MKTP)|\.\w+)?", case=False
+            )
+            | amazon_transactions.original_name.str.match(
+                r"(?i)(Amazon|AMZN)(\s?(Prime|Marketplace|MKTP)|\.\w+)?", case=False
+            )
         ]
         return amazon_transactions
 
