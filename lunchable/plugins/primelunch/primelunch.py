@@ -276,7 +276,10 @@ class PrimeLunch:
         """
         former_transaction = self.transaction_map[transaction.id]
         response = None
-        if former_transaction.notes != transaction.notes.strip():  # type: ignore[union-attr]
+        stripped_notes = transaction.notes.strip()  # type: ignore[union-attr]
+        acceptable_length = min(349, len(stripped_notes))
+        new_notes = stripped_notes[:acceptable_length]
+        if former_transaction.notes != new_notes:
             confirmation = True
             if confirm is True:
                 self.print_transaction(
@@ -288,9 +291,7 @@ class PrimeLunch:
             if confirmation is True:
                 response = self.lunch.update_transaction(
                     transaction_id=transaction.id,
-                    transaction=TransactionUpdateObject(
-                        notes=transaction.notes.strip()  # type: ignore[union-attr]
-                    ),
+                    transaction=TransactionUpdateObject(notes=new_notes),
                 )
                 if confirm is True:
                     print(f"\t✅ Transaction #{transaction.id} updated")
