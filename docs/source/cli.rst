@@ -23,7 +23,8 @@ Lunchable CLI
 Installation
 ******************
 
-To use lunchable, first install it using pip:
+To use lunchable on the command line, first install it using `pip <https://pypi.org/project/lunchable/>`_ or
+`pipx <https://pypa.github.io/pipx/>`_:
 
 .. code-block:: console
 
@@ -34,7 +35,7 @@ or, if you're using the Splitwise plugin on the CLI:
 
 .. code-block:: console
 
-    pip install lunchable[splitwise]
+    pip install "lunchable[splitwise]"
 
 Install Shell Completion
 =========================

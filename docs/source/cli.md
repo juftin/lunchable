@@ -1,7 +1,7 @@
 # lunchable CLI
 
 ```{eval-rst}
-.. click:: lunchable._cli:command_line_interface
+.. click:: lunchable._cli:cli
    :prog: lunchable
    :nested: full
 ```

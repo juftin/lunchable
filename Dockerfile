@@ -8,7 +8,7 @@ COPY pyproject.toml README.md /tmp/lunchable/
 COPY lunchable/ /tmp/lunchable/lunchable/
 COPY requirements/prod.txt /tmp/lunchable/requirements.txt
 RUN pip install -r /tmp/lunchable/requirements.txt
-RUN pip install /tmp/lunchable/[splitlunch] && rm -rf /tmp/lunchable
+RUN pip install /tmp/lunchable/[all] && rm -rf /tmp/lunchable
 
 RUN apt-get update && apt-get install -y jq && apt-get clean
 
