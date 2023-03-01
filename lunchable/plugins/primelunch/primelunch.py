@@ -106,7 +106,6 @@ class PrimeLunch:
             "shipping": float,
             "shipping_refund": float,
             "gift": float,
-            "tax": float,
             "refund": float,
             "payments": string,
         }
