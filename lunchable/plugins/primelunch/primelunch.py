@@ -104,7 +104,6 @@ class PrimeLunch:
             "date": dt64,
             "total": float,
             "shipping": float,
-            "shipping_refund": float,
             "gift": float,
             "refund": float,
             "payments": string,

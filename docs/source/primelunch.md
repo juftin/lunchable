@@ -51,6 +51,17 @@ The below command runs the `PrimeLunch` update tool:
 lunchable plugins primelunch run -f ~/Downloads/amazon_order_history.csv
 ```
 
+:::{important}
+The commands on this documentation correspond to running `PrimeLunch` on a
+Mac or Linux Machine. If you are a Windows user take note of the following items:
+- Multiline commands in Windows machines use the `^` character instead of `\` to escape new lines
+- On macs, the default CSV file is located at `~/Downloads/amazon_order_history.csv`, on Windows this file
+  is located someplace like `C:\Users\YourUserName\Downloads\amazon_order_history.csv`
+- It's recommended you use the new
+  [Windows Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701)
+  to run `PrimeLunch`
+:::
+
 The below command runs the `PrimeLunch` update tool using a date window of fourteen days
 instead of the default seven days (these larger windows are especially useful for finding refunds and recurring
 purchases):
