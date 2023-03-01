@@ -51,13 +51,14 @@ The below command runs the `PrimeLunch` update tool:
 lunchable plugins primelunch run -f ~/Downloads/amazon_order_history.csv
 ```
 
-The below command runs the `PrimeLunch` update tool using a date window of three days
-instead of 5 days:
+The below command runs the `PrimeLunch` update tool using a date window of fourteen days
+instead of the default seven days (these larger windows are especially useful for finding refunds and recurring
+purchases):
 
 ```shell
 lunchable plugins primelunch run \
    --file ~/Downloads/amazon_order_history.csv \
-   --window 3
+   --window 14
 ```
 
 Update all transactions without going through the confirmation prompt for each one:

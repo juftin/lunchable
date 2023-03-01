@@ -19,7 +19,7 @@ from rich.prompt import Confirm
 
 from lunchable import LunchMoney, TransactionUpdateObject
 from lunchable._config.logging_config import set_up_logging
-from lunchable.models import TransactionObject
+from lunchable.models import CategoriesObject, TransactionObject
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +32,7 @@ class PrimeLunch:
     def __init__(
         self,
         file_path: str | os.PathLike,
-        time_window: int = 5,
+        time_window: int = 7,
         access_token: Optional[str] = None,
     ) -> None:
         """
@@ -43,6 +43,7 @@ class PrimeLunch:
         self.transaction_map: Dict[int, TransactionObject] = {}
         self.cached = False
         self.lunch = LunchMoney(access_token=access_token)
+        self.categories: dict[int, CategoriesObject] = {}
 
     @staticmethod
     def transactions_to_df(transactions: List[TransactionObject]) -> pd.DataFrame:
@@ -169,7 +170,7 @@ class PrimeLunch:
 
     @classmethod
     def merge_transactions(
-        cls, amazon: pd.DataFrame, transactions: pd.DataFrame, time_range: int = 5
+        cls, amazon: pd.DataFrame, transactions: pd.DataFrame, time_range: int = 7
     ) -> pd.DataFrame:
         """
         Merge Amazon Transactions and LunchMoney Transaction
@@ -186,16 +187,20 @@ class PrimeLunch:
         -------
         pd.DataFrame
         """
+        refunded_data = amazon[amazon["refund"] > 0].copy()
+        refunded_data["total"] = -refunded_data["refund"]
+        refunded_data["items"] = "REFUND: " + refunded_data["items"]
+        complete_amazon_data = pd.concat([amazon, refunded_data], ignore_index=True)
         merged_data = transactions.copy()
         merged_data = merged_data.merge(
-            amazon,
+            complete_amazon_data,
             how="inner",
             left_on=["amount"],
             right_on=["total"],
             suffixes=(None, "_amazon"),
         )
         merged_data["start_date"] = merged_data["date_amazon"]
-        merged_data["end_date"] = merged_data["start_date"] + datetime.timedelta(
+        merged_data["end_date"] = merged_data["date_amazon"] + datetime.timedelta(
             days=time_range
         )
         merged_data.query(
@@ -232,14 +237,14 @@ class PrimeLunch:
             start_date=start_date, end_date=end_cache_date
         )
         transaction_map = {item.id: item for item in transactions}
+        self.categories = {item.id: item for item in self.lunch.get_categories()}
         self.transaction_map = transaction_map
         self.cached = True
         logger.info("%s transactions returned from LunchMoney", len(transactions))
         return transaction_map
 
-    @classmethod
     def print_transaction(
-        cls, transaction: TransactionObject, former_transaction: TransactionObject
+        self, transaction: TransactionObject, former_transaction: TransactionObject
     ) -> None:
         """
         Print a Transaction for interactive input
@@ -250,8 +255,12 @@ class PrimeLunch:
         transaction_table.add_row("🏦 Payee", former_transaction.payee)
         transaction_table.add_row("📅 Date", str(former_transaction.date))
         transaction_table.add_row(
-            "💰 Amount", "$" + str(round(former_transaction.amount, 2))
+            "💰 Amount", self.format_currency(amount=former_transaction.amount)
         )
+        if former_transaction.category_id is not None:
+            transaction_table.add_row(
+                "📊 Category", self.categories[former_transaction.category_id].name
+            )
         if (
             former_transaction.original_name is not None
             and former_transaction.original_name != former_transaction.payee
@@ -329,7 +338,9 @@ class PrimeLunch:
         )
         amazon_transaction_df = self.filter_amazon_transactions(df=transaction_df)
         merged_data = self.merge_transactions(
-            transactions=amazon_transaction_df, amazon=amazon_df, time_range=5
+            transactions=amazon_transaction_df,
+            amazon=amazon_df,
+            time_range=self.time_window,
         )
         updated_transactions = self.df_to_transactions(df=merged_data)
         responses = []
@@ -338,6 +349,26 @@ class PrimeLunch:
             if resp is not None:
                 responses.append(resp)
         logger.info("%s LunchMoney transactions updated", len(responses))
+
+    @staticmethod
+    def format_currency(amount: float) -> str:
+        """
+        Format currency amounts to be pleasant and human readable
+
+        Parameters
+        ----------
+        amount: float
+            Float Amount to be converted into a string
+
+        Returns
+        -------
+        str
+        """
+        if amount < 0:
+            float_string = "[bold red]$ ({:,.2f})[/bold red]".format(float(abs(amount)))
+        else:
+            float_string = "[bold green]$ {:,.2f}[/bold green]".format(float(amount))
+        return float_string
 
 
 @click.command("run")
@@ -356,7 +387,7 @@ class PrimeLunch:
     type=click.INT,
     help="Allowable time window between Amazon transaction date and "
     "credit card transaction date",
-    default=5,
+    default=7,
 )
 @click.option(
     "-a",
