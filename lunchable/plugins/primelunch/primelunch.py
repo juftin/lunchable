@@ -118,6 +118,7 @@ class PrimeLunch:
         ).all(axis=1)
         duplicate_header_rows = np.where(header_row_eval)[0]
         amazon_df.drop(duplicate_header_rows, axis=0, inplace=True)
+        amazon_df["total"] = amazon_df["total"].astype("string").str.replace(",", "")
         amazon_df = amazon_df.astype(dtype=expected_columns, copy=True, errors="raise")
         logger.info("Amazon Data File loaded: %s", self.file_path)
         return amazon_df
@@ -141,10 +142,12 @@ class PrimeLunch:
         ].fillna("")
         amazon_transactions = amazon_transactions[
             amazon_transactions.payee.str.match(
-                r"(?i)(Amazon|AMZN)(\s?(Prime|Marketplace|MKTP)|\.\w+)?", case=False
+                r"(?i)(Amazon|AMZN|Whole Foods)(\s?(Prime|Marketplace|MKTP)|\.\w+)?",
+                case=False,
             )
             | amazon_transactions.original_name.str.match(
-                r"(?i)(Amazon|AMZN)(\s?(Prime|Marketplace|MKTP)|\.\w+)?", case=False
+                r"(?i)(Amazon|AMZN|Whole Foods)(\s?(Prime|Marketplace|MKTP)|\.\w+)?",
+                case=False,
             )
         ]
         return amazon_transactions
@@ -191,6 +194,11 @@ class PrimeLunch:
         refunded_data["items"] = "REFUND: " + refunded_data["items"]
         complete_amazon_data = pd.concat([amazon, refunded_data], ignore_index=True)
         merged_data = transactions.copy()
+        complete_amazon_data["items"] = np.where(
+            complete_amazon_data["to"].str.startswith("Whole Foods"),
+            "Whole Foods Groceries",
+            complete_amazon_data["items"],
+        )
         merged_data = merged_data.merge(
             complete_amazon_data,
             how="inner",
