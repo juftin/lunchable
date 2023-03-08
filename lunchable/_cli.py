@@ -407,3 +407,26 @@ def primelunch() -> None:
 
 
 primelunch.add_command(run_primelunch)
+
+
+@access_token_option
+@click.option(
+    "-c",
+    "--cache-time",
+    type=click.INT,
+    default=0,
+    help="How long (in seconds) to cache data for between sessions.",
+    show_default=True,
+)
+@plugins.command()
+def termlunch(access_token: str, cache_time: int) -> None:
+    """
+    TermLunch - LunchMoney on the Terminal
+    """
+    from lunchable.plugins.termlunch import TermLunch
+
+    app = TermLunch(
+        access_token=access_token,
+        cache_time=cache_time,
+    )
+    app.run()

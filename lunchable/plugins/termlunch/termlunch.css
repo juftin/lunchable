@@ -1,0 +1,189 @@
+/*App Wide Settings*/
+
+Screen {
+    layers: base overlay;
+    overflow: hidden;
+}
+
+Header {
+    content-align: center middle;
+}
+
+/*Transactions Data Table Settings*/
+
+TransactionContainer {
+    width: 100%;
+    height: 100%;
+}
+
+TransactionContainer.-sidebar {
+    offset-x: 40;
+}
+
+/* Detail Bar Settings */
+
+DetailBar {
+    width: 40;
+    background: $panel;
+    transition: offset 400ms in_out_cubic;
+    layer: overlay;
+    dock: right;
+}
+
+DetailBar:focus-within {
+    offset: 0 0 !important;
+}
+
+DetailBar.-hidden {
+    offset-x: -100%;
+}
+
+/*Sidebar Settings*/
+
+Sidebar {
+    width: 40;
+    background: $panel;
+    transition: offset 400ms in_out_cubic;
+    layer: overlay;
+}
+
+Sidebar:focus-within {
+    offset: 0 0 !important;
+}
+
+Sidebar.-hidden {
+    offset-x: -100%;
+}
+
+Sidebar Title {
+    background: $boost;
+    color: $secondary;
+    padding: 2 4;
+    dock: top;
+    text-align: center;
+    text-style: bold;
+}
+
+DarkSwitch .label {
+    width: 1fr;
+    padding: 1 2;
+    color: $text-muted;
+}
+
+DarkSwitch Switch {
+    background: $boost;
+    dock: left;
+}
+
+ListView {
+    width: 100%;
+}
+
+ListItem {
+    color: $text;
+    height: 2;
+    align: center middle;
+    background: $panel-lighten-1;
+    overflow: hidden hidden;
+}
+
+ListItem > Widget :hover {
+    background: $panel-lighten-1;
+}
+
+ListView > ListItem.--highlight {
+    background: $panel-lighten-1;
+}
+
+ListView:focus > ListItem.--highlight {
+    background: $panel-lighten-1;
+}
+
+/* Landing Page Settings */
+
+LoadingPage {
+    width: 100%;
+    height: 100%;
+    align: center middle;
+}
+
+LoadingPage.-sidebar {
+    offset-x: 40;
+}
+
+DarkSwitch {
+    background: $panel;
+    padding: 1;
+    height: auto;
+}
+
+AppButtonContainer {
+    background: $panel;
+    padding: 1;
+    dock: bottom;
+    height: auto;
+}
+
+LoginContainer {
+    background: $boost;
+    height: auto;
+    max-width: 100;
+    min-width: 40;
+    border: wide $primary;
+    padding: 1 2;
+    margin: 1 2;
+    box-sizing: border-box;
+}
+
+/* Button Settings */
+
+LoginContainer Button {
+    width: 100%;
+    margin-top: 1;
+    margin: 0 1;
+}
+
+AppButton {
+    background: $panel;
+    padding: 1;
+    height: auto;
+}
+
+AppButton Button {
+    width: 100%;
+    margin-top: 1;
+    margin: 0 1;
+}
+
+/* Content Settings */
+
+Section {
+    height: auto;
+    min-width: 40;
+    margin: 1 2 4 2;
+}
+
+SectionTitle {
+    padding: 1 2;
+    background: $boost;
+    content-align: center middle;
+    text-align: center;
+    text-style: bold;
+}
+
+SubTitle {
+    padding-top: 1;
+    border-bottom: heavy $panel;
+    color: $text;
+    text-style: bold;
+}
+
+TextContent {
+    margin: 1 0;
+}
+
+Column {
+    height: auto;
+    min-height: 100vh;
+    align: center top;
+}
