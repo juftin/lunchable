@@ -96,17 +96,16 @@ class PrimeLunch:
         pd.DataFrame
         """
         dt64: np.dtype[datetime64] = np.dtype("datetime64[ns]")
-        string = pd.StringDtype(storage="python")
         expected_columns = {
-            "order id": string,
-            "items": string,
-            "to": string,
+            "order id": str,
+            "items": str,
+            "to": str,
             "date": dt64,
-            "total": float,
-            "shipping": float,
-            "gift": float,
-            "refund": float,
-            "payments": string,
+            "total": np.float64,
+            "shipping": np.float64,
+            "gift": np.float64,
+            "refund": np.float64,
+            "payments": str,
         }
         amazon_df = pd.read_csv(
             self.file_path,
@@ -117,7 +116,9 @@ class PrimeLunch:
         ).all(axis=1)
         duplicate_header_rows = np.where(header_row_eval)[0]
         amazon_df.drop(duplicate_header_rows, axis=0, inplace=True)
-        amazon_df["total"] = amazon_df["total"].astype("string").str.replace(",", "")
+        amazon_df["total"] = (
+            amazon_df["total"].astype("string").str.replace(",", "").astype(np.float64)
+        )
         amazon_df = amazon_df.astype(dtype=expected_columns, copy=True, errors="raise")
         logger.info("Amazon Data File loaded: %s", self.file_path)
         return amazon_df
@@ -170,6 +171,59 @@ class PrimeLunch:
         return deduped
 
     @classmethod
+    def _extract_total_from_payments(cls, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Extract the Credit Card Payments from the payments column
+
+        There is quite a bit of data manipulation going on here. We
+        need to extract meaningful credit card transaction info from strings like this:
+
+        Visa ending in 9470: September 11, 2022: $29.57; \
+        Visa ending in 9470: September 11, 2022: $2.22;
+        """
+        extracted = df.copy()
+        extracted["new_total"] = extracted["payments"].str.rstrip(";").str.split(";")
+        exploded_totals = extracted.explode("new_total", ignore_index=True)
+        exploded_totals = exploded_totals[
+            exploded_totals["new_total"].str.strip() != ""
+        ]
+        currency_matcher = r"(?:[\£\$\€]{1}[,\d]+.?\d*)"
+        exploded_totals["parsed_total"] = exploded_totals["new_total"].str.findall(
+            currency_matcher
+        )
+        exploded_totals = exploded_totals.explode("parsed_total", ignore_index=True)
+        exploded_totals["parsed_total"] = exploded_totals["parsed_total"].str.replace(
+            "[^0-9.]", "", regex=True
+        )
+        exploded_totals["parsed_total"] = exploded_totals["parsed_total"].astype(
+            np.float64
+        )
+        exploded_totals = exploded_totals[~exploded_totals["parsed_total"].isnull()]
+        exploded_totals["total"] = np.where(
+            ~exploded_totals["parsed_total"].isnull(),
+            exploded_totals["parsed_total"],
+            exploded_totals["total"],
+        )
+        return exploded_totals
+
+    @classmethod
+    def _extract_extra_from_orders(cls, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Extract the Credit Card Refunds and Whole Foods Orders
+        """
+        refunds = df.copy()
+        refunded_data = refunds[refunds["refund"] > 0].copy()
+        refunded_data["total"] = -refunded_data["refund"]
+        refunded_data["items"] = "REFUND: " + refunded_data["items"]
+        complete_amazon_data = pd.concat([refunds, refunded_data], ignore_index=True)
+        complete_amazon_data["items"] = np.where(
+            complete_amazon_data["to"].str.startswith("Whole Foods"),
+            "Whole Foods Groceries",
+            complete_amazon_data["items"],
+        )
+        return complete_amazon_data
+
+    @classmethod
     def merge_transactions(
         cls, amazon: pd.DataFrame, transactions: pd.DataFrame, time_range: int = 7
     ) -> pd.DataFrame:
@@ -188,16 +242,9 @@ class PrimeLunch:
         -------
         pd.DataFrame
         """
-        refunded_data = amazon[amazon["refund"] > 0].copy()
-        refunded_data["total"] = -refunded_data["refund"]
-        refunded_data["items"] = "REFUND: " + refunded_data["items"]
-        complete_amazon_data = pd.concat([amazon, refunded_data], ignore_index=True)
+        exploded_totals = cls._extract_total_from_payments(df=amazon)
+        complete_amazon_data = cls._extract_extra_from_orders(df=exploded_totals)
         merged_data = transactions.copy()
-        complete_amazon_data["items"] = np.where(
-            complete_amazon_data["to"].str.startswith("Whole Foods"),
-            "Whole Foods Groceries",
-            complete_amazon_data["items"],
-        )
         merged_data = merged_data.merge(
             complete_amazon_data,
             how="inner",
