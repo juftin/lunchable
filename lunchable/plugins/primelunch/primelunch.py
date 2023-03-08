@@ -5,10 +5,11 @@ PrimeLunch Utils
 from __future__ import annotations
 
 import datetime
+import html
 import logging
 import os
 import pathlib
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 import click
 import numpy as np
@@ -17,14 +18,15 @@ from numpy import datetime64
 from rich import print, table
 from rich.prompt import Confirm
 
-from lunchable import LunchMoney, TransactionUpdateObject
+from lunchable import TransactionUpdateObject
 from lunchable._config.logging_config import set_up_logging
-from lunchable.models import CategoriesObject, TransactionObject
+from lunchable.models import CategoriesObject, TransactionObject, UserObject
+from lunchable.plugins.base.pandas_app import LunchablePandasApp
 
 logger = logging.getLogger(__name__)
 
 
-class PrimeLunch:
+class PrimeLunch(LunchablePandasApp):
     """
     PrimeLunch: Amazon Notes Updater
     """
@@ -38,58 +40,15 @@ class PrimeLunch:
         """
         Initialize and set internal data
         """
+        super().__init__(cache_time=0, access_token=access_token)
         self.file_path = pathlib.Path(file_path)
         self.time_window = time_window
-        self.transaction_map: Dict[int, TransactionObject] = {}
-        self.cached = False
-        self.lunch = LunchMoney(access_token=access_token)
-        self.categories: dict[int, CategoriesObject] = {}
-
-    @staticmethod
-    def transactions_to_df(transactions: List[TransactionObject]) -> pd.DataFrame:
-        """
-        Convert Transactions Array to DataFrame
-
-        Parameters
-        ----------
-        transactions: List[TransactionObject]
-
-        Returns
-        -------
-        pd.DataFrame
-        """
-        return pd.DataFrame(
-            [item.dict() for item in transactions],
-            columns=TransactionObject.__fields__.keys(),
-        )
-
-    @staticmethod
-    def df_to_transactions(df: pd.DataFrame) -> List[TransactionObject]:
-        """
-        Convert DataFrame to Transaction Array
-
-        Parameters
-        ----------
-        df: pd.DataFrame
-
-        Returns
-        -------
-        List[TransactionObject]
-        """
-        array_df = df.copy()
-        array_df = array_df.fillna(np.nan).replace([np.nan], [None])
-        transaction_array = array_df.to_dict(orient="records")
-        return [TransactionObject(**item) for item in transaction_array]
 
     def amazon_to_df(self) -> pd.DataFrame:
         """
         Read an Amazon Data File to a DataFrame
 
         This is pretty simple, except duplicate header rows need to be cleaned
-
-        Parameters
-        ----------
-        file_path: os.PathLike
 
         Returns
         -------
@@ -286,15 +245,17 @@ class PrimeLunch:
             start_date,
             end_cache_date,
         )
-        transactions = self.lunch.get_transactions(
-            start_date=start_date, end_date=end_cache_date
+        self.get_latest_cache(include=[CategoriesObject, UserObject])
+        self.refresh_transactions(start_date=start_date, end_date=end_cache_date)
+        logger.info(
+            'Scanning LunchMoney Budget: "%s"',
+            html.unescape(self.lunch_data.user.budget_name),  # type: ignore[union-attr]
         )
-        transaction_map = {item.id: item for item in transactions}
-        self.categories = {item.id: item for item in self.lunch.get_categories()}
-        self.transaction_map = transaction_map
-        self.cached = True
-        logger.info("%s transactions returned from LunchMoney", len(transactions))
-        return transaction_map
+        logger.info(
+            "%s transactions returned from LunchMoney",
+            len(self.lunch_data.transactions),
+        )
+        return self.lunch_data.transactions
 
     def print_transaction(
         self, transaction: TransactionObject, former_transaction: TransactionObject
@@ -312,7 +273,8 @@ class PrimeLunch:
         )
         if former_transaction.category_id is not None:
             transaction_table.add_row(
-                "📊 Category", self.categories[former_transaction.category_id].name
+                "📊 Category",
+                self.lunch_data.categories[former_transaction.category_id].name,
             )
         if (
             former_transaction.original_name is not None
@@ -345,7 +307,7 @@ class PrimeLunch:
         -------
         Optional[Dict[str, Any]]
         """
-        former_transaction = self.transaction_map[transaction.id]
+        former_transaction = self.lunch_data.transactions[transaction.id]
         response = None
         stripped_notes = transaction.notes.strip()  # type: ignore[union-attr]
         acceptable_length = min(349, len(stripped_notes))
@@ -386,8 +348,8 @@ class PrimeLunch:
             max_date,
         )
         self.cache_transactions(start_date=min_date, end_date=max_date)
-        transaction_df = self.transactions_to_df(
-            transactions=list(self.transaction_map.values())
+        transaction_df = self.models_to_df(
+            models=self.lunch_data.transactions.values(),
         )
         amazon_transaction_df = self.filter_amazon_transactions(df=transaction_df)
         merged_data = self.merge_transactions(
@@ -395,7 +357,9 @@ class PrimeLunch:
             amazon=amazon_df,
             time_range=self.time_window,
         )
-        updated_transactions = self.df_to_transactions(df=merged_data)
+        updated_transactions = self.df_to_models(
+            df=merged_data, model_type=TransactionObject
+        )
         responses = []
         for item in updated_transactions:
             resp = self.update_transaction(transaction=item, confirm=confirm)

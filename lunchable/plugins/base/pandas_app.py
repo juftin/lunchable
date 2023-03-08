@@ -58,7 +58,7 @@ class LunchablePandasApp(LunchableApp):
         return [model_type(**item) for item in model_array]
 
 
-class PandasLunchableTransactionsApp(LunchableTransactionsApp, LunchablePandasApp):
+class LunchablePandasTransactionsApp(LunchableTransactionsApp, LunchablePandasApp):
     """
     LunchableTransactionsApp with Pandas Super Powers
     """

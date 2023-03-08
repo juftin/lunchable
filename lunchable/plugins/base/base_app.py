@@ -52,7 +52,9 @@ class LunchableDataContainer(BaseModel):
     categories: Dict[int, CategoriesObject] = {}
     assets: Dict[int, AssetsObject] = {}
     tags: Dict[int, TagsObject] = {}
-    user: Optional[UserObject] = None
+    user: UserObject = UserObject(
+        user_id=0, user_name="", user_email="", account_id=0, budget_name=""
+    )
     crypto: Dict[int, UserObject] = {}
 
     @property
@@ -121,7 +123,6 @@ class BaseLunchableApp(ABC):
         """
         self.lunch = LunchMoney(access_token=access_token)
         self.lunch_data = LunchableDataContainer()
-        self.lunch_data.user = self.lunch.get_user()
         self.data_dir = FileConfig.DATA_DIR.joinpath(self.__class__.__name__).joinpath(
             sha256(self.lunch.access_token.encode("utf-8")).hexdigest()
         )
@@ -183,13 +184,18 @@ class BaseLunchableApp(ABC):
         return data_objects
 
     def get_latest_cache(
-        self, exclude: Optional[List[Type[LunchableModel]]] = None, force: bool = False
+        self,
+        include: Optional[List[Type[LunchableModel]]] = None,
+        exclude: Optional[List[Type[LunchableModel]]] = None,
+        force: bool = False,
     ) -> None:
         """
         Cache the Underlying Data Objects
 
         Parameters
         ----------
+        include : Optional[List[Type[LunchableModel]]]
+            Models to refresh cache for (instead of all of them)
         exclude : Optional[List[Type[LunchableModel]]]
             Models to skip cache refreshing
         force: bool
@@ -199,11 +205,15 @@ class BaseLunchableApp(ABC):
         -------
         None
         """
-        total_data_models: List[LunchableDataModel] = (
-            self.lunchable_models + self.__builtin_data_models__
-        )
+        models_to_process = self.lunchable_models + self.__builtin_data_models__
+        if include is not None:
+            new_models_to_process: List[LunchableDataModel] = []
+            data_model_mapping = {item.model: item for item in models_to_process}
+            for model_class in include:
+                new_models_to_process.append(data_model_mapping[model_class])
+            models_to_process = new_models_to_process
         exclusions = exclude if exclude is not None else []
-        for data_model in total_data_models:
+        for data_model in models_to_process:
             if data_model.model in exclusions:
                 continue
             cache = self._cache_single_object(
