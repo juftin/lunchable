@@ -2,6 +2,7 @@
 Lunch Money Python SDK and Associated Objects
 """
 
+from ._base import LunchableModel
 from .assets import AssetsObject
 from .budgets import BudgetObject
 from .categories import CategoriesObject
@@ -16,6 +17,7 @@ from .transactions import (
     TransactionSplitObject,
     TransactionUpdateObject,
 )
+from .user import UserObject
 
 __all__ = [
     "AssetsObject",
@@ -30,4 +32,6 @@ __all__ = [
     "TransactionUpdateObject",
     "TransactionInsertObject",
     "TransactionSplitObject",
+    "UserObject",
+    "LunchableModel",
 ]

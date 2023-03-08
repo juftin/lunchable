@@ -14,7 +14,7 @@ from rich import print, print_json, traceback
 import lunchable
 from lunchable import LunchMoney
 from lunchable._config.logging_config import set_up_logging
-from lunchable.models._base import LunchableModel
+from lunchable.models import LunchableModel
 from lunchable.plugins.primelunch.primelunch import run_primelunch
 from lunchable.plugins.pushlunch import PushLunch
 

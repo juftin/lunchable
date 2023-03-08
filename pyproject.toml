@@ -22,7 +22,7 @@ license = "MIT"
 name = "lunchable"
 readme = "README.md"
 repository = "https://github.com/juftin/lunchable"
-version = "0.4.8"
+version = "0.4.7"
 
 [tool.poetry.dependencies]
 click = ">=8.0.1"
@@ -46,6 +46,9 @@ tox = "^3.25.1"
 all = [
   "splitwise",
   "python-dateutil",
+  "pandas"
+]
+apps = [
   "pandas"
 ]
 primelunch = [
