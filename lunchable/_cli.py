@@ -4,7 +4,7 @@ Lunchmoney CLI
 
 import logging
 from json import JSONDecodeError
-from typing import Optional
+from typing import Any, Dict, Optional, Union
 
 import click
 import requests
@@ -58,14 +58,14 @@ def cli(ctx: click.core.Context, debug: bool, access_token: str) -> None:
 
 
 @cli.group()
-def transactions():
+def transactions() -> None:
     """
     Interact with Lunch Money transactions
     """
 
 
 @cli.group()
-def plugins():
+def plugins() -> None:
     """
     Interact with Lunchable Plugins
     """
@@ -133,17 +133,19 @@ def plugins():
     help="Pass in true if you’d like to include imported transactions with a pending status.",
 )
 @click.pass_obj
-def lunchmoney_transactions(context: LunchMoneyContext, **kwargs):
+def lunchmoney_transactions(
+    context: LunchMoneyContext, **kwargs: Dict[str, Any]
+) -> None:
     """
     Retrieve Lunch Money Transactions
     """
     lunch = LunchMoney(access_token=context.access_token)
-    transactions = lunch.get_transactions(**kwargs)
+    transactions = lunch.get_transactions(**kwargs)  # type: ignore[arg-type]
     print_json(data=transactions, default=pydantic_encoder)
 
 
 @plugins.group()
-def splitlunch():
+def splitlunch() -> None:
     """
     Splitwise Plugin for lunchable, SplitLunch 💲🍱
     """
@@ -178,7 +180,7 @@ def splitlunch():
     default=None,
     help="ISO 8601 Date time. Return expenses updated before this date",
 )
-def splitlunch_expenses(**kwargs):
+def splitlunch_expenses(**kwargs: Union[int, str, bool]) -> None:
     """
     Retrieve Splitwise Expenses
     """
@@ -187,7 +189,7 @@ def splitlunch_expenses(**kwargs):
     splitlunch = SplitLunch()
     if set(kwargs.values()) == {None}:
         kwargs["limit"] = 5
-    expenses = splitlunch.get_expenses(**kwargs)
+    expenses = splitlunch.get_expenses(**kwargs)  # type: ignore[arg-type]
     print_json(data=expenses, default=pydantic_encoder)
 
 
@@ -217,7 +219,7 @@ financial_partner_group_id = click.option(
 
 @splitlunch.command("splitlunch")
 @tag_transactions
-def make_splitlunch(**kwargs):
+def make_splitlunch(**kwargs: Union[int, str, bool]) -> None:
     """
     Split all `SplitLunch` tagged transactions in half.
 
@@ -226,7 +228,7 @@ def make_splitlunch(**kwargs):
     from lunchable.plugins.splitlunch import SplitLunch
 
     splitlunch = SplitLunch()
-    results = splitlunch.make_splitlunch(**kwargs)
+    results = splitlunch.make_splitlunch(**kwargs)  # type: ignore[arg-type]
     print_json(data=results, default=pydantic_encoder)
 
 
@@ -235,7 +237,7 @@ def make_splitlunch(**kwargs):
 @financial_partner_id
 @financial_partner_email
 @financial_partner_group_id
-def make_splitlunch_import(**kwargs):
+def make_splitlunch_import(**kwargs: Union[int, str, bool]) -> None:
     """
     Import `SplitLunchImport` tagged transactions to Splitwise and Split them in Lunch Money
 
@@ -245,15 +247,21 @@ def make_splitlunch_import(**kwargs):
     """
     from lunchable.plugins.splitlunch import SplitLunch
 
-    financial_partner_id = kwargs.pop("financial_partner_id")
-    financial_partner_email = kwargs.pop("financial_partner_email")
-    financial_partner_group_id = kwargs.pop("financial_partner_group_id")
+    financial_partner_id: Optional[int] = kwargs.pop(
+        "financial_partner_id"
+    )  # type: ignore[assignment]
+    financial_partner_email: Optional[str] = kwargs.pop(
+        "financial_partner_email"
+    )  # type: ignore[assignment]
+    financial_partner_group_id: Optional[int] = kwargs.pop(
+        "financial_partner_group_id"
+    )  # type: ignore[assignment]
     splitlunch = SplitLunch(
         financial_partner_id=financial_partner_id,
         financial_partner_email=financial_partner_email,
         financial_partner_group_id=financial_partner_group_id,
     )
-    results = splitlunch.make_splitlunch_import(**kwargs)
+    results = splitlunch.make_splitlunch_import(**kwargs)  # type: ignore[arg-type]
     print_json(data=results, default=pydantic_encoder)
 
 
@@ -262,7 +270,7 @@ def make_splitlunch_import(**kwargs):
 @financial_partner_id
 @financial_partner_email
 @financial_partner_group_id
-def make_splitlunch_direct_import(**kwargs):
+def make_splitlunch_direct_import(**kwargs: Union[int, str, bool]) -> None:
     """
     Import `SplitLunchDirectImport` tagged transactions to Splitwise and Split them in Lunch Money
 
@@ -272,20 +280,26 @@ def make_splitlunch_direct_import(**kwargs):
     """
     from lunchable.plugins.splitlunch import SplitLunch
 
-    financial_partner_id = kwargs.pop("financial_partner_id")
-    financial_partner_email = kwargs.pop("financial_partner_email")
-    financial_partner_group_id = kwargs.pop("financial_partner_group_id")
+    financial_partner_id: Optional[int] = kwargs.pop(
+        "financial_partner_id"
+    )  # type: ignore[assignment]
+    financial_partner_email: Optional[str] = kwargs.pop(
+        "financial_partner_email"
+    )  # type: ignore[assignment]
+    financial_partner_group_id: Optional[int] = kwargs.pop(
+        "financial_partner_group_id"
+    )  # type: ignore[assignment]
     splitlunch = SplitLunch(
         financial_partner_id=financial_partner_id,
         financial_partner_email=financial_partner_email,
         financial_partner_group_id=financial_partner_group_id,
     )
-    results = splitlunch.make_splitlunch_direct_import(**kwargs)
+    results = splitlunch.make_splitlunch_direct_import(**kwargs)  # type: ignore[arg-type]
     print_json(data=results, default=pydantic_encoder)
 
 
 @splitlunch.command("update-balance")
-def update_splitwise_balance(**kwargs):
+def update_splitwise_balance() -> None:
     """
     Update the Splitwise Asset Balance
     """
@@ -297,7 +311,7 @@ def update_splitwise_balance(**kwargs):
 
 
 @splitlunch.command("refresh")
-def refresh_splitwise_transactions(**kwargs):
+def refresh_splitwise_transactions() -> None:
     """
     Import New Splitwise Transactions to Lunch Money and
 
@@ -313,7 +327,7 @@ def refresh_splitwise_transactions(**kwargs):
 
 
 @plugins.group()
-def pushlunch():
+def pushlunch() -> None:
     """
     Push Notifications for Lunch Money: PushLunch 📲
     """
@@ -338,7 +352,7 @@ def pushlunch():
     default=None,
     help="Pushover User Key. Defaults to `PUSHOVER_USER_KEY` env var",
 )
-def notify(continuous: bool, interval: int, user_key: str):
+def notify(continuous: bool, interval: int, user_key: str) -> None:
     """
     Send a Notification for each Uncleared Transaction
     """
@@ -355,7 +369,7 @@ def notify(continuous: bool, interval: int, user_key: str):
 @click.option("-X", "--request", default="GET", help="Specify request command to use")
 @click.option("-d", "--data", default=None, help="HTTP POST data")
 @click.pass_obj
-def http(context: LunchMoneyContext, url: str, request: str, data: str):
+def http(context: LunchMoneyContext, url: str, request: str, data: str) -> None:
     """
     Interact with the LunchMoney API
 
@@ -386,7 +400,7 @@ def http(context: LunchMoneyContext, url: str, request: str, data: str):
 
 
 @plugins.group()
-def primelunch():
+def primelunch() -> None:
     """
     PrimeLunch CLI - Syncing LunchMoney with Amazon
     """

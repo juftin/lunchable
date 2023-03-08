@@ -446,7 +446,7 @@ class TransactionsClient(LunchMoneyAPIClient):
         limit: Optional[int] = None,
         debit_as_negative: Optional[bool] = None,
         pending: Optional[bool] = None,
-        params: Optional[dict] = None,
+        params: Optional[Dict[str, Any]] = None,
     ) -> List[TransactionObject]:
         """
         Get Transactions Using Criteria

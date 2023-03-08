@@ -6,7 +6,7 @@ import datetime
 import json
 import logging
 from json import loads
-from typing import Any, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import requests
 
@@ -76,7 +76,7 @@ class LunchMoneyAPIClient:
         return "<LunchMoney: requests.Session>"
 
     @staticmethod
-    def _serializer(obj):
+    def _serializer(obj: Any) -> str:
         if isinstance(obj, datetime.datetime):
             return obj.isoformat()
         elif isinstance(obj, datetime.date):
@@ -88,9 +88,9 @@ class LunchMoneyAPIClient:
         self,
         method: str,
         url_path: Union[List[Union[str, int]], str, int],
-        params: Optional[dict] = None,
+        params: Optional[Dict[str, Any]] = None,
         payload: Optional[Any] = None,
-        **kwargs
+        **kwargs: Any
     ) -> Any:
         """
         Make a Request to the API
@@ -102,7 +102,7 @@ class LunchMoneyAPIClient:
             PATCH, or DELETE
         url_path: Union[List[Union[str, int]], str, int]
             API Components, if a list join these sequentially
-        params: Optional[dict]
+        params: Optional[Dict[str, Any]]
             Params to pass
         payload: Optional[Any]
             data to pass
@@ -143,7 +143,7 @@ class LunchMoneyAPIClient:
         params: Optional[Any] = None,
         data: Optional[Any] = None,
         json: Optional[Any] = None,
-        **kwargs
+        **kwargs: Any
     ) -> requests.Response:
         """
         Make a HTTP Request

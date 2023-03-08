@@ -28,7 +28,7 @@ from lunchable.plugins.splitlunch.models import SplitLunchExpense
 logger = logging.getLogger(__name__)
 
 try:
-    import splitwise  # type: ignore
+    import splitwise
     from dateutil.tz import tzlocal
 except ImportError as ie:
     logger.exception(ie)
@@ -178,7 +178,7 @@ class SplitLunch(splitwise.Splitwise):
         self.splitwise_asset = self._get_splitwise_asset()
         self.reimbursement_category = self._get_reimbursement_category()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
         String Representation
 

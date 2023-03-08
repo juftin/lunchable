@@ -6,7 +6,7 @@ https://lunchmoney.dev/#assets
 
 import datetime
 import logging
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from pydantic import Field, validator
 
@@ -87,7 +87,7 @@ class _AssetsParamsPut(LunchableModel):
 
     @classmethod
     @validator("balance", pre=True)
-    def result_check(cls, x):
+    def result_check(cls, x: Union[float, int]) -> float:
         """
         Check a result
         """
@@ -112,7 +112,7 @@ class _AssetsParamsPost(LunchableModel):
 
     @classmethod
     @validator("balance", pre=True)
-    def result_check(cls, x):
+    def result_check(cls, x: Union[float, int]) -> float:
         """
         Check a result
         """

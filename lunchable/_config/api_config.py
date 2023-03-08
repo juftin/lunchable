@@ -86,7 +86,7 @@ class APIConfig:
         return auth_header
 
     @staticmethod
-    def make_url(url_path: Union[List[Union[str, int]], str, int]):
+    def make_url(url_path: Union[List[Union[str, int]], str, int]) -> str:
         """
         Make a Lunch Money API URL using path parts
 
@@ -126,7 +126,7 @@ class APIConfig:
         params: str = "",
         query: str = "",
         fragment: str = "",
-    ):
+    ) -> str:
         """
         Build a URL
 
