@@ -10,7 +10,7 @@ class LunchableModel(BaseModel):
     Hashable Pydantic Model
     """
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         """
         Hash Method for Pydantic BaseModels
         """

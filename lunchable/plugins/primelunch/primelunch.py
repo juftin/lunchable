@@ -9,7 +9,7 @@ import html
 import logging
 import os
 import pathlib
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
 import click
 import numpy as np
@@ -33,7 +33,7 @@ class PrimeLunch(LunchablePandasApp):
 
     def __init__(
         self,
-        file_path: str | os.PathLike,
+        file_path: Union[str, os.PathLike[str], pathlib.Path],
         time_window: int = 7,
         access_token: Optional[str] = None,
     ) -> None:
@@ -54,7 +54,7 @@ class PrimeLunch(LunchablePandasApp):
         -------
         pd.DataFrame
         """
-        dt64: np.dtype[datetime64] = np.dtype("datetime64[ns]")
+        dt64: np.dtype[datetime64] = np.dtype("datetime64[ns]")  # type: ignore[assignment]
         expected_columns = {
             "order id": str,
             "items": str,
@@ -249,7 +249,7 @@ class PrimeLunch(LunchablePandasApp):
         self.refresh_transactions(start_date=start_date, end_date=end_cache_date)
         logger.info(
             'Scanning LunchMoney Budget: "%s"',
-            html.unescape(self.lunch_data.user.budget_name),  # type: ignore[union-attr]
+            html.unescape(self.lunch_data.user.budget_name),
         )
         logger.info(
             "%s transactions returned from LunchMoney",
@@ -330,7 +330,7 @@ class PrimeLunch(LunchablePandasApp):
                     print(f"\t✅ Transaction #{transaction.id} updated")
         return response
 
-    def process_transactions(self, confirm: bool = True):
+    def process_transactions(self, confirm: bool = True) -> None:
         """
         Run the End-to-End Process
         """
@@ -424,7 +424,9 @@ class PrimeLunch(LunchablePandasApp):
     help="LunchMoney Access Token - defaults to the LUNCHMONEY_ACCESS_TOKEN environment variable",
     envvar="LUNCHMONEY_ACCESS_TOKEN",
 )
-def run_primelunch(csv_file: str, window: int, update_all: bool, access_token: str):
+def run_primelunch(
+    csv_file: str, window: int, update_all: bool, access_token: str
+) -> None:
     """
     Run the PrimeLunch Update Process
     """

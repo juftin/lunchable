@@ -38,7 +38,7 @@ class LunchableDataModel(LunchableModel):
     """
 
     model: Type[LunchableModel]
-    function: Callable
+    function: Callable[[Any], Any]
     kwargs: Dict[str, Any] = {}
 
 
@@ -77,7 +77,7 @@ class BaseLunchableApp(ABC):
     Abstract Base Class for Lunchable Apps
     """
 
-    __lunchable_object_mapping__: dict[str, str] = {
+    __lunchable_object_mapping__: Dict[str, str] = {
         PlaidAccountObject.__name__: "plaid_accounts",
         TransactionObject.__name__: "transactions",
         CategoriesObject.__name__: "categories",
@@ -133,7 +133,7 @@ class BaseLunchableApp(ABC):
     def _cache_single_object(
         self,
         model: Type[LunchableModelType],
-        function: Callable,
+        function: Callable[[Any], Any],
         kwargs: Optional[Dict[str, Any]] = None,
         force: bool = False,
     ) -> Union[LunchableModelType, List[LunchableModelType]]:
@@ -144,7 +144,7 @@ class BaseLunchableApp(ABC):
         ----------
         model: Type[LunchableModel]
         function: Callable
-        kwargs: dict[str, Any]
+        kwargs: Optional[Dict[str, Any]]
         force: bool
 
         Returns
@@ -166,7 +166,7 @@ class BaseLunchableApp(ABC):
         else:
             refresh = True
         if refresh is True:
-            data_objects = function(**kwargs)
+            data_objects = function(**kwargs)  # type: ignore[call-arg]
             if self.cache_time > 0:
                 plain_data: str = json.dumps(data_objects, default=pydantic_encoder)
                 base64_data: bytes = base64.b64encode(plain_data.encode("utf-8"))
@@ -224,7 +224,7 @@ class BaseLunchableApp(ABC):
             )
             cache_attribute: Union[Dict[int, LunchableModel], LunchableModel]
             if isinstance(cache, list):
-                cache_attribute = {item.id: item for item in cache}  # type: ignore
+                cache_attribute = {item.id: item for item in cache}
             else:
                 cache_attribute = cache
             setattr(
