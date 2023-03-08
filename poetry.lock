@@ -2,11 +2,12 @@
 
 [extras]
 all = ["splitwise", "python-dateutil", "pandas"]
+apps = ["pandas"]
 primelunch = ["pandas"]
 splitlunch = ["splitwise", "python-dateutil"]
 
 [metadata]
-content-hash = "5a9cd1b858efbed15da24768e7b20140cfbd2072c3d91c291203507198b55752"
+content-hash = "83e1776c4db2050096a5bd590c07fb8631a700b9529d17766e15c752ee38d039"
 lock-version = "2.0"
 python-versions = ">=3.7.1,<4.0"
 
@@ -93,21 +94,6 @@ name = "colorama"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 version = "0.4.5"
-
-[[package]]
-category = "main"
-description = "Python parser for the CommonMark Markdown spec"
-files = [
-  {file = "commonmark-0.9.1-py2.py3-none-any.whl", hash = "sha256:da2f38c92590f83de410ba1a3cbceafbc74fee9def35f9251ba9a971d6d66fd9"},
-  {file = "commonmark-0.9.1.tar.gz", hash = "sha256:452f9dc859be7f06631ddcb328b6919c67984aca654e5fefb3914d54691aed60"}
-]
-name = "commonmark"
-optional = false
-python-versions = "*"
-version = "0.9.1"
-
-[package.extras]
-test = ["flake8 (==3.7.8)", "hypothesis (==3.55.3)"]
 
 [[package]]
 category = "dev"
@@ -267,6 +253,32 @@ python-versions = "*"
 version = "1.1.1"
 
 [[package]]
+category = "main"
+description = "Python port of markdown-it. Markdown parsing, done right!"
+files = [
+  {file = "markdown-it-py-2.2.0.tar.gz", hash = "sha256:7c9a5e412688bc771c67432cbfebcdd686c93ce6484913dccf06cb5a0bea35a1"},
+  {file = "markdown_it_py-2.2.0-py3-none-any.whl", hash = "sha256:5a35f8d1870171d9acc47b99612dc146129b631baf04970128b568f190d0cc30"}
+]
+name = "markdown-it-py"
+optional = false
+python-versions = ">=3.7"
+version = "2.2.0"
+
+[package.dependencies]
+mdurl = ">=0.1,<1.0"
+typing_extensions = {version = ">=3.7.4", markers = "python_version < \"3.8\""}
+
+[package.extras]
+benchmarking = ["psutil", "pytest", "pytest-benchmark"]
+code-style = ["pre-commit (>=3.0,<4.0)"]
+compare = ["commonmark (>=0.9,<1.0)", "markdown (>=3.4,<4.0)", "mistletoe (>=1.0,<2.0)", "mistune (>=2.0,<3.0)", "panflute (>=2.3,<3.0)"]
+linkify = ["linkify-it-py (>=1,<3)"]
+plugins = ["mdit-py-plugins"]
+profiling = ["gprof2dot"]
+rtd = ["attrs", "myst-parser", "pyyaml", "sphinx", "sphinx-copybutton", "sphinx-design", "sphinx_book_theme"]
+testing = ["coverage", "pytest", "pytest-cov", "pytest-regressions"]
+
+[[package]]
 category = "dev"
 description = "McCabe checker, plugin for flake8"
 files = [
@@ -277,6 +289,18 @@ name = "mccabe"
 optional = false
 python-versions = "*"
 version = "0.6.1"
+
+[[package]]
+category = "main"
+description = "Markdown URL utilities"
+files = [
+  {file = "mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8"},
+  {file = "mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba"}
+]
+name = "mdurl"
+optional = false
+python-versions = ">=3.7"
+version = "0.1.2"
 
 [[package]]
 category = "dev"
@@ -689,13 +713,13 @@ version = "2.3.1"
 category = "main"
 description = "Pygments is a syntax highlighting package written in Python."
 files = [
-  {file = "Pygments-2.13.0-py3-none-any.whl", hash = "sha256:f643f331ab57ba3c9d89212ee4a2dabc6e94f117cf4eefde99a0574720d14c42"},
-  {file = "Pygments-2.13.0.tar.gz", hash = "sha256:56a8508ae95f98e2b9bdf93a6be5ae3f7d8af858b43e02c5a2ff083726be40c1"}
+  {file = "Pygments-2.14.0-py3-none-any.whl", hash = "sha256:fa7bd7bd2771287c0de303af8bfdfc731f51bd2c6a47ab69d117138893b82717"},
+  {file = "Pygments-2.14.0.tar.gz", hash = "sha256:b3ed06a9e8ac9a9aae5a6f5dbe78a8a58655d17b43b93c078f094ddc476ae297"}
 ]
 name = "pygments"
 optional = false
 python-versions = ">=3.6"
-version = "2.13.0"
+version = "2.14.0"
 
 [package.extras]
 plugins = ["importlib-metadata"]
@@ -879,21 +903,21 @@ rsa = ["oauthlib[signedtoken] (>=3.0.0)"]
 category = "main"
 description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
 files = [
-  {file = "rich-12.6.0-py3-none-any.whl", hash = "sha256:a4eb26484f2c82589bd9a17c73d32a010b1e29d89f1604cd9bf3a2097b81bb5e"},
-  {file = "rich-12.6.0.tar.gz", hash = "sha256:ba3a3775974105c221d31141f2c116f4fd65c5ceb0698657a11e9f295ec93fd0"}
+  {file = "rich-13.3.1-py3-none-any.whl", hash = "sha256:8aa57747f3fc3e977684f0176a88e789be314a99f99b43b75d1e9cb5dc6db9e9"},
+  {file = "rich-13.3.1.tar.gz", hash = "sha256:125d96d20c92b946b983d0d392b84ff945461e5a06d3867e9f9e575f8697b67f"}
 ]
 name = "rich"
 optional = false
-python-versions = ">=3.6.3,<4.0.0"
-version = "12.6.0"
+python-versions = ">=3.7.0"
+version = "13.3.1"
 
 [package.dependencies]
-commonmark = ">=0.9.0,<0.10.0"
-pygments = ">=2.6.0,<3.0.0"
+markdown-it-py = ">=2.1.0,<3.0.0"
+pygments = ">=2.14.0,<3.0.0"
 typing-extensions = {version = ">=4.0.0,<5.0", markers = "python_version < \"3.9\""}
 
 [package.extras]
-jupyter = ["ipywidgets (>=7.5.1,<8.0.0)"]
+jupyter = ["ipywidgets (>=7.5.1,<9)"]
 
 [[package]]
 category = "main"
