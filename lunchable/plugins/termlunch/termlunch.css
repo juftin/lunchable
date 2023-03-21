@@ -17,13 +17,13 @@ TransactionContainer {
 }
 
 TransactionContainer.-sidebar {
-    offset-x: 40;
+    offset-x: 45;
 }
 
 /* Detail Bar Settings */
 
 DetailBar {
-    width: 40;
+    width: 45;
     background: $panel;
     transition: offset 400ms in_out_cubic;
     layer: overlay;
@@ -41,7 +41,7 @@ DetailBar.-hidden {
 /*Sidebar Settings*/
 
 Sidebar {
-    width: 40;
+    width: 45;
     background: $panel;
     transition: offset 400ms in_out_cubic;
     layer: overlay;
@@ -99,6 +99,14 @@ ListView:focus > ListItem.--highlight {
     background: $panel-lighten-1;
 }
 
+AccountsTableContainer {
+    width: 45;
+}
+
+AccountsTable {
+    width: 100%;
+}
+
 /* Landing Page Settings */
 
 LoadingPage {
@@ -108,7 +116,7 @@ LoadingPage {
 }
 
 LoadingPage.-sidebar {
-    offset-x: 40;
+    offset-x: 45;
 }
 
 DarkSwitch {

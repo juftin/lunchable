@@ -3,7 +3,7 @@ TermLunch Base Classes
 """
 
 import datetime
-from typing import Optional, Any
+from typing import Any, Optional
 
 import numpy as np
 import pandas as pd
@@ -28,6 +28,12 @@ class RowDataTable(DataTable):
 class TransactionTable(RowDataTable):
     """
     RowDataTable Object: TransactionTable
+    """
+
+
+class AccountsTable(RowDataTable):
+    """
+    RowDataTable Object: AccountsTable
     """
 
 

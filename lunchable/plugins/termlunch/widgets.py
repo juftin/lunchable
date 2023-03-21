@@ -1,7 +1,6 @@
 """
 Textual Widgets for the TermLunch App
 """
-
 from os import getenv
 from pathlib import Path
 from textwrap import dedent
@@ -14,7 +13,12 @@ from textual.demo import Title
 from textual.widget import Widget
 from textual.widgets import Button, Input, Label, ListItem, ListView, Static, Switch
 
-from lunchable.plugins.termlunch.common import RowDataTable, TermLunchApp
+from lunchable.plugins.base.base_app import LunchableDataContainer
+from lunchable.plugins.termlunch.common import (
+    AccountsTable,
+    TermLunchApp,
+    TransactionTable,
+)
 
 
 class Section(Container):
@@ -125,34 +129,52 @@ class LoginContainer(Container):
         """
         self.run_auth_flow()
 
+    def refresh_app_data(self) -> None:
+        """
+        Refresh all the data within the app
+        """
+        # Data Refresh
+        self.app.lunch_app.get_latest_cache()
+        self.app.lunch_app.build_transaction_table()
+        # Object Queries
+        info_table = self.app.query_one(InfoTable)
+        existing_list_view = self.app.query_one("#info-table", expect_type=ListView)
+        app_table = self.app.query_one(TransactionTable)
+        account_table = self.app.query_one(AccountsTableContainer)
+        existing_accounts = self.app.query_one(
+            "#accounts-table", expect_type=AccountsTable
+        )
+        # Object Interactions
+        list_items = info_table.sync_data()
+        existing_list_view.clear()
+        for item in list_items:
+            existing_list_view.append(item)
+        app_table.clear()
+        for value_list in self.app.lunch_app.transaction_df.values.tolist():
+            row = [str(x) for x in value_list]
+            app_table.add_row(*row)
+        new_accounts = account_table.sync_data()
+        existing_accounts.clear()
+        for column in ["Account Name", "Balance", "Type"]:
+            existing_accounts.add_column(label=column)
+        for row in new_accounts:
+            existing_accounts.add_row(*row)
+
     def run_auth_flow(self) -> None:
         """
         Button Pressed Trigger
         """
         access_token_input = self.query_one(Input).value
-        self.app.log.error((access_token_input, self.app.lunch_app))
         try:
             self.app.lunch_app = TermLunchApp(
                 access_token=access_token_input, cache_time=self.app.cache_time
             )
-            self.app.log.error((access_token_input, self.app.lunch_app.__dict__))
-            self.app.lunch_app.get_latest_cache()
-            self.app.lunch_app.build_transaction_table()
-            self.app.log.error((access_token_input, self.app.lunch_app.__dict__))
-            info_table = self.app.query_one(InfoTable)
-            existing_list_view = self.app.query_one("#info-table", expect_type=ListView)
-            list_items = info_table.sync_data()
-            existing_list_view.clear()
-            for item in list_items:
-                existing_list_view.append(item)
-            app_table = self.app.query_one(RowDataTable)
-            app_table.clear()
-            for value_list in self.app.lunch_app.transaction_df.values.tolist():
-                row = [str(x) for x in value_list]
-                app_table.add_row(*row)
+            self.refresh_app_data()
             above_the_fold = self.app.query_one(LoadingPage)
             above_the_fold.display = False
-            self.app.transaction_container.display = True
+            # self.app.transaction_container.display = True
+            # self.app.accounts_page.display = True
+            # self.app.console.print(self.app.accounts_table)
         except EnvironmentError:
             button = self.query_one("#error-message", expect_type=Static)
             error_message = (
@@ -209,6 +231,65 @@ class InfoTable(Container):
         yield ListView(id="info-table")
 
 
+class AccountsTableContainer(Container):
+    """
+    Accounts Information Table
+    """
+
+    @staticmethod
+    def format_currency(amount: float) -> str:
+        """
+        Format currency amounts to be pleasant and human readable
+
+        Parameters
+        ----------
+        amount: float
+            Float Amount to be converted into a string
+
+        Returns
+        -------
+        str
+        """
+        if amount < 0:
+            float_string = "[bold red]$ ({:,.2f})[/bold red]".format(float(abs(amount)))
+        else:
+            float_string = "[bold dark_green]$ {:,.2f}[/bold dark_green]".format(
+                float(amount)
+            )
+        return float_string
+
+    def sync_data(self) -> List[List[str]]:
+        """
+        Grab the Latest Data
+        """
+        data_rows: List[List[str]] = []
+        if hasattr(self.app.lunch_app, "lunch_data"):
+            self.app.lunch_app.lunch_data: LunchableDataContainer
+            for credit_account in self.app.lunch_app.lunch_data.plaid_accounts.values():
+                data_rows.append(
+                    [
+                        credit_account.name,
+                        self.format_currency(credit_account.balance),
+                        credit_account.subtype.title(),
+                    ]
+                )
+            for asset in self.app.lunch_app.lunch_data.assets.values():
+                data_rows.append(
+                    [
+                        asset.name,
+                        self.format_currency(asset.balance),
+                        asset.subtype_name.title(),
+                    ]
+                )
+        return data_rows
+
+    def compose(self) -> Iterable[Widget]:
+        """
+        Generate Static Table
+        """
+        yield AccountsTable(id="accounts-table")
+
+
 class Sidebar(Container):
     """
     Lunchable SideBar
@@ -220,6 +301,7 @@ class Sidebar(Container):
         """
         yield Title(self.app.title)
         yield InfoTable()
+        yield AccountsTableContainer()
         yield AppButtonContainer(
             DarkSwitch(),
             LogOutButton(),
