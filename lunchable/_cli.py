@@ -2,6 +2,7 @@
 Lunchmoney CLI
 """
 
+import datetime
 import logging
 from json import JSONDecodeError
 from typing import Any, Dict, Optional, Union
@@ -152,6 +153,18 @@ def splitlunch() -> None:
     pass
 
 
+dated_after = click.option(
+    "--dated-after",
+    default=None,
+    help="ISO 8601 Date time. Return expenses later that this date",
+)
+dated_before = click.option(
+    "--dated-before",
+    default=None,
+    help="ISO 8601 Date time. Return expenses earlier than this date",
+)
+
+
 @splitlunch.command("expenses")
 @click.option(
     "--limit", default=None, help="Limit the amount of Results. 0 returns everything."
@@ -160,16 +173,8 @@ def splitlunch() -> None:
 @click.option("--limit", default=None, help="Number of expenses to be returned")
 @click.option("--group-id", default=None, help="GroupID of the expenses")
 @click.option("--friendship-id", default=None, help="FriendshipID of the expenses")
-@click.option(
-    "--dated-after",
-    default=None,
-    help="ISO 8601 Date time. Return expenses later that this date",
-)
-@click.option(
-    "--dated-before",
-    default=None,
-    help="ISO 8601 Date time. Return expenses earlier than this date",
-)
+@dated_after
+@dated_before
 @click.option(
     "--updated-after",
     default=None,
@@ -311,6 +316,8 @@ def update_splitwise_balance() -> None:
 
 
 @splitlunch.command("refresh")
+@dated_after
+@dated_before
 @click.option(
     "--allow-self-paid/--no-allow-self-paid",
     default=False,
@@ -321,7 +328,12 @@ def update_splitwise_balance() -> None:
     default=False,
     help="Allow payments to be imported (filtered out by default).",
 )
-def refresh_splitwise_transactions(allow_self_paid: bool, allow_payments: bool) -> None:
+def refresh_splitwise_transactions(
+    dated_before: Optional[datetime.datetime],
+    dated_after: Optional[datetime.datetime],
+    allow_self_paid: bool,
+    allow_payments: bool,
+) -> None:
     """
     Import New Splitwise Transactions to Lunch Money and
 
@@ -333,7 +345,10 @@ def refresh_splitwise_transactions(allow_self_paid: bool, allow_payments: bool) 
 
     splitlunch = SplitLunch()
     response = splitlunch.refresh_splitwise_transactions(
-        allow_self_paid=allow_self_paid, allow_payments=allow_payments
+        dated_before=dated_before,
+        dated_after=dated_after,
+        allow_self_paid=allow_self_paid,
+        allow_payments=allow_payments,
     )
     print_json(data=response, default=pydantic_encoder)
 
