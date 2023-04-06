@@ -39,6 +39,90 @@ except ImportError as ie:
     raise LunchMoneyImportError(_pip_extra_error)
 
 
+def _get_expense_impact(
+    expense: splitwise.Expense, current_user_id: int
+) -> Tuple[float, bool]:
+    """
+    Get the Financial Impact of a Splitwise Expense
+
+    Parameters
+    ----------
+    expense: splitwise.Expense
+
+    Returns
+    -------
+    Tuple[float, bool]
+    """
+    financial_impact = 0.00
+    self_paid = False
+    if len(expense.repayments) >= 1:
+        for debt in expense.repayments:
+            if debt.fromUser == current_user_id:
+                financial_impact -= float(debt.amount)
+            elif debt.toUser == current_user_id:
+                self_paid = True
+                financial_impact += float(debt.amount)
+    elif len(expense.repayments) == 0:
+        assert len(expense.users) == 1
+        if expense.users[0].id == current_user_id:
+            self_paid = True
+    return financial_impact, self_paid
+
+
+def _get_payment_impact(
+    expense: splitwise.Expense, current_user_id: int
+) -> Tuple[float, bool]:
+    """
+    Get the Financial Impact of a Splitwise Payment
+
+    Parameters
+    ----------
+    expense: splitwise.Expense
+
+    Returns
+    -------
+    Tuple[float, bool]
+    """
+    financial_impact = 0.00
+    self_paid = False
+    if len(expense.repayments) >= 1:
+        for debt in expense.repayments:
+            if debt.fromUser == current_user_id:
+                financial_impact += float(debt.amount)
+            elif debt.toUser == current_user_id:
+                self_paid = True
+                financial_impact -= float(debt.amount)
+    elif len(expense.repayments) == 0:
+        if expense.users[0].id == current_user_id:
+            financial_impact -= float(expense.cost)
+    return financial_impact, self_paid
+
+
+def _get_splitwise_impact(
+    expense: splitwise.Expense, current_user_id: int
+) -> Tuple[float, bool]:
+    """
+    Get the Financial Impact of a Splitwise Transaction
+
+    Parameters
+    ----------
+    expense: splitwise.Expense
+
+    Returns
+    -------
+    Tuple[float, bool]
+    """
+    if expense.payment is True:
+        financial_impact, self_paid = _get_payment_impact(
+            expense=expense, current_user_id=current_user_id
+        )
+    else:
+        financial_impact, self_paid = _get_expense_impact(
+            expense=expense, current_user_id=current_user_id
+        )
+    return financial_impact, self_paid
+
+
 class SplitLunch(splitwise.Splitwise):
     """
     Lunchable Plugin For Interacting With Splitwise
@@ -482,7 +566,9 @@ class SplitLunch(splitwise.Splitwise):
         -------
         SplitLunchExpense
         """
-        financial_impact, self_paid = self._get_splitwise_impact(expense=expense)
+        financial_impact, self_paid = _get_splitwise_impact(
+            expense=expense, current_user_id=self.current_user.id
+        )
         if expense.payment is True and financial_impact < 0:
             personal_share = abs(financial_impact)
         elif expense.payment is True and financial_impact > 0:
@@ -509,58 +595,6 @@ class SplitLunch(splitwise.Splitwise):
             deleted=True if expense.deleted_at is not None else False,
         )
         return expense
-
-    def _get_expense_impact(self, expense: splitwise.Expense) -> Tuple[float, bool]:
-        """
-        Get the Financial Impact of a Splitwise Expense
-
-        Parameters
-        ----------
-        expense: splitwise.Expense
-
-        Returns
-        -------
-        Tuple[float, bool]
-        """
-        financial_impact = 0.00
-        self_paid = True
-        if len(expense.repayments) >= 1:
-            for debt in expense.repayments:
-                if debt.fromUser == self.current_user.id:
-                    self_paid = False
-                    financial_impact -= float(debt.amount)
-                elif debt.toUser == self.current_user.id:
-                    financial_impact += float(debt.amount)
-        elif len(expense.repayments) == 0:
-            assert len(expense.users) == 1
-            assert expense.users[0].id == self.current_user.id
-        return financial_impact, self_paid
-
-    def _get_payment_impact(self, expense: splitwise.Expense) -> Tuple[float, bool]:
-        """
-        Get the Financial Impact of a Splitwise Payment
-
-        Parameters
-        ----------
-        expense: splitwise.Expense
-
-        Returns
-        -------
-        Tuple[float, bool]
-        """
-        financial_impact = 0.00
-        self_paid = True
-        if len(expense.repayments) >= 1:
-            for debt in expense.repayments:
-                if debt.fromUser == self.current_user.id:
-                    self_paid = False
-                    financial_impact += float(debt.amount)
-                elif debt.toUser == self.current_user.id:
-                    financial_impact -= float(debt.amount)
-        elif len(expense.repayments) == 0:
-            assert expense.users[0].id == self.current_user.id
-            financial_impact -= float(expense.cost)
-        return financial_impact, self_paid
 
     def _get_splitwise_asset(self) -> Optional[AssetsObject]:
         """
@@ -611,24 +645,6 @@ class SplitLunch(splitwise.Splitwise):
         if len(reimbursement_list) != 1:
             return None
         return reimbursement_list[0]
-
-    def _get_splitwise_impact(self, expense: splitwise.Expense) -> Tuple[float, bool]:
-        """
-        Get the Financial Impact of a Splitwise Transaction
-
-        Parameters
-        ----------
-        expense: splitwise.Expense
-
-        Returns
-        -------
-        Tuple[float, bool]
-        """
-        if expense.payment is True:
-            financial_impact, self_paid = self._get_payment_impact(expense=expense)
-        else:
-            financial_impact, self_paid = self._get_expense_impact(expense=expense)
-        return financial_impact, self_paid
 
     def _get_splitwise_tags(self) -> None:
         """
@@ -1028,8 +1044,9 @@ class SplitLunch(splitwise.Splitwise):
         Ingest Splitwise Expenses into Lunch Money
 
         This function inserts splitwise expenses into Lunch Money. If an expense
-        is not a payment, not deleted, and not self-paid it qualifies for ingestion. Otherwise
-        it will be ignored.
+        is not a payment, not deleted, not self-paid, and has a non-0 impact on
+        the user's splitwise balance it qualifies for ingestion. Otherwise it
+        will be ignored.
 
         Parameters
         ----------
@@ -1087,6 +1104,9 @@ class SplitLunch(splitwise.Splitwise):
         3) It filters out payments. Payments are excluded because it is assumed that these
         transactions will have already been imported via a different account.
 
+        4) It filters out expenses with a financial impact of 0, implying that the user was not
+        involved in the expense.
+
         Parameters
         ----------
         expenses: List[SplitLunchExpense]
@@ -1102,6 +1122,7 @@ class SplitLunch(splitwise.Splitwise):
                     splitwise_transaction.deleted is False,
                     splitwise_transaction.payment is False,
                     splitwise_transaction.self_paid is False,
+                    splitwise_transaction.financial_impact != 0.00,
                 ]
             ):
                 filtered_expenses.append(splitwise_transaction)

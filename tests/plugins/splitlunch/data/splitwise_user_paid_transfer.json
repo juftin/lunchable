@@ -1,0 +1,83 @@
+{
+    "id": 1829903595,
+    "group_id": 34823819,
+    "friendship_id": null,
+    "expense_bundle_id": null,
+    "description": "Payment",
+    "repeats": false,
+    "repeat_interval": null,
+    "email_reminder": false,
+    "email_reminder_in_advance": -1,
+    "next_repeat": null,
+    "details": null,
+    "comments_count": 1,
+    "payment": true,
+    "creation_method": "payment",
+    "transaction_method": "offline",
+    "transaction_confirmed": false,
+    "transaction_id": null,
+    "transaction_status": null,
+    "cost": "431.92",
+    "currency_code": "USD",
+    "repayments": [
+        {
+            "from": 45374,
+            "to": 1234059,
+            "amount": "431.92"
+        }
+    ],
+    "date": "2022-08-02T19:37:30Z",
+    "created_at": "2022-08-02T19:37:40Z",
+    "created_by": {
+        "id": 1234059,
+        "first_name": "Evan",
+        "last_name": "Broder",
+        "picture": {
+            "medium": "https://splitwise.s3.amazonaws.com/uploads/user/avatar/1234059/medium_headshot.jpg"
+        },
+        "custom_picture": true
+    },
+    "updated_at": "2022-08-02T19:37:40Z",
+    "updated_by": null,
+    "deleted_at": null,
+    "deleted_by": null,
+    "category": {
+        "id": 18,
+        "name": "General"
+    },
+    "receipt": {
+        "large": null,
+        "original": null
+    },
+    "users": [
+        {
+            "user": {
+                "id": 1234059,
+                "first_name": "Evan",
+                "last_name": "Broder",
+                "picture": {
+                    "medium": "https://splitwise.s3.amazonaws.com/uploads/user/avatar/1234059/medium_headshot.jpg"
+                }
+            },
+            "user_id": 1234059,
+            "paid_share": "431.92",
+            "owed_share": "0.0",
+            "net_balance": "431.92"
+        },
+        {
+            "user": {
+                "id": 45374,
+                "first_name": "XXXXXXXXXX",
+                "last_name": "XXXXXXXXXX",
+                "picture": {
+                    "medium": "XXXXXXXXXX"
+                }
+            },
+            "user_id": 45374,
+            "paid_share": "0.0",
+            "owed_share": "431.92",
+            "net_balance": "-431.92"
+        }
+    ],
+    "comments": []
+}
