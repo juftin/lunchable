@@ -58,10 +58,10 @@ def _get_splitwise_impact(
     if len(expense.repayments) >= 1:
         for debt in expense.repayments:
             if debt.fromUser == current_user_id:
-                financial_impact -= float(debt.amount)
+                financial_impact += float(debt.amount)
             elif debt.toUser == current_user_id:
                 self_paid = True
-                financial_impact += float(debt.amount)
+                financial_impact -= float(debt.amount)
     elif len(expense.repayments) == 0:
         assert len(expense.users) == 1
         if expense.users[0].id == current_user_id:
@@ -515,19 +515,10 @@ class SplitLunch(splitwise.Splitwise):
         financial_impact, self_paid = _get_splitwise_impact(
             expense=expense, current_user_id=self.current_user.id
         )
-        if expense.payment is True and financial_impact < 0:
-            personal_share = abs(financial_impact)
-        elif expense.payment is True and financial_impact > 0:
-            personal_share = 0
-        elif self_paid is True:
-            personal_share = round(float(expense.cost) - financial_impact, 2)
-        else:
-            personal_share = abs(financial_impact)
         expense = SplitLunchExpense(
             splitwise_id=expense.id,
             original_amount=expense.cost,
             financial_impact=financial_impact,
-            personal_share=personal_share,
             self_paid=self_paid,
             description=expense.description,
             category=expense.category.name,
@@ -879,12 +870,13 @@ class SplitLunch(splitwise.Splitwise):
                 date=transaction.date,
                 category_id=transaction.category_id,
                 notes=notes,
-                amount=new_transaction.personal_share,
+                # financial_impact for self-paid transactions will be negative
+                amount=round(
+                    transaction.amount - abs(new_transaction.financial_impact), 2
+                ),
             )
             reimbursement_object = split_object.copy()
-            reimbursement_object.amount = round(
-                transaction.amount - new_transaction.personal_share, 2
-            )
+            reimbursement_object.amount = new_transaction.financial_impact
             reimbursement_object.category_id = self.reimbursement_category.id
             logger.debug(
                 f"Transaction split by Splitwise: {transaction.amount} -> "
@@ -1013,7 +1005,7 @@ class SplitLunch(splitwise.Splitwise):
             new_lunchmoney_transaction = TransactionInsertObject(
                 date=splitwise_transaction.date.astimezone(tzlocal()),
                 payee=splitwise_transaction.description,
-                amount=splitwise_transaction.personal_share,
+                amount=splitwise_transaction.financial_impact,
                 asset_id=self.splitwise_asset.id,
                 external_id=splitwise_transaction.splitwise_id,
             )

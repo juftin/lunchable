@@ -41,12 +41,12 @@ def test_update_balance():
 def test_financial_impact():
     for [file, expected_self_paid, expected_impact] in [
         # For both expenses and transfers, when someone else pays, financial impact should be
-        # negative
-        ["splitwise_non_user_paid_expense.json", False, -9.99],
-        ["splitwise_non_user_paid_transfer.json", False, -523.84],
-        # When you pay, financial impact should be positive
-        ["splitwise_user_paid_expense.json", True, 61.65],
-        ["splitwise_user_paid_transfer.json", True, 431.92],
+        # positive
+        ["splitwise_non_user_paid_expense.json", False, 9.99],
+        ["splitwise_non_user_paid_transfer.json", False, 523.84],
+        # When you pay, financial impact should be negative
+        ["splitwise_user_paid_expense.json", True, -61.65],
+        ["splitwise_user_paid_transfer.json", True, -431.92],
         # And any transaction that doesn't involve you should have no impact
         ["splitwise_non_involved_expense.json", False, 0],
         ["splitwise_non_involved_transfer.json", False, 0],
