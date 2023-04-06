@@ -39,11 +39,11 @@ except ImportError as ie:
     raise LunchMoneyImportError(_pip_extra_error)
 
 
-def _get_expense_impact(
+def _get_splitwise_impact(
     expense: splitwise.Expense, current_user_id: int
 ) -> Tuple[float, bool]:
     """
-    Get the Financial Impact of a Splitwise Expense
+    Get the Financial Impact of a Splitwise Transaction
 
     Parameters
     ----------
@@ -66,60 +66,6 @@ def _get_expense_impact(
         assert len(expense.users) == 1
         if expense.users[0].id == current_user_id:
             self_paid = True
-    return financial_impact, self_paid
-
-
-def _get_payment_impact(
-    expense: splitwise.Expense, current_user_id: int
-) -> Tuple[float, bool]:
-    """
-    Get the Financial Impact of a Splitwise Payment
-
-    Parameters
-    ----------
-    expense: splitwise.Expense
-
-    Returns
-    -------
-    Tuple[float, bool]
-    """
-    financial_impact = 0.00
-    self_paid = False
-    if len(expense.repayments) >= 1:
-        for debt in expense.repayments:
-            if debt.fromUser == current_user_id:
-                financial_impact += float(debt.amount)
-            elif debt.toUser == current_user_id:
-                self_paid = True
-                financial_impact -= float(debt.amount)
-    elif len(expense.repayments) == 0:
-        if expense.users[0].id == current_user_id:
-            financial_impact -= float(expense.cost)
-    return financial_impact, self_paid
-
-
-def _get_splitwise_impact(
-    expense: splitwise.Expense, current_user_id: int
-) -> Tuple[float, bool]:
-    """
-    Get the Financial Impact of a Splitwise Transaction
-
-    Parameters
-    ----------
-    expense: splitwise.Expense
-
-    Returns
-    -------
-    Tuple[float, bool]
-    """
-    if expense.payment is True:
-        financial_impact, self_paid = _get_payment_impact(
-            expense=expense, current_user_id=current_user_id
-        )
-    else:
-        financial_impact, self_paid = _get_expense_impact(
-            expense=expense, current_user_id=current_user_id
-        )
     return financial_impact, self_paid
 
 
