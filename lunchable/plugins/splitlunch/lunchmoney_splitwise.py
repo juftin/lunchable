@@ -977,14 +977,18 @@ class SplitLunch(splitwise.Splitwise):
             update_responses.append(formatted_update_response)
         return update_responses
 
-    def splitwise_to_lunchmoney(self, expenses: List[SplitLunchExpense]) -> List[int]:
+    def splitwise_to_lunchmoney(
+        self,
+        expenses: List[SplitLunchExpense],
+        allow_self_paid: bool = False,
+        allow_payments: bool = False,
+    ) -> List[int]:
         """
         Ingest Splitwise Expenses into Lunch Money
 
-        This function inserts splitwise expenses into Lunch Money. If an expense
-        is not a payment, not deleted, not self-paid, and has a non-0 impact on
-        the user's splitwise balance it qualifies for ingestion. Otherwise it
-        will be ignored.
+        This function inserts splitwise expenses into Lunch Money. If an expense not deleted and has
+        a non-0 impact on the user's splitwise balance it qualifies for ingestion. By default,
+        payments and self-paid transactions are also ineligible. Otherwise it will be ignored.
 
         Parameters
         ----------
@@ -1000,7 +1004,11 @@ class SplitLunch(splitwise.Splitwise):
             raise ValueError("SplitwiseAsset")
         batch = []
         new_transaction_ids = []
-        filtered_expenses = self.filter_relevant_splitwise_expenses(expenses=expenses)
+        filtered_expenses = self.filter_relevant_splitwise_expenses(
+            expenses=expenses,
+            allow_self_paid=allow_self_paid,
+            allow_payments=allow_payments,
+        )
         for splitwise_transaction in filtered_expenses:
             new_lunchmoney_transaction = TransactionInsertObject(
                 date=splitwise_transaction.date.astimezone(tzlocal()),
@@ -1026,6 +1034,8 @@ class SplitLunch(splitwise.Splitwise):
     @staticmethod
     def filter_relevant_splitwise_expenses(
         expenses: List[SplitLunchExpense],
+        allow_self_paid: bool = False,
+        allow_payments: bool = False,
     ) -> List[SplitLunchExpense]:
         """
         Filter Expenses in Splitwise into relevant expenses.
@@ -1035,15 +1045,17 @@ class SplitLunch(splitwise.Splitwise):
 
         1) It filters out deleted expenses
 
-        2) It filters out `self-paid` expenses. A `self-paid` expense is an expense in Splitwise
-        where you originated the payment. This is excluded because it is assumed that these
-        transactions will have already been imported via a different account.
-
-        3) It filters out payments. Payments are excluded because it is assumed that these
-        transactions will have already been imported via a different account.
-
-        4) It filters out expenses with a financial impact of 0, implying that the user was not
+        2) It filters out expenses with a financial impact of 0, implying that the user was not
         involved in the expense.
+
+        3) If the --allow-self-paid flag is not provided, it filters out `self-paid` expenses. A
+        `self-paid` expense is an expense in Splitwise where you originated the payment. This is
+        excluded because it is assumed that these transactions will have already been imported via a
+        different account.
+
+        4) If the --allow-payments flag is not provided, it filters out payments. Payments are
+        excluded because it is assumed that these transactions will have already been imported via a
+        different account.
 
         Parameters
         ----------
@@ -1058,9 +1070,9 @@ class SplitLunch(splitwise.Splitwise):
             if all(
                 [
                     splitwise_transaction.deleted is False,
-                    splitwise_transaction.payment is False,
-                    splitwise_transaction.self_paid is False,
                     splitwise_transaction.financial_impact != 0.00,
+                    allow_self_paid or (splitwise_transaction.self_paid is False),
+                    allow_payments or (splitwise_transaction.payment is False),
                 ]
             ):
                 filtered_expenses.append(splitwise_transaction)
@@ -1136,11 +1148,8 @@ class SplitLunch(splitwise.Splitwise):
         splitwise_expenses = self.get_expenses(limit=0)
         splitwise_ids = {item.splitwise_id for item in splitwise_expenses}
         new_ids = splitwise_ids.difference(splitlunch_ids)
-        filtered_expenses = self.filter_relevant_splitwise_expenses(
-            expenses=splitwise_expenses
-        )
         new_expenses = [
-            expense for expense in filtered_expenses if expense.splitwise_id in new_ids
+            expense for expense in splitwise_expenses if expense.splitwise_id in new_ids
         ]
         deleted_transactions = self.get_deleted_transactions(
             splitlunch_expenses=splitlunch_expenses,
@@ -1188,7 +1197,11 @@ class SplitLunch(splitwise.Splitwise):
         ]
         return transactions_to_delete
 
-    def refresh_splitwise_transactions(self) -> Dict[str, Any]:
+    def refresh_splitwise_transactions(
+        self,
+        allow_self_paid: bool = False,
+        allow_payments: bool = False,
+    ) -> Dict[str, Any]:
         """
         Import New Splitwise Transactions to Lunch Money
 
@@ -1200,7 +1213,11 @@ class SplitLunch(splitwise.Splitwise):
         List[SplitLunchExpense]
         """
         new_transactions, deleted_transactions = self.get_new_transactions()
-        self.splitwise_to_lunchmoney(expenses=new_transactions)
+        self.splitwise_to_lunchmoney(
+            expenses=new_transactions,
+            allow_self_paid=allow_self_paid,
+            allow_payments=allow_payments,
+        )
         splitwise_asset = self.update_splitwise_balance()
         self.handle_deleted_transactions(deleted_transactions=deleted_transactions)
         return dict(
