@@ -83,7 +83,7 @@ class PlaidAccountObject(LunchableModel):
     name: str = Field(description=_name_description)
     type: str = Field(description=_type_description)
     subtype: str = Field(description=_subtype_description)
-    mask: str = Field(description=_mask_description)
+    mask: Optional[str] = Field(description=_mask_description)
     institution_name: str = Field(description=_institution_name_description)
     status: str = Field(description=_status_description)
     last_import: Optional[datetime.datetime] = Field(
