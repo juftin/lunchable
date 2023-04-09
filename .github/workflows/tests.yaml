@@ -27,13 +27,6 @@ jobs:
                 -   {name: Python 3.9, python: '3.9', tox: py39}
                 -   {name: Python 3.8, python: '3.8', tox: py38}
                 -   {name: Python 3.7, python: '3.7', tox: py37}
-        env:
-            LUNCHMONEY_ACCESS_TOKEN: ${{ secrets.LUNCHMONEY_ACCESS_TOKEN }}
-            SENSITIVE_REQUEST_STRINGS: ${{ secrets.SENSITIVE_REQUEST_STRINGS }}
-            SPLITWISE_CONSUMER_KEY: ${{ secrets.SPLITWISE_CONSUMER_KEY }}
-            SPLITWISE_CONSUMER_SECRET: ${{ secrets.SPLITWISE_CONSUMER_SECRET }}
-            SPLITWISE_API_KEY: ${{ secrets.SPLITWISE_API_KEY }}
-            PUSHOVER_USER_KEY: ${{ secrets.PUSHOVER_USER_KEY }}
         steps:
         -   name: Set up Github Workspace
             uses: actions/checkout@v3
@@ -50,5 +43,5 @@ jobs:
         -   name: Tox Test Suite
             run: |
                 echo "::add-matcher::.github/matchers/python.json"
-                tox -e ${{ matrix.tox }}
+                tox -e ${{ matrix.tox }} -- --vcr-record=none
                 echo "::remove-matcher owner=python::"
