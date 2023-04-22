@@ -321,7 +321,7 @@ def update_splitwise_balance() -> None:
     default=False,
     help="Allow payments to be imported (filtered out by default).",
 )
-def refresh_splitwise_transactions(**kwargs: str) -> None:
+def refresh_splitwise_transactions(allow_self_paid: bool, allow_payments: bool) -> None:
     """
     Import New Splitwise Transactions to Lunch Money and
 
@@ -332,7 +332,9 @@ def refresh_splitwise_transactions(**kwargs: str) -> None:
     from lunchable.plugins.splitlunch import SplitLunch
 
     splitlunch = SplitLunch()
-    response = splitlunch.refresh_splitwise_transactions(**kwargs)
+    response = splitlunch.refresh_splitwise_transactions(
+        allow_self_paid=allow_self_paid, allow_payments=allow_payments
+    )
     print_json(data=response, default=pydantic_encoder)
 
 

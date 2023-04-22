@@ -39,6 +39,9 @@ def test_update_balance():
 
 
 def test_financial_impact():
+    """
+    Test the financial impact algorithm
+    """
     for [file, expected_self_paid, expected_impact] in [
         # For both expenses and transfers, when someone else pays, financial impact should be
         # positive
