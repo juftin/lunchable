@@ -1121,6 +1121,8 @@ class SplitLunch(splitwise.Splitwise):
 
     def get_new_transactions(
         self,
+        dated_after: Optional[datetime.datetime] = None,
+        dated_before: Optional[datetime.datetime] = None,
     ) -> Tuple[List[SplitLunchExpense], List[TransactionObject]]:
         """
         Get Splitwise Transactions that don't exist in Lunch Money
@@ -1145,7 +1147,11 @@ class SplitLunch(splitwise.Splitwise):
             for item in splitlunch_expenses
             if item.external_id is not None
         }
-        splitwise_expenses = self.get_expenses(limit=0)
+        splitwise_expenses = self.get_expenses(
+            limit=0,
+            dated_after=dated_after,
+            dated_before=dated_before,
+        )
         splitwise_ids = {item.splitwise_id for item in splitwise_expenses}
         new_ids = splitwise_ids.difference(splitlunch_ids)
         new_expenses = [
@@ -1199,6 +1205,8 @@ class SplitLunch(splitwise.Splitwise):
 
     def refresh_splitwise_transactions(
         self,
+        dated_after: Optional[datetime.datetime] = None,
+        dated_before: Optional[datetime.datetime] = None,
         allow_self_paid: bool = False,
         allow_payments: bool = False,
     ) -> Dict[str, Any]:
@@ -1212,7 +1220,10 @@ class SplitLunch(splitwise.Splitwise):
         -------
         List[SplitLunchExpense]
         """
-        new_transactions, deleted_transactions = self.get_new_transactions()
+        new_transactions, deleted_transactions = self.get_new_transactions(
+            dated_after=dated_after,
+            dated_before=dated_before,
+        )
         self.splitwise_to_lunchmoney(
             expenses=new_transactions,
             allow_self_paid=allow_self_paid,
