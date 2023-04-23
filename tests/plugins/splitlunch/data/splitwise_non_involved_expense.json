@@ -1,0 +1,83 @@
+{
+    "id": 2166292526,
+    "group_id": 374195,
+    "friendship_id": null,
+    "expense_bundle_id": null,
+    "description": "DoorDash",
+    "repeats": false,
+    "repeat_interval": null,
+    "email_reminder": false,
+    "email_reminder_in_advance": -1,
+    "next_repeat": null,
+    "details": null,
+    "comments_count": 0,
+    "payment": false,
+    "creation_method": null,
+    "transaction_method": "offline",
+    "transaction_confirmed": false,
+    "transaction_id": null,
+    "transaction_status": null,
+    "cost": "55.32",
+    "currency_code": "USD",
+    "repayments": [
+        {
+            "from": 1234102,
+            "to": 370803,
+            "amount": "17.9"
+        }
+    ],
+    "date": "2023-02-04T21:04:21Z",
+    "created_at": "2023-02-04T21:05:40Z",
+    "created_by": {
+        "id": 370803,
+        "first_name": "XXXXXXXXXX",
+        "last_name": "XXXXXXXXXX",
+        "picture": {
+            "medium": "XXXXXXXXXX"
+        },
+        "custom_picture": true
+    },
+    "updated_at": "2023-02-04T21:05:40Z",
+    "updated_by": null,
+    "deleted_at": null,
+    "deleted_by": null,
+    "category": {
+        "id": 13,
+        "name": "Dining out"
+    },
+    "receipt": {
+        "large": null,
+        "original": null
+    },
+    "users": [
+        {
+            "user": {
+                "id": 1234102,
+                "first_name": "XXXXXXXXXX",
+                "last_name": "XXXXXXXXXX",
+                "picture": {
+                    "medium": "XXXXXXXXXX"
+                }
+            },
+            "user_id": 1234102,
+            "paid_share": "0.0",
+            "owed_share": "17.9",
+            "net_balance": "-17.9"
+        },
+        {
+            "user": {
+                "id": 370803,
+                "first_name": "XXXXXXXXXX",
+                "last_name": "XXXXXXXXXX",
+                "picture": {
+                    "medium": "XXXXXXXXXX"
+                }
+            },
+            "user_id": 370803,
+            "paid_share": "55.32",
+            "owed_share": "37.42",
+            "net_balance": "17.9"
+        }
+    ],
+    "comments": []
+}

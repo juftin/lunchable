@@ -1,0 +1,102 @@
+{
+    "id": 2216325479,
+    "group_id": 374195,
+    "friendship_id": null,
+    "expense_bundle_id": null,
+    "description": "Bar",
+    "repeats": false,
+    "repeat_interval": null,
+    "email_reminder": false,
+    "email_reminder_in_advance": -1,
+    "next_repeat": null,
+    "details": null,
+    "comments_count": 0,
+    "payment": false,
+    "creation_method": "equal",
+    "transaction_method": "offline",
+    "transaction_confirmed": false,
+    "transaction_id": null,
+    "transaction_status": null,
+    "cost": "92.47",
+    "currency_code": "USD",
+    "repayments": [
+        {
+            "from": 370803,
+            "to": 1234059,
+            "amount": "30.82"
+        },
+        {
+            "from": 1234102,
+            "to": 1234059,
+            "amount": "30.83"
+        }
+    ],
+    "date": "2023-03-01T08:00:00Z",
+    "created_at": "2023-03-03T17:44:06Z",
+    "created_by": {
+        "id": 1234059,
+        "first_name": "Evan",
+        "last_name": "Broder",
+        "picture": {
+            "medium": "https://splitwise.s3.amazonaws.com/uploads/user/avatar/1234059/medium_headshot.jpg"
+        },
+        "custom_picture": true
+    },
+    "updated_at": "2023-03-03T17:44:06Z",
+    "updated_by": null,
+    "deleted_at": null,
+    "deleted_by": null,
+    "category": {
+        "id": 38,
+        "name": "Liquor"
+    },
+    "receipt": {
+        "large": null,
+        "original": null
+    },
+    "users": [
+        {
+            "user": {
+                "id": 1234059,
+                "first_name": "Evan",
+                "last_name": "Broder",
+                "picture": {
+                    "medium": "https://splitwise.s3.amazonaws.com/uploads/user/avatar/1234059/medium_headshot.jpg"
+                }
+            },
+            "user_id": 1234059,
+            "paid_share": "92.47",
+            "owed_share": "30.82",
+            "net_balance": "61.65"
+        },
+        {
+            "user": {
+                "id": 370803,
+                "first_name": "XXXXXXXXXX",
+                "last_name": "XXXXXXXXXX",
+                "picture": {
+                    "medium": "XXXXXXXXXX"
+                }
+            },
+            "user_id": 370803,
+            "paid_share": "0.0",
+            "owed_share": "30.82",
+            "net_balance": "-30.82"
+        },
+        {
+            "user": {
+                "id": 1234102,
+                "first_name": "XXXXXXXXXX",
+                "last_name": "XXXXXXXXXX",
+                "picture": {
+                    "medium": "XXXXXXXXXX"
+                }
+            },
+            "user_id": 1234102,
+            "paid_share": "0.0",
+            "owed_share": "30.83",
+            "net_balance": "-30.83"
+        }
+    ],
+    "comments": []
+}

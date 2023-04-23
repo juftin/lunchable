@@ -1,0 +1,101 @@
+{
+    "id": 2279028334,
+    "group_id": 374195,
+    "friendship_id": null,
+    "expense_bundle_id": null,
+    "description": "Toilet paper",
+    "repeats": false,
+    "repeat_interval": null,
+    "email_reminder": false,
+    "email_reminder_in_advance": -1,
+    "next_repeat": null,
+    "details": null,
+    "comments_count": 0,
+    "payment": false,
+    "creation_method": null,
+    "transaction_method": "offline",
+    "transaction_confirmed": false,
+    "transaction_id": null,
+    "transaction_status": null,
+    "cost": "29.97",
+    "currency_code": "USD",
+    "repayments": [
+        {
+            "from": 1234059,
+            "to": 370803,
+            "amount": "9.99"
+        },
+        {
+            "from": 1234102,
+            "to": 370803,
+            "amount": "9.99"
+        }
+    ],
+    "date": "2023-04-04T23:11:38Z",
+    "created_at": "2023-04-04T23:11:51Z",
+    "created_by": {
+        "id": 370803,
+        "first_name": "XXXXXXXXXX",
+        "last_name": "XXXXXXXXXX",
+        "picture": {
+            "medium": "XXXXXXXXXX"
+        },
+        "custom_picture": true
+    },
+    "updated_at": "2023-04-04T23:11:51Z",
+    "updated_by": null,
+    "deleted_at": null,
+    "deleted_by": null,
+    "category": {
+        "id": 14,
+        "name": "Household supplies"
+    },
+    "receipt": {
+        "large": null,
+        "original": null
+    },
+    "users": [
+        {
+            "user": {
+                "id": 370803,
+                "first_name": "XXXXXXXXXX",
+                "last_name": "XXXXXXXXXX",
+                "picture": {
+                    "medium": "XXXXXXXXXX"
+                }
+            },
+            "user_id": 370803,
+            "paid_share": "29.97",
+            "owed_share": "9.99",
+            "net_balance": "19.98"
+        },
+        {
+            "user": {
+                "id": 1234102,
+                "first_name": "XXXXXXXXXX",
+                "last_name": "XXXXXXXXXX",
+                "picture": {
+                    "medium": "XXXXXXXXXX"
+                }
+            },
+            "user_id": 1234102,
+            "paid_share": "0.0",
+            "owed_share": "9.99",
+            "net_balance": "-9.99"
+        },
+        {
+            "user": {
+                "id": 1234059,
+                "first_name": "Evan",
+                "last_name": "Broder",
+                "picture": {
+                    "medium": "https://splitwise.s3.amazonaws.com/uploads/user/avatar/1234059/medium_headshot.jpg"
+                }
+            },
+            "user_id": 1234059,
+            "paid_share": "0.0",
+            "owed_share": "9.99",
+            "net_balance": "-9.99"
+        }
+    ]
+}

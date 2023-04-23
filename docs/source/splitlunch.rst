@@ -24,9 +24,11 @@ have prerequisites:
 
 Auto Importer
 -------------
-It supports the auto-importing of Splitwise expenses into Lunch Money
-transactions. This requires a manual asset exist in your Lunch Money
-account with "Splitwise" in the Name.
+It supports the auto-importing of Splitwise expenses into Lunch Money transactions. This requires a
+manual asset exist in your Lunch Money account with "Splitwise" in the Name. Expenses that have been
+deleted or which don't impact you (i.e. are only between other users in your group) are skipped. By
+default, payments and expenses for which you are recorded as the payer are skipped as well, but
+these can be overridden by the `--allow-payments` and `--allow-self-paid` CLI flags, respectively.
 
     Prerequisites:
        - Accounts:

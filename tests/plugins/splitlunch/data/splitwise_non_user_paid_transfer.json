@@ -1,0 +1,91 @@
+{
+    "id": 2229699053,
+    "group_id": 374195,
+    "friendship_id": null,
+    "expense_bundle_id": null,
+    "description": "Payment",
+    "repeats": false,
+    "repeat_interval": null,
+    "email_reminder": false,
+    "email_reminder_in_advance": -1,
+    "next_repeat": null,
+    "details": null,
+    "comments_count": 1,
+    "payment": true,
+    "creation_method": "splitwise_p2p",
+    "transaction_method": "splitwise_p2p",
+    "transaction_confirmed": true,
+    "transaction_id": "4366d04a-68cf-42f5-a6de-48d0101191f3",
+    "transaction_status": "completed",
+    "cost": "523.84",
+    "currency_code": "USD",
+    "repayments": [
+        {
+            "from": 1234059,
+            "to": 370803,
+            "amount": "523.84"
+        }
+    ],
+    "date": "2023-03-10T17:28:50Z",
+    "created_at": "2023-03-10T17:28:50Z",
+    "created_by": {
+        "id": 370803,
+        "first_name": "XXXXXXXXXX",
+        "last_name": "XXXXXXXXXX",
+        "picture": {
+            "medium": "XXXXXXXXXX"
+        },
+        "custom_picture": true
+    },
+    "updated_at": "2023-03-15T23:13:59Z",
+    "updated_by": {
+        "id": 370803,
+        "first_name": "XXXXXXXXXX",
+        "last_name": "XXXXXXXXXX",
+        "picture": {
+            "medium": "XXXXXXXXXX"
+        },
+        "custom_picture": true
+    },
+    "deleted_at": null,
+    "deleted_by": null,
+    "category": {
+        "id": 18,
+        "name": "General"
+    },
+    "receipt": {
+        "large": null,
+        "original": null
+    },
+    "users": [
+        {
+            "user": {
+                "id": 370803,
+                "first_name": "XXXXXXXXXX",
+                "last_name": "XXXXXXXXXX",
+                "picture": {
+                    "medium": "XXXXXXXXXX"
+                }
+            },
+            "user_id": 370803,
+            "paid_share": "523.84",
+            "owed_share": "0.0",
+            "net_balance": "523.84"
+        },
+        {
+            "user": {
+                "id": 1234059,
+                "first_name": "Evan",
+                "last_name": "Broder",
+                "picture": {
+                    "medium": "https://splitwise.s3.amazonaws.com/uploads/user/avatar/1234059/medium_headshot.jpg"
+                }
+            },
+            "user_id": 1234059,
+            "paid_share": "0.0",
+            "owed_share": "523.84",
+            "net_balance": "-523.84"
+        }
+    ],
+    "comments": []
+}

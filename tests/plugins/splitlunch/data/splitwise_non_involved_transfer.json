@@ -1,0 +1,83 @@
+{
+    "id": 2004096100,
+    "group_id": 374195,
+    "friendship_id": null,
+    "expense_bundle_id": null,
+    "description": "Payment",
+    "repeats": false,
+    "repeat_interval": null,
+    "email_reminder": false,
+    "email_reminder_in_advance": -1,
+    "next_repeat": null,
+    "details": null,
+    "comments_count": 1,
+    "payment": true,
+    "creation_method": "payment",
+    "transaction_method": "offline",
+    "transaction_confirmed": false,
+    "transaction_id": null,
+    "transaction_status": null,
+    "cost": "716.21",
+    "currency_code": "USD",
+    "repayments": [
+        {
+            "from": 370803,
+            "to": 1234102,
+            "amount": "716.21"
+        }
+    ],
+    "date": "2022-11-06T01:20:22Z",
+    "created_at": "2022-11-06T01:20:25Z",
+    "created_by": {
+        "id": 1234102,
+        "first_name": "XXXXXXXXXX",
+        "last_name": "XXXXXXXXXX",
+        "picture": {
+            "medium": "XXXXXXXXXX"
+        },
+        "custom_picture": false
+    },
+    "updated_at": "2022-11-06T01:20:25Z",
+    "updated_by": null,
+    "deleted_at": null,
+    "deleted_by": null,
+    "category": {
+        "id": 18,
+        "name": "General"
+    },
+    "receipt": {
+        "large": null,
+        "original": null
+    },
+    "users": [
+        {
+            "user": {
+                "id": 370803,
+                "first_name": "XXXXXXXXXX",
+                "last_name": "XXXXXXXXXX",
+                "picture": {
+                    "medium": "XXXXXXXXXX"
+                }
+            },
+            "user_id": 370803,
+            "paid_share": "0.0",
+            "owed_share": "716.21",
+            "net_balance": "-716.21"
+        },
+        {
+            "user": {
+                "id": 1234102,
+                "first_name": "XXXXXXXXXX",
+                "last_name": "XXXXXXXXXX",
+                "picture": {
+                    "medium": "XXXXXXXXXX"
+                }
+            },
+            "user_id": 1234102,
+            "paid_share": "716.21",
+            "owed_share": "0.0",
+            "net_balance": "716.21"
+        }
+    ],
+    "comments": []
+}
