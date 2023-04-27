@@ -1,0 +1,20 @@
+name: verify2
+on:
+    pull_request:
+        types: [opened, synchronize, reopened]
+
+jobs:
+    verify:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v3
+            - name: Print unique ID
+              run: echo "test_var=test" >> $GITHUB_ENV
+            - name: Do something else
+              run: echo ${{ env.test_var }}
+            - name: Print unique ID 2
+              id: test
+              run: echo "test_var=test" >> "$GITHUB_OUTPUT"
+            - name: Do something else again
+              run: echo ${{ steps.test.outputs.test }}
