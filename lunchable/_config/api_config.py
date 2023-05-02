@@ -149,12 +149,12 @@ class APIConfig:
         url: str
             Compiled URL
         """
-        url_components = dict(
-            scheme=scheme,
-            netloc=netloc,
-            path=path,
-            params=params,
-            query=query,
-            fragment=fragment,
-        )
+        url_components = {
+            "scheme": scheme,
+            "netloc": netloc,
+            "path": path,
+            "params": params,
+            "query": query,
+            "fragment": fragment,
+        }
         return parse.urlunparse(components=tuple(url_components.values()))

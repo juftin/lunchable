@@ -4,6 +4,7 @@ Lunchmoney CLI
 
 import datetime
 import logging
+import sys
 from json import JSONDecodeError
 from typing import Any, Dict, Optional, Union
 
@@ -418,7 +419,7 @@ def http(context: LunchMoneyContext, url: str, request: str, data: str) -> None:
     except requests.HTTPError:
         logger.error(resp)
         print(resp.text)
-        exit(1)
+        sys.exit(1)
     try:
         response = resp.json()
     except JSONDecodeError:

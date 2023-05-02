@@ -71,13 +71,13 @@ class PushLunch:
                 "You must provide a Pushover User Key or define it with "
                 "a `PUSHOVER_USER_KEY` environment variable"
             )
-        self._params = dict(user=user_key, token=token)
+        self._params = {"user": user_key, "token": token}
         self.lunchable = lunchable_client or LunchMoney(
             access_token=lunchmoney_access_token
         )
         self.asset_mapping = self._get_assets()
         self.category_mapping = self._get_categories()
-        self.notified_transactions: List[int] = list()
+        self.notified_transactions: List[int] = []
 
     def send_notification(
         self,
@@ -129,18 +129,18 @@ class PushLunch:
         requests.Response
         """
         html_param = 1 if html not in [None, False] else None
-        params_dict = dict(
-            message=message,
-            attachment=attachment,
-            device=device,
-            title=title,
-            url=url,
-            url_title=url_title,
-            priority=priority,
-            sound=sound,
-            timestamp=timestamp,
-            html=html_param,
-        )
+        params_dict = {
+            "message": message,
+            "attachment": attachment,
+            "device": device,
+            "title": title,
+            "url": url,
+            "url_title": url_title,
+            "priority": priority,
+            "sound": sound,
+            "timestamp": timestamp,
+            "html": html_param,
+        }
         params: Dict[str, Any] = {
             key: value for key, value in params_dict.items() if value is not None
         }
@@ -219,7 +219,7 @@ class PushLunch:
         manual_assets = self.lunchable.get_assets()
         plaid_account = self.lunchable.get_plaid_accounts()
         assets = [*manual_assets, *plaid_account]
-        asset_mapping = dict()
+        asset_mapping = {}
         for account in assets:
             if isinstance(account, AssetsObject):
                 if account.display_name is None:
@@ -240,7 +240,7 @@ class PushLunch:
         Dict[int, str]
         """
         categories = self.lunchable.get_categories()
-        category_mapping = dict()
+        category_mapping = {}
         for category in categories:
             category_mapping[category.id] = category.name
         return category_mapping
@@ -311,7 +311,7 @@ class PushLunch:
         if continuous is True:
             logger.info("Continuous Notifications Enabled. Beginning PushLunch.")
 
-        uncleared_transactions = list()
+        uncleared_transactions = []
         continuous_search = True
 
         while continuous_search is True:
