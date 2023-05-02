@@ -90,7 +90,7 @@ class LunchMoneyAPIClient:
         url_path: Union[List[Union[str, int]], str, int],
         params: Optional[Dict[str, Any]] = None,
         payload: Optional[Any] = None,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> Any:
         """
         Make a Request to the API
@@ -123,7 +123,7 @@ class LunchMoneyAPIClient:
             logger.exception(he)
             # noinspection PyUnboundLocalVariable
             logger.error(response.text)
-            raise LunchMoneyHTTPError(he)
+            raise LunchMoneyHTTPError(he) from he
         returned_data = loads(response.content)
         if isinstance(returned_data, dict) and any(
             ["error" in returned_data.keys(), "errors" in returned_data.keys()]
@@ -143,7 +143,7 @@ class LunchMoneyAPIClient:
         params: Optional[Any] = None,
         data: Optional[Any] = None,
         json: Optional[Any] = None,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> requests.Response:
         """
         Make a HTTP Request

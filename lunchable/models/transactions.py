@@ -249,11 +249,11 @@ class TransactionObject(TransactionBaseObject):
     _is_group_description = """
     True if this transaction represents a group of transactions. If so, amount
     and currency represent the totalled amount of transactions bearing this
-    transaction’s id as their group_id. Amount is calculated based on the
-    user’s primary currency.
+    transaction's id as their group_id. Amount is calculated based on the
+    user's primary currency.
     """
     _group_id_description = """
-    Exists if this transaction is part of a group. Denotes the parent’s transaction ID
+    Exists if this transaction is part of a group. Denotes the parent's transaction ID
     """
     _external_id_description = """
     User-defined external ID for any manually-entered or imported transaction.
@@ -490,10 +490,10 @@ class TransactionsClient(LunchMoneyAPIClient):
             Please check the response length to determine if you should make another
             call with an offset to fetch more transactions.
         debit_as_negative: Optional[bool]
-            Pass in true if you’d like expenses to be returned as negative amounts and
+            Pass in true if you'd like expenses to be returned as negative amounts and
             credits as positive amounts. Defaults to false.
         pending: Optional[bool]
-            Pass in true if you’d like to include imported transactions with a pending status.
+            Pass in true if you'd like to include imported transactions with a pending status.
         params: Optional[dict]
             Additional Query String Params
 
@@ -688,7 +688,7 @@ class TransactionsClient(LunchMoneyAPIClient):
             Transactions to insert. Either a single TransactionInsertObject object or
             a list of them
         apply_rules: bool
-            If true, will apply account’s existing rules to the inserted transactions.
+            If true, will apply account's existing rules to the inserted transactions.
             Defaults to false.
         skip_duplicates: bool
             If true, the system will automatically dedupe based on transaction date,
@@ -721,7 +721,7 @@ class TransactionsClient(LunchMoneyAPIClient):
                                                       notes="Saturday Dinner")
             new_transaction_ids = lunch.insert_transactions(transactions=new_transaction)
         """
-        insert_objects = list()
+        insert_objects = []
         if not isinstance(transactions, list):
             transactions = [transactions]
         for item in transactions:

@@ -344,14 +344,12 @@ class LunchableTransactionsBaseApp(LunchableApp, ABC):
         """
         Which Data Should this app get
         """
-        return super().__builtin_data_models__ + [
+        return [
+            *super().__builtin_data_models__,
             LunchableDataModel(
                 model=TransactionObject,
                 function=self.lunch.get_transactions,
-                kwargs={
-                    "start_date": self.start_date,
-                    "end_date": self.end_date,
-                },
+                kwargs={"start_date": self.start_date, "end_date": self.end_date},
             ),
         ]
 

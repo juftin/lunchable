@@ -36,7 +36,7 @@ except ImportError as ie:
         "Looks like you don't have the Splitwise plugin installed: "
         f"`pip install {__application__}[splitlunch]`"
     )
-    raise LunchMoneyImportError(_pip_extra_error)
+    raise LunchMoneyImportError(_pip_extra_error) from ie
 
 
 def _get_splitwise_impact(
@@ -234,10 +234,10 @@ class SplitLunch(splitwise.Splitwise):
         """
         try:
             assert amount == round(amount, 2)
-        except AssertionError:
+        except AssertionError as ae:
             raise SplitLunchError(
                 f"{amount} caused an error, you must provide a real " "spending amount."
-            )
+            ) from ae
         equal_shares = round(amount, 2) / splits
         remainder_dollars = floor(equal_shares)
         remainder_cents = floor((equal_shares - remainder_dollars) * 100) / 100
@@ -316,8 +316,8 @@ class SplitLunch(splitwise.Splitwise):
         expense_response, expense_errors = self.createExpense(expense=new_expense)
         try:
             assert expense_errors is None
-        except AssertionError:
-            raise SplitLunchError(expense_errors["base"][0])
+        except AssertionError as ae:
+            raise SplitLunchError(expense_errors["base"][0]) from ae
         logger.info("Expense Created: %s", expense_response.id)
         message = f"Created via SplitLunch: {datetime.datetime.now()}"
         self.createComment(expense_id=expense_response.id, content=message)
@@ -368,8 +368,8 @@ class SplitLunch(splitwise.Splitwise):
         expense_response, expense_errors = self.createExpense(expense=new_expense)
         try:
             assert expense_errors is None
-        except AssertionError:
-            raise SplitLunchError(expense_errors["base"][0])
+        except AssertionError as ae:
+            raise SplitLunchError(expense_errors["base"][0]) from ae
         logger.info("Expense Created: %s", expense_response.id)
         message = f"Created via SplitLunch: {datetime.datetime.now()}"
         self.createComment(expense_id=expense_response.id, content=message)
@@ -481,9 +481,11 @@ class SplitLunch(splitwise.Splitwise):
             consumer_secret = getenv("SPLITWISE_CONSUMER_SECRET")
         if api_key is None:
             api_key = getenv("SPLITWISE_API_KEY", None)
-        init_kwargs = dict(
-            consumer_key=consumer_key, consumer_secret=consumer_secret, api_key=api_key
-        )
+        init_kwargs = {
+            "consumer_key": consumer_key,
+            "consumer_secret": consumer_secret,
+            "api_key": api_key,
+        }
         if consumer_key is None or consumer_secret is None or api_key is None:
             error_message = (
                 dedent(
@@ -545,7 +547,7 @@ class SplitLunch(splitwise.Splitwise):
         AssetsObject
         """
         assets = self.lunchable.get_assets()
-        splitwise_assets = list()
+        splitwise_assets = []
         for asset in assets:
             if (
                 asset.institution_name is not None
@@ -575,7 +577,7 @@ class SplitLunch(splitwise.Splitwise):
         CategoriesObject
         """
         categories = self.lunchable.get_categories()
-        reimbursement_list = list()
+        reimbursement_list = []
         for category in categories:
             if "reimbursement" == category.name.strip().lower():
                 reimbursement_list.append(category)
@@ -780,7 +782,7 @@ class SplitLunch(splitwise.Splitwise):
         if self.reimbursement_category is None:
             self._raise_category_reimbursement_error()
             raise ValueError("ReimbursementCategory")
-        split_transaction_ids = list()
+        split_transaction_ids = []
         tagged_objects = self.get_splitlunch_tagged_transactions()
         for transaction in tagged_objects:
             # Split the Original Amount
@@ -854,7 +856,7 @@ class SplitLunch(splitwise.Splitwise):
             self._raise_category_reimbursement_error()
             raise ValueError("ReimbursementCategory")
         tagged_objects = self.get_splitlunch_import_tagged_transactions()
-        update_responses = list()
+        update_responses = []
         for transaction in tagged_objects:
             # Split the Original Amount
             description = str(transaction.payee)
@@ -886,16 +888,16 @@ class SplitLunch(splitwise.Splitwise):
                 transaction_id=transaction.id,
                 split=[split_object, reimbursement_object],
             )
-            formatted_update_response = dict(
-                original_id=transaction.id,
-                payee=transaction.payee,
-                amount=transaction.amount,
-                reimbursement_amount=reimbursement_object.amount,
-                notes=transaction.notes,
-                splitwise_id=new_transaction.splitwise_id,
-                updated=update_response["updated"],
-                split=update_response["split"],
-            )
+            formatted_update_response = {
+                "original_id": transaction.id,
+                "payee": transaction.payee,
+                "amount": transaction.amount,
+                "reimbursement_amount": reimbursement_object.amount,
+                "notes": transaction.notes,
+                "splitwise_id": new_transaction.splitwise_id,
+                "updated": update_response["updated"],
+                "split": update_response["split"],
+            }
             update_responses.append(formatted_update_response)
             # Tag each of the new transactions generated
             for split_transaction_id in update_response["split"]:
@@ -937,7 +939,7 @@ class SplitLunch(splitwise.Splitwise):
             self._raise_category_reimbursement_error()
             raise ValueError("ReimbursementCategory")
         tagged_objects = self.get_splitlunch_direct_import_tagged_transactions()
-        update_responses = list()
+        update_responses = []
         for transaction in tagged_objects:
             # Split the Original Amount
             description = str(transaction.payee)
@@ -964,16 +966,16 @@ class SplitLunch(splitwise.Splitwise):
             response = self.lunchable.update_transaction(
                 transaction_id=transaction.id, transaction=update
             )
-            formatted_update_response = dict(
-                original_id=transaction.id,
-                payee=transaction.payee,
-                amount=transaction.amount,
-                reimbursement_amount=transaction.amount,
-                notes=transaction.notes,
-                splitwise_id=new_transaction.splitwise_id,
-                updated=response["updated"],
-                split=None,
-            )
+            formatted_update_response = {
+                "original_id": transaction.id,
+                "payee": transaction.payee,
+                "amount": transaction.amount,
+                "reimbursement_amount": transaction.amount,
+                "notes": transaction.notes,
+                "splitwise_id": new_transaction.splitwise_id,
+                "updated": response["updated"],
+                "split": None,
+            }
             update_responses.append(formatted_update_response)
         return update_responses
 
@@ -1065,7 +1067,7 @@ class SplitLunch(splitwise.Splitwise):
         -------
         List[SplitLunchExpense]
         """
-        filtered_expenses = list()
+        filtered_expenses = []
         for splitwise_transaction in expenses:
             if all(
                 [
@@ -1231,11 +1233,11 @@ class SplitLunch(splitwise.Splitwise):
         )
         splitwise_asset = self.update_splitwise_balance()
         self.handle_deleted_transactions(deleted_transactions=deleted_transactions)
-        return dict(
-            balance=splitwise_asset.balance,
-            new=new_transactions,
-            deleted=deleted_transactions,
-        )
+        return {
+            "balance": splitwise_asset.balance,
+            "new": new_transactions,
+            "deleted": deleted_transactions,
+        }
 
     def handle_deleted_transactions(
         self,
@@ -1252,7 +1254,7 @@ class SplitLunch(splitwise.Splitwise):
         -------
         List[Dict[str, Any]]
         """
-        updated_transactions = list()
+        updated_transactions = []
         for transaction in deleted_transactions:
             update = self.lunchable.update_transaction(
                 transaction_id=transaction.id,

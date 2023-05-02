@@ -2,7 +2,6 @@
 Run Tests on the Splitwise Plugin
 """
 
-import datetime
 import json
 import logging
 from os import path
@@ -22,7 +21,7 @@ def test_import_splitwise():
     """
     test_case = True
     try:
-        from lunchable.plugins.splitlunch import SplitLunch
+        from lunchable.plugins.splitlunch import SplitLunch  # noqa
     except ImportError:
         test_case = False
     finally:

@@ -142,7 +142,7 @@ class RecurringExpensesClient(LunchMoneyAPIClient):
         start_date : Optional[datetime.date]
             Date to search. By default will return the first day of the current month
         debit_as_negative: bool
-            Pass in true if you’d like expenses to be returned as negative amounts and credits as
+            Pass in true if you'd like expenses to be returned as negative amounts and credits as
             positive amounts.
 
         Returns
