@@ -14,8 +14,8 @@
 [![GitHub License](https://img.shields.io/github/license/juftin/lunchable?color=blue&label=License)](https://github.com/juftin/lunchable/blob/main/LICENSE)
 
 **lunchable** is a Python Client for the [Lunch Money Developer API](https://lunchmoney.dev). It's
-built on top of [pydantic](https://github.com/samuelcolvin/pydantic), it offers an *intuitive* API,
-a *simple* CLI, complete coverage of all endpoints, and *plugins* to other external services.
+built on top of [pydantic](https://github.com/samuelcolvin/pydantic), it offers an _intuitive_ API,
+a _simple_ CLI, complete coverage of all endpoints, and _plugins_ to other external services.
 
 ### Installation
 
@@ -45,12 +45,14 @@ lunchable http -X GET https://dev.lunchmoney.app/v1/assets
 ```
 
 ### Check out the [**Docs**](https://juftin.com/lunchable/)
+
 ### Looking to contribute? See the [Contributing Guide](docs/source/contributing.md)
+
 ### See the [Changelog](https://github.com/juftin/lunchable/releases)
 
+---
 
---------------
---------------
+---
 
 <br/>
 

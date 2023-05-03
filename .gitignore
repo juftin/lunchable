@@ -140,3 +140,6 @@ node_modules/
 
 # Lunchable Data
 lunchable/data/
+
+# Requirements Files
+requirements/*.bak

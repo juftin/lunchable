@@ -1,6 +1,6 @@
-* lunchable version:
-* Python version:
-* Operating System:
+-   lunchable version:
+-   Python version:
+-   Operating System:
 
 ### Description
 
