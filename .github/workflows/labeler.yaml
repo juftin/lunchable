@@ -17,7 +17,6 @@ on:
         -   main
 
 jobs:
-
     label-sync:
         if: github.event_name == 'push'
         runs-on: ubuntu-latest

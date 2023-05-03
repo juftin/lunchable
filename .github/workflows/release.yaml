@@ -5,6 +5,7 @@ on:
 jobs:
     release:
         name: Release
+        if: github.repository_owner == 'juftin'
         runs-on: ubuntu-latest
         steps:
         -   name: Checkout
@@ -14,16 +15,15 @@ jobs:
         -   name: Set up Python
             uses: actions/setup-python@v4
             with:
-                python-version: 3.9
-        -   name: Install Poetry
+                python-version: '3.10'
+        -   name: Install Hatch
             run: |
-                python -m pip install -q poetry
-                poetry --version
-        -   name: Install Semantic Release
-            run: |
-                npm install --prefix .github/semantic_release
+                python -m pip install --upgrade pip
+                python -m pip install -q hatch
+                hatch -v env create
+                hatch --version
         -   name: Release
-            run: npx --prefix .github/semantic_release semantic-release
+            run: hatch run semantic-release
             env:
                 GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
                 GIT_AUTHOR_NAME: github-actions[bot]
@@ -33,7 +33,7 @@ jobs:
 
     github-pages-publish:
         needs: release
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && github.repository_owner == 'juftin'
         runs-on: ubuntu-latest
         steps:
         -   name: Checkout Latest Changes
@@ -57,15 +57,17 @@ jobs:
         -   name: Set up Python Environment
             uses: actions/setup-python@v4
             with:
-                python-version: '3.9'
-        -   name: Install Test Dependencies
+                python-version: '3.10'
+        -   name: Install Hatch
             run: |
-                python -m pip install --upgrade pip wheel
-                python -m pip install tox poetry
+                python -m pip install --upgrade pip
+                python -m pip install -q hatch
+                hatch -v env create
+                hatch --version
         -   name: Tox Sphinx Generation
             working-directory: ${{ github.workspace }}/main
             run: |
-                tox -e sphinx
+                hatch run docs-build
         -   name: Setup Git Config
             run: |
                 git config --global user.name "github-actions[bot]"
