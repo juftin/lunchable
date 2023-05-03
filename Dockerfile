@@ -1,5 +1,5 @@
 ARG BASE_IMAGE
-FROM ${BASE_IMAGE:-python:3.9-slim}
+FROM ${BASE_IMAGE:-python:3.10-slim}
 
 MAINTAINER Justin Flannery "juftin@juftin.com"
 
