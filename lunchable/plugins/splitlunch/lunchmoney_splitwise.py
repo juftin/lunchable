@@ -878,7 +878,7 @@ class SplitLunch(splitwise.Splitwise):
                 ),
             )
             reimbursement_object = split_object.copy()
-            reimbursement_object.amount = new_transaction.financial_impact
+            reimbursement_object.amount = abs(new_transaction.financial_impact)
             reimbursement_object.category_id = self.reimbursement_category.id
             logger.debug(
                 f"Transaction split by Splitwise: {transaction.amount} -> "
