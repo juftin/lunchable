@@ -272,7 +272,7 @@ class SplitLunch(splitwise.Splitwise):
         return amounts_due
 
     def create_self_paid_expense(
-        self, amount: float, description: str
+        self, amount: float, description: str, date: datetime.date
     ) -> SplitLunchExpense:
         """
         Create and Submit a Splitwise Expense
@@ -291,6 +291,7 @@ class SplitLunch(splitwise.Splitwise):
         # CREATE THE NEW EXPENSE OBJECT
         new_expense = splitwise.Expense()
         new_expense.setDescription(desc=description)
+        new_expense.setDate(date=date)
         if self.financial_group:
             new_expense.setGroupId(self.financial_group)
         # GET AND SET AMOUNTS OWED
@@ -325,7 +326,7 @@ class SplitLunch(splitwise.Splitwise):
         return pydantic_response
 
     def create_expense_on_behalf_of_partner(
-        self, amount: float, description: str
+        self, amount: float, description: str, date: datetime.date
     ) -> SplitLunchExpense:
         """
         Create and Submit a Splitwise Expense on behalf of your financial partner.
@@ -346,6 +347,7 @@ class SplitLunch(splitwise.Splitwise):
         # CREATE THE NEW EXPENSE OBJECT
         new_expense = splitwise.Expense()
         new_expense.setDescription(desc=description)
+        new_expense.setDate(date=date)
         if self.financial_group:
             new_expense.setGroupId(self.financial_group)
         # GET AND SET AMOUNTS OWED
@@ -863,7 +865,9 @@ class SplitLunch(splitwise.Splitwise):
             if transaction.notes is not None:
                 description = f"{transaction.payee} - {transaction.notes}"
             new_transaction = self.create_self_paid_expense(
-                amount=transaction.amount, description=description
+                amount=transaction.amount,
+                description=description,
+                date=transaction.date,
             )
             notes = f"Splitwise ID: {new_transaction.splitwise_id}"
             if transaction.notes is not None:
@@ -946,7 +950,9 @@ class SplitLunch(splitwise.Splitwise):
             if transaction.notes is not None:
                 description = f"{transaction.payee} - {transaction.notes}"
             new_transaction = self.create_expense_on_behalf_of_partner(
-                amount=transaction.amount, description=description
+                amount=transaction.amount,
+                description=description,
+                date=transaction.date,
             )
             notes = f"Splitwise ID: {new_transaction.splitwise_id}"
             if transaction.notes is not None:
