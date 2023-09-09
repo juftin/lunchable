@@ -92,6 +92,7 @@ dependencies = [
 features = [
   "all"
 ]
+path = ".venv"
 pre-install-commands = ["pip install -U --no-deps -r requirements/dev.txt"]
 
 [tool.hatch.envs.default.env-vars]

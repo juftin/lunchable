@@ -388,7 +388,8 @@ class LunchableTransactionsApp(LunchableTransactionsBaseApp):
         -------
         datetime.date
         """
-        return datetime.date.today() - datetime.timedelta(days=365)
+        today = datetime.date.today()
+        return today.replace(year=today.year - 100)
 
     @property
     def end_date(self) -> datetime.date:
@@ -399,4 +400,5 @@ class LunchableTransactionsApp(LunchableTransactionsBaseApp):
         -------
         datetime.date
         """
-        return datetime.date.today() + datetime.timedelta(days=1)
+        today = datetime.date.today()
+        return today.replace(year=today.year + 100)
