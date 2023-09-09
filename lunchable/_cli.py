@@ -43,7 +43,7 @@ access_token_option = click.option(
 )
 
 
-@click.group()
+@click.group(invoke_without_command=True)
 @click.version_option(
     version=lunchable.__version__, prog_name=lunchable.__application__
 )
@@ -57,6 +57,8 @@ def cli(ctx: click.core.Context, debug: bool, access_token: str) -> None:
     ctx.obj = LunchMoneyContext(debug=debug, access_token=access_token)
     traceback.install(show_locals=debug)
     set_up_logging(log_level=logging.DEBUG if debug is True else logging.INFO)
+    if ctx.invoked_subcommand is None:
+        click.echo(ctx.get_help())
 
 
 @cli.group()
@@ -387,8 +389,6 @@ def notify(continuous: bool, interval: int, user_key: str) -> None:
     push = PushLunch(user_key=user_key)
     if interval is not None:
         interval = int(interval)
-    if continuous is not None:
-        set_up_logging(log_level=logging.INFO)
     push.notify_uncleared_transactions(continuous=continuous, interval=interval)
 
 

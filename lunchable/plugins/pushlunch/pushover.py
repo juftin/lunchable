@@ -2,7 +2,6 @@
 Pushover Notifications via lunchable
 """
 
-import datetime
 import logging
 from base64 import b64decode
 from json import loads
@@ -13,8 +12,13 @@ from typing import Any, Dict, List, Optional
 
 import requests
 
-from lunchable import LunchMoney
-from lunchable.models import AssetsObject, PlaidAccountObject, TransactionObject
+from lunchable.models import (
+    AssetsObject,
+    CategoriesObject,
+    PlaidAccountObject,
+    TransactionObject,
+)
+from lunchable.plugins import LunchableApp
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +31,7 @@ class PushLunchError(Exception):
     pass
 
 
-class PushLunch:
+class PushLunch(LunchableApp):
     """
     Lunch Money Pushover Notifications via Lunchable
     """
@@ -39,7 +43,6 @@ class PushLunch:
         user_key: Optional[str] = None,
         app_token: Optional[str] = None,
         lunchmoney_access_token: Optional[str] = None,
-        lunchable_client: Optional[LunchMoney] = None,
     ):
         """
         Initialize
@@ -55,11 +58,10 @@ class PushLunch:
         lunchmoney_access_token: Optional[str]
             LunchMoney Access Token. Will be inherited from `LUNCHMONEY_ACCESS_TOKEN`
             environment variable.
-        lunchable_client: Optional[LunchMoney]
-            lunchable client to use. One will be created if none provided.
         """
-        self.session = requests.Session()
-        self.session.headers.update({"Content-Type": "application/json"})
+        super().__init__(access_token=lunchmoney_access_token)
+        self.pushover_session = requests.Session()
+        self.pushover_session.headers.update({"Content-Type": "application/json"})
 
         _courtesy_token = b"YXpwMzZ6MjExcWV5OGFvOXNicWF0cmdraXc4aGVz"
         if app_token is None:
@@ -72,11 +74,9 @@ class PushLunch:
                 "a `PUSHOVER_USER_KEY` environment variable"
             )
         self._params = {"user": user_key, "token": token}
-        self.lunchable = lunchable_client or LunchMoney(
-            access_token=lunchmoney_access_token
+        self.get_latest_cache(
+            include=[AssetsObject, PlaidAccountObject, CategoriesObject]
         )
-        self.asset_mapping = self._get_assets()
-        self.category_mapping = self._get_categories()
         self.notified_transactions: List[int] = []
 
     def send_notification(
@@ -145,7 +145,7 @@ class PushLunch:
             key: value for key, value in params_dict.items() if value is not None
         }
         params.update(self._params)
-        response = self.session.post(url=self.pushover_endpoint, params=params)
+        response = self.pushover_session.post(url=self.pushover_endpoint, params=params)
         response.raise_for_status()
         return response
 
@@ -171,16 +171,21 @@ class PushLunch:
         if transaction.category_id is None:
             category = "N/A"
         else:
-            category = self.category_mapping[transaction.category_id]
+            category = self.lunch_data.categories[transaction.category_id].name
         account_id = transaction.plaid_account_id or transaction.asset_id
         assert account_id is not None
+        account = self.lunch_data.asset_map[account_id]
+        if isinstance(account, AssetsObject):
+            account_name = account.display_name or account.name
+        else:
+            account_name = account.name
         transaction_formatted = dedent(
             f"""
         <b>Payee:</b> <i>{transaction.payee}</i>
         <b>Amount:</b> <i>{self._format_float(transaction.amount)}</i>
         <b>Date:</b> <i>{transaction.date.strftime("%A %B %-d, %Y")}</i>
         <b>Category:</b> <i>{category}</i>
-        <b>Account:</b> <i>{self.asset_mapping[account_id]}</i>
+        <b>Account:</b> <i>{account_name}</i>
         """
         ).strip()
         if transaction.currency is not None:
@@ -208,43 +213,6 @@ class PushLunch:
         self.notified_transactions.append(transaction.id)
         return loads(response.content)
 
-    def _get_assets(self) -> Dict[int, str]:
-        """
-        Get Mapping Of Asset ID -> Asset Name
-
-        Returns
-        -------
-        Dict[int, str]
-        """
-        manual_assets = self.lunchable.get_assets()
-        plaid_account = self.lunchable.get_plaid_accounts()
-        assets = [*manual_assets, *plaid_account]
-        asset_mapping = {}
-        for account in assets:
-            if isinstance(account, AssetsObject):
-                if account.display_name is None:
-                    name = account.name
-                else:
-                    name = account.display_name
-                asset_mapping[account.id] = name
-            elif isinstance(account, PlaidAccountObject):
-                asset_mapping[account.id] = account.name
-        return asset_mapping
-
-    def _get_categories(self) -> Dict[int, str]:
-        """
-        Get Mapping Of Category ID -> Category Name
-
-        Returns
-        -------
-        Dict[int, str]
-        """
-        categories = self.lunchable.get_categories()
-        category_mapping = {}
-        for category in categories:
-            category_mapping[category.id] = category.name
-        return category_mapping
-
     @classmethod
     def _format_float(cls, amount: float) -> str:
         """
@@ -264,23 +232,6 @@ class PushLunch:
         else:
             float_string = "$ {:,.2f}".format(float(amount))
         return float_string
-
-    def _get_uncleared_transactions(
-        self,
-        start_date: Optional[datetime.datetime] = None,
-        end_date: Optional[datetime.datetime] = None,
-    ) -> List[TransactionObject]:
-        """
-        Get Uncleared Transactions
-
-        Returns
-        -------
-        List[TransactionObject]
-        """
-        uncleared_transactions = self.lunchable.get_transactions(
-            start_date=start_date, end_date=end_date, status="uncleared"
-        )
-        return uncleared_transactions
 
     def notify_uncleared_transactions(
         self, continuous: bool = False, interval: Optional[int] = None
@@ -316,7 +267,7 @@ class PushLunch:
 
         while continuous_search is True:
             found_transactions = len(self.notified_transactions)
-            uncleared_transactions += self._get_uncleared_transactions()
+            uncleared_transactions += self.lunch.get_transactions(status="uncleared")
             for transaction in uncleared_transactions:
                 self.post_transaction(transaction=transaction)
             if continuous is True:

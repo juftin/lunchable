@@ -55,7 +55,7 @@ class LunchableDataContainer(BaseModel):
     user: UserObject = UserObject(
         user_id=0, user_name="", user_email="", account_id=0, budget_name=""
     )
-    crypto: Dict[int, UserObject] = {}
+    crypto: Dict[int, CryptoObject] = {}
 
     @property
     def asset_map(self) -> Dict[int, Union[PlaidAccountObject, AssetsObject]]:
@@ -70,6 +70,72 @@ class LunchableDataContainer(BaseModel):
         asset_map.update(self.plaid_accounts)
         asset_map.update(self.assets)
         return asset_map
+
+    @property
+    def plaid_accounts_list(self) -> List[PlaidAccountObject]:
+        """
+        List of Plaid Accounts
+
+        Returns
+        -------
+        List[PlaidAccountObject]
+        """
+        return list(self.plaid_accounts.values())
+
+    @property
+    def assets_list(self) -> List[AssetsObject]:
+        """
+        List of Assets
+
+        Returns
+        -------
+        List[AssetsObject]
+        """
+        return list(self.assets.values())
+
+    @property
+    def transactions_list(self) -> List[TransactionObject]:
+        """
+        List of Transactions
+
+        Returns
+        -------
+        List[TransactionObject]
+        """
+        return list(self.transactions.values())
+
+    @property
+    def categories_list(self) -> List[CategoriesObject]:
+        """
+        List of Categories
+
+        Returns
+        -------
+        List[CategoriesObject]
+        """
+        return list(self.categories.values())
+
+    @property
+    def tags_list(self) -> List[TagsObject]:
+        """
+        List of Tags
+
+        Returns
+        -------
+        List[TagsObject]
+        """
+        return list(self.tags.values())
+
+    @property
+    def crypto_list(self) -> List[CryptoObject]:
+        """
+        List of Crypto
+
+        Returns
+        -------
+        List[CryptoObject]
+        """
+        return list(self.crypto.values())
 
 
 class BaseLunchableApp(ABC):
@@ -234,17 +300,70 @@ class BaseLunchableApp(ABC):
             )
 
     def refresh_transactions(
-        self, start_date: datetime.date, end_date: datetime.date
+        self,
+        start_date: Optional[Union[datetime.date, datetime.datetime, str]] = None,
+        end_date: Optional[Union[datetime.date, datetime.datetime, str]] = None,
+        tag_id: Optional[int] = None,
+        recurring_id: Optional[int] = None,
+        plaid_account_id: Optional[int] = None,
+        category_id: Optional[int] = None,
+        asset_id: Optional[int] = None,
+        group_id: Optional[int] = None,
+        is_group: Optional[bool] = None,
+        status: Optional[str] = None,
+        offset: Optional[int] = None,
+        limit: Optional[int] = None,
+        debit_as_negative: Optional[bool] = None,
+        pending: Optional[bool] = None,
+        params: Optional[Dict[str, Any]] = None,
     ) -> Dict[int, TransactionObject]:
         """
         Refresh App data with the latest transactions
+
+        start_date: Optional[Union[datetime.date, datetime.datetime, str]]
+            Denotes the beginning of the time period to fetch transactions for. Defaults
+            to beginning of current month. Required if end_date exists. Format: YYYY-MM-DD.
+        end_date: Optional[Union[datetime.date, datetime.datetime, str]]
+            Denotes the end of the time period you'd like to get transactions for.
+            Defaults to end of current month. Required if start_date exists.
+        tag_id: Optional[int]
+            Filter by tag. Only accepts IDs, not names.
+        recurring_id: Optional[int]
+            Filter by recurring expense
+        plaid_account_id: Optional[int]
+            Filter by Plaid account
+        category_id: Optional[int]
+            Filter by category. Will also match category groups.
+        asset_id: Optional[int]
+            Filter by asset
+        group_id: Optional[int]
+            Filter by group_id (if the transaction is part of a specific group)
+        is_group: Optional[bool]
+            Filter by group (returns transaction groups)
+        status: Optional[str]
+            Filter by status (Can be cleared or uncleared. For recurring
+            transactions, use recurring)
+        offset: Optional[int]
+            Sets the offset for the records returned
+        limit: Optional[int]
+            Sets the maximum number of records to return. Note: The server will not
+            respond with any indication that there are more records to be returned.
+            Please check the response length to determine if you should make another
+            call with an offset to fetch more transactions.
+        debit_as_negative: Optional[bool]
+            Pass in true if you'd like expenses to be returned as negative amounts and
+            credits as positive amounts. Defaults to false.
+        pending: Optional[bool]
+            Pass in true if you'd like to include imported transactions with a pending status.
+        params: Optional[dict]
+            Additional Query String Params
 
         Returns
         -------
         Dict[int, TransactionObject]
         """
         transactions = self.lunch.get_transactions(
-            start_date=start_date, end_date=end_date
+            start_date=start_date, end_date=end_date, status=status
         )
         transaction_map = {item.id: item for item in transactions}
         self.lunch_data.transactions = transaction_map
