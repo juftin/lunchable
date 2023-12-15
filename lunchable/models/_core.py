@@ -63,7 +63,7 @@ class LunchMoneyAPIClient:
         updated_headers = dict(**default_headers, **api_headers)
         typed_headers = requests.models.CaseInsensitiveDict(updated_headers)
         self.lunch_money_session = requests.Session()
-        self.lunch_money_session.headers = typed_headers
+        self.lunch_money_session.headers = typed_headers  # type: ignore[assignment]
 
     def __repr__(self) -> str:
         """

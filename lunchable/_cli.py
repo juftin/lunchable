@@ -255,15 +255,9 @@ def make_splitlunch_import(**kwargs: Union[int, str, bool]) -> None:
     """
     from lunchable.plugins.splitlunch import SplitLunch
 
-    financial_partner_id: Optional[int] = kwargs.pop(
-        "financial_partner_id"
-    )  # type: ignore[assignment]
-    financial_partner_email: Optional[str] = kwargs.pop(
-        "financial_partner_email"
-    )  # type: ignore[assignment]
-    financial_partner_group_id: Optional[int] = kwargs.pop(
-        "financial_partner_group_id"
-    )  # type: ignore[assignment]
+    financial_partner_id: Optional[int] = kwargs.pop("financial_partner_id")  # type: ignore[assignment]
+    financial_partner_email: Optional[str] = kwargs.pop("financial_partner_email")  # type: ignore[assignment]
+    financial_partner_group_id: Optional[int] = kwargs.pop("financial_partner_group_id")  # type: ignore[assignment]
     splitlunch = SplitLunch(
         financial_partner_id=financial_partner_id,
         financial_partner_email=financial_partner_email,
@@ -288,15 +282,9 @@ def make_splitlunch_direct_import(**kwargs: Union[int, str, bool]) -> None:
     """
     from lunchable.plugins.splitlunch import SplitLunch
 
-    financial_partner_id: Optional[int] = kwargs.pop(
-        "financial_partner_id"
-    )  # type: ignore[assignment]
-    financial_partner_email: Optional[str] = kwargs.pop(
-        "financial_partner_email"
-    )  # type: ignore[assignment]
-    financial_partner_group_id: Optional[int] = kwargs.pop(
-        "financial_partner_group_id"
-    )  # type: ignore[assignment]
+    financial_partner_id: Optional[int] = kwargs.pop("financial_partner_id")  # type: ignore[assignment]
+    financial_partner_email: Optional[str] = kwargs.pop("financial_partner_email")  # type: ignore[assignment]
+    financial_partner_group_id: Optional[int] = kwargs.pop("financial_partner_group_id")  # type: ignore[assignment]
     splitlunch = SplitLunch(
         financial_partner_id=financial_partner_id,
         financial_partner_email=financial_partner_email,

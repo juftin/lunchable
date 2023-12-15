@@ -228,9 +228,9 @@ class PushLunch(LunchableApp):
         str
         """
         if amount < 0:
-            float_string = "$ ({:,.2f})".format(float(amount)).replace("-", "")
+            float_string = f"$ ({float(amount):,.2f})".replace("-", "")
         else:
-            float_string = "$ {:,.2f}".format(float(amount))
+            float_string = f"$ {float(amount):,.2f}"
         return float_string
 
     def notify_uncleared_transactions(

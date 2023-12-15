@@ -7,23 +7,28 @@ jobs:
         name: Release
         if: github.repository_owner == 'juftin'
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            issues: write
+            pull-requests: write
         steps:
-        -   name: Checkout
-            uses: actions/checkout@v3
+        -   name: Check out the repository
+            uses: actions/checkout@v4
+            with:
+                fetch-depth: 2
         -   name: Setup Node.js
-            uses: actions/setup-node@v3
+            uses: actions/setup-node@v4
         -   name: Set up Python
-            uses: actions/setup-python@v4
+            uses: actions/setup-python@v5
             with:
                 python-version: '3.11'
         -   name: Install Hatch
             run: |
                 python -m pip install --upgrade pip
-                python -m pip install -q hatch
-                hatch -v env create
+                python -m pip install -q hatch pre-commit
                 hatch --version
         -   name: Release
-            run: hatch run semantic-release
+            run: hatch run gen:release
             env:
                 GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
                 GIT_AUTHOR_NAME: github-actions[bot]
@@ -49,13 +54,13 @@ jobs:
                 git push --set-upstream origin gh-pages || true
                 git checkout main --
         -   name: Checkout gh-pages Branch
-            uses: actions/checkout@v3
+            uses: actions/checkout@v4
             with:
                 path: ${{ github.workspace }}/github-pages
                 ref: gh-pages
                 fetch-depth: 0
         -   name: Set up Python Environment
-            uses: actions/setup-python@v4
+            uses: actions/setup-python@v5
             with:
                 python-version: '3.11'
         -   name: Install Hatch
@@ -63,12 +68,11 @@ jobs:
             run: |
                 python -m pip install --upgrade pip
                 python -m pip install -q hatch
-                hatch -v env create
                 hatch --version
         -   name: Documentation Generation
             working-directory: ${{ github.workspace }}/main
             run: |
-                hatch run docs-build
+                hatch run docs:build
         -   name: Setup Git Config
             run: |
                 git config --global user.name "github-actions[bot]"
