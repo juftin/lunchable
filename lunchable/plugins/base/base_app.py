@@ -244,9 +244,9 @@ class BaseLunchableApp(ABC):
                 json_body.decode("utf-8")
             )
             if isinstance(json_data, dict):
-                data_objects = model(**json_data)
+                data_objects = model.model_validate(json_data)
             else:
-                data_objects = [model(**item) for item in json_data]
+                data_objects = [model.model_validate(item) for item in json_data]
         return data_objects
 
     def get_latest_cache(

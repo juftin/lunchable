@@ -47,16 +47,20 @@ class CryptoObject(LunchableModel):
     )
 
     id: int = Field(description=_id_description)
-    zabo_account_id: Optional[int] = Field(description=_zabo_account_id_description)
+    zabo_account_id: Optional[int] = Field(
+        None, description=_zabo_account_id_description
+    )
     source: str = Field(description=_source_description)
     name: str = Field(description="Name of the crypto asset")
-    display_name: Optional[str] = Field(description=_display_name_description)
+    display_name: Optional[str] = Field(None, description=_display_name_description)
     balance: float = Field(description="Current balance")
     balance_as_of: Optional[datetime.datetime] = Field(
-        description=_balance_as_of_description
+        None, description=_balance_as_of_description
     )
-    currency: Optional[str] = Field(description="Abbreviation for the cryptocurrency")
-    status: Optional[str] = Field(description=_status_description)
+    currency: Optional[str] = Field(
+        None, description="Abbreviation for the cryptocurrency"
+    )
+    status: Optional[str] = Field(None, description=_status_description)
     institution_name: Optional[str] = Field(
         default=None, description="Name of provider holding the asset"
     )
@@ -68,11 +72,11 @@ class CryptoParamsPut(LunchableModel):
     https://lunchmoney.dev/#update-manual-crypto-asset
     """
 
-    name: Optional[str]
-    display_name: Optional[str]
-    institution_name: Optional[str]
-    balance: Optional[float]
-    currency: Optional[str]
+    name: Optional[str] = None
+    display_name: Optional[str] = None
+    institution_name: Optional[str] = None
+    balance: Optional[float] = None
+    currency: Optional[str] = None
 
 
 class CryptoClient(LunchMoneyAPIClient):
@@ -98,7 +102,7 @@ class CryptoClient(LunchMoneyAPIClient):
             method=self.Methods.GET, url_path=APIConfig.LUNCHMONEY_CRYPTO
         )
         crypto_data = response_data["crypto"]
-        crypto_objects = [CryptoObject(**item) for item in crypto_data]
+        crypto_objects = [CryptoObject.model_validate(item) for item in crypto_data]
         return crypto_objects
 
     def update_crypto(
@@ -145,7 +149,7 @@ class CryptoClient(LunchMoneyAPIClient):
             institution_name=institution_name,
             balance=balance,
             currency=currency,
-        ).dict(exclude_none=True)
+        ).model_dump(exclude_none=True)
         response_data = self._make_request(
             method=self.Methods.PUT,
             url_path=[
@@ -155,5 +159,5 @@ class CryptoClient(LunchMoneyAPIClient):
             ],
             payload=crypto_body,
         )
-        crypto = CryptoObject(**response_data)
+        crypto = CryptoObject.model_validate(response_data)
         return crypto

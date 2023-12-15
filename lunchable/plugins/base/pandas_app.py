@@ -32,7 +32,7 @@ class LunchablePandasApp(LunchableApp):
         if not isinstance(models, list):
             models = list(models)
         return pd.DataFrame(
-            [item.dict() for item in models],
+            [item.model_dump() for item in models],
             columns=models[0].__fields__.keys(),
         )
 
@@ -55,7 +55,7 @@ class LunchablePandasApp(LunchableApp):
         array_df = df.copy()
         array_df = array_df.fillna(np.NaN).replace([np.NaN], [None])
         model_array = array_df.to_dict(orient="records")
-        return [model_type(**item) for item in model_array]
+        return [model_type.model_validate(item) for item in model_array]
 
 
 class LunchablePandasTransactionsApp(LunchableTransactionsApp, LunchablePandasApp):

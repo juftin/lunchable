@@ -31,8 +31,9 @@ class UserObject(LunchableModel):
     )
     budget_name: str = Field(description="Name of the associated budgeting account")
     api_key_label: Optional[str] = Field(
+        None,
         description="User-defined label of the developer API key used. "
-        "Returns null if nothing has been set."
+        "Returns null if nothing has been set.",
     )
 
 
@@ -56,5 +57,5 @@ class UserClient(LunchMoneyAPIClient):
         response_data = self._make_request(
             method=self.Methods.GET, url_path=APIConfig.LUNCHMONEY_ME
         )
-        me = UserObject(**response_data)
+        me = UserObject.model_validate(response_data)
         return me

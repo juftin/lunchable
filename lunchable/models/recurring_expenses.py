@@ -84,21 +84,25 @@ class RecurringExpensesObject(LunchableModel):
     """
 
     id: int = Field(description=_id_description)
-    start_date: Optional[datetime.date] = Field(description=_start_date_description)
-    end_date: Optional[datetime.date] = Field(description=_end_date_description)
+    start_date: Optional[datetime.date] = Field(
+        None, description=_start_date_description
+    )
+    end_date: Optional[datetime.date] = Field(None, description=_end_date_description)
     cadence: str = Field(description=_cadence_description)
     payee: str = Field(description="Payee of the recurring expense")
     amount: float = Field(description=_amount_description)
     currency: str = Field(max_length=3, description=_currency_description)
-    description: Optional[str] = Field(description=_description_description)
+    description: Optional[str] = Field(None, description=_description_description)
     billing_date: datetime.date = Field(description=_billing_date_description)
     type: str = Field(description=_type_description)
-    original_name: Optional[str] = Field(description=_original_name_description)
+    original_name: Optional[str] = Field(None, description=_original_name_description)
     source: str = Field(description=_source_description)
-    plaid_account_id: Optional[int] = Field(description=_plaid_account_id_description)
-    asset_id: Optional[int] = Field(description=_asset_id_description)
-    transaction_id: Optional[int] = Field(description=_transaction_id_description)
-    category_id: Optional[int] = Field(description=_category_id_description)
+    plaid_account_id: Optional[int] = Field(
+        None, description=_plaid_account_id_description
+    )
+    asset_id: Optional[int] = Field(None, description=_asset_id_description)
+    transaction_id: Optional[int] = Field(None, description=_transaction_id_description)
+    category_id: Optional[int] = Field(None, description=_category_id_description)
 
 
 class RecurringExpenseParamsGet(LunchableModel):
@@ -153,7 +157,7 @@ class RecurringExpensesClient(LunchMoneyAPIClient):
             start_date = datetime.datetime.now().date().replace(day=1)
         params = RecurringExpenseParamsGet(
             start_date=start_date, debit_as_negative=debit_as_negative
-        ).dict()
+        ).model_dump()
         response_data = self._make_request(
             method="GET",
             url_path=[APIConfig.LUNCH_MONEY_RECURRING_EXPENSES],
@@ -161,7 +165,7 @@ class RecurringExpensesClient(LunchMoneyAPIClient):
         )
         recurring_expenses = response_data.get(APIConfig.LUNCH_MONEY_RECURRING_EXPENSES)
         recurring_expenses_objects = [
-            RecurringExpensesObject(**item) for item in recurring_expenses
+            RecurringExpensesObject.model_validate(item) for item in recurring_expenses
         ]
         logger.debug(
             "%s RecurringExpensesObjects retrieved", len(recurring_expenses_objects)
