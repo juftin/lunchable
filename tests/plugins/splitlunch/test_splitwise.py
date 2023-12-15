@@ -6,15 +6,14 @@ import json
 import logging
 from os import path
 
-import splitwise
+import pytest
 
-from lunchable.plugins.splitlunch import SplitLunch
-from lunchable.plugins.splitlunch.lunchmoney_splitwise import _get_splitwise_impact
 from tests.conftest import lunchable_cassette
 
 logger = logging.getLogger(__name__)
 
 
+@pytest.mark.filterwarnings("ignore:datetime.datetime.utcfromtimestamp")
 def test_import_splitwise():
     """
     Try to import splitwise and succeed since the extra is installed in tox
@@ -28,19 +27,27 @@ def test_import_splitwise():
         assert test_case is True
 
 
+@pytest.mark.filterwarnings("ignore:datetime.datetime.utcfromtimestamp")
 @lunchable_cassette
 def test_update_balance():
     """
     Update the Balance
     """
+    from lunchable.plugins.splitlunch import SplitLunch
+
     lunch = SplitLunch()
     lunch.update_splitwise_balance()
 
 
+@pytest.mark.filterwarnings("ignore:datetime.datetime.utcfromtimestamp")
 def test_financial_impact():
     """
     Test the financial impact algorithm
     """
+    import splitwise
+
+    from lunchable.plugins.splitlunch.lunchmoney_splitwise import _get_splitwise_impact
+
     for [file, expected_self_paid, expected_impact] in [
         # For both expenses and transfers, when someone else pays, financial impact should be
         # positive
