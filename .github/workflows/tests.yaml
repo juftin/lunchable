@@ -45,5 +45,7 @@ jobs:
         -   name: Test Suite
             run: |
                 echo "::add-matcher::.github/matchers/python.json"
-                hatch run test tests/ --vcr-record=none
+                hatch run test
                 echo "::remove-matcher owner=python::"
+            env:
+                VCR_RECORD_MODE: none

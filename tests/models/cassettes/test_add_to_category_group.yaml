@@ -1,6 +1,6 @@
 interactions:
 -   request:
-        body: '{"category_ids": [343125], "new_categories": ["Another Another Test Category"]}'
+        body: '{"category_ids": [443128], "new_categories": ["Another Another Test Category"]}'
         headers:
             Accept:
             -   '*/*'
@@ -13,27 +13,33 @@ interactions:
             Content-Type:
             -   application/json
             User-Agent:
-            -   python-requests/2.27.1
+            -   python-requests/2.29.0
             authorization:
             -   XXXXXXXXXX
         method: POST
-        uri: https://dev.lunchmoney.app/v1/categories/group/343124/add
+        uri: https://dev.lunchmoney.app/v1/categories/group/658694/add
     response:
         body:
-            string: '{"id":343124,"name":"Test Category Group","description":"","is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"is_group":true,"group_id":null,"children":[{"id":343126,"name":"Another Another Test Category","description":null,"created_at":"2022-06-07T19:39:33.608Z"},{"id":343125,"name":"Another Test Category","description":null,"created_at":"2022-06-07T19:37:02.688Z"},{"id":343106,"name":"Test Category","description":"Test Category Description Updated","created_at":"2022-06-07T16:31:40.780Z"}]}'
+            string: '{"id":658694,"name":"Test Category Group","description":"Test Category Group!!","is_income":false,"exclude_from_budget":true,"exclude_from_totals":false,"is_group":true,"group_id":null,"children":[{"id":658761,"name":"Another Another Test Category","description":null,"created_at":"2023-12-15T02:42:01.147Z","archived":false,"archived_on":null},{"id":443128,"name":"Groceries","description":"Test Category Description Updated","created_at":"2023-03-07T02:10:27.268Z","archived":false,"archived_on":null}],"archived":false,"archived_on":null}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
             Connection:
             -   keep-alive
             Content-Length:
-            -   '521'
+            -   '541'
             Content-Type:
             -   application/json; charset=utf-8
             Date:
-            -   Tue, 07 Jun 2022 19:39:33 GMT
+            -   Fri, 15 Dec 2023 02:42:01 GMT
             Etag:
-            -   W/"209-CNJytM5IsDz5pPHDFW8MY9tiVtQ"
+            -   W/"21d-JdapYXJpKm5jckYYF084zl/FWR8"
+            Nel:
+            -   '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
+            Report-To:
+            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1702608121&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=IhPV7bOJdhOd%2BTJ73mF%2BY5R1AE8%2BA1EFE91jTMBZ51A%3D"}]}'
+            Reporting-Endpoints:
+            -   heroku-nel=https://nel.heroku.com/reports?ts=1702608121&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=IhPV7bOJdhOd%2BTJ73mF%2BY5R1AE8%2BA1EFE91jTMBZ51A%3D
             Server:
             -   Cowboy
             Vary:

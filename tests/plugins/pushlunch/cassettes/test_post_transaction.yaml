@@ -11,27 +11,33 @@ interactions:
             Content-Type:
             -   application/json
             User-Agent:
-            -   python-requests/2.26.0
+            -   python-requests/2.29.0
             authorization:
             -   XXXXXXXXXX
         method: GET
         uri: https://dev.lunchmoney.app/v1/assets
     response:
         body:
-            string: '{"assets":[{"id":21845,"type_name":"cash","subtype_name":"digital wallet (paypal, venmo)","name":"Splitwise Balance","display_name":"Splitwise","balance":"176.6700","balance_as_of":"2021-11-15T17:44:52.277Z","currency":"usd","closed_on":null,"institution_name":"Splitwise","created_at":"2021-08-28T16:06:02.701Z"},{"id":23043,"type_name":"cash","subtype_name":"digital wallet (paypal, venmo)","name":"Test Account","display_name":"Test Account","balance":"181.7100","balance_as_of":"2021-11-02T22:27:05.311Z","currency":"usd","closed_on":null,"institution_name":"Test","created_at":"2021-09-20T05:32:29.060Z"}]}'
+            string: '{"assets":[{"id":49335,"type_name":"cash","subtype_name":"checking","name":"Test Account","display_name":null,"balance":"-16513.5500","balance_as_of":"2023-03-07T02:43:48.383Z","closed_on":null,"currency":"usd","institution_name":null,"exclude_transactions":false,"created_at":"2023-03-07T02:05:23.670Z"},{"id":78214,"type_name":"cash","subtype_name":null,"name":"test-account-1","display_name":"Test Account #1","balance":"5.2000","balance_as_of":"2023-12-15T02:26:08.599Z","closed_on":null,"currency":"usd","institution_name":"Test Institution","exclude_transactions":false,"created_at":"2023-12-15T02:24:12.158Z"}]}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
             Connection:
             -   keep-alive
             Content-Length:
-            -   '611'
+            -   '618'
             Content-Type:
             -   application/json; charset=utf-8
             Date:
-            -   Tue, 16 Nov 2021 01:56:24 GMT
+            -   Fri, 15 Dec 2023 03:27:35 GMT
             Etag:
-            -   W/"263-PuKlmQwTXplhQGNn6uzd/fxEv94"
+            -   W/"26a-RdZT78+tFlrfVSVBVJsvuI2fLCs"
+            Nel:
+            -   '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
+            Report-To:
+            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1702610855&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=jbOtlJShgUrEu1SyJzVSXw%2BEEVmle0iQjCmXiIgczW0%3D"}]}'
+            Reporting-Endpoints:
+            -   heroku-nel=https://nel.heroku.com/reports?ts=1702610855&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=jbOtlJShgUrEu1SyJzVSXw%2BEEVmle0iQjCmXiIgczW0%3D
             Server:
             -   Cowboy
             Vary:
@@ -55,48 +61,77 @@ interactions:
             Content-Type:
             -   application/json
             User-Agent:
-            -   python-requests/2.26.0
+            -   python-requests/2.29.0
             authorization:
             -   XXXXXXXXXX
         method: GET
         uri: https://dev.lunchmoney.app/v1/plaid_accounts
     response:
         body:
-            string: !!binary |
-                H4sIAAAAAAAAA+WY74+aSBjH/xXCq/bikvkJDO+s2q45Tz1h90UvjZkF0k5ENDCYmKb/+z1Yb8Wu
-                suxC09yd8YV5mGfG+eT7/OKruU2kipYyDDdFqnPT++urqSLTY5gL1jMjqeNlotJVDDaTIIJvMHxt
-                s2emch2D7V22WcWZ/BwbN8botyCTUQwPI5XDxvvlcRE8WPSHI+O9SmUaKpkY4zRSOxUV8LOyA8aM
-                gLfeb0svle7iXK/jVIMtLx6O5od/1oN1LfMVmI5+Ks210oVWm/TqyeVWWuoCrmrKUKtduU0ic71U
-                6+0m06aXFknSMx9kAg7lFshC8IFVYZFlcRruwVbkkfm4ZnlwL7YlrColHmDbI8KjyOLU+Vieo9bq
-                eMK33iNohzcBPZBbpQHXLC1R3wOVIruAurrstOiILsziSJ3T/G4yQplFJ54CY3SZZ2X750me7sEC
-                jD3KPU4tF9sfzSpf4iLLbkcYU0swWkPYbUJ45M/nT4E+q8dcb8KVAS5pFaDrXgb4XkVxovS+Sg+0
-                +ROViG6IEyDbo9SjroVInRJRE063myKPDV/uVPo5rwMWxdtNrvQm258De/Q80nIRuhK+/STZG+9k
-                unqB2BAOMPI494htCdc9F5twkAtaaRfPzBIOrqEomlAcT4fj+/Hwrj95heYu5MCXSa6Z4LCDmG3x
-                1rgoIjW4SCNcqY4zQGEMvsThCvTzCuGFJ9dH5RHcnfJO+ci1iHDOlceQcCxbtFeeXYPSaYJyMr6f
-                TT/MjNtRfxLcvkJ9DOFVhaHj8H9jrsNNWP2h8jBO4MAYkl63Oe9aiX258uDW7HBr5EG4Ys7OlQfR
-                B2aB20uP1eBs1C3+WahwlatkF2d1EJv2KdR2WAd9SucdX9mPUHEdltuozi5GfrAYD4LR0PCD2eB3
-                4246Dvz/d4diN6qt/hcJcum2VBDErqS5iwF7jdj3/4vcG+IGmMN9Pcwsm/LzkMXYhhLitkMJ5Ybz
-                moilL0DZYeYTmNoddns8IMijwuPYQjb6AaPLmUV4+8TnXscoGk1v/iEE53AiDG/BcDZ4SvLpkFxx
-                elP6vG04IV+K9586IlOKBe9iTGboGmib8Gahf8iU87vF4Lbvj4z5pD/9JRnzuVYRBZgdot+x2I+t
-                Yvs3DmXLXdMnuo16n1JyxpvJ/YfZW2Ph39UG/3+/8jh2I2ajSR+w9YzxdGC1bq1B9U7XMx0hSAiL
-                k7YCI+JJbfn07W/qjC1HUBQAAA==
+            string: |
+                {
+                  "plaid_accounts": [
+                    {
+                      "id": 71394,
+                      "date_linked": "2023-12-15",
+                      "name": "Chase - Freedom",
+                      "display_name": "Chase Freedom",
+                      "type": "credit",
+                      "subtype": "creditcard",
+                      "mask": "5678",
+                      "institution_name": "Chase",
+                      "status": "active",
+                      "limit": 12345,
+                      "balance": "123.0900",
+                      "currency": "usd",
+                      "balance_last_update": "2023-12-14T15:55:00.753Z",
+                      "import_start_date": "2023-02-06",
+                      "last_import": "2023-12-14T15:55:03.163Z",
+                      "last_fetch": "2023-12-14T15:55:03.301Z",
+                      "plaid_last_successful_update": "2023-12-13T15:51:37.490Z"
+                    },
+                    {
+                      "id": 71395,
+                      "date_linked": "2023-12-15",
+                      "name": "Chase - Sapphire",
+                      "display_name": "Chase Sapphire",
+                      "type": "credit",
+                      "subtype": "creditcard",
+                      "mask": "1234",
+                      "institution_name": "Chase",
+                      "status": "active",
+                      "limit": 12345,
+                      "balance": "456.0900",
+                      "currency": "usd",
+                      "balance_last_update": "2023-12-14T15:55:00.753Z",
+                      "import_start_date": "2023-02-06",
+                      "last_import": "2023-12-14T15:55:03.163Z",
+                      "last_fetch": "2023-12-14T15:55:03.301Z",
+                      "plaid_last_successful_update": "2023-12-13T15:51:37.490Z"
+                    }
+                  ]
+                }
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
             Connection:
             -   keep-alive
-            Content-Encoding:
-            -   gzip
+            Content-Length:
+            -   '21'
             Content-Type:
             -   application/json; charset=utf-8
             Date:
-            -   Tue, 16 Nov 2021 01:56:24 GMT
+            -   Fri, 15 Dec 2023 03:27:35 GMT
             Etag:
-            -   W/"1450-Y89kn8ima647B5tEKBH83Vze8Mg"
+            -   W/"15-HiUW5V/D9oSc9LAodzElf6GkW1U"
+            Nel:
+            -   '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
+            Report-To:
+            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1702610855&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=jbOtlJShgUrEu1SyJzVSXw%2BEEVmle0iQjCmXiIgczW0%3D"}]}'
+            Reporting-Endpoints:
+            -   heroku-nel=https://nel.heroku.com/reports?ts=1702610855&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=jbOtlJShgUrEu1SyJzVSXw%2BEEVmle0iQjCmXiIgczW0%3D
             Server:
             -   Cowboy
-            Transfer-Encoding:
-            -   chunked
             Vary:
             -   Origin, Accept-Encoding
             Via:
@@ -118,44 +153,31 @@ interactions:
             Content-Type:
             -   application/json
             User-Agent:
-            -   python-requests/2.26.0
+            -   python-requests/2.29.0
             authorization:
             -   XXXXXXXXXX
         method: GET
         uri: https://dev.lunchmoney.app/v1/categories
     response:
         body:
-            string: !!binary |
-                H4sIAAAAAAAAA82YXU/bMBSG/0qU6zazHdtpfAcM2C6QppFp0qapMo3bRqRx5SRsCPHf534oLpCs
-                NoWlEjfFb1U/Pu85PscP/oRXYiZVJkqf/Xzws9RnCMUwRAO/4AvhM/8kn8i5zAfeKVelP/BTUU5U
-                tqwyWfisqPN84GflOCsmciWf8rwUA1/8meR1KsZTJRfjmzqdiap9rZKV/m+zVi9TvaF0zLXcRwDB
-                IYiGCCUAMRAxCAOCRz/0JiZKWOn0zmZK1svmB9afxivM1dYfBzvIYYN8yotb70KII8Al1A53o3PA
-                pdjgZnneJyomDMAAArQH9YnOFjXCOIoa1DNezr0P3kly9Zx3s/Q9q+ap4r/5+kDekx7qP5JAyjBm
-                EAQjAtrp23UuvjaBPpPTqRDe9Vwuj8DaNLSz9kZnS0xRTGFD/FHcVC8i/a2oFJ/citQ7UyLNKu+M
-                q9TbSt815mCIaAIwwzGDOKCo4wTadS4xJ80JnBeVUBXPioUoXhzF/w961GHzdp0tMsEoig3ynUbt
-                w+DxMAQJAIzEOluDOO6q3a06a4NDEpuUPt/sMH1h8ktRCMVz7e31BX/vTaXyTtd43vpLpdY5FLlK
-                1V0HsllqtztKIGEIsjAORnFXiWvVOdgdg+Y8LqRcpXKe3Ql137vdKSBWdt/qXDKcNsiXvBx4ieJF
-                uZQ609eofYOTkWVxHzmXtpEBz6a9pPkzhM40b9W5oJqSdqnkRKy79L5xKbCr4FudSxaba/uTRhl4
-                J3Ulj4A3tuSNXXlNeD9vYPaxttRgi/JsTUqxHelG50JqcvYLv181ItuCNRXqoAC/4lJ6DkPs5smt
-                zgXajNBfhCplsb6M1f4ov7ujoV3B2upckMMd5CMozRTtGymf6GxJMYojQ/pVZIubWpXi4Ab7NW4e
-                DVG8ap1gpLvggEZdbm7VuTwXkB3gotIz9JVuNmZ8dpifD0lgPGIgDML9zwa7Ohc34x3ksuK1rlhH
-                YerI0tSRa79h3km+ZhpyzlVWzHoHJl1zQ7vOJcLG1Ncinw6zxVLJu8MT+U3CHNp10FudC7UZHVYv
-                QctjiDENLU0dupqamkp9vZC3fV6/GKxqr55g9hWsXZ31EwgkO/mb6ILVjP4v3gaerOpp2ay9ReH+
-                1/sIAgkKGaaMkABFXZW7Vefi8J2DUPxO5P37m1h2IsSVlZi3D/N43XdTTS1nJmo1M/16/Aun4gU/
-                qBoAAA==
+            string: '{"categories":[{"id":658761,"name":"Another Another Test Category","description":null,"is_income":false,"exclude_from_budget":true,"exclude_from_totals":false,"updated_at":"2023-12-15T02:42:01.147Z","created_at":"2023-12-15T02:42:01.147Z","is_group":false,"group_id":658694,"archived":false,"archived_on":null,"order":null},{"id":443128,"name":"Groceries","description":"Test Category Description Updated","is_income":false,"exclude_from_budget":true,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:27.268Z","created_at":"2023-03-07T02:10:27.268Z","is_group":false,"group_id":658694,"archived":false,"archived_on":null,"order":null},{"id":443125,"name":"Home","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:09:42.960Z","created_at":"2023-03-07T02:09:42.960Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443129,"name":"Income","description":null,"is_income":true,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:40:15.216Z","created_at":"2023-03-07T02:40:15.216Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443127,"name":"Personal Care","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:17.225Z","created_at":"2023-03-07T02:10:17.225Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443126,"name":"Shopping","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:12.260Z","created_at":"2023-03-07T02:10:12.260Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":658693,"name":"Test Category","description":"Test Category Description","is_income":false,"exclude_from_budget":true,"exclude_from_totals":false,"updated_at":"2023-12-15T02:32:23.352Z","created_at":"2023-12-15T02:32:23.352Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":658694,"name":"Test Category Group","description":"Test Category Group!!","is_income":false,"exclude_from_budget":true,"exclude_from_totals":false,"updated_at":"2023-12-15T02:32:24.849Z","created_at":"2023-12-15T02:32:24.849Z","is_group":true,"group_id":null,"archived":false,"archived_on":null,"order":null,"children":[{"id":658761,"name":"Another Another Test Category","description":null,"is_income":false,"exclude_from_budget":true,"exclude_from_totals":false,"updated_at":"2023-12-15T02:42:01.147Z","created_at":"2023-12-15T02:42:01.147Z","is_group":false,"group_id":658694,"archived":false,"archived_on":null,"order":null},{"id":443128,"name":"Groceries","description":"Test Category Description Updated","is_income":false,"exclude_from_budget":true,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:27.268Z","created_at":"2023-03-07T02:10:27.268Z","is_group":false,"group_id":658694,"archived":false,"archived_on":null,"order":null}]}]}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
             Connection:
             -   keep-alive
-            Content-Encoding:
-            -   gzip
             Content-Type:
             -   application/json; charset=utf-8
             Date:
-            -   Tue, 16 Nov 2021 01:56:24 GMT
+            -   Fri, 15 Dec 2023 03:27:35 GMT
             Etag:
-            -   W/"1aa8-J6Eh1EZIPff3WsMWdh+K0M/hEm0"
+            -   W/"bf6-3cADdNauX+96ckDbRxINI6x4Zf0"
+            Nel:
+            -   '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
+            Report-To:
+            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1702610855&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=jbOtlJShgUrEu1SyJzVSXw%2BEEVmle0iQjCmXiIgczW0%3D"}]}'
+            Reporting-Endpoints:
+            -   heroku-nel=https://nel.heroku.com/reports?ts=1702610855&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=jbOtlJShgUrEu1SyJzVSXw%2BEEVmle0iQjCmXiIgczW0%3D
             Server:
             -   Cowboy
             Transfer-Encoding:
@@ -166,6 +188,8 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
+            content-length:
+            -   '3062'
         status:
             code: 200
             message: OK
@@ -183,14 +207,12 @@ interactions:
             Content-Type:
             -   application/json
             User-Agent:
-            -   python-requests/2.26.0
+            -   python-requests/2.29.0
         method: POST
-        uri: https://api.pushover.net/1/messages.json?html=1&message=%3Cb%3EPayee%3A%3C%2Fb%3E+%3Ci%3ETest%3C%2Fi%3E%0A%3Cb%3EAmount%3A%3C%2Fb%3E+%3Ci%3E%24+1.00%3C%2Fi%3E%0A%3Cb%3EDate%3A%3C%2Fb%3E+%3Ci%3ESunday+September+19%2C+2021%3C%2Fi%3E%0A%3Cb%3ECategory%3A%3C%2Fb%3E+%3Ci%3ECoffee+Shops%3C%2Fi%3E%0A%3Cb%3EAccount%3A%3C%2Fb%3E+%3Ci%3ETest+Account%3C%2Fi%3E%0A%3Cb%3ECurrency%3A%3C%2Fb%3E+%3Ci%3EUSD%3C%2Fi%3E%0A%3Cb%3EStatus%3A%3C%2Fb%3E+%3Ci%3EUncleared%3C%2Fi%3E%0A%3Cb%3ENotes%3A%3C%2Fb%3E+%3Ci%3EExample+Test+Notification+from+lunchable%3C%2Fi%3E%0A%0A%3Ca+href%3D%22https%3A%2F%2Fmy.lunchmoney.app%2Ftransactions%2F2021%2F09%3Fstatus%3Dunreviewed%22%3E%3Cb%3EUncleared+Transactions+from+this+Period%3C%2Fb%3E%3C%2Fa%3E&title=Lunch+Money+Transaction&token=XXXXXXXXXX&user=XXXXXXXXXX
+        uri: https://api.pushover.net/1/messages.json?html=1&message=%3Cb%3EPayee%3A%3C%2Fb%3E+%3Ci%3ETest%3C%2Fi%3E%0A%3Cb%3EAmount%3A%3C%2Fb%3E+%3Ci%3E%24+1.00%3C%2Fi%3E%0A%3Cb%3EDate%3A%3C%2Fb%3E+%3Ci%3ESunday+September+19%2C+2021%3C%2Fi%3E%0A%3Cb%3ECategory%3A%3C%2Fb%3E+%3Ci%3EAnother+Another+Test+Category%3C%2Fi%3E%0A%3Cb%3EAccount%3A%3C%2Fb%3E+%3Ci%3ETest+Account%3C%2Fi%3E%0A%3Cb%3ECurrency%3A%3C%2Fb%3E+%3Ci%3EUSD%3C%2Fi%3E%0A%3Cb%3EStatus%3A%3C%2Fb%3E+%3Ci%3EUncleared%3C%2Fi%3E%0A%3Cb%3ENotes%3A%3C%2Fb%3E+%3Ci%3EExample+Test+Notification+from+lunchable%3C%2Fi%3E%0A%0A%3Ca+href%3D%22https%3A%2F%2Fmy.lunchmoney.app%2Ftransactions%2F2021%2F09%3Fstatus%3Dunreviewed%22%3E%3Cb%3EUncleared+Transactions+from+this+Period%3C%2Fb%3E%3C%2Fa%3E&title=Lunch+Money+Transaction&token=XXXXXXXXXX&user=XXXXXXXXXX
     response:
         body:
-            string: !!binary |
-                H4sIAAAAAAAAAwTBQRKAIAgAwL9wjpkUBPE3ajygxFPT39t9YUWPvaClAx6/t6+ABnINOzNPZJKK
-                XCxh16KYTbySDdKu8P0AAAD//wMAbJY6vj0AAAA=
+            string: '{"status":1,"request":"b80ebc1d-6ae8-430e-98c1-4cb53791f420"}'
         headers:
             Access-Control-Allow-Headers:
             -   X-Requested-With, X-Prototype-Version, Origin, Accept, Content-Type, X-CSRF-Token, X-Pushover-App, Authorization
@@ -203,27 +225,19 @@ interactions:
             CF-Cache-Status:
             -   DYNAMIC
             CF-RAY:
-            -   6aed1a47bf8f7ada-MCI
+            -   835b9778c9ac4de2-MCI
             Cache-Control:
-            -   max-age=0, private, must-revalidate
+            -   no-cache
             Connection:
             -   keep-alive
-            Content-Encoding:
-            -   gzip
             Content-Type:
             -   application/json; charset=utf-8
             Date:
-            -   Tue, 16 Nov 2021 01:56:25 GMT
-            ETag:
-            -   W/"e4886d0fdd75eb017928d9f18fbfc234"
-            Expect-CT:
-            -   max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+            -   Fri, 15 Dec 2023 03:27:35 GMT
             Referrer-Policy:
             -   strict-origin-when-cross-origin
             Server:
             -   cloudflare
-            Strict-Transport-Security:
-            -   max-age=31536000
             Transfer-Encoding:
             -   chunked
             X-Content-Type-Options:
@@ -232,21 +246,18 @@ interactions:
             -   noopen
             X-Frame-Options:
             -   SAMEORIGIN
-            -   DENY
             X-Limit-App-Limit:
             -   '10000'
             X-Limit-App-Remaining:
             -   '9939'
             X-Limit-App-Reset:
-            -   '1638338400'
-            X-PO-H:
-            -   a
+            -   '1704088800'
             X-Permitted-Cross-Domain-Policies:
             -   none
             X-Request-Id:
-            -   6db9024c-4368-4591-a757-296e839b37a7
+            -   bb106ac8-e675-4c00-804b-203765b0f209
             X-Runtime:
-            -   '0.066070'
+            -   '0.012594'
             X-XSS-Protection:
             -   1; mode=block
         status:

@@ -21,7 +21,7 @@ def test_upsert_budget(
     """
     # Ride Sharing
     response = lunch_money_obj.upsert_budget(
-        start_date=obscure_start_date, category_id=229137, amount=100.00
+        start_date=obscure_start_date, category_id=443127, amount=100.00
     )
     assert isinstance(response, dict) or response is None
 
@@ -52,7 +52,7 @@ def test_delete_budget(
     Delete a Budget
     """
     deleted = lunch_money_obj.remove_budget(
-        start_date=obscure_start_date, category_id=229137
+        start_date=obscure_start_date, category_id=443127
     )
     logger.info("Budget Deleted")
     assert deleted is True

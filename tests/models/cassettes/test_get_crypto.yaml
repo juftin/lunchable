@@ -11,27 +11,33 @@ interactions:
             Content-Type:
             -   application/json
             User-Agent:
-            -   python-requests/2.26.0
+            -   python-requests/2.29.0
             authorization:
             -   XXXXXXXXXX
         method: GET
         uri: https://dev.lunchmoney.app/v1/crypto
     response:
         body:
-            string: '{"crypto":[{"id":2939,"source":"manual","created_at":"2021-09-16T14:10:07.976Z","name":"","display_name":"Coinbase","balance":"0.000000000000000000","balance_as_of":"2021-09-20T23:45:01.438Z","currency":"BTC","status":"active","institution_name":"Coinbase"}]}'
+            string: '{"crypto":[{"id":7286,"source":"manual","created_at":"2023-12-15T03:02:18.331Z","name":"Bitcoin","display_name":null,"balance":"1.000000000000000000","balance_as_of":"2023-12-15T03:00:08.292Z","currency":"BTC","status":"active","institution_name":null}]}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
             Connection:
             -   keep-alive
             Content-Length:
-            -   '259'
+            -   '254'
             Content-Type:
             -   application/json; charset=utf-8
             Date:
-            -   Mon, 20 Sep 2021 23:46:55 GMT
+            -   Fri, 15 Dec 2023 03:02:44 GMT
             Etag:
-            -   W/"103-qXMYPLAohEtQAnfxStAHSQkDhnk"
+            -   W/"fe-gWd945unYRZrDjreifrq6CEXmUc"
+            Nel:
+            -   '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
+            Report-To:
+            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1702609364&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=D2SqsIheCBS9moU68CE44YICCUb1SCHSza2L8Wt0hE8%3D"}]}'
+            Reporting-Endpoints:
+            -   heroku-nel=https://nel.heroku.com/reports?ts=1702609364&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=D2SqsIheCBS9moU68CE44YICCUb1SCHSza2L8Wt0hE8%3D
             Server:
             -   Cowboy
             Vary:

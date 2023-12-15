@@ -24,7 +24,7 @@ def lunchmoney_asset() -> AssetsObject:
     AssetsObject
     """
     splitwise_asset = AssetsObject(
-        id=21845,
+        id=78214,
         type_name="cash",
         subtype_name="digital wallet (paypal, venmo)",
         name="Splitwise Balance",
@@ -75,7 +75,7 @@ def test_create_asset(lunch_money_obj: LunchMoney):
         name="test-account-1",
         subtype_name=None,
         display_name="Test Account #1",
-        balance=5.20,
+        balance=4.20,
         currency="usd",
         institution_name="Test Institution",
     )

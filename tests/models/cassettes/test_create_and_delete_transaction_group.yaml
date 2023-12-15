@@ -1,6 +1,6 @@
 interactions:
 -   request:
-        body: '{"date": "2021-09-20", "payee": "Test", "notes": "Test Transaction Group", "transactions": [55907976, 55907977]}'
+        body: '{"date": "2023-12-14", "payee": "Test", "notes": "Test Transaction Group", "transactions": [546452296, 546434806]}'
         headers:
             Accept:
             -   '*/*'
@@ -9,31 +9,37 @@ interactions:
             Connection:
             -   keep-alive
             Content-Length:
-            -   '112'
+            -   '114'
             Content-Type:
             -   application/json
             User-Agent:
-            -   python-requests/2.26.0
+            -   python-requests/2.29.0
             authorization:
             -   XXXXXXXXXX
         method: POST
         uri: https://dev.lunchmoney.app/v1/transactions/group
     response:
         body:
-            string: '56034791'
+            string: '561178199'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
             Connection:
             -   keep-alive
             Content-Length:
-            -   '8'
+            -   '9'
             Content-Type:
             -   application/json; charset=utf-8
             Date:
-            -   Mon, 20 Sep 2021 23:46:58 GMT
+            -   Fri, 15 Dec 2023 02:57:39 GMT
             Etag:
-            -   W/"8-G+S+rrOqUpCQgQ8Hw7AMbFQQrsM"
+            -   W/"9-QgM8UlEG9Jko03c9j304G1eR1wE"
+            Nel:
+            -   '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
+            Report-To:
+            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1702609059&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=a%2FD%2FxKu%2FI8HJf1kkNWFJCRTzav%2B8PV5EZXdEDkFV7nQ%3D"}]}'
+            Reporting-Endpoints:
+            -   heroku-nel=https://nel.heroku.com/reports?ts=1702609059&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=a%2FD%2FxKu%2FI8HJf1kkNWFJCRTzav%2B8PV5EZXdEDkFV7nQ%3D
             Server:
             -   Cowboy
             Vary:
@@ -59,27 +65,33 @@ interactions:
             Content-Type:
             -   application/json
             User-Agent:
-            -   python-requests/2.26.0
+            -   python-requests/2.29.0
             authorization:
             -   XXXXXXXXXX
         method: DELETE
-        uri: https://dev.lunchmoney.app/v1/transactions/group/56034791
+        uri: https://dev.lunchmoney.app/v1/transactions/group/561178199
     response:
         body:
-            string: '{"transactions":[55907977,55907976]}'
+            string: '{"transactions":[546452296,546434806]}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
             Connection:
             -   keep-alive
             Content-Length:
-            -   '36'
+            -   '38'
             Content-Type:
             -   application/json; charset=utf-8
             Date:
-            -   Mon, 20 Sep 2021 23:47:00 GMT
+            -   Fri, 15 Dec 2023 02:57:40 GMT
             Etag:
-            -   W/"24-lVChRyRiVqGERw6b0cY0xfzBH0U"
+            -   W/"26-MZMWmBEzSYlditcq8Wp4EJp/buM"
+            Nel:
+            -   '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
+            Report-To:
+            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1702609060&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=v%2FTNRGIUsGut5fPkA5odLxpk9OeFYkVrqG1ZFEBeXVU%3D"}]}'
+            Reporting-Endpoints:
+            -   heroku-nel=https://nel.heroku.com/reports?ts=1702609060&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=v%2FTNRGIUsGut5fPkA5odLxpk9OeFYkVrqG1ZFEBeXVU%3D
             Server:
             -   Cowboy
             Vary:

@@ -11,45 +11,31 @@ interactions:
             Content-Type:
             -   application/json
             User-Agent:
-            -   python-requests/2.27.1
+            -   python-requests/2.29.0
             authorization:
             -   XXXXXXXXXX
         method: GET
         uri: https://dev.lunchmoney.app/v1/categories
     response:
         body:
-            string: !!binary |
-                H4sIAAAAAAAAA82ZUW/bKhTHv4rl58QDDNjmre227j5MmtZcXWnTFNGYJFYdE2E7d9W07z6cRMZr
-                7AXUtY7Ul4Z/VX6c/zkcTn74C16JlVSZKH329YefpT5DKIEhmvgF3wif+Vf5Qq5lPvGuuSr9iZ+K
-                cqGybZXJwmdFnecTPyvnWbGQjXzJ81JMfPF9kdepmC+V3Mzv63Qlqv61Slb603at3qZ6Q+mca7mP
-                AIJTEE0RmgHEQMQgDAiOv+hNLJSw0umdrZSst+0/2P82bzCbrf+cdJDDFvmaFw/eeyEuAJdQO9yD
-                zgGXYoOb5fmYqJgwAAMI0BnU33S2qBHGUdSi3vBy7b3xrmYfn/Ielv7LqnWq+P98fyAvSQ/1D5lB
-                yjBmEAQxAf30/ToXX5tA38jlUgjvbi23F2BtGtpZ+6CzJaYoobAlfivuq5NI/1tUii8eROrdKJFm
-                lXfDVeodpS8aczBFdAYwwwmDOKBo4AT6dS4xJ+0JvCsqoSqeFRtRnBzF6wc9GrB5v84WmWAUJQZ5
-                p1HHMHgyDcEMAEYSna1BkgzV7l6dtcEhSUxKvzvsMD0x+a0ohOK59vb+gn/0llJ513s8b/9HpdY5
-                FLlK1UMHcljqtzuaQcIQZGESxMlQievVOdgdg/Y83kvZpHKe7YR6HN3uFBArux91LhlOW+RbXk68
-                meJFuZU60/eoY4OT2LK4x86lLTbg2XKUNH+CMJjmvToXVFPSbpVciH2XPjYuBXYV/KhzyWJzbX/Q
-                KBPvqq7kBfAmlryJK68J7z8HmHOsPTXYojxbk1JsR3rQ2ZImSQzCDulOlNWzexHn2whNAZwifeuG
-                jGBGQn3L9NIO6VziairUJ/7YoB7L81Ko14U+DR2xez0fdS7QZmDwSahSFvvWQ5339IvnL7Qrz0ed
-                C3LYQb6Ai4iicw/o33S2pBglkSH9LLLNfa1K8foprEHiKUqaRhFGuucPaDTk5l6dy3CEdICLynvj
-                fdSt1Yqvnufn5yQwjhkIg/D8kKSrc3Ez7iCXFa91xboIU0eWpo5cuyszFfqcacg1V1mxGh2YDL2S
-                +nUuETamvhP5cppttkrunp/IfyXMod174ahzoTYPpWbutb2EGNPQ0tShq6mpqdR3G/kw5vWLQVN7
-                9XvtXMHq6ixRQxyC2LRZM12wTgYgzYft9ONFB3u6Z6Sap7lwGhgQxDEc6C17ddZTLkg6Resp3x/o
-                vbedtb9xW/1pBKabZxQyTBkhAYqGrqtenUtadw5C8Z3Ix09qYtl+EVdWYsZb5vuJsV8S1PJZTK2e
-                xd9+/gLWr/HGixwAAA==
+            string: '{"categories":[{"id":443128,"name":"Groceries","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:27.268Z","created_at":"2023-03-07T02:10:27.268Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443125,"name":"Home","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:09:42.960Z","created_at":"2023-03-07T02:09:42.960Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443129,"name":"Income","description":null,"is_income":true,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:40:15.216Z","created_at":"2023-03-07T02:40:15.216Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443127,"name":"Personal Care","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:17.225Z","created_at":"2023-03-07T02:10:17.225Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443126,"name":"Shopping","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:12.260Z","created_at":"2023-03-07T02:10:12.260Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null}]}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
             Connection:
             -   keep-alive
-            Content-Encoding:
-            -   gzip
             Content-Type:
             -   application/json; charset=utf-8
             Date:
-            -   Tue, 07 Jun 2022 15:44:22 GMT
+            -   Fri, 15 Dec 2023 02:32:22 GMT
             Etag:
-            -   W/"1c8b-2C+z0APSMSFso9iuFK0RMSqaYvc"
+            -   W/"5aa-MbmNEXQ+cwhlZ4ywOUrmZ68sek0"
+            Nel:
+            -   '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
+            Report-To:
+            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1702607542&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=8xQJI4s4EliWDIdvpGOmgBgTV2jgVm9BOMwhWYO5vYk%3D"}]}'
+            Reporting-Endpoints:
+            -   heroku-nel=https://nel.heroku.com/reports?ts=1702607542&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=8xQJI4s4EliWDIdvpGOmgBgTV2jgVm9BOMwhWYO5vYk%3D
             Server:
             -   Cowboy
             Transfer-Encoding:
@@ -60,6 +46,8 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
+            content-length:
+            -   '1450'
         status:
             code: 200
             message: OK
