@@ -37,8 +37,8 @@ class CategoryChild(LunchableModel):
     """
 
     id: int
-    name: str = Field(min_length=1, max_length=40)
-    description: Optional[str] = Field(None, max_length=140)
+    name: str = Field(min_length=1)
+    description: Optional[str] = None
     created_at: Optional[datetime.datetime] = None
 
 
@@ -81,7 +81,7 @@ class CategoriesObject(LunchableModel):
     )
 
     id: int = Field(description="A unique identifier for the category.")
-    name: str = Field(min_length=1, max_length=40, description=_name_description)
+    name: str = Field(min_length=1, description=_name_description)
     description: Optional[str] = Field(
         None, max_length=140, description=_description_description
     )
