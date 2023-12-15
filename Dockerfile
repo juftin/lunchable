@@ -3,14 +3,16 @@ FROM ${BASE_IMAGE:-python:3.11-slim}
 
 MAINTAINER Justin Flannery "juftin@juftin.com"
 
-RUN python -m pip install --upgrade pip
-COPY pyproject.toml README.md /tmp/lunchable/
-COPY lunchable/ /tmp/lunchable/lunchable/
-COPY requirements/requirements-prod.txt /tmp/lunchable/requirements.txt
-RUN pip install -r /tmp/lunchable/requirements.txt
-RUN pip install /tmp/lunchable/[all] && rm -rf /tmp/lunchable
-
 RUN apt-get update && apt-get install -y jq && apt-get clean
+
+COPY requirements.txt /tmp/project/requirements.txt
+COPY README.md /tmp/project/README.md
+COPY pyproject.toml /tmp/project/pyproject.toml
+COPY lunchable /tmp/project/lunchable
+
+RUN pip install -r /tmp/project/requirements.txt
+RUN pip install /tmp/project && \
+    rm -rf /tmp/project
 
 SHELL ["/bin/bash", "-c"]
 

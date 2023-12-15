@@ -9,7 +9,7 @@ import html
 import logging
 import os
 import pathlib
-from typing import Any, Dict, Optional, Union
+from typing import Any, Optional, Union
 
 import click
 import numpy as np
@@ -54,7 +54,7 @@ class PrimeLunch(LunchablePandasApp):
         -------
         pd.DataFrame
         """
-        dt64: np.dtype[datetime64] = np.dtype("datetime64[ns]")  # type: ignore[assignment]
+        dt64: np.dtype[datetime64] = np.dtype("datetime64[ns]")
         expected_columns = {
             "order id": str,
             "items": str,
@@ -226,7 +226,7 @@ class PrimeLunch(LunchablePandasApp):
 
     def cache_transactions(
         self, start_date: datetime.date, end_date: datetime.date
-    ) -> Dict[int, TransactionObject]:
+    ) -> dict[int, TransactionObject]:
         """
         Cache Transactions to Memory
 
@@ -286,7 +286,8 @@ class PrimeLunch(LunchablePandasApp):
         if former_transaction.notes is not None:
             transaction_table.add_row("📝 Notes", former_transaction.notes)
         notes_table.add_row(
-            "🗒  Amazon Notes", transaction.notes.strip()  # type: ignore[union-attr]
+            "🗒  Amazon Notes",
+            transaction.notes.strip(),  # type: ignore[union-attr]
         )
         print()
         print(transaction_table)
@@ -294,7 +295,7 @@ class PrimeLunch(LunchablePandasApp):
 
     def update_transaction(
         self, transaction: TransactionObject, confirm: bool = True
-    ) -> Optional[Dict[str, Any]]:
+    ) -> Optional[dict[str, Any]]:
         """
         Update a Transaction's Notes if they've changed
 
@@ -382,9 +383,9 @@ class PrimeLunch(LunchablePandasApp):
         str
         """
         if amount < 0:
-            float_string = "[bold red]$ ({:,.2f})[/bold red]".format(float(abs(amount)))
+            float_string = f"[bold red]$ ({float(abs(amount)):,.2f})[/bold red]"
         else:
-            float_string = "[bold green]$ {:,.2f}[/bold green]".format(float(amount))
+            float_string = f"[bold green]$ {float(amount):,.2f}[/bold green]"
         return float_string
 
 

@@ -3,17 +3,21 @@ build-backend = "hatchling.build"
 requires = ["hatchling"]
 
 [project]
-authors = [{name = "Justin Flannery", email = "justin.flannery@juftin.com"}]
+authors = [
+  {name = "Justin Flannery", email = "juftin@juftin.com"}
+]
 classifiers = [
   "License :: OSI Approved :: MIT License",
   "Development Status :: 5 - Production/Stable",
   "Operating System :: OS Independent",
-  "Programming Language :: Python :: 3",
+  "Programming Language :: Python",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12"
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy"
 ]
 dependencies = [
   "click>=8.0.1",
@@ -57,32 +61,49 @@ Documentation = "https://github.com/juftin/lunchable#readme"
 Issues = "https://github.com/juftin/lunchable/issues"
 Source = "https://github.com/juftin/lunchable"
 
+[tool.coverage.paths]
+lunchable = ["lunchable", "*/lunchable/lunchable"]
+tests = ["tests", "*/lunchable/tests"]
+
 [tool.coverage.report]
-exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:"
+]
 
 [tool.coverage.run]
 branch = true
-omit = ["lunchable/_version.py"]
+omit = [
+  "lunchable/_version.py"
+]
 parallel = true
+source_pkgs = ["lunchable", "tests"]
 
 [tool.hatch.env]
-requires = [
-  "hatch-pip-compile"
-]
+requires = ["hatch-pip-compile"]
+
+[tool.hatch.envs.all]
+pip-compile-constraint = ""
+template = "test"
+
+[[tool.hatch.envs.all.matrix]]
+python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
 [tool.hatch.envs.default]
+features = ["all"]
+pip-compile-constraint = "default"
+post-install-commands = [
+  "- pre-commit install"
+]
+type = "pip-compile"
+
+[tool.hatch.envs.default.scripts]
+cov = "hatch run test:cov"
+test = "hatch run test:test"
+
+[tool.hatch.envs.docs]
 dependencies = [
-  # Testing
-  "pytest~=7.3.1",
-  "pytest-cov~=4.0.0",
-  "pytest-mock~=3.10.0",
-  "vcrpy~=5.1.0",
-  # Tooling
-  "black~=23.3.0",
-  "ruff~=0.0.261",
-  "mypy~=1.2.0",
-  "pip-tools~=6.13.0",
-  # Sphinx
   "sphinx",
   "sphinx-rtd-theme",
   "autodocsumm",
@@ -95,23 +116,57 @@ dependencies = [
   "sphinx-autodoc-typehints",
   "autodoc_pydantic"
 ]
-features = [
-  "all"
-]
+detached = true
 type = "pip-compile"
 
-[tool.hatch.envs.default.env-vars]
-LUNCHMONEY_ACCESS_TOKEN = "{env:LUNCHMONEY_ACCESS_TOKEN:LUNCHMONEY_ACCESS_TOKEN_PLACEHOLDER}"
-PUSHOVER_USER_KEY = "{env:PUSHOVER_USER_KEY:PUSHOVER_USER_KEY_PLACEHOLDER}"
-SENSITIVE_REQUEST_STRINGS = "{env:SENSITIVE_REQUEST_STRINGS:SENSITIVE_REQUEST_STRINGS_PLACEHOLDER}"
-SPLITWISE_API_KEY = "{env:SPLITWISE_API_KEY:SPLITWISE_API_KEY_PLACEHOLDER}"
-SPLITWISE_CONSUMER_KEY = "{env:SPLITWISE_CONSUMER_KEY:SPLITWISE_CONSUMER_KEY_PLACEHOLDER}"
-SPLITWISE_CONSUMER_SECRET = "{env:SPLITWISE_CONSUMER_SECRET:SPLITWISE_CONSUMER_SECRET_PLACEHOLDER}"
+[tool.hatch.envs.docs.scripts]
+build = [
+  "rm -rf docs/_build/ && rm -rf docs/source/api/",
+  "cd docs && make html"
+]
+deploy = ["mkdocs gh-deploy {args:}"]
+serve = [
+  "build",
+  "python -m http.server --bind 0.0.0.0 -d docs/_build/html/"
+]
 
-[tool.hatch.envs.default.scripts]
-_pip_compile = "pip-compile --resolver=backtracking --all-extras {args:}"
-all = ["format", "lint", "test"]
-check = [
+[tool.hatch.envs.gen]
+detached = true
+
+[tool.hatch.envs.gen.scripts]
+release = [
+  "npm install --prefix .github/semantic_release/",
+  "npx --prefix .github/semantic_release/ semantic-release {args:}"
+]
+
+[tool.hatch.envs.lint]
+dependencies = [
+  "mypy>=1.6.1",
+  "ruff~=0.1.7",
+  "pydantic"
+]
+detached = true
+pip-compile-constraint = "default"
+type = "pip-compile"
+
+[tool.hatch.envs.lint.scripts]
+all = [
+  "style",
+  "typing"
+]
+fmt = [
+  "ruff format {args:.}",
+  "ruff --fix {args:.}",
+  "style"
+]
+precommit = [
+  "pre-commit run --all-files"
+]
+style = [
+  "ruff {args:.}",
+  "ruff format --check --diff {args:.}"
+]
+typing = [
   """
   mypy \
     --install-types \
@@ -122,30 +177,34 @@ check = [
     {args:lunchable/}
   """
 ]
-docs-build = [
-  "rm -rf docs/_build/ && rm -rf docs/source/api/",
-  "cd docs && make html"
-]
-docs-serve = [
-  "docs-build",
-  "python -m http.server --bind 0.0.0.0 -d docs/_build/html/"
-]
-format = ["ruff --fix {args:.}", "black {args:.}"]
-lint = ["ruff {args:.}", "black --check {args:.}"]
-requirements = [
-  "_pip_compile --output-file requirements/requirements-prod.txt {args:}"
-]
-semantic-release = [
-  "npm install --prefix .github/semantic_release/",
-  "npx --prefix .github/semantic_release/ semantic-release {args:}"
-]
-test = "pytest --cov=lunchable --cov-report={env:COVERAGE_REPORT:term-missing} --cov-config=pyproject.toml {args:tests/ -v}"
 
-[[tool.hatch.envs.test.matrix]]
-python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
+[tool.hatch.envs.test]
+dependencies = [
+  "coverage[toml]>=6.5",
+  "pytest",
+  "pytest-mock",
+  "vcrpy~=5.1.0"
+]
+
+[tool.hatch.envs.test.env-vars]
+LUNCHMONEY_ACCESS_TOKEN = "{env:LUNCHMONEY_ACCESS_TOKEN:LUNCHMONEY_ACCESS_TOKEN_PLACEHOLDER}"
+PUSHOVER_USER_KEY = "{env:PUSHOVER_USER_KEY:PUSHOVER_USER_KEY_PLACEHOLDER}"
+SENSITIVE_REQUEST_STRINGS = "{env:SENSITIVE_REQUEST_STRINGS:SENSITIVE_REQUEST_STRINGS_PLACEHOLDER}"
+SPLITWISE_API_KEY = "{env:SPLITWISE_API_KEY:SPLITWISE_API_KEY_PLACEHOLDER}"
+SPLITWISE_CONSUMER_KEY = "{env:SPLITWISE_CONSUMER_KEY:SPLITWISE_CONSUMER_KEY_PLACEHOLDER}"
+SPLITWISE_CONSUMER_SECRET = "{env:SPLITWISE_CONSUMER_SECRET:SPLITWISE_CONSUMER_SECRET_PLACEHOLDER}"
 
 [tool.hatch.envs.test.scripts]
-matrix = "test"
+cov = [
+  "test-cov",
+  "cov-report"
+]
+cov-report = [
+  "- coverage combine",
+  "coverage report -m"
+]
+test = "pytest {args:tests}"
+test-cov = "coverage run -m pytest {args:tests}"
 
 [tool.hatch.version]
 path = "lunchable/_version.py"
@@ -162,16 +221,17 @@ plugins = [
 warn_redundant_casts = true
 warn_unused_ignores = true
 
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = [
+  "pytest.*"
+]
+
 [tool.pydantic-mypy]
 init_forbid_extra = true
 init_typed = true
 warn_required_dynamic_aliases = true
 warn_untyped_fields = true
-
-[tool.pytest.ini_options]
-filterwarnings = [
-  "error"
-]
 
 [tool.ruff]
 ignore = [

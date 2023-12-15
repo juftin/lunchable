@@ -1,65 +1,79 @@
 # Contributing
 
-## Quickstart
+## Environment Setup
 
-```shell
-pipx install pre-commit
-pipx install hatch
-pre-commit install
-hatch env create
-hatch shell
-```
+1.  Install [hatch](https://github.com/pypa/hatch)
 
-## Tools
+    ```shell
+    pipx install hatch
+    ```
 
-This project makes use of a couple tools to streamline the development process:
-[pre-commit](https://pre-commit.com/) and [hatch](https://hatch.pypa.io/).
+2.  Build the Virtual Environment
 
-### pre-commit
+    ```shell
+    hatch env create
+    ```
 
-[pre-commit] is a tool to manage git-hooks scripts, which are useful
-for identifying simple issues before submission to code review.
+3.  If you need to, you can link a hatch virtual environment to your IDE.
+    They can be located by name with the `env find` command:
 
-```commandline
-pipx install pre-commit
-pre-commit install
-```
+    ```shell
+    hatch env find default
+    ```
 
-To use pre-commit, you must first install it. [pipx] is preferred, but you can also install with
-`pip`. Once [pre-commit] is installed, run `pre-commit install` to install the git-hooks scripts
-into the local repository. Done, now pre-commit will run automatically on git commit. To run it
-manually on your changed files run `pre-commit run` on your command line.
+4.  Activate the Virtual Environment
 
-### hatch
+    ```shell
+    hatch shell
+    ```
 
-[hatch](https://hatch.pypa.io/) is a tool to manage the packaging and distribution of Python packages. It also
-used to manage the virtual environment for the project and running common scripts.
+## Using Hatch
 
-```commandline
-pipx install hatch
-hatch env create
-hatch run test
-```
+### Hatch Cheat Sheet
 
-## Commit Message Format
+| Command Description            | Command                     | Notes                                                      |
+| ------------------------------ | --------------------------- | ---------------------------------------------------------- |
+| Run Tests                      | `hatch run cov`             | Runs tests with `pytest` and `coverage`                    |
+| Run Formatting                 | `hatch run lint:fmt`        | Runs `ruff` code formatter                                 |
+| Run Linting                    | `hatch run lint:all`        | Runs `ruff` and `mypy` linters / type checkers             |
+| Run Type Checking              | `hatch run lint:typing`     | Runs `mypy` type checker                                   |
+| Serve the Documentation        | `hatch run docs:serve`      | Serve the documentation using MkDocs                       |
+| Run the `pre-commit` Hooks     | `hatch run lint:precommit`  | Runs the `pre-commit` hooks on all files                   |
 
-Releases for this project are handled entirely by CI/CD via Pull requests being merged into
-the `main` branch. Contributions follow the [gitmoji] standards with [conventional commits],
-orchestration is handled by the [semantic-release] tool.
+### Hatch Explanation
 
-While you can denote other changes on your commit messages with gitmoji, the following
+Hatch is a Python package manager. It's most basic use is as a standardized build-system.
+However, hatch also has some extra features which this project takes advantage of.
+These features include virtual environment management and the organization of common
+scripts like linting and testing. All the operations in hatch take place in one
+of its managed virtual environments.
+
+## Committing Code
+
+This project uses [pre-commit] to run a set of
+checks on the code before it is committed. The pre-commit hooks are
+installed by hatch automatically when you run it for the first time.
+
+This project uses [semantic-versioning] standards, managed by [semantic-release].
+Releases for this project are handled entirely by CI/CD via pull requests being
+merged into the `main` branch. Contributions follow the [gitmoji] standards
+with [conventional commits].
+
+While you can denote other changes on your commit messages with [gitmoji], the following
 commit message emoji prefixes are the only ones to trigger new releases:
 
-| Emoji | Shortcode   | Description                 | Semver |
-| ----- | ----------- | --------------------------- | ------ |
-| 💥    | :boom:      | Introduce breaking changes. | Major  |
-| ✨    | :sparkles:  | Introduce new features.     | Minor  |
-| 🐛    | :bug:       | Fix a bug.                  | Patch  |
-| 🚑    | :ambulance: | Critical hotfix.            | Patch  |
-| 🔒    | :lock:      | Fix security issues.        | Patch  |
+| Emoji | Shortcode     | Description                 | Semver |
+| ----- | ------------- | --------------------------- | ------ |
+| 💥    | \:boom\:      | Introduce breaking changes. | Major  |
+| ✨    | \:sparkles\:  | Introduce new features.     | Minor  |
+| 🐛    | \:bug\:       | Fix a bug.                  | Patch  |
+| 🚑    | \:ambulance\: | Critical hotfix.            | Patch  |
+| 🔒    | \:lock\:      | Fix security issues.        | Patch  |
 
-Most features can be squash merged into a single commit. If you're working on a
-feature, your commit message might look like:
+Most features can be squash merged into a single commit on a pull-request.
+When merging multiple commits, they will be summarized into a single release.
+
+If you're working on a new feature, your commit message might look like:
 
 ```text
 ✨ New Feature Description
@@ -71,43 +85,43 @@ Bug fix commits would look like this:
 🐛 Bug Fix Description
 ```
 
-## Scripts
+If you're working on a feature that introduces breaking changes, your
+commit message might look like:
 
-All common scripts for this repository are managed by [hatch](#hatch).
-
-```shell
-hatch run <script>
+```text
+💥 Breaking Change Description
 ```
 
-| Script         | Script Description                                      |
-| -------------- |---------------------------------------------------------|
-| `format`       | Code Formatting [black] and [ruff]                      |
-| `lint`         | Code Linting [black] and [ruff]                         |
-| `check`        | Type Checking with [mypy]                               |
-| `test`         | Unit Testing with [pytest]                              |
-| `all`          | Run multiple scripts: `format`, `lint`, `check`, `test` |
-| `docs-serve`   | Documentation Building and Serving                      |
-| `requirements` | Lock File Updates with [pip-tools]                      |
+Other commits that don't trigger a release might look like this:
 
-## Dependencies
-
-Dependencies are managed by [pip-tools / pip-compile](https://github.com/jazzband/pip-tools/).
-After updating dependencies in the `pyproject.toml` file, run the following to update the
-underlying `requirements.txt` files:
-
-```shell
-hatch run requirements
+```text
+📝 Documentation Update Description
+👷 CI/CD Update Description
+🧪 Testing Changes Description
+🚚 Moving/Renaming Description
+⬆️ Dependency Upgrade Description
 ```
 
-[pipx]: https://pipxproject.github.io/pipx/
+### Pre-Releases
+
+[semantic-release] supports pre-releases. To trigger a pre-release, you
+would merge your pull request into an `alpha` or `beta` branch.
+
+### Specific Release Versions
+
+In some cases you need more advanced control around what kind of release you
+need to create. If you need to release a specific version, you can do so by creating a
+new branch with the version number as the branch name. For example, if the
+current version is `2.3.2`, but you need to release a fix as `1.2.5`, you
+would create a branch named `1.2.x` and merge your changes into that branch.
+
+See the [semantic-release documentation] for more information about
+branch based releases and other advanced release cases.
+
+[pipx]: https://pypa.github.io/pipx/
 [pre-commit]: https://pre-commit.com/
 [gitmoji]: https://gitmoji.dev/
 [conventional commits]: https://www.conventionalcommits.org/en/v1.0.0/
 [semantic-release]: https://github.com/semantic-release/semantic-release
-[black]: https://github.com/psf/black
-[ruff]: https://github.com/charliermarsh/ruff
-[mypy]: https://mypy.readthedocs.io/en/stable/
-[pytest]: https://docs.pytest.org/en/stable/
-[MkDocs]: https://www.mkdocs.org/
-[mkdocs-material]: https://squidfunk.github.io/mkdocs-material/
-[pip-tools]: https://github.com/jazzband/pip-tools/
+[semantic-versioning]: https://semver.org/
+[semantic-release documentation]: https://semantic-release.gitbook.io/semantic-release/usage/configuration#branches
