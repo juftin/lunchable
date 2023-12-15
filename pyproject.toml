@@ -131,7 +131,7 @@ serve = [
 ]
 
 [tool.hatch.envs.gen]
-detached = false
+detached = true
 
 [tool.hatch.envs.gen.scripts]
 release = [
