@@ -25,7 +25,7 @@ class ModelCreateCategory(LunchableModel):
     """
 
     name: str
-    description: Optional[str]
+    description: Optional[str] = None
     is_income: Optional[bool] = False
     exclude_from_budget: Optional[bool] = False
     exclude_from_totals: Optional[bool] = False
@@ -38,8 +38,8 @@ class CategoryChild(LunchableModel):
 
     id: int
     name: str = Field(min_length=1, max_length=40)
-    description: Optional[str] = Field(max_length=140)
-    created_at: Optional[datetime.datetime]
+    description: Optional[str] = Field(None, max_length=140)
+    created_at: Optional[datetime.datetime] = None
 
 
 class CategoriesObject(LunchableModel):
@@ -83,16 +83,22 @@ class CategoriesObject(LunchableModel):
     id: int = Field(description="A unique identifier for the category.")
     name: str = Field(min_length=1, max_length=40, description=_name_description)
     description: Optional[str] = Field(
-        max_length=140, description=_description_description
+        None, max_length=140, description=_description_description
     )
-    is_income: str = Field(description=_is_income_description)
+    is_income: bool = Field(description=_is_income_description)
     exclude_from_budget: bool = Field(description=_exclude_from_budget_description)
     exclude_from_totals: bool = Field(description=_exclude_from_totals_description)
-    updated_at: Optional[datetime.datetime] = Field(description=_updated_at_description)
-    created_at: Optional[datetime.datetime] = Field(description=_created_at_description)
+    updated_at: Optional[datetime.datetime] = Field(
+        None, description=_updated_at_description
+    )
+    created_at: Optional[datetime.datetime] = Field(
+        None, description=_created_at_description
+    )
     is_group: bool = Field(description=_is_group_description)
-    group_id: Optional[int] = Field(description=_group_id_description)
-    children: Optional[List[CategoryChild]] = Field(description=_children_description)
+    group_id: Optional[int] = Field(None, description=_group_id_description)
+    children: Optional[List[CategoryChild]] = Field(
+        None, description=_children_description
+    )
 
 
 class _CategoriesParamsPut(LunchableModel):
@@ -100,12 +106,12 @@ class _CategoriesParamsPut(LunchableModel):
     https://lunchmoney.dev/#update-category
     """
 
-    name: Optional[str] = Field(min_length=1, max_length=40)
-    description: Optional[str] = Field(max_length=140)
-    is_income: Optional[bool]
-    exclude_from_budget: Optional[bool]
-    exclude_from_totals: Optional[bool]
-    group_id: Optional[int]
+    name: Optional[str] = Field(None, min_length=1, max_length=40)
+    description: Optional[str] = Field(None, max_length=140)
+    is_income: Optional[bool] = None
+    exclude_from_budget: Optional[bool] = None
+    exclude_from_totals: Optional[bool] = None
+    group_id: Optional[int] = None
 
 
 class _CategoriesParamsPost(LunchableModel):
@@ -114,12 +120,12 @@ class _CategoriesParamsPost(LunchableModel):
     """
 
     name: str
-    description: Optional[str]
+    description: Optional[str] = None
     is_income: Optional[bool] = False
     exclude_from_budget: Optional[bool] = False
     exclude_from_totals: Optional[bool] = False
-    category_ids: Optional[List[int]]
-    new_categories: Optional[List[str]]
+    category_ids: Optional[List[int]] = None
+    new_categories: Optional[List[str]] = None
 
 
 class _CategoriesAddParamsPost(LunchableModel):
@@ -127,8 +133,8 @@ class _CategoriesAddParamsPost(LunchableModel):
     https://lunchmoney.dev/#add-to-category-group
     """
 
-    category_ids: Optional[List[int]]
-    new_categories: Optional[List[str]]
+    category_ids: Optional[List[int]] = None
+    new_categories: Optional[List[str]] = None
 
 
 class CategoriesClient(LunchMoneyAPIClient):
@@ -195,7 +201,7 @@ class CategoriesClient(LunchMoneyAPIClient):
             is_income=is_income,
             exclude_from_budget=exclude_from_budget,
             exclude_from_totals=exclude_from_totals,
-        ).dict(exclude_none=True)
+        ).model_dump(exclude_none=True)
         response_data = self._make_request(
             method=self.Methods.POST,
             url_path=APIConfig.LUNCHMONEY_CATEGORIES,
@@ -337,7 +343,7 @@ class CategoriesClient(LunchMoneyAPIClient):
             exclude_from_budget=exclude_from_budget,
             exclude_from_totals=exclude_from_totals,
             group_id=group_id,
-        ).dict(exclude_none=True)
+        ).model_dump(exclude_none=True)
         response_data = self._make_request(
             method=self.Methods.PUT,
             url_path=[APIConfig.LUNCHMONEY_CATEGORIES, category_id],
@@ -395,7 +401,7 @@ class CategoriesClient(LunchMoneyAPIClient):
             exclude_from_totals=exclude_from_totals,
             category_ids=category_ids,
             new_categories=new_categories,
-        ).dict(exclude_none=True)
+        ).model_dump(exclude_none=True)
         response_data = self._make_request(
             method=self.Methods.POST,
             url_path=[APIConfig.LUNCHMONEY_CATEGORIES, "group"],
@@ -433,7 +439,7 @@ class CategoriesClient(LunchMoneyAPIClient):
         """
         payload = _CategoriesAddParamsPost(
             category_ids=category_ids, new_categories=new_categories
-        ).dict(exclude_none=True)
+        ).model_dump(exclude_none=True)
         response_data = self._make_request(
             method=self.Methods.POST,
             url_path=[
@@ -444,4 +450,4 @@ class CategoriesClient(LunchMoneyAPIClient):
             ],
             payload=payload,
         )
-        return CategoriesObject(**response_data)
+        return CategoriesObject.model_validate(response_data)

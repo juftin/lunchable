@@ -113,7 +113,7 @@ def test_split_transaction(lunch_money_obj: LunchMoney):
         notes=transaction_to_split.notes,
         amount=amount_1,
     )
-    split_object_2 = split_object.copy()
+    split_object_2 = split_object.model_copy()
     new_split = lunch_money_obj.update_transaction(
         transaction_id=transaction_to_split.id, split=[split_object, split_object_2]
     )

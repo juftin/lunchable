@@ -21,7 +21,7 @@ classifiers = [
 ]
 dependencies = [
   "click>=8.0.1",
-  "pydantic>=1.2.0,<2.0.0",
+  "pydantic>=2,<3",
   "requests>=2.0.0,<3.0.0",
   "rich>=10.0.0"
 ]

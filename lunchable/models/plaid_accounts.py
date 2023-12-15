@@ -83,18 +83,18 @@ class PlaidAccountObject(LunchableModel):
     name: str = Field(description=_name_description)
     type: str = Field(description=_type_description)
     subtype: str = Field(description=_subtype_description)
-    mask: Optional[str] = Field(description=_mask_description)
+    mask: Optional[str] = Field(None, description=_mask_description)
     institution_name: str = Field(description=_institution_name_description)
     status: str = Field(description=_status_description)
     last_import: Optional[datetime.datetime] = Field(
-        description=_last_import_description
+        None, description=_last_import_description
     )
-    balance: Optional[float] = Field(description=_balance_description)
+    balance: Optional[float] = Field(None, description=_balance_description)
     currency: str = Field(description=_currency_description)
     balance_last_update: datetime.datetime = Field(
         description=_balance_last_update_description
     )
-    limit: Optional[int] = Field(description=_limit_description)
+    limit: Optional[int] = Field(None, description=_limit_description)
 
 
 class PlaidAccountsClient(LunchMoneyAPIClient):

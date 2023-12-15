@@ -32,7 +32,7 @@ class LunchablePandasApp(LunchableApp):
         if not isinstance(models, list):
             models = list(models)
         return pd.DataFrame(
-            [item.dict() for item in models],
+            [item.model_dump() for item in models],
             columns=models[0].__fields__.keys(),
         )
 

@@ -8,7 +8,7 @@ import datetime
 import logging
 from typing import List, Optional, Union
 
-from pydantic import Field, validator
+from pydantic import Field, field_validator
 
 from lunchable._config import APIConfig
 from lunchable.models._base import LunchableModel
@@ -54,17 +54,17 @@ class AssetsObject(LunchableModel):
 
     id: int = Field(description="Unique identifier for asset")
     type_name: str = Field(description=_type_name_description)
-    subtype_name: Optional[str] = Field(description=_subtype_name_description)
+    subtype_name: Optional[str] = Field(None, description=_subtype_name_description)
     name: str = Field(description="Name of the asset")
     display_name: Optional[str] = Field(
-        description="Display name of the asset (as set by user)"
+        None, description="Display name of the asset (as set by user)"
     )
     balance: float = Field(description=_balance_description)
     balance_as_of: datetime.datetime = Field(description=_balance_as_of_description)
-    closed_on: Optional[datetime.date] = Field(description=_closed_on_description)
+    closed_on: Optional[datetime.date] = Field(None, description=_closed_on_description)
     currency: str = Field(description=_currency_description)
     institution_name: Optional[str] = Field(
-        description="Name of institution holding the asset"
+        None, description="Name of institution holding the asset"
     )
     exclude_transactions: bool = Field(
         default=False, description=_exclude_transactions_description
@@ -77,16 +77,16 @@ class _AssetsParamsPut(LunchableModel):
     https://lunchmoney.dev/#update-asset
     """
 
-    type_name: Optional[str]
-    subtype_name: Optional[str]
-    name: Optional[str]
-    balance: Optional[str]
-    balance_as_of: Optional[datetime.datetime]
-    currency: Optional[str]
-    institution_name: Optional[str]
+    type_name: Optional[str] = None
+    subtype_name: Optional[str] = None
+    name: Optional[str] = None
+    balance: Optional[float] = None
+    balance_as_of: Optional[datetime.datetime] = None
+    currency: Optional[str] = None
+    institution_name: Optional[str] = None
 
+    @field_validator("balance", mode="before")
     @classmethod
-    @validator("balance", pre=True)
     def result_check(cls, x: Union[float, int]) -> float:
         """
         Check a result
@@ -100,18 +100,18 @@ class _AssetsParamsPost(LunchableModel):
     """
 
     type_name: str
-    subtype_name: Optional[str]
+    subtype_name: Optional[str] = None
     name: str
-    display_name: Optional[str]
+    display_name: Optional[str] = None
     balance: float
-    balance_as_of: Optional[datetime.datetime]
-    currency: Optional[str]
-    institution_name: Optional[str]
-    closed_on: Optional[datetime.date]
+    balance_as_of: Optional[datetime.datetime] = None
+    currency: Optional[str] = None
+    institution_name: Optional[str] = None
+    closed_on: Optional[datetime.date] = None
     exclude_transactions: bool = False
 
+    @field_validator("balance", mode="before")
     @classmethod
-    @validator("balance", pre=True)
     def result_check(cls, x: Union[float, int]) -> float:
         """
         Check a result
@@ -192,7 +192,7 @@ class AssetsClient(LunchMoneyAPIClient):
             balance_as_of=balance_as_of,
             currency=currency,
             institution_name=institution_name,
-        ).dict(exclude_none=True)
+        ).model_dump(exclude_none=True)
         response_data = self._make_request(
             method=self.Methods.PUT,
             url_path=[APIConfig.LUNCHMONEY_ASSETS, asset_id],
@@ -260,7 +260,7 @@ class AssetsClient(LunchMoneyAPIClient):
             institution_name=institution_name,
             closed_on=closed_on,
             exclude_transactions=exclude_transactions,
-        ).dict(exclude_none=True)
+        ).model_dump(exclude_none=True)
         response_data = self._make_request(
             method=self.Methods.POST,
             url_path=[APIConfig.LUNCHMONEY_ASSETS],

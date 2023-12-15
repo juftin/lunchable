@@ -22,11 +22,11 @@ class BudgetDataObject(LunchableModel):
     Data Object within a Budget
     """
 
-    budget_amount: Optional[float] = Field()
-    budget_currency: Optional[str] = Field()
-    budget_to_base: Optional[float] = Field()
-    spending_to_base: float = Field(default=0.00)
-    num_transactions: int = Field(default=0)
+    budget_amount: Optional[float] = None
+    budget_currency: Optional[str] = None
+    budget_to_base: Optional[float] = None
+    spending_to_base: float = 0.00
+    num_transactions: int = 0
 
 
 class BudgetConfigObject(LunchableModel):
@@ -36,9 +36,9 @@ class BudgetConfigObject(LunchableModel):
 
     config_id: int
     cadence: str
-    amount: Optional[float]
-    currency: Optional[str]
-    to_base: Optional[float]
+    amount: Optional[float] = None
+    currency: Optional[str] = None
+    to_base: Optional[float] = None
     auto_suggest: str
 
 
@@ -71,17 +71,23 @@ class BudgetObject(LunchableModel):
     """
 
     category_name: str = Field(description="Name of the category")
-    category_id: Optional[int] = Field(description="Unique identifier for category")
-    category_group_name: Optional[str] = Field(
-        description=_category_group_name_description
+    category_id: Optional[int] = Field(
+        None, description="Unique identifier for category"
     )
-    group_id: Optional[int] = Field(description="Unique identifier for category group")
-    is_group: Optional[bool] = Field(description="If true, this category is a group")
+    category_group_name: Optional[str] = Field(
+        None, description=_category_group_name_description
+    )
+    group_id: Optional[int] = Field(
+        None, description="Unique identifier for category group"
+    )
+    is_group: Optional[bool] = Field(
+        None, description="If true, this category is a group"
+    )
     is_income: bool = Field(description=_is_income_description)
     exclude_from_budget: bool = Field(description=_exclude_from_budget_description)
     exclude_from_totals: bool = Field(description=_exclude_from_totals_description)
     data: Dict[datetime.date, BudgetDataObject] = Field(description=_data_description)
-    config: Optional[BudgetConfigObject] = Field(description=_config_description)
+    config: Optional[BudgetConfigObject] = Field(None, description=_config_description)
 
 
 class BudgetParamsGet(LunchableModel):
@@ -101,7 +107,7 @@ class BudgetParamsPut(LunchableModel):
     start_date: datetime.date
     category_id: int
     amount: float
-    currency: Optional[str]
+    currency: Optional[str] = None
 
 
 class BudgetParamsRemove(LunchableModel):
@@ -132,7 +138,7 @@ class BudgetsClient(LunchMoneyAPIClient):
         -------
         List[BudgetObject]
         """
-        params = BudgetParamsGet(start_date=start_date, end_date=end_date).dict()
+        params = BudgetParamsGet(start_date=start_date, end_date=end_date).model_dump()
         response_data = self._make_request(
             method="GET", url_path=[APIConfig.LUNCHMONEY_BUDGET], params=params
         )
@@ -183,7 +189,7 @@ class BudgetsClient(LunchMoneyAPIClient):
             category_id=category_id,
             amount=amount,
             currency=currency,
-        ).dict(exclude_none=True)
+        ).model_dump(exclude_none=True)
         response_data = self._make_request(
             method="PUT", url_path=[APIConfig.LUNCHMONEY_BUDGET], payload=body
         )
@@ -208,7 +214,7 @@ class BudgetsClient(LunchMoneyAPIClient):
         """
         params = BudgetParamsRemove(
             start_date=start_date, category_id=category_id
-        ).dict()
+        ).model_dump()
         response_data = self._make_request(
             method="DELETE", url_path=[APIConfig.LUNCHMONEY_BUDGET], params=params
         )

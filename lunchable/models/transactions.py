@@ -82,17 +82,19 @@ class TransactionInsertObject(TransactionBaseObject):
 
     date: datetime.date = Field(description=_date_description)
     amount: float = Field(description=_amount_description)
-    category_id: Optional[int] = Field(description=_category_id_description)
-    payee: Optional[str] = Field(description="Max 140 characters", max_length=140)
-    currency: Optional[str] = Field(description=_currency_description, max_length=3)
-    asset_id: Optional[int] = Field(description=_asset_id_description)
-    recurring_id: Optional[int] = Field(description=_recurring_id)
-    notes: Optional[str] = Field(description="Max 350 characters", max_length=350)
-    status: Optional[StatusEnum] = Field(description=_status_description)
-    external_id: Optional[str] = Field(
-        description=_external_id_description, max_length=75
+    category_id: Optional[int] = Field(None, description=_category_id_description)
+    payee: Optional[str] = Field(None, description="Max 140 characters", max_length=140)
+    currency: Optional[str] = Field(
+        None, description=_currency_description, max_length=3
     )
-    tags: Optional[List[Union[str, int]]] = Field(description=_tags_description)
+    asset_id: Optional[int] = Field(None, description=_asset_id_description)
+    recurring_id: Optional[int] = Field(None, description=_recurring_id)
+    notes: Optional[str] = Field(None, description="Max 350 characters", max_length=350)
+    status: Optional[StatusEnum] = Field(None, description=_status_description)
+    external_id: Optional[str] = Field(
+        None, description=_external_id_description, max_length=75
+    )
+    tags: Optional[List[Union[str, int]]] = Field(None, description=_tags_description)
 
 
 class TransactionUpdateObject(TransactionBaseObject):
@@ -153,17 +155,17 @@ class TransactionUpdateObject(TransactionBaseObject):
         cleared = "cleared"
         uncleared = "uncleared"
 
-    date: Optional[datetime.date] = Field(description=_date_description)
-    category_id: Optional[int] = Field(description=_category_id_description)
-    payee: Optional[str] = Field(description="Max 140 characters", max_length=140)
-    amount: Optional[float] = Field(description=_amount_description)
-    currency: Optional[str] = Field(description=_currency_description)
-    asset_id: Optional[int] = Field(description=_asset_id_description)
-    recurring_id: Optional[int] = Field(description=_recurring_id_description)
-    notes: Optional[str] = Field(description="Max 350 characters", max_length=350)
-    status: Optional[StatusEnum] = Field(description=_status_description)
-    external_id: Optional[str] = Field(description=_external_id_description)
-    tags: Optional[List[Union[int, str]]] = Field(description=_tags_description)
+    date: Optional[datetime.date] = Field(None, description=_date_description)
+    category_id: Optional[int] = Field(None, description=_category_id_description)
+    payee: Optional[str] = Field(None, description="Max 140 characters", max_length=140)
+    amount: Optional[float] = Field(None, description=_amount_description)
+    currency: Optional[str] = Field(None, description=_currency_description)
+    asset_id: Optional[int] = Field(None, description=_asset_id_description)
+    recurring_id: Optional[int] = Field(None, description=_recurring_id_description)
+    notes: Optional[str] = Field(None, description="Max 350 characters", max_length=350)
+    status: Optional[StatusEnum] = Field(None, description=_status_description)
+    external_id: Optional[str] = Field(None, description=_external_id_description)
+    tags: Optional[List[Union[int, str]]] = Field(None, description=_tags_description)
 
 
 class TransactionSplitObject(TransactionBaseObject):
@@ -188,7 +190,7 @@ class TransactionSplitObject(TransactionBaseObject):
     category_id: Optional[int] = Field(
         default=None, description=_category_id_description
     )
-    notes: Optional[str] = Field(description=_notes_description)
+    notes: Optional[str] = Field(None, description=_notes_description)
     amount: float = Field(description=_amount_description)
 
 
@@ -291,27 +293,31 @@ class TransactionObject(TransactionBaseObject):
 
     id: int = Field(description="Unique identifier for transaction")
     date: datetime.date = Field(description="Date of transaction in ISO 8601 format")
-    payee: Optional[str] = Field(description=_payee_description)
+    payee: Optional[str] = Field(None, description=_payee_description)
     amount: float = Field(description=_amount_description)
-    currency: Optional[str] = Field(max_length=3, description=_currency_description)
-    notes: Optional[str] = Field(description=_notes_description)
-    category_id: Optional[int] = Field(description=_category_description)
-    asset_id: Optional[int] = Field(description=_asset_id_description)
-    plaid_account_id: Optional[int] = Field(description=_plaid_account_id_description)
-    status: Optional[str] = Field(description=_status_description)
-    parent_id: Optional[int] = Field(description=_parent_id_description)
-    is_group: Optional[bool] = Field(description=_is_group_description)
-    group_id: Optional[int] = Field(description=_group_id_description)
-    tags: Optional[List[TagsObject]] = Field(description="Array of Tag objects")
-    external_id: Optional[str] = Field(
-        max_length=75, description=_external_id_description
+    currency: Optional[str] = Field(
+        None, max_length=3, description=_currency_description
     )
-    original_name: Optional[str] = Field(description=_original_name_description)
-    type: Optional[str] = Field(description=_type_description)
-    subtype: Optional[str] = Field(description=_subtype_description)
-    fees: Optional[str] = Field(description=_fees_description)
-    price: Optional[str] = Field(description=_price_description)
-    quantity: Optional[str] = Field(description=_quantity_description)
+    notes: Optional[str] = Field(None, description=_notes_description)
+    category_id: Optional[int] = Field(None, description=_category_description)
+    asset_id: Optional[int] = Field(None, description=_asset_id_description)
+    plaid_account_id: Optional[int] = Field(
+        None, description=_plaid_account_id_description
+    )
+    status: Optional[str] = Field(None, description=_status_description)
+    parent_id: Optional[int] = Field(None, description=_parent_id_description)
+    is_group: Optional[bool] = Field(None, description=_is_group_description)
+    group_id: Optional[int] = Field(None, description=_group_id_description)
+    tags: Optional[List[TagsObject]] = Field(None, description="Array of Tag objects")
+    external_id: Optional[str] = Field(
+        None, max_length=75, description=_external_id_description
+    )
+    original_name: Optional[str] = Field(None, description=_original_name_description)
+    type: Optional[str] = Field(None, description=_type_description)
+    subtype: Optional[str] = Field(None, description=_subtype_description)
+    fees: Optional[str] = Field(None, description=_fees_description)
+    price: Optional[str] = Field(None, description=_price_description)
+    quantity: Optional[str] = Field(None, description=_quantity_description)
 
     def get_update_object(self) -> TransactionUpdateObject:
         """
@@ -325,7 +331,7 @@ class TransactionObject(TransactionBaseObject):
         -------
         TransactionUpdateObject
         """
-        update_dict = self.dict()
+        update_dict = self.model_dump()
         try:
             TransactionUpdateObject.StatusEnum(self.status)
         except ValueError:
@@ -348,7 +354,7 @@ class TransactionObject(TransactionBaseObject):
         -------
         TransactionInsertObject
         """
-        insert_dict = self.dict()
+        insert_dict = self.model_dump()
         try:
             TransactionInsertObject.StatusEnum(self.status)
         except ValueError:
@@ -365,20 +371,20 @@ class _TransactionParamsGet(LunchableModel):
     https://lunchmoney.dev/#get-all-transactions
     """
 
-    tag_id: Optional[int]
-    recurring_id: Optional[int]
-    plaid_account_id: Optional[int]
-    category_id: Optional[int]
-    asset_id: Optional[int]
-    group_id: Optional[int]
-    is_group: Optional[bool]
-    status: Optional[FullStatusEnum]
-    offset: Optional[int]
-    limit: Optional[int]
-    start_date: Optional[datetime.date]
-    end_date: Optional[datetime.date]
-    debit_as_negative: Optional[bool]
-    pending: Optional[bool]
+    tag_id: Optional[int] = None
+    recurring_id: Optional[int] = None
+    plaid_account_id: Optional[int] = None
+    category_id: Optional[int] = None
+    asset_id: Optional[int] = None
+    group_id: Optional[int] = None
+    is_group: Optional[bool] = None
+    status: Optional[FullStatusEnum] = None
+    offset: Optional[int] = None
+    limit: Optional[int] = None
+    start_date: Optional[datetime.date] = None
+    end_date: Optional[datetime.date] = None
+    debit_as_negative: Optional[bool] = None
+    pending: Optional[bool] = None
 
 
 class _TransactionInsertParamsPost(LunchableModel):
@@ -401,9 +407,9 @@ class _TransactionGroupParamsPost(LunchableModel):
 
     date: datetime.date
     payee: str
-    category_id: Optional[int]
-    notes: Optional[str]
-    tags: Optional[List[int]]
+    category_id: Optional[int] = None
+    notes: Optional[str] = None
+    tags: Optional[List[int]] = None
     transactions: List[int]
 
 
@@ -529,7 +535,7 @@ class TransactionsClient(LunchMoneyAPIClient):
             end_date=end_date,
             debit_as_negative=debit_as_negative,
             pending=pending,
-        ).dict(exclude_none=True)
+        ).model_dump(exclude_none=True)
         search_params.update(params if params is not None else {})
         response_data = self._make_request(
             method=self.Methods.GET,
@@ -652,13 +658,13 @@ class TransactionsClient(LunchMoneyAPIClient):
             split=split,
             debit_as_negative=debit_as_negative,
             skip_balance_update=skip_balance_update,
-        ).dict(exclude_none=True)
+        ).model_dump(exclude_none=True)
         if transaction is None and split is None:
             raise LunchMoneyError("You must update the transaction or provide a split")
         elif transaction is not None:
             if isinstance(transaction, TransactionObject):
                 transaction = transaction.get_update_object()
-            payload["transaction"] = transaction.dict(exclude_unset=True)
+            payload["transaction"] = transaction.model_dump(exclude_unset=True)
         response_data = self._make_request(
             method=self.Methods.PUT,
             url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS, transaction_id],
@@ -743,7 +749,7 @@ class TransactionsClient(LunchMoneyAPIClient):
             check_for_recurring=check_for_recurring,
             debit_as_negative=debit_as_negative,
             skip_balance_update=skip_balance_update,
-        ).dict(exclude_unset=True)
+        ).model_dump(exclude_unset=True)
         response_data = self._make_request(
             method=self.Methods.POST,
             url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
@@ -796,7 +802,7 @@ class TransactionsClient(LunchMoneyAPIClient):
             notes=notes,
             tags=tags,
             transactions=transactions,
-        ).dict(exclude_none=True)
+        ).model_dump(exclude_none=True)
         response_data = self._make_request(
             method=self.Methods.POST,
             url_path=[
@@ -867,6 +873,6 @@ class TransactionsClient(LunchMoneyAPIClient):
             url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS, "unsplit"],
             payload=_TransactionsUnsplitPost(
                 parent_ids=parent_ids, remove_parents=remove_parents
-            ).dict(exclude_none=True),
+            ).model_dump(exclude_none=True),
         )
         return response_data

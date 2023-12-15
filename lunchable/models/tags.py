@@ -25,7 +25,9 @@ class TagsObject(LunchableModel):
 
     id: int = Field(description="Unique identifier for tag")
     name: str = Field(description="User-defined name of tag", min_length=1)
-    description: Optional[str] = Field(description="User-defined description of tag")
+    description: Optional[str] = Field(
+        None, description="User-defined description of tag"
+    )
 
 
 class TagsClient(LunchMoneyAPIClient):
