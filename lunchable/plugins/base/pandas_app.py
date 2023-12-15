@@ -55,7 +55,7 @@ class LunchablePandasApp(LunchableApp):
         array_df = df.copy()
         array_df = array_df.fillna(np.NaN).replace([np.NaN], [None])
         model_array = array_df.to_dict(orient="records")
-        return [model_type(**item) for item in model_array]  # type: ignore[misc]
+        return [model_type(**item) for item in model_array]
 
 
 class LunchablePandasTransactionsApp(LunchableTransactionsApp, LunchablePandasApp):

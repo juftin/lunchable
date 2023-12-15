@@ -54,7 +54,7 @@ class PrimeLunch(LunchablePandasApp):
         -------
         pd.DataFrame
         """
-        dt64: np.dtype[datetime64] = np.dtype("datetime64[ns]")  # type: ignore[assignment]
+        dt64: np.dtype[datetime64] = np.dtype("datetime64[ns]")
         expected_columns = {
             "order id": str,
             "items": str,
@@ -66,7 +66,7 @@ class PrimeLunch(LunchablePandasApp):
             "refund": np.float64,
             "payments": str,
         }
-        amazon_df = pd.read_csv(  # type: ignore[call-overload]
+        amazon_df = pd.read_csv(
             self.file_path,
             usecols=expected_columns.keys(),
         )
