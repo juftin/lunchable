@@ -57,7 +57,9 @@ class CryptoObject(LunchableModel):
     )
     currency: Optional[str] = Field(description="Abbreviation for the cryptocurrency")
     status: Optional[str] = Field(description=_status_description)
-    institution_name: str = Field(description="Name of provider holding the asset")
+    institution_name: Optional[str] = Field(
+        default=None, description="Name of provider holding the asset"
+    )
     created_at: datetime.datetime = Field(description=_created_at_description)
 
 
