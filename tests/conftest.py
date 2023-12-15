@@ -118,9 +118,9 @@ def test_transactions() -> List[TransactionObject]:
         "tags": None,
         "type": None,
     }
-    transaction_1 = TransactionObject(**transaction_dict_1)
-    transaction_2 = TransactionObject(**transaction_dict_2)
-    transaction_3 = TransactionObject(**transaction_dict_3)
+    transaction_1 = TransactionObject.model_validate(transaction_dict_1)
+    transaction_2 = TransactionObject.model_validate(transaction_dict_2)
+    transaction_3 = TransactionObject.model_validate(transaction_dict_3)
     return [transaction_1, transaction_2, transaction_3]
 
 

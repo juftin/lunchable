@@ -197,10 +197,10 @@ class SplitLunch(splitwise.Splitwise):
             else lunchable_client
         )
         self._none_tag = TagsObject(id=0, name="SplitLunchPlaceholder")
-        self.splitwise_tag = self._none_tag.copy()
-        self.splitlunch_tag = self._none_tag.copy()
-        self.splitlunch_import_tag = self._none_tag.copy()
-        self.splitlunch_direct_import_tag = self._none_tag.copy()
+        self.splitwise_tag = self._none_tag.model_copy()
+        self.splitlunch_tag = self._none_tag.model_copy()
+        self.splitlunch_import_tag = self._none_tag.model_copy()
+        self.splitlunch_direct_import_tag = self._none_tag.model_copy()
         self._get_splitwise_tags()
         self.earliest_start_date = datetime.date(1812, 1, 1)
         today = datetime.date.today()
@@ -797,7 +797,7 @@ class SplitLunch(splitwise.Splitwise):
                 amount=amount_1,
             )
             # Generate the second split as a copy, change some properties
-            reimbursement_object = split_object.copy()
+            reimbursement_object = split_object.model_copy()
             reimbursement_object.amount = amount_2
             reimbursement_object.category_id = self.reimbursement_category.id
             logger.debug(
@@ -881,7 +881,7 @@ class SplitLunch(splitwise.Splitwise):
                     transaction.amount - abs(new_transaction.financial_impact), 2
                 ),
             )
-            reimbursement_object = split_object.copy()
+            reimbursement_object = split_object.model_copy()
             reimbursement_object.amount = abs(new_transaction.financial_impact)
             reimbursement_object.category_id = self.reimbursement_category.id
             logger.debug(

@@ -14,7 +14,7 @@
 [![GitHub License](https://img.shields.io/github/license/juftin/lunchable?color=blue&label=License)](https://github.com/juftin/lunchable/blob/main/LICENSE)
 
 **lunchable** is a Python Client for the [Lunch Money Developer API](https://lunchmoney.dev). It's
-built on top of [pydantic](https://github.com/samuelcolvin/pydantic), it offers an _intuitive_ API,
+built on top of [pydantic](https://github.com/pydantic/pydantic), it offers an _intuitive_ API,
 a _simple_ CLI, complete coverage of all endpoints, and _plugins_ to other external services.
 
 ### Installation
@@ -35,7 +35,7 @@ lunch = LunchMoney(access_token="xxxxxxxxxxx")
 transactions: List[TransactionObject] = lunch.get_transactions()
 
 first_transaction: TransactionObject = transactions[0]
-transaction_as_dict: Dict[str, Any] = first_transaction.dict()
+transaction_as_dict: Dict[str, Any] = first_transaction.model_dump()
 ```
 
 ```shell

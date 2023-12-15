@@ -19,11 +19,11 @@ class SplitLunchExpense(LunchableModel):
     financial_impact: float
     description: str
     category: str
-    details: Optional[str]
+    details: Optional[str] = None
     payment: bool
     date: datetime.datetime
     users: List[int]
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    deleted_at: Optional[datetime.datetime]
+    deleted_at: Optional[datetime.datetime] = None
     deleted: bool

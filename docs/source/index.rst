@@ -45,7 +45,7 @@ and *plugins* to other external services
     transactions: List[TransactionObject] = lunch.get_transactions()
 
     first_transaction: TransactionObject = transactions[0]
-    transaction_as_dict: Dict[str, Any] = first_transaction.dict()
+    transaction_as_dict: Dict[str, Any] = first_transaction.model_dump()
 
 .. code-block:: console
 
