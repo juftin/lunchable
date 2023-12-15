@@ -185,7 +185,9 @@ class TransactionSplitObject(TransactionBaseObject):
     """
 
     date: datetime.date = Field(description=_date_description)
-    category_id: int = Field(description=_category_id_description)
+    category_id: Optional[int] = Field(
+        default=None, description=_category_id_description
+    )
     notes: Optional[str] = Field(description=_notes_description)
     amount: float = Field(description=_amount_description)
 
