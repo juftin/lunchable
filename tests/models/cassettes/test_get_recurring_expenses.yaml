@@ -11,62 +11,35 @@ interactions:
             Content-Type:
             -   application/json
             User-Agent:
-            -   python-requests/2.26.0
+            -   python-requests/2.29.0
             authorization:
             -   XXXXXXXXXX
         method: GET
-        uri: https://dev.lunchmoney.app/v1/recurring_expenses?start_date=2022-11-01&debit_as_negative=False
+        uri: https://dev.lunchmoney.app/v1/recurring_expenses?debit_as_negative=False&start_date=2022-11-01
     response:
         body:
-            string: !!binary |
-                H4sIAAAAAAAAA+VbbU/bSBD+K6t8OemUWLvrXb99C0kgVAmJaKDtnU7IJNtg4djIdriLqva33zgJ
-                NMYJrFl3ufZAAmVt45nnmZmdnRm+NBIxXSZJEM2vxD93IkpF2vD+/NIIZg2PMArfzUaa+Ul2NfMz
-                0fCiZRg2GyKaFT5P/ZmIpvCxsYij7CZcNZqNO38l8pWuiO5Fgj7A7Qks+4t4GWWwTrlBCMawlAsA
-                j69gcZnO8oVEwN2zK399H6akhd0WIRPMPG56JjYs0/0D7puJdJoEd1kQRw+SXAdhmCuzkS5/mMKT
-                LUzg9mx1l6+ly/lcpPD3YSlOgnkQ+eFV5C+eCota6Aj+GtyVxstkrV26gucWuXKhH4B802muzFUO
-                1ub1fpqKzWdKHMZzZDIxj5PVzj1Z4kepP82lflz92txCTpmNLVXIO34yy7VCx/AzmgZ+uAs8IRY3
-                LEcaertF6QRTj1HPtAzHxSXoG8M4yeb+XKCxv1oIeIsUEdNQ+Mk+GjYaPqK+8KPlWoUy6oxwm+7C
-                /gDODuqUuqDxC7gzlzmOKu4fpyJEvUgk81UBcIwNjGXxJriFnRxvanmUGcwiZbw373gwTz1QPzXw
-                Q0izF5A2bcclPyqomFWQxk7LxBPMPep4xDVsl5eR3kSCF4Cmtds0rwNpyix1pE8jACASGVq/6jOA
-                8TmJF2gUARICvffvAZAUbeVHH9dfDiZ4l5WWbQEvvHLEwa5HLIPxsgc8H+xNqWBfb5SRiO2mQ7By
-                jHkLPsBPyIOf2IZrV9185fhQUU0ji7lX0fpZzGK0XgRwUOdGTG9B2ZKulOzS+At4FanFq4iyV50P
-                B73jzgXq9s4ue+dodHx82kE2xugDMt1JH7Uve9trTdQZNdHF+8IGbxGDV9p2VNxpbfAS7vQqnTQ6
-                EsfcxarEvRsjSD7nfgRO46eicMDAVfMuYk6w45kEUl3DZlVpoXK0dPrt9z3UOe91Tyfwq4t64/Yn
-                yUNGbSHMxlwV+SM/ukXxZ9ReiCSY+oUsjHODsuoHDOJxYhDLKadh74S4Q+0lBMkXTxhkJ07pPGG8
-                mPdCnLJVQR+cXo7OTkao32sPwIW7p+e9zgS8ePwNHS+zZSKAjlx0D1HTYegbmoBIHurCjYUEIL9a
-                MVNWCllczjfU1NMYuxhl6pvOILgWSbZCQ1ANDuutjYH70QxdLK4TEYY+pATpEuSYFgKbbRmWq6ty
-                QmxJ6qopo7GkknOl7nhP1dvLjIur5AFvxcwb8uDq4eHn8JC344GaenhwAE75A8r/jIc8IVCurg9O
-                j3rnk09oeDG5aA8QpJLD3tmktF0SzAybP26Y7U6/+6FYosyva0sHZJlSUk5nZYdhqp4OLBegfAKG
-                KWZBIZ9mhisfzRyAd4Itj9q5F1Fu/hBu6i1nShbPlBsjsgblcsOyn/GW9XVt3uLU6y37ldNaQbNx
-                zQmZAjs77S1uwrHfKp8++/FCNNcJbfNwRnuIPfe/eRxlmFnK/vRM9YVUq77A5o95ToNpgp/A5l/u
-                Mj7rJFSuwfsEaB2lFstVtvVLES3iwvmdVwO3WPrlvGzjPwDcGqyYORK5rHKLayzCOIsjdBTcCnQs
-                CmbcYqbBqa4UlkrWEPdIrDdxxcoHufZkmEuOzkWwuF4mqdhW9XZsXGOBikq2qA5JrbeLSJQD98vo
-                6+xo/ETo50UMZfT7wg+zm9XY/zvNC2XJ9KY4xQAx2tIXcyTBPyC0zsIFtxxl7B+brGOQsmDxsKNW
-                AZ2yCcEetj1CDOaWexa1gP5UWtnMxawhztiOq1wm2hoNWlvNWGT7y0T8VVM7kLAT02DmnoR9Y52/
-                lV8pQYfGCR5mSnCg3CI9ieN5KNAon6HI4sSfF/P0arWF7cDU2uox3tOp276tmwT3u+87BDx7G+At
-                iTCv3CHtwO60TFaDILotVHMqnovUortk560oq9ZkEqsPqY3bn8btAfr95PziqH9xdDwaddFJf1w8
-                jxp2JUNfo85cDw4AtlNxVkYW9cNyy1o7qyWlocoDTQ8nkqFYXIskvQnuCnsrJQbVl9HIor9PZs2N
-                GOXovnVcwOH2+8D690kMqrEhSa1KsaYoss6QA7uqssEfCO5W1VPrwwAysw3Lssv76eOk4PMzyLT+
-                MqPURkpe7IwwR7lW8LrB0PVY9qtLZk6LOHmCb5r5fz1YbpmaZ33BlBvSq7dkJtWpYuoZZS3Tq78A
-                H7ieao56M15+bIrDTmw/Mxe2vq6t8CPJirKCmstzyvnsZe9sOHro4O0SRHUWRWXZeSqtZrSVt5eD
-                aBNauTLxi+L919d/ASeqfSMqOgAA
+            string: '{"recurring_expenses":[{"id":585244,"start_date":"2021-12-01","end_date":null,"cadence":"monthly","payee":"Test Item","amount":"100.0000","currency":"usd","created_at":"2023-12-15T02:38:04.131Z","description":"Video Streaming","billing_date":"2022-11-01","type":"cleared","original_name":null,"source":"manual","plaid_account_id":null,"asset_id":null,"category_id":443126,"transaction_id":null}]}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
             Connection:
             -   keep-alive
-            Content-Encoding:
-            -   gzip
+            Content-Length:
+            -   '396'
             Content-Type:
             -   application/json; charset=utf-8
             Date:
-            -   Wed, 20 Oct 2021 04:55:45 GMT
+            -   Fri, 15 Dec 2023 02:38:40 GMT
             Etag:
-            -   W/"3a2a-S77KNgBrvha3Iq84ldNbVb0042s"
+            -   W/"18c-Y2ukKiTxVJNnFDEIhjY0XlrmVgc"
+            Nel:
+            -   '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
+            Report-To:
+            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1702607920&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=ODq7%2BtzP93fHx0jIG2mzN8v19hfSsKtMTc8%2F80zMDFM%3D"}]}'
+            Reporting-Endpoints:
+            -   heroku-nel=https://nel.heroku.com/reports?ts=1702607920&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=ODq7%2BtzP93fHx0jIG2mzN8v19hfSsKtMTc8%2F80zMDFM%3D
             Server:
             -   Cowboy
-            Transfer-Encoding:
-            -   chunked
             Vary:
             -   Origin, Accept-Encoding
             Via:

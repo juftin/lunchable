@@ -36,7 +36,7 @@ def test_get_transaction(lunch_money_obj: LunchMoney):
     """
     Get Transaction (singular) and assert it's a Transaction
     """
-    transaction = lunch_money_obj.get_transaction(transaction_id=53725270)
+    transaction = lunch_money_obj.get_transaction(transaction_id=546434806)
     assert isinstance(transaction, TransactionObject)
     logger.info("Transaction returned: %s", transaction.id)
 
@@ -105,7 +105,7 @@ def test_split_transaction(lunch_money_obj: LunchMoney):
     """
     Try to split a transaction
     """
-    transaction_to_split = lunch_money_obj.get_transaction(57271032)
+    transaction_to_split = lunch_money_obj.get_transaction(546434806)
     amount_1 = transaction_to_split.amount / 2
     split_object = TransactionSplitObject(
         date=transaction_to_split.date,
@@ -125,7 +125,7 @@ def test_unsplit_transaction(lunch_money_obj: LunchMoney):
     """
     Try to unsplit a transaction
     """
-    transaction_ids = [103958497]
+    transaction_ids = [179018299]
     response = lunch_money_obj.unsplit_transactions(
         parent_ids=transaction_ids, remove_parents=True
     )

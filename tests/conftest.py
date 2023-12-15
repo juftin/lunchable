@@ -3,10 +3,12 @@ Pytest Fixtures Shared Across all Unit Tests
 """
 
 import datetime
-from os import getenv
-from typing import Dict, List
+import os
+import pathlib
+from typing import List
 
 import pytest
+from vcr import VCR
 
 from lunchable import LunchMoney
 from lunchable.models import TransactionObject
@@ -26,59 +28,6 @@ def obscure_start_date() -> datetime.datetime:
     datetime.datetime
     """
     return obscure_start_date_object
-
-
-def scrub_string(string, replacement=""):
-    """
-    Nested Scrubbing Function
-    """
-
-    def before_record_response(response):
-        body = response["body"]["string"]
-        sensitive_strings = string.split(",")
-        try:
-            sensitive_strings.remove("<LUNCH>")
-        except ValueError:
-            pass
-        for string_part in sensitive_strings:
-            string_part = string_part.strip()
-            if isinstance(body, bytes):
-                try:
-                    body = body.decode("utf-8").replace(string_part, replacement)
-                    body = str.encode(body)
-                except UnicodeDecodeError:
-                    pass
-            else:
-                body = body.replace(string, replacement)
-        response["body"]["string"] = body
-        return response
-
-    return before_record_response
-
-
-@module_scope
-def vcr_config() -> Dict[str, list]:
-    """
-    VCR Cassette Privacy Enforcer
-
-    This fixture ensures the API Credentials are obfuscated
-
-    Returns
-    -------
-    Dict[str, list]:
-    """
-    return {
-        "filter_headers": [("authorization", "XXXXXXXXXX")],
-        "filter_query_parameters": [("user", "XXXXXXXXXX"), ("token", "XXXXXXXXXX")],
-        "before_record_response": scrub_string(
-            getenv("SENSITIVE_REQUEST_STRINGS", "<LUNCH>"), "XXXXXXXXXX"
-        ),
-    }
-
-
-# Decorator Object to Use pyvcr Cassettes on Unit Tests (see `pytest-vcr`)
-# pass `--vcr-record=none` to pytest CI runs to ensure new cassettes are generated
-lunchable_cassette = pytest.mark.vcr(scope="module")
 
 
 @pytest.fixture
@@ -102,14 +51,14 @@ def test_transactions() -> List[TransactionObject]:
     """
     transaction_dict_1 = {
         "amount": 1.0,
-        "asset_id": 23043,
-        "category_id": 229134,
+        "asset_id": 49335,
+        "category_id": 658761,
         "currency": "usd",
         "date": "2021-09-19",
         "external_id": None,
         "fees": None,
         "group_id": None,
-        "id": 55907882,
+        "id": 546434801,
         "is_group": False,
         "notes": "Test Transaction 1",
         "original_name": "Test 1",
@@ -132,7 +81,7 @@ def test_transactions() -> List[TransactionObject]:
         "external_id": None,
         "fees": None,
         "group_id": None,
-        "id": 55907976,
+        "id": 546452296,
         "is_group": False,
         "notes": "Test Transaction 2",
         "original_name": "Test 2",
@@ -155,7 +104,7 @@ def test_transactions() -> List[TransactionObject]:
         "external_id": None,
         "fees": None,
         "group_id": None,
-        "id": 55907977,
+        "id": 546434806,
         "is_group": False,
         "notes": "Test Transaction 3",
         "original_name": "Test 3",
@@ -173,3 +122,34 @@ def test_transactions() -> List[TransactionObject]:
     transaction_2 = TransactionObject(**transaction_dict_2)
     transaction_3 = TransactionObject(**transaction_dict_3)
     return [transaction_1, transaction_2, transaction_3]
+
+
+###########################################################
+# VCR Configuration : Offload Epic API Calls to Cassettes #
+###########################################################
+
+
+def path_transformer(path: str) -> str:
+    """
+    Cassette Path Transformer
+    """
+    suffix = ".yaml"
+    if not path.endswith(suffix):
+        path = path + suffix
+    cassette_path = pathlib.Path(path)
+    cassette_path = cassette_path.parent / "cassettes" / cassette_path.name
+    return str(cassette_path)
+
+
+vcr = VCR(
+    filter_headers=(("authorization", "XXXXXXXXXX"),),
+    filter_query_parameters=(("user", "XXXXXXXXXX"), ("token", "XXXXXXXXXX")),
+    decode_compressed_response=True,
+    path_transformer=path_transformer,
+    record_mode=os.getenv("VCR_RECORD_MODE", "once"),
+)
+
+
+# Decorator Object to Use pyvcr Cassettes on Unit Tests
+# pass `--vcr-record=none` to pytest CI runs to ensure new cassettes are generated
+lunchable_cassette = vcr.use_cassette

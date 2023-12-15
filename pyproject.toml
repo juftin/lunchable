@@ -70,7 +70,7 @@ dependencies = [
   "pytest~=7.3.1",
   "pytest-cov~=4.0.0",
   "pytest-mock~=3.10.0",
-  "pytest-vcr~=1.0.2",
+  "vcrpy~=5.1.0",
   # Tooling
   "black~=23.3.0",
   "ruff~=0.0.261",
@@ -92,8 +92,6 @@ dependencies = [
 features = [
   "all"
 ]
-path = ".venv"
-pre-install-commands = ["pip install -U --no-deps -r requirements/dev.txt"]
 
 [tool.hatch.envs.default.env-vars]
 LUNCHMONEY_ACCESS_TOKEN = "{env:LUNCHMONEY_ACCESS_TOKEN:LUNCHMONEY_ACCESS_TOKEN_PLACEHOLDER}"
@@ -181,7 +179,8 @@ ignore = [
   "PLR0913",  # Too many arguments to function call
   "PLW2901",  # Outer for loop variable overwritten by inner assignment target
   "RUF001",  # String contains ambiguous unicode character `’`
-  "PLR2004"  # Magic value used in comparison
+  "PLR2004",  # Magic value used in comparison
+  "RUF012"  # Mutable class attributes should be annotated with `typing.ClassVar`
 ]
 select = [
   "E",  # pycodestyle errors

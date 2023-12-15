@@ -472,7 +472,7 @@ class LunchableTransactionsBaseApp(LunchableApp, ABC):
             ),
         ]
 
-    def refresh_transactions(
+    def refresh_transactions(  # type: ignore[override]
         self,
         start_date: Optional[datetime.date] = None,
         end_date: Optional[datetime.date] = None,

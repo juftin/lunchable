@@ -11,42 +11,73 @@ interactions:
             Content-Type:
             -   application/json
             User-Agent:
-            -   python-requests/2.26.0
+            -   python-requests/2.29.0
             authorization:
             -   XXXXXXXXXX
         method: GET
         uri: https://dev.lunchmoney.app/v1/plaid_accounts
     response:
         body:
-            string: !!binary |
-                H4sIAAAAAAAAA+WXbW/aMBDHv0qUV+tEI9ux8/SOAm3RGHSQ8qLThNzEai2CQYmDhKp+9zkdg7BC
-                6vJQaVteRZe7s/LT/853T+YsoTwe0Sia5kJmZvD9yeSxGWBIfFwzYyrZKOFizJTNRADBc+CfI2DW
-                TEEnTNku0umYpfSBGedG63OY0pipjzHPVOLFaOmkPvTrzZZxyQUVEaeJ0RYxn/M4V6+lDBBipKLl
-                YlZEcTFnmZwwIZUty++X5vvf/so6odlYmZZxXGSSy1zyqdh5cpFKUpmrXzVpJPm8SJPQTI74ZDZN
-                pRmIPElq5j1NVECRAlhAPcorytOUiWihbHkWmyuf0Ut4PitglShBN4ROAJwAuhb2nbviHD7hyxOe
-                ayvQLtEB3aAzLhWunihQDxWVPN2Cuuy2dlqii1IW802av0xGRNN4zdOHEGznWUr/Nsk1Cj9EMLBx
-                QHzLt9GdWeYLseNYZD/EpbwYVSH2dBC3Bjc3r4m+KchMTqOxoUJEmaDnbSd4yWOWcLko41Pi/DAp
-                Or5fwQnocLqe5hkzBnTOxUNWBSxms2nG5TRdbAJbRS5peQDsqN96kiyMCyrG2mrzzpEXQhLYXgCx
-                5dhkU23YBcQC6FCKgJAKir4OxXa32R62m7f1zh6a29IE3yc5PcFBF9qeRQ7GVS06pIVLSJYqFEbj
-                kUVjpZ89hBetQ1fKQ/BYynv5ZeAGNgkQtjz4R59D2HYs5+D6rVaeq4Oy0x72ulc947pV74TXe6gP
-                AzguMXRd8jf2OqjD6ivPIpaoA5lqesftebvu2L2UBwvlESU+aCHgbSrPBgjZFvROKz2tcfFbzqNx
-                xpM5S6sg6g4qtuPiIwwqR9PexjyCdsPytO7ZfmsQ9tuNsNU0BmGv8cW47bbDwf89oThad+vgkSq5
-                HPeqQADvaHNbC3YXMb0xhXjEQu5pC9Z+B8kjNj4f2s4HDXsEW+C0EH2t3W3wUn836kS1uoXNXuM1
-                x9crcinoUxFzprkfbyv2ky7Ito2Bp6r2pEuyp3VbF5yMT53hVe/M6A9uK/X67/dK19Fi1urUFbaa
-                0e42rIOHQewg99hbCIKAOBaGJ4D14/knMreSVgMTAAA=
+            string: |
+                {
+                  "plaid_accounts": [
+                    {
+                      "id": 71394,
+                      "date_linked": "2023-12-15",
+                      "name": "Chase - Freedom",
+                      "display_name": "Chase Freedom",
+                      "type": "credit",
+                      "subtype": "creditcard",
+                      "mask": "5678",
+                      "institution_name": "Chase",
+                      "status": "active",
+                      "limit": 12345,
+                      "balance": "123.0900",
+                      "currency": "usd",
+                      "balance_last_update": "2023-12-14T15:55:00.753Z",
+                      "import_start_date": "2023-02-06",
+                      "last_import": "2023-12-14T15:55:03.163Z",
+                      "last_fetch": "2023-12-14T15:55:03.301Z",
+                      "plaid_last_successful_update": "2023-12-13T15:51:37.490Z"
+                    },
+                    {
+                      "id": 71395,
+                      "date_linked": "2023-12-15",
+                      "name": "Chase - Sapphire",
+                      "display_name": "Chase Sapphire",
+                      "type": "credit",
+                      "subtype": "creditcard",
+                      "mask": "1234",
+                      "institution_name": "Chase",
+                      "status": "active",
+                      "limit": 12345,
+                      "balance": "456.0900",
+                      "currency": "usd",
+                      "balance_last_update": "2023-12-14T15:55:00.753Z",
+                      "import_start_date": "2023-02-06",
+                      "last_import": "2023-12-14T15:55:03.163Z",
+                      "last_fetch": "2023-12-14T15:55:03.301Z",
+                      "plaid_last_successful_update": "2023-12-13T15:51:37.490Z"
+                    }
+                  ]
+                }
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
             Connection:
             -   keep-alive
-            Content-Encoding:
-            -   gzip
             Content-Type:
             -   application/json; charset=utf-8
             Date:
-            -   Mon, 20 Sep 2021 23:46:55 GMT
+            -   Fri, 15 Dec 2023 03:04:46 GMT
             Etag:
-            -   W/"1303-QpMdfClFpRHc91/edMUZPthZKs0"
+            -   W/"1f58-hipJFRmyr9x6gdp2aLKh5viwTAU"
+            Nel:
+            -   '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
+            Report-To:
+            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1702609486&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=1cXBwXEaoZ%2Fm4ZhVbC9Kz5VVT8hDCwaBZH8pnT4DXyQ%3D"}]}'
+            Reporting-Endpoints:
+            -   heroku-nel=https://nel.heroku.com/reports?ts=1702609486&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=1cXBwXEaoZ%2Fm4ZhVbC9Kz5VVT8hDCwaBZH8pnT4DXyQ%3D
             Server:
             -   Cowboy
             Transfer-Encoding:
@@ -57,6 +88,8 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
+            content-length:
+            -   '8024'
         status:
             code: 200
             message: OK

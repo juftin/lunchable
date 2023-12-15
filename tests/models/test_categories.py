@@ -41,7 +41,7 @@ def test_get_category(lunch_money_obj: LunchMoney):
     """
     Get a Single Category
     """
-    category_id = 229135
+    category_id = 443128
     category = lunch_money_obj.get_category(category_id=category_id)
     logger.info("Category ID # %s was just fetched: %s", category.id, category.name)
     assert isinstance(category, CategoriesObject)
@@ -74,7 +74,7 @@ def test_update_category(lunch_money_obj: LunchMoney):
     """
     Update a Single Category
     """
-    category_id = 343106
+    category_id = 443128
     updated = lunch_money_obj.update_category(
         category_id=category_id, description="Test Category Description Updated"
     )
@@ -101,9 +101,9 @@ def test_add_to_category_group(lunch_money_obj: LunchMoney):
     """
     name = "Test Category Group"
     category = lunch_money_obj.insert_into_category_group(
-        category_group_id=343124,
+        category_group_id=658694,
         new_categories=["Another Another Test Category"],
-        category_ids=[343125],
+        category_ids=[443128],
     )
     logger.info("Category Group ID # %s was just created: %s", category.id, name)
     assert isinstance(category, CategoriesObject)

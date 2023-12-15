@@ -11,27 +11,33 @@ interactions:
             Content-Type:
             -   application/json
             User-Agent:
-            -   python-requests/2.26.0
+            -   python-requests/2.29.0
             authorization:
             -   XXXXXXXXXX
         method: GET
         uri: https://dev.lunchmoney.app/v1/assets
     response:
         body:
-            string: '{"assets":[{"id":21966,"type_name":"cash","subtype_name":"checking","name":"Ally Checking Import","display_name":"Ally Checking Import","balance":"1459.8200","balance_as_of":"2021-08-31T05:29:46.069Z","currency":"usd","closed_on":null,"institution_name":null,"created_at":"2021-08-31T05:24:33.936Z"},{"id":21845,"type_name":"cash","subtype_name":"digital wallet (paypal, venmo)","name":"Splitwise Balance","display_name":"Splitwise","balance":"5.2000","balance_as_of":"2021-09-16T01:21:04.667Z","currency":"usd","closed_on":null,"institution_name":"Splitwise","created_at":"2021-08-28T16:06:02.701Z"},{"id":23043,"type_name":"cash","subtype_name":"digital wallet (paypal, venmo)","name":"Test Account","display_name":"Test Account","balance":"-2.5000","balance_as_of":"2021-09-20T05:51:06.848Z","currency":"usd","closed_on":null,"institution_name":"Test","created_at":"2021-09-20T05:32:29.060Z"}]}'
+            string: '{"assets":[{"id":49335,"type_name":"cash","subtype_name":"checking","name":"Test Account","display_name":null,"balance":"-16513.5500","balance_as_of":"2023-03-07T02:43:48.383Z","closed_on":null,"currency":"usd","institution_name":null,"exclude_transactions":false,"created_at":"2023-03-07T02:05:23.670Z"}]}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
             Connection:
             -   keep-alive
             Content-Length:
-            -   '897'
+            -   '306'
             Content-Type:
             -   application/json; charset=utf-8
             Date:
-            -   Mon, 20 Sep 2021 23:46:53 GMT
+            -   Fri, 15 Dec 2023 02:24:11 GMT
             Etag:
-            -   W/"381-GHr+VX5KccktZibZjp0bharu6DA"
+            -   W/"132-iRGsYXgd9Lq/WtxFtW/wUKm/z0U"
+            Nel:
+            -   '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
+            Report-To:
+            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1702607051&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=xrm8MxWAZkRuo3Rg1wWpj49%2BSPanStLfcU6QTrTk6IU%3D"}]}'
+            Reporting-Endpoints:
+            -   heroku-nel=https://nel.heroku.com/reports?ts=1702607051&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=xrm8MxWAZkRuo3Rg1wWpj49%2BSPanStLfcU6QTrTk6IU%3D
             Server:
             -   Cowboy
             Vary:
