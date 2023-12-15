@@ -75,7 +75,7 @@ exclude_lines = [
 [tool.coverage.run]
 branch = true
 omit = [
-  "lunchable/__about__.py"
+  "lunchable/_version.py"
 ]
 parallel = true
 source_pkgs = ["lunchable", "tests"]
@@ -207,7 +207,7 @@ test = "pytest {args:tests}"
 test-cov = "coverage run -m pytest {args:tests}"
 
 [tool.hatch.version]
-path = "lunchable/__about__.py"
+path = "lunchable/_version.py"
 
 [tool.mypy]
 check_untyped_defs = true
