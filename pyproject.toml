@@ -12,7 +12,8 @@ classifiers = [
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11"
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12"
 ]
 dependencies = [
   "click>=8.0.1",
@@ -30,18 +31,18 @@ requires-python = ">=3.8,<4"
 
 [project.optional-dependencies]
 all = [
-  "pandas>=1.5.0,<2.0.0",
-  "python-dateutil~=2.8.2",
+  "pandas",
+  "python-dateutil",
   "splitwise>=2.3.0,<3.0.0"
 ]
 apps = [
-  "pandas>=1.5.0,<2.0.0"
+  "pandas"
 ]
 primelunch = [
-  "pandas>=1.5.0,<2.0.0"
+  "pandas"
 ]
 splitlunch = [
-  "python-dateutil~=2.8.2",
+  "python-dateutil",
   "splitwise>=2.3.0,<3.0.0"
 ]
 
@@ -63,6 +64,11 @@ exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 branch = true
 omit = ["lunchable/_version.py"]
 parallel = true
+
+[tool.hatch.env]
+requires = [
+  "hatch-pip-compile"
+]
 
 [tool.hatch.envs.default]
 dependencies = [
@@ -92,6 +98,7 @@ dependencies = [
 features = [
   "all"
 ]
+type = "pip-compile"
 
 [tool.hatch.envs.default.env-vars]
 LUNCHMONEY_ACCESS_TOKEN = "{env:LUNCHMONEY_ACCESS_TOKEN:LUNCHMONEY_ACCESS_TOKEN_PLACEHOLDER}"
@@ -102,8 +109,7 @@ SPLITWISE_CONSUMER_KEY = "{env:SPLITWISE_CONSUMER_KEY:SPLITWISE_CONSUMER_KEY_PLA
 SPLITWISE_CONSUMER_SECRET = "{env:SPLITWISE_CONSUMER_SECRET:SPLITWISE_CONSUMER_SECRET_PLACEHOLDER}"
 
 [tool.hatch.envs.default.scripts]
-_pip_compile = "pip-compile --resolver=backtracking --generate-hashes --all-extras {args:}"
-_sed_requirements = "sed -i.bak 's/-r requirements.in/lunchable (pyproject.toml)/' {args}"
+_pip_compile = "pip-compile --resolver=backtracking --all-extras {args:}"
 all = ["format", "lint", "test"]
 check = [
   """
@@ -127,13 +133,7 @@ docs-serve = [
 format = ["ruff --fix {args:.}", "black {args:.}"]
 lint = ["ruff {args:.}", "black --check {args:.}"]
 requirements = [
-  "hatch dep show requirements --project-only --all > requirements.in",
-  "_pip_compile --output-file requirements/prod.txt{args:}",
-  "_sed_requirements requirements/prod.txt",
-  "hatch dep show requirements --all > requirements.in",
-  "_pip_compile --output-file requirements/dev.txt{args:}",
-  "_sed_requirements requirements/dev.txt",
-  "rm requirements.in"
+  "_pip_compile --output-file requirements/requirements-prod.txt {args:}"
 ]
 semantic-release = [
   "npm install --prefix .github/semantic_release/",
@@ -142,7 +142,7 @@ semantic-release = [
 test = "pytest --cov=lunchable --cov-report={env:COVERAGE_REPORT:term-missing} --cov-config=pyproject.toml {args:tests/ -v}"
 
 [[tool.hatch.envs.test.matrix]]
-python = ["3.8", "3.9", "3.10", "3.11"]
+python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
 [tool.hatch.envs.test.scripts]
 matrix = "test"

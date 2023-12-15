@@ -223,10 +223,10 @@ class BaseLunchableApp(ABC):
         if force is True:
             refresh = True
         elif self.cache_time > 0 and data_file.exists():
-            modified_time = datetime.datetime.utcfromtimestamp(
-                data_file.stat().st_mtime
+            modified_time = datetime.datetime.fromtimestamp(
+                data_file.stat().st_mtime, tz=datetime.timezone.utc
             )
-            current_time = datetime.datetime.utcnow()
+            current_time = datetime.datetime.now(tz=datetime.timezone.utc)
             file_age = current_time - modified_time
             refresh = file_age > datetime.timedelta(seconds=self.cache_time)
         else:
