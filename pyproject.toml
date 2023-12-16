@@ -22,8 +22,8 @@ classifiers = [
 dependencies = [
   "click>=8.0.1",
   "pydantic>=2,<3",
-  "requests>=2.0.0,<3.0.0",
-  "rich>=10.0.0"
+  "rich>=10.0.0",
+  "httpx"
 ]
 description = "A simple Python SDK around the Lunch Money Developer API"
 dynamic = ["version"]
@@ -99,8 +99,8 @@ post-install-commands = [
 type = "pip-compile"
 
 [tool.hatch.envs.default.scripts]
-cov = "hatch run test:cov"
-test = "hatch run test:test"
+cov = "hatch run test:cov {args:}"
+test = "hatch run test:test {args:}"
 
 [tool.hatch.envs.docs]
 dependencies = [
@@ -116,8 +116,6 @@ dependencies = [
   "sphinx-autodoc-typehints",
   "autodoc_pydantic"
 ]
-detached = true
-type = "pip-compile"
 
 [tool.hatch.envs.docs.scripts]
 build = [
