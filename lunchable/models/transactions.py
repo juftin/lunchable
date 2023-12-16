@@ -537,7 +537,7 @@ class TransactionsClient(LunchMoneyAPIClient):
             pending=pending,
         ).model_dump(exclude_none=True)
         search_params.update(params if params is not None else {})
-        response_data = self._make_request(
+        response_data = self.lunchable_request(
             method=self.Methods.GET,
             url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
             params=search_params,
@@ -571,7 +571,7 @@ class TransactionsClient(LunchMoneyAPIClient):
         The above code returns a :class:`.TransactionObject` with ID # 1234 (assuming
         it exists)
         """
-        response_data = self._make_request(
+        response_data = self.lunchable_request(
             method=self.Methods.GET,
             url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS, transaction_id],
         )
@@ -665,7 +665,7 @@ class TransactionsClient(LunchMoneyAPIClient):
             if isinstance(transaction, TransactionObject):
                 transaction = transaction.get_update_object()
             payload["transaction"] = transaction.model_dump(exclude_unset=True)
-        response_data = self._make_request(
+        response_data = self.lunchable_request(
             method=self.Methods.PUT,
             url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS, transaction_id],
             payload=payload,
@@ -750,7 +750,7 @@ class TransactionsClient(LunchMoneyAPIClient):
             debit_as_negative=debit_as_negative,
             skip_balance_update=skip_balance_update,
         ).model_dump(exclude_unset=True)
-        response_data = self._make_request(
+        response_data = self.lunchable_request(
             method=self.Methods.POST,
             url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
             payload=payload,
@@ -803,7 +803,7 @@ class TransactionsClient(LunchMoneyAPIClient):
             tags=tags,
             transactions=transactions,
         ).model_dump(exclude_none=True)
-        response_data = self._make_request(
+        response_data = self.lunchable_request(
             method=self.Methods.POST,
             url_path=[
                 APIConfig.LUNCHMONEY_TRANSACTIONS,
@@ -833,7 +833,7 @@ class TransactionsClient(LunchMoneyAPIClient):
         -------
         List[int]
         """
-        response_data = self._make_request(
+        response_data = self.lunchable_request(
             method=self.Methods.DELETE,
             url_path=[
                 APIConfig.LUNCHMONEY_TRANSACTIONS,
@@ -868,7 +868,7 @@ class TransactionsClient(LunchMoneyAPIClient):
         -------
         List[int]
         """
-        response_data = self._make_request(
+        response_data = self.lunchable_request(
             method=self.Methods.POST,
             url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS, "unsplit"],
             payload=_TransactionsUnsplitPost(

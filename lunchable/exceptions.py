@@ -2,7 +2,7 @@
 Lunchmoney Exceptions
 """
 
-from requests.exceptions import HTTPError
+from httpx import HTTPError
 
 
 class LunchMoneyError(Exception):
