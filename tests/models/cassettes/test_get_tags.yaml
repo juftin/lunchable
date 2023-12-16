@@ -17,8 +17,7 @@ interactions:
         method: GET
         uri: https://dev.lunchmoney.app/v1/tags
     response:
-        body:
-            string: '[{"id":66845,"name":"test","description":null,"archived":false}]'
+        content: '[{"id":66845,"name":"test","description":null,"archived":false}]'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -46,7 +45,6 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 version: 1

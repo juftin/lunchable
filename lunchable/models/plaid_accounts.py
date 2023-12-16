@@ -116,7 +116,7 @@ class PlaidAccountsClient(LunchMoneyAPIClient):
         -------
         List[PlaidAccountObject]
         """
-        response_data = self._make_request(
+        response_data = self.make_request(
             method=self.Methods.GET, url_path=APIConfig.LUNCHMONEY_PLAID_ACCOUNTS
         )
         accounts = response_data.get(APIConfig.LUNCHMONEY_PLAID_ACCOUNTS)

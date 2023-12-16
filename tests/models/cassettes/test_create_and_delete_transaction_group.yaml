@@ -19,8 +19,7 @@ interactions:
         method: POST
         uri: https://dev.lunchmoney.app/v1/transactions/group
     response:
-        body:
-            string: '561178199'
+        content: '561178199'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -48,9 +47,8 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 -   request:
         body:
         headers:
@@ -71,8 +69,7 @@ interactions:
         method: DELETE
         uri: https://dev.lunchmoney.app/v1/transactions/group/561178199
     response:
-        body:
-            string: '{"transactions":[546452296,546434806]}'
+        content: '{"transactions":[546452296,546434806]}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -100,7 +97,6 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 version: 1

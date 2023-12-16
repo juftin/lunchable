@@ -54,7 +54,7 @@ class UserClient(LunchMoneyAPIClient):
         -------
         UserObject
         """
-        response_data = self._make_request(
+        response_data = self.make_request(
             method=self.Methods.GET, url_path=APIConfig.LUNCHMONEY_ME
         )
         me = UserObject.model_validate(response_data)

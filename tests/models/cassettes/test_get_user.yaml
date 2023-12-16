@@ -17,8 +17,7 @@ interactions:
         method: GET
         uri: https://dev.lunchmoney.app/v1/me
     response:
-        body:
-            string: '{"user_name":"Justin Flannery","user_email":"juftin@gmail.com","user_id":12126,"account_id":18286,"budget_name":"🤖 Juftin - Sandbox","api_key_label":"Lunchable"}'
+        content: '{"user_name":"Justin Flannery","user_email":"juftin@gmail.com","user_id":12126,"account_id":18286,"budget_name":"🤖 Juftin - Sandbox","api_key_label":"Lunchable"}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -46,7 +45,6 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 version: 1

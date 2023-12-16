@@ -19,8 +19,7 @@ interactions:
         method: POST
         uri: https://dev.lunchmoney.app/v1/categories/group
     response:
-        body:
-            string: '{"category_id":658694}'
+        content: '{"category_id":658694}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -48,7 +47,6 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 version: 1
