@@ -9,7 +9,7 @@
 
 **lunchable** is a Python Client for the
 `Lunch Money Developer API <https://lunchmoney.dev>`_.
-It's built on top of `pydantic <https://github.com/pydantic/pydantic>`_,
+It's built on top of `pydantic <https://github.com/pydantic/pydantic>`_
 and `httpx <https://github.com/encode/httpx/>`_,
 it offers an *intuitive* API, a *simple* CLI,
 complete coverage of all endpoints,
