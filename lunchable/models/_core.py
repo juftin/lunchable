@@ -2,13 +2,13 @@
 Lunchmoney SDK Core
 """
 
-import datetime
-import json
-import logging
-from json import loads
-from typing import Any, Dict, List, Optional, Union
+from __future__ import annotations
 
-import requests
+import logging
+from typing import Any, AsyncIterable, Iterable, List, Mapping, Optional, Union
+
+import httpx
+import pydantic_core
 
 from lunchable._config import APIConfig
 from lunchable.exceptions import LunchMoneyHTTPError
@@ -46,7 +46,7 @@ class LunchMoneyAPIClient:
         PATCH = "PATCH"
         DELETE = "DELETE"
 
-    def __init__(self, access_token: Optional[str] = None):
+    def __init__(self, access_token: str | None = None) -> None:
         """
         Initialize a Lunch Money object with an Access Token.
 
@@ -59,11 +59,10 @@ class LunchMoneyAPIClient:
         """
         self.access_token = APIConfig.get_access_token(access_token=access_token)
         api_headers = APIConfig.get_header(access_token=self.access_token)
-        default_headers = requests.sessions.default_headers()
-        updated_headers = dict(**default_headers, **api_headers)
-        typed_headers = requests.models.CaseInsensitiveDict(updated_headers)
-        self.lunch_money_session = requests.Session()
-        self.lunch_money_session.headers = typed_headers  # type: ignore[assignment]
+        self.lunch_money_session = httpx.Client()
+        self.lunch_money_async_session = httpx.AsyncClient()
+        self.lunch_money_session.headers.update(api_headers)
+        self.lunch_money_async_session.headers.update(api_headers)
 
     def __repr__(self) -> str:
         """
@@ -73,83 +72,26 @@ class LunchMoneyAPIClient:
         -------
         str
         """
-        return "<LunchMoney: requests.Session>"
+        return "<LunchMoney: httpx.Client>"
 
-    @staticmethod
-    def _serializer(obj: Any) -> str:
-        if isinstance(obj, datetime.datetime):
-            return obj.isoformat()
-        elif isinstance(obj, datetime.date):
-            return obj.isoformat()
-        else:
-            return obj
-
-    def _make_request(
+    def request(
         self,
         method: str,
-        url_path: Union[List[Union[str, int]], str, int],
-        params: Optional[Dict[str, Any]] = None,
-        payload: Optional[Any] = None,
-        **kwargs: Any,
-    ) -> Any:
-        """
-        Make a Request to the API
-
-        Parameters
-        ----------
-        method: str
-            requests method: GET, OPTIONS, HEAD, POST, PUT,
-            PATCH, or DELETE
-        url_path: Union[List[Union[str, int]], str, int]
-            API Components, if a list join these sequentially
-        params: Optional[Dict[str, Any]]
-            Params to pass
-        payload: Optional[Any]
-            data to pass
-
-        Returns
-        -------
-        Any
-        """
-        url = APIConfig.make_url(url_path=url_path)
-        if payload is not None:
-            payload = json.dumps(payload, default=LunchMoneyAPIClient._serializer)
-        try:
-            response = self.lunch_money_session.request(
-                method=method, url=url, params=params, data=payload, **kwargs
-            )
-            response.raise_for_status()
-        except requests.exceptions.HTTPError as he:
-            logger.exception(he)
-            # noinspection PyUnboundLocalVariable
-            logger.error(response.text)
-            raise LunchMoneyHTTPError(he) from he
-        returned_data = loads(response.content)
-        if isinstance(returned_data, dict) and any(
-            ["error" in returned_data.keys(), "errors" in returned_data.keys()]
-        ):
-            try:
-                errors = returned_data["error"]
-            except KeyError:
-                errors = returned_data["errors"]
-            logger.exception(errors)
-            raise LunchMoneyHTTPError(errors)
-        return loads(response.content)
-
-    def make_http_request(
-        self,
-        method: str,
-        url: str,
-        params: Optional[Any] = None,
-        data: Optional[Any] = None,
+        url: Union[httpx.URL, str],
+        *,
+        content: Optional[
+            Union[str, bytes, Iterable[bytes], AsyncIterable[bytes]]
+        ] = None,
+        data: Optional[Mapping[str, Any]] = None,
         json: Optional[Any] = None,
+        params: Optional[Mapping[str, Any]] = None,
         **kwargs: Any,
-    ) -> requests.Response:
+    ) -> httpx.Response:
         """
-        Make a HTTP Request
+        Make an HTTP Request
 
         This is a simple method :class:`.LunchMoney` exposes to make HTTP requests. It
-        has the benefit of using an existing `requests.Session` as well as as out of the box
+        has the benefit of using an existing `httpx.Client` as well as as out of the box
         auth headers that are used to connect to the Lunch Money Developer API.
 
         Parameters
@@ -157,20 +99,24 @@ class LunchMoneyAPIClient:
         method: str
             requests method: GET, OPTIONS, HEAD, POST, PUT,
             PATCH, or DELETE
-        url: str
+        url: Union[httpx.URL, str]
             URL for the new Request object.
-        params: Optional[Any]
-            Dictionary, list of tuples or bytes to send in the query
-            string for the Request.
-        data: Optional[Any]
+        content: Optional[Union[str, bytes, Iterable[bytes], AsyncIterable[bytes]]]
+            Content to send in the body of the Request.
+        data: Optional[Mapping[str, Any]]
             Dictionary, list of tuples, bytes, or file-like object to send
             in the body of the Request.
         json: Optional[Any]
             A JSON serializable Python object to send in the body of the Request.
+        params: Optional[Mapping[str, Any]]
+            Dictionary, list of tuples or bytes to send in the query
+            string for the Request.
+        **kwargs: Any
+            Additional arguments to send to the request method.
 
         Returns
         -------
-        Any
+        httpx.Response
 
         Examples
         --------
@@ -190,8 +136,8 @@ class LunchMoneyAPIClient:
             cookies = {"cookie_keys": "cookie_values"}
 
             for null_tag in null_tags:
-                # use the requests.session embedded in the class to make a request with cookies
-                response = lunch.make_request(
+                # use the httpx.client embedded in the class to make a request with cookies
+                response = lunch.request(
                     method="DELETE",
                     url=f"https://api.lunchmoney.app/tags/{null_tag.id}",
                     cookies=cookies)
@@ -199,6 +145,141 @@ class LunchMoneyAPIClient:
                 response.raise_for_status()
         """
         response = self.lunch_money_session.request(
-            method=method, url=url, params=params, data=data, json=json, **kwargs
+            method=method,
+            url=url,
+            content=content,
+            data=data,
+            json=json,
+            params=params,
+            **kwargs,
         )
         return response
+
+    def arequest(
+        self,
+        method: str,
+        url: Union[httpx.URL, str],
+        *,
+        content: Optional[
+            Union[str, bytes, Iterable[bytes], AsyncIterable[bytes]]
+        ] = None,
+        data: Optional[Mapping[str, Any]] = None,
+        json: Optional[Any] = None,
+        params: Optional[Mapping[str, Any]] = None,
+        **kwargs: Any,
+    ) -> httpx.Response:
+        """
+        Make an async HTTP Request
+
+        This is a simple method :class:`.LunchMoney` exposes to make HTTP requests. It
+        has the benefit of using an existing `httpx.Client` as well as as out of the box
+        auth headers that are used to connect to the Lunch Money Developer API.
+
+        Parameters
+        ----------
+        method: str
+            requests method: GET, OPTIONS, HEAD, POST, PUT,
+            PATCH, or DELETE
+        url: Union[httpx.URL, str]
+            URL for the new Request object.
+        content: Optional[Union[str, bytes, Iterable[bytes], AsyncIterable[bytes]]]
+            Content to send in the body of the Request.
+        data: Optional[Mapping[str, Any]]
+            Dictionary, list of tuples, bytes, or file-like object to send
+            in the body of the Request.
+        json: Optional[Any]
+            A JSON serializable Python object to send in the body of the Request.
+        params: Optional[Mapping[str, Any]]
+            Dictionary, list of tuples or bytes to send in the query
+            string for the Request.
+        **kwargs: Any
+            Additional arguments to send to the request method.
+
+        Returns
+        -------
+        httpx.Response
+        """
+        response = self.lunch_money_async_session.request(
+            method=method,
+            url=url,
+            content=content,
+            data=data,
+            json=json,
+            params=params,
+            **kwargs,
+        )
+        return response
+
+    def process_response(self, response: httpx.Response) -> Any:
+        """
+        Process a Lunch Money Response
+
+        This includes 200 responses that are actually errors
+
+        Parameters
+        ----------
+        response: httpx.Response
+            An HTTPX Response Object
+        """
+        try:
+            response.raise_for_status()
+        except httpx.HTTPError as he:
+            logger.exception(he)
+            logger.error(response.text)
+            raise LunchMoneyHTTPError from he
+        if response.content:
+            returned_data = response.json()
+        else:
+            returned_data = None
+        if isinstance(returned_data, dict) and any(
+            ["error" in returned_data.keys(), "errors" in returned_data.keys()]
+        ):
+            try:
+                errors = returned_data["error"]
+            except KeyError:
+                errors = returned_data["errors"]
+            logger.exception(errors)
+            raise LunchMoneyHTTPError(errors)
+        return returned_data
+
+    def lunchable_request(
+        self,
+        method: str,
+        url_path: Union[List[Union[str, int]], str, int],
+        params: Optional[Mapping[str, Any]] = None,
+        payload: Optional[Any] = None,
+        **kwargs: Any,
+    ) -> Any:
+        """
+        Make an HTTP Request and return its data
+
+        This method is a wrapper around :meth:`.LunchMoney.request` that
+        also processes the response and checks for any errors.
+
+        Parameters
+        ----------
+        method: str
+            requests method: GET, OPTIONS, HEAD, POST, PUT,
+            PATCH, or DELETE
+        url_path: Union[List[Union[str, int]], str, int]
+            URL components to make into a URL
+        payload: Optional[Mapping[str, Any]]
+            Data to send in the body of the Request.
+        params: Optional[Mapping[str, Any]]
+            Dictionary, list of tuples or bytes to send in the query
+            string for the Request.
+        **kwargs: Any
+            Additional arguments to send to the request method.
+
+        Returns
+        -------
+        Any
+        """
+        url = APIConfig.make_url(url_path=url_path)
+        if payload is not None:
+            payload = pydantic_core.to_json(payload)
+        response = self.request(
+            method=method, url=url, params=params, content=payload, **kwargs
+        )
+        data = self.process_response(response=response)
+        return data
