@@ -54,7 +54,7 @@ class UserClient(LunchMoneyAPIClient):
         -------
         UserObject
         """
-        response_data = self._make_request(
+        response_data = self.lunchable_request(
             method=self.Methods.GET, url_path=APIConfig.LUNCHMONEY_ME
         )
         me = UserObject(**response_data)

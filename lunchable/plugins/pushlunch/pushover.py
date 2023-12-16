@@ -10,7 +10,7 @@ from textwrap import dedent
 from time import sleep
 from typing import Any, Dict, List, Optional
 
-import requests
+import httpx
 
 from lunchable.models import (
     AssetsObject,
@@ -60,7 +60,7 @@ class PushLunch(LunchableApp):
             environment variable.
         """
         super().__init__(access_token=lunchmoney_access_token)
-        self.pushover_session = requests.Session()
+        self.pushover_session = httpx.Client()
         self.pushover_session.headers.update({"Content-Type": "application/json"})
 
         _courtesy_token = b"YXpwMzZ6MjExcWV5OGFvOXNicWF0cmdraXc4aGVz"
@@ -91,7 +91,7 @@ class PushLunch(LunchableApp):
         sound: Optional[str] = None,
         timestamp: Optional[str] = None,
         html: bool = False,
-    ) -> requests.Response:
+    ) -> httpx.Response:
         """
         Send a Pushover Notification
 
@@ -126,7 +126,7 @@ class PushLunch(LunchableApp):
 
         Returns
         -------
-        requests.Response
+        httpx.Response
         """
         html_param = 1 if html not in [None, False] else None
         params_dict = {

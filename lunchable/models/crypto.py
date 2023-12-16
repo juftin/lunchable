@@ -98,7 +98,7 @@ class CryptoClient(LunchMoneyAPIClient):
         -------
         List[CryptoObject]
         """
-        response_data = self._make_request(
+        response_data = self.lunchable_request(
             method=self.Methods.GET, url_path=APIConfig.LUNCHMONEY_CRYPTO
         )
         crypto_data = response_data["crypto"]
@@ -150,7 +150,7 @@ class CryptoClient(LunchMoneyAPIClient):
             balance=balance,
             currency=currency,
         ).model_dump(exclude_none=True)
-        response_data = self._make_request(
+        response_data = self.lunchable_request(
             method=self.Methods.PUT,
             url_path=[
                 APIConfig.LUNCHMONEY_CRYPTO,

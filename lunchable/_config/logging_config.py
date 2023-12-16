@@ -7,6 +7,7 @@ from os import getenv
 from typing import Optional, Tuple, Union
 
 import click
+from rich.console import Console
 from rich.logging import RichHandler
 
 LOG_HANDLER = getenv("LOG_HANDLER", "rich").lower()
@@ -36,7 +37,11 @@ def get_log_handler(
         omit_repeated_times=False,
         show_path=False,
         tracebacks_suppress=[click],
+        console=Console(stderr=True),
     )
+    httpx_logger = logging.getLogger("httpx")
+    if log_level != logging.DEBUG:
+        httpx_logger.setLevel(logging.WARNING)
     python_handler = logging.StreamHandler()
     python_formatter = logging.Formatter("%(asctime)s [%(levelname)8s]: %(message)s")
     python_handler.setFormatter(python_formatter)
