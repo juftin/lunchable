@@ -130,3 +130,16 @@ def test_unsplit_transaction(lunch_money_obj: LunchMoney):
         parent_ids=transaction_ids, remove_parents=True
     )
     assert len(response) == 3
+
+
+@lunchable_cassette
+def test_get_uncleared_transactions(lunch_money_obj: LunchMoney) -> None:
+    """
+    Get uncleared transactions
+
+    Enum values previously weren't getting JSON encoded
+    """
+    uncleared_transactions = lunch_money_obj.get_transactions(status="uncleared")
+    assert len(uncleared_transactions) >= 1
+    for transaction in uncleared_transactions:
+        assert isinstance(transaction, TransactionObject)

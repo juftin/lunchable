@@ -153,7 +153,7 @@ class CategoriesClient(LunchMoneyAPIClient):
         -------
         List[CategoriesObject]
         """
-        response_data = self._make_request(
+        response_data = self.make_request(
             method=self.Methods.GET, url_path=APIConfig.LUNCHMONEY_CATEGORIES
         )
         categories = response_data["categories"]
@@ -204,7 +204,7 @@ class CategoriesClient(LunchMoneyAPIClient):
             exclude_from_budget=exclude_from_budget,
             exclude_from_totals=exclude_from_totals,
         ).model_dump(exclude_none=True)
-        response_data = self._make_request(
+        response_data = self.make_request(
             method=self.Methods.POST,
             url_path=APIConfig.LUNCHMONEY_CATEGORIES,
             payload=category_body,
@@ -230,7 +230,7 @@ class CategoriesClient(LunchMoneyAPIClient):
         -------
         CategoriesObject
         """
-        response_data = self._make_request(
+        response_data = self.make_request(
             method=self.Methods.GET,
             url_path=[APIConfig.LUNCHMONEY_CATEGORIES, category_id],
         )
@@ -257,7 +257,7 @@ class CategoriesClient(LunchMoneyAPIClient):
         -------
         bool
         """
-        response_data = self._make_request(
+        response_data = self.make_request(
             method=self.Methods.DELETE,
             url_path=[APIConfig.LUNCHMONEY_CATEGORIES, category_id],
         )
@@ -291,7 +291,7 @@ class CategoriesClient(LunchMoneyAPIClient):
         -------
         bool
         """
-        response_data = self._make_request(
+        response_data = self.make_request(
             method=self.Methods.DELETE,
             url_path=[APIConfig.LUNCHMONEY_CATEGORIES, category_id, "force"],
         )
@@ -346,7 +346,7 @@ class CategoriesClient(LunchMoneyAPIClient):
             exclude_from_totals=exclude_from_totals,
             group_id=group_id,
         ).model_dump(exclude_none=True)
-        response_data = self._make_request(
+        response_data = self.make_request(
             method=self.Methods.PUT,
             url_path=[APIConfig.LUNCHMONEY_CATEGORIES, category_id],
             payload=payload,
@@ -404,7 +404,7 @@ class CategoriesClient(LunchMoneyAPIClient):
             category_ids=category_ids,
             new_categories=new_categories,
         ).model_dump(exclude_none=True)
-        response_data = self._make_request(
+        response_data = self.make_request(
             method=self.Methods.POST,
             url_path=[APIConfig.LUNCHMONEY_CATEGORIES, "group"],
             payload=payload,
@@ -442,7 +442,7 @@ class CategoriesClient(LunchMoneyAPIClient):
         payload = _CategoriesAddParamsPost(
             category_ids=category_ids, new_categories=new_categories
         ).model_dump(exclude_none=True)
-        response_data = self._make_request(
+        response_data = self.make_request(
             method=self.Methods.POST,
             url_path=[
                 APIConfig.LUNCHMONEY_CATEGORIES,

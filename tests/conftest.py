@@ -144,7 +144,6 @@ def path_transformer(path: str) -> str:
 vcr = VCR(
     filter_headers=(("authorization", "XXXXXXXXXX"),),
     filter_query_parameters=(("user", "XXXXXXXXXX"), ("token", "XXXXXXXXXX")),
-    decode_compressed_response=True,
     path_transformer=path_transformer,
     record_mode=os.getenv("VCR_RECORD_MODE", "once"),
 )

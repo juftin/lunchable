@@ -17,8 +17,7 @@ interactions:
         method: GET
         uri: https://dev.lunchmoney.app/v1/categories/443128
     response:
-        body:
-            string: '{"id":443128,"name":"Groceries","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null}'
+        content: '{"id":443128,"name":"Groceries","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -46,7 +45,6 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 version: 1

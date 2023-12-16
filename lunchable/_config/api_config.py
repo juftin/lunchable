@@ -7,6 +7,7 @@ from os import getenv
 from typing import Dict, List, Optional, Union
 from urllib import parse
 
+from lunchable._version import __version__
 from lunchable.exceptions import EnvironmentVariableError, LunchMoneyError
 
 logger = logging.getLogger(__name__)
@@ -69,7 +70,7 @@ class APIConfig:
     @staticmethod
     def get_header(access_token: Optional[str] = None) -> Dict[str, str]:
         """
-        Get the header dict to pass to requests
+        Get the header dict to pass to httpx
 
         Parameters
         ----------
@@ -81,9 +82,12 @@ class APIConfig:
         Dict[str, str]
         """
         access_token = APIConfig.get_access_token(access_token=access_token)
-        auth_header = {"Authorization": f"Bearer {access_token}"}
-        auth_header.update(APIConfig.LUNCHMONEY_CONTENT_TYPE_HEADERS)
-        return auth_header
+        lunchable_header = {
+            "Authorization": f"Bearer {access_token}",
+            "User-Agent": f"lunchable/{__version__}",
+        }
+        lunchable_header.update(APIConfig.LUNCHMONEY_CONTENT_TYPE_HEADERS)
+        return lunchable_header
 
     @staticmethod
     def make_url(url_path: Union[List[Union[str, int]], str, int]) -> str:

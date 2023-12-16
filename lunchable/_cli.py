@@ -9,8 +9,8 @@ from json import JSONDecodeError
 from typing import Any, Dict, Optional, Union
 
 import click
-import requests
-from pydantic.json import pydantic_encoder
+import httpx
+from pydantic_core import to_jsonable_python
 from rich import print, print_json, traceback
 
 import lunchable
@@ -145,7 +145,8 @@ def lunchmoney_transactions(
     """
     lunch = LunchMoney(access_token=context.access_token)
     transactions = lunch.get_transactions(**kwargs)  # type: ignore[arg-type]
-    print_json(data=transactions, default=pydantic_encoder)
+    json_data = to_jsonable_python(transactions)
+    print_json(data=json_data)
 
 
 @plugins.group()
@@ -198,7 +199,8 @@ def splitlunch_expenses(**kwargs: Union[int, str, bool]) -> None:
     if set(kwargs.values()) == {None}:
         kwargs["limit"] = 5
     expenses = splitlunch.get_expenses(**kwargs)  # type: ignore[arg-type]
-    print_json(data=expenses, default=pydantic_encoder)
+    json_data = to_jsonable_python(expenses)
+    print_json(data=json_data)
 
 
 tag_transactions = click.option(
@@ -237,7 +239,8 @@ def make_splitlunch(**kwargs: Union[int, str, bool]) -> None:
 
     splitlunch = SplitLunch()
     results = splitlunch.make_splitlunch(**kwargs)  # type: ignore[arg-type]
-    print_json(data=results, default=pydantic_encoder)
+    json_data = to_jsonable_python(results)
+    print_json(data=json_data)
 
 
 @splitlunch.command("splitlunch-import")
@@ -264,7 +267,8 @@ def make_splitlunch_import(**kwargs: Union[int, str, bool]) -> None:
         financial_partner_group_id=financial_partner_group_id,
     )
     results = splitlunch.make_splitlunch_import(**kwargs)  # type: ignore[arg-type]
-    print_json(data=results, default=pydantic_encoder)
+    json_data = to_jsonable_python(results)
+    print_json(data=json_data)
 
 
 @splitlunch.command("splitlunch-direct-import")
@@ -291,7 +295,8 @@ def make_splitlunch_direct_import(**kwargs: Union[int, str, bool]) -> None:
         financial_partner_group_id=financial_partner_group_id,
     )
     results = splitlunch.make_splitlunch_direct_import(**kwargs)  # type: ignore[arg-type]
-    print_json(data=results, default=pydantic_encoder)
+    json_data = to_jsonable_python(results)
+    print_json(data=json_data)
 
 
 @splitlunch.command("update-balance")
@@ -303,7 +308,8 @@ def update_splitwise_balance() -> None:
 
     splitlunch = SplitLunch()
     updated_asset = splitlunch.update_splitwise_balance()
-    print_json(data=updated_asset, default=pydantic_encoder)
+    json_data = to_jsonable_python(updated_asset)
+    print_json(data=json_data)
 
 
 @splitlunch.command("refresh")
@@ -341,7 +347,8 @@ def refresh_splitwise_transactions(
         allow_self_paid=allow_self_paid,
         allow_payments=allow_payments,
     )
-    print_json(data=response, default=pydantic_encoder)
+    json_data = to_jsonable_python(response)
+    print_json(data=json_data)
 
 
 @plugins.group()
@@ -397,14 +404,14 @@ def http(context: LunchMoneyContext, url: str, request: str, data: str) -> None:
         url_request = f"https://dev.lunchmoney.app/{url}"
     else:
         url_request = url
-    resp = lunch.make_http_request(
+    resp = lunch.request(
         method=request,
         url=url_request,
-        data=data,
+        content=data,
     )
     try:
         resp.raise_for_status()
-    except requests.HTTPError:
+    except httpx.HTTPError:
         logger.error(resp)
         print(resp.text)
         sys.exit(1)
@@ -412,7 +419,8 @@ def http(context: LunchMoneyContext, url: str, request: str, data: str) -> None:
         response = resp.json()
     except JSONDecodeError:
         response = resp.text
-    print_json(data=response, default=pydantic_encoder)
+    json_data = to_jsonable_python(response)
+    print_json(data=json_data)
 
 
 @plugins.group()
