@@ -19,8 +19,7 @@ interactions:
         method: PUT
         uri: https://dev.lunchmoney.app/v1/categories/443128
     response:
-        body:
-            string: 'true'
+        content: 'true'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -48,7 +47,6 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 version: 1

@@ -15,10 +15,9 @@ interactions:
             authorization:
             -   XXXXXXXXXX
         method: GET
-        uri: https://dev.lunchmoney.app/v1/recurring_expenses?debit_as_negative=False&start_date=2022-11-01
+        uri: https://dev.lunchmoney.app/v1/recurring_expenses?debit_as_negative=false&start_date=2022-11-01
     response:
-        body:
-            string: '{"recurring_expenses":[{"id":585244,"start_date":"2021-12-01","end_date":null,"cadence":"monthly","payee":"Test Item","amount":"100.0000","currency":"usd","created_at":"2023-12-15T02:38:04.131Z","description":"Video Streaming","billing_date":"2022-11-01","type":"cleared","original_name":null,"source":"manual","plaid_account_id":null,"asset_id":null,"category_id":443126,"transaction_id":null}]}'
+        content: '{"recurring_expenses":[{"id":585244,"start_date":"2021-12-01","end_date":null,"cadence":"monthly","payee":"Test Item","amount":"100.0000","currency":"usd","created_at":"2023-12-15T02:38:04.131Z","description":"Video Streaming","billing_date":"2022-11-01","type":"cleared","original_name":null,"source":"manual","plaid_account_id":null,"asset_id":null,"category_id":443126,"transaction_id":null}]}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -46,7 +45,6 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 version: 1

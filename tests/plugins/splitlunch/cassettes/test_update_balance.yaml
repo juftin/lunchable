@@ -129,8 +129,7 @@ interactions:
         method: GET
         uri: https://dev.lunchmoney.app/v1/tags
     response:
-        body:
-            string: '[{"id":22215,"name":"Wedding","description":null},{"id":21559,"name":"test","description":null},{"id":24194,"name":"SplitLunchDirectImport","description":null},{"id":21639,"name":"SplitLunch","description":"Tag to Create Splitwise Transactions from Lunch Money"},{"id":23474,"name":"Splitwise","description":null},{"id":22178,"name":"SplitLunchImport","description":null}]'
+        content: '[{"id":22215,"name":"Wedding","description":null},{"id":21559,"name":"test","description":null},{"id":24194,"name":"SplitLunchDirectImport","description":null},{"id":21639,"name":"SplitLunch","description":"Tag to Create Splitwise Transactions from Lunch Money"},{"id":23474,"name":"Splitwise","description":null},{"id":22178,"name":"SplitLunchImport","description":null}]'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -152,9 +151,8 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 -   request:
         body:
         headers:
@@ -173,8 +171,7 @@ interactions:
         method: GET
         uri: https://dev.lunchmoney.app/v1/assets
     response:
-        body:
-            string: '{"assets":[{"id":21845,"type_name":"cash","subtype_name":"digital wallet (paypal, venmo)","name":"Splitwise Balance","display_name":"Splitwise","balance":"176.6700","balance_as_of":"2021-11-16T02:17:52.209Z","currency":"usd","closed_on":null,"institution_name":"Splitwise","created_at":"2021-08-28T16:06:02.701Z"},{"id":23043,"type_name":"cash","subtype_name":"digital wallet (paypal, venmo)","name":"Test Account","display_name":"Test Account","balance":"181.7100","balance_as_of":"2021-11-02T22:27:05.311Z","currency":"usd","closed_on":null,"institution_name":"Test","created_at":"2021-09-20T05:32:29.060Z"}]}'
+        content: '{"assets":[{"id":21845,"type_name":"cash","subtype_name":"digital wallet (paypal, venmo)","name":"Splitwise Balance","display_name":"Splitwise","balance":"176.6700","balance_as_of":"2021-11-16T02:17:52.209Z","currency":"usd","closed_on":null,"institution_name":"Splitwise","created_at":"2021-08-28T16:06:02.701Z"},{"id":23043,"type_name":"cash","subtype_name":"digital wallet (paypal, venmo)","name":"Test Account","display_name":"Test Account","balance":"181.7100","balance_as_of":"2021-11-02T22:27:05.311Z","currency":"usd","closed_on":null,"institution_name":"Test","created_at":"2021-09-20T05:32:29.060Z"}]}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -196,9 +193,8 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 -   request:
         body:
         headers:
@@ -217,32 +213,12 @@ interactions:
         method: GET
         uri: https://dev.lunchmoney.app/v1/categories
     response:
-        body:
-            string: !!binary |
-                H4sIAAAAAAAAA82YXU/bMBSG/0qU6zazHdtpfAcM2C6QppFp0qapMo3bRqRx5SRsCPHf534oLpCs
-                NoWlEjfFb1U/Pu85PscP/oRXYiZVJkqf/Xzws9RnCMUwRAO/4AvhM/8kn8i5zAfeKVelP/BTUU5U
-                tqwyWfisqPN84GflOCsmciWf8rwUA1/8meR1KsZTJRfjmzqdiap9rZKV/m+zVi9TvaF0zLXcRwDB
-                IYiGCCUAMRAxCAOCRz/0JiZKWOn0zmZK1svmB9afxivM1dYfBzvIYYN8yotb70KII8Al1A53o3PA
-                pdjgZnneJyomDMAAArQH9YnOFjXCOIoa1DNezr0P3kly9Zx3s/Q9q+ap4r/5+kDekx7qP5JAyjBm
-                EAQjAtrp23UuvjaBPpPTqRDe9Vwuj8DaNLSz9kZnS0xRTGFD/FHcVC8i/a2oFJ/citQ7UyLNKu+M
-                q9TbSt815mCIaAIwwzGDOKCo4wTadS4xJ80JnBeVUBXPioUoXhzF/w961GHzdp0tMsEoig3ynUbt
-                w+DxMAQJAIzEOluDOO6q3a06a4NDEpuUPt/sMH1h8ktRCMVz7e31BX/vTaXyTtd43vpLpdY5FLlK
-                1V0HsllqtztKIGEIsjAORnFXiWvVOdgdg+Y8LqRcpXKe3Ql137vdKSBWdt/qXDKcNsiXvBx4ieJF
-                uZQ609eofYOTkWVxHzmXtpEBz6a9pPkzhM40b9W5oJqSdqnkRKy79L5xKbCr4FudSxaba/uTRhl4
-                J3Ulj4A3tuSNXXlNeD9vYPaxttRgi/JsTUqxHelG50JqcvYLv181ItuCNRXqoAC/4lJ6DkPs5smt
-                zgXajNBfhCplsb6M1f4ov7ujoV3B2upckMMd5CMozRTtGymf6GxJMYojQ/pVZIubWpXi4Ab7NW4e
-                DVG8ap1gpLvggEZdbm7VuTwXkB3gotIz9JVuNmZ8dpifD0lgPGIgDML9zwa7Ohc34x3ksuK1rlhH
-                YerI0tSRa79h3km+ZhpyzlVWzHoHJl1zQ7vOJcLG1Ncinw6zxVLJu8MT+U3CHNp10FudC7UZHVYv
-                QctjiDENLU0dupqamkp9vZC3fV6/GKxqr55g9hWsXZ31EwgkO/mb6ILVjP4v3gaerOpp2ay9ReH+
-                1/sIAgkKGaaMkABFXZW7Vefi8J2DUPxO5P37m1h2IsSVlZi3D/N43XdTTS1nJmo1M/16/Aun4gU/
-                qBoAAA==
+        content: '{"categories":[{"id":658761,"name":"Another Another Test Category","description":null,"is_income":false,"exclude_from_budget":true,"exclude_from_totals":false,"updated_at":"2023-12-15T02:42:01.147Z","created_at":"2023-12-15T02:42:01.147Z","is_group":false,"group_id":658694,"archived":false,"archived_on":null,"order":null},{"id":443128,"name":"Groceries","description":"Test Category Description Updated","is_income":false,"exclude_from_budget":true,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:27.268Z","created_at":"2023-03-07T02:10:27.268Z","is_group":false,"group_id":658694,"archived":false,"archived_on":null,"order":null},{"id":443125,"name":"Home","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:09:42.960Z","created_at":"2023-03-07T02:09:42.960Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443129,"name":"Income","description":null,"is_income":true,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:40:15.216Z","created_at":"2023-03-07T02:40:15.216Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443127,"name":"Personal Care","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:17.225Z","created_at":"2023-03-07T02:10:17.225Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443126,"name":"Shopping","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:12.260Z","created_at":"2023-03-07T02:10:12.260Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":660672,"name":"Splitwise","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-12-15T20:45:04.146Z","created_at":"2023-12-15T20:45:04.146Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":0},{"id":658693,"name":"Test Category","description":"Test Category Description","is_income":false,"exclude_from_budget":true,"exclude_from_totals":false,"updated_at":"2023-12-15T02:32:23.352Z","created_at":"2023-12-15T02:32:23.352Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":658694,"name":"Test Category Group","description":"Test Category Group!!","is_income":false,"exclude_from_budget":true,"exclude_from_totals":false,"updated_at":"2023-12-15T02:32:24.849Z","created_at":"2023-12-15T02:32:24.849Z","is_group":true,"group_id":null,"archived":false,"archived_on":null,"order":null,"children":[{"id":658761,"name":"Another Another Test Category","description":null,"is_income":false,"exclude_from_budget":true,"exclude_from_totals":false,"updated_at":"2023-12-15T02:42:01.147Z","created_at":"2023-12-15T02:42:01.147Z","is_group":false,"group_id":658694,"archived":false,"archived_on":null,"order":null},{"id":443128,"name":"Groceries","description":"Test Category Description Updated","is_income":false,"exclude_from_budget":true,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:27.268Z","created_at":"2023-03-07T02:10:27.268Z","is_group":false,"group_id":658694,"archived":false,"archived_on":null,"order":null}]}]}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
             Connection:
             -   keep-alive
-            Content-Encoding:
-            -   gzip
             Content-Type:
             -   application/json; charset=utf-8
             Date:
@@ -259,9 +235,8 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 -   request:
         body:
         headers:
