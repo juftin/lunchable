@@ -276,10 +276,14 @@ class LunchMoneyAPIClient:
         Any
         """
         url = APIConfig.make_url(url_path=url_path)
-        if payload is not None:
-            payload = pydantic_core.to_json(payload)
+        json_safe_payload = pydantic_core.to_jsonable_python(payload)
+        json_safe_params = pydantic_core.to_jsonable_python(params)
         response = self.request(
-            method=method, url=url, params=params, content=payload, **kwargs
+            method=method,
+            url=url,
+            params=json_safe_params,
+            data=json_safe_payload,
+            **kwargs,
         )
         data = self.process_response(response=response)
         return data
