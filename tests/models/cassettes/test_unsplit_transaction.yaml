@@ -19,8 +19,7 @@ interactions:
         method: POST
         uri: https://dev.lunchmoney.app/v1/transactions/unsplit
     response:
-        body:
-            string: '[103958755,103958756,103958497]'
+        content: '[103958755,103958756,103958497]'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -42,7 +41,6 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 version: 1

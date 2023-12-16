@@ -17,8 +17,7 @@ interactions:
         method: GET
         uri: https://dev.lunchmoney.app/v1/transactions/546434806
     response:
-        body:
-            string: '{"id":546434806,"date":"2023-12-12","payee":"Example Restaurant","amount":"120.0000","currency":"usd","to_base":120,"notes":"Saturday Dinner","category_id":null,"recurring_id":null,"asset_id":null,"plaid_account_id":null,"status":"uncleared","is_group":false,"group_id":null,"parent_id":null,"has_children":null,"tags":[],"external_id":null,"original_name":"Example Restaurant","type":null,"subtype":null}'
+        content: '{"id":546434806,"date":"2023-12-12","payee":"Example Restaurant","amount":"120.0000","currency":"usd","to_base":120,"notes":"Saturday Dinner","category_id":null,"recurring_id":null,"asset_id":null,"plaid_account_id":null,"status":"uncleared","is_group":false,"group_id":null,"parent_id":null,"has_children":null,"tags":[],"external_id":null,"original_name":"Example Restaurant","type":null,"subtype":null}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -46,9 +45,8 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 -   request:
         body: '{"split": [{"date": "2023-12-12", "notes": "Saturday Dinner", "amount": 60.0}, {"date": "2023-12-12", "notes": "Saturday Dinner", "amount": 60.0}], "debit_as_negative": false, "skip_balance_update": true}'
         headers:
@@ -69,8 +67,7 @@ interactions:
         method: PUT
         uri: https://dev.lunchmoney.app/v1/transactions/546434806
     response:
-        body:
-            string: '{"updated":true,"split":[561279455,561279456]}'
+        content: '{"updated":true,"split":[561279455,561279456]}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -98,7 +95,6 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 version: 1

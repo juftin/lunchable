@@ -17,8 +17,7 @@ interactions:
         method: GET
         uri: https://dev.lunchmoney.app/v1/categories
     response:
-        body:
-            string: '{"categories":[{"id":443128,"name":"Groceries","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:27.268Z","created_at":"2023-03-07T02:10:27.268Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443125,"name":"Home","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:09:42.960Z","created_at":"2023-03-07T02:09:42.960Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443129,"name":"Income","description":null,"is_income":true,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:40:15.216Z","created_at":"2023-03-07T02:40:15.216Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443127,"name":"Personal Care","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:17.225Z","created_at":"2023-03-07T02:10:17.225Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443126,"name":"Shopping","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:12.260Z","created_at":"2023-03-07T02:10:12.260Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null}]}'
+        content: '{"categories":[{"id":443128,"name":"Groceries","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:27.268Z","created_at":"2023-03-07T02:10:27.268Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443125,"name":"Home","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:09:42.960Z","created_at":"2023-03-07T02:09:42.960Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443129,"name":"Income","description":null,"is_income":true,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:40:15.216Z","created_at":"2023-03-07T02:40:15.216Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443127,"name":"Personal Care","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:17.225Z","created_at":"2023-03-07T02:10:17.225Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null},{"id":443126,"name":"Shopping","description":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"updated_at":"2023-03-07T02:10:12.260Z","created_at":"2023-03-07T02:10:12.260Z","is_group":false,"group_id":null,"archived":false,"archived_on":null,"order":null}]}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -48,7 +47,6 @@ interactions:
             -   Express
             content-length:
             -   '1450'
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 version: 1

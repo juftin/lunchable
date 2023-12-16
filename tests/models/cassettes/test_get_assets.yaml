@@ -17,8 +17,7 @@ interactions:
         method: GET
         uri: https://dev.lunchmoney.app/v1/assets
     response:
-        body:
-            string: '{"assets":[{"id":49335,"type_name":"cash","subtype_name":"checking","name":"Test Account","display_name":null,"balance":"-16513.5500","balance_as_of":"2023-03-07T02:43:48.383Z","closed_on":null,"currency":"usd","institution_name":null,"exclude_transactions":false,"created_at":"2023-03-07T02:05:23.670Z"}]}'
+        content: '{"assets":[{"id":49335,"type_name":"cash","subtype_name":"checking","name":"Test Account","display_name":null,"balance":"-16513.5500","balance_as_of":"2023-03-07T02:43:48.383Z","closed_on":null,"currency":"usd","institution_name":null,"exclude_transactions":false,"created_at":"2023-03-07T02:05:23.670Z"}]}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -46,7 +45,6 @@ interactions:
             -   1.1 vegur
             X-Powered-By:
             -   Express
-        status:
-            code: 200
-            message: OK
+        http_version: HTTP/1.1
+        status_code: 200
 version: 1
