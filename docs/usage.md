@@ -28,13 +28,13 @@ to see what else you can do.
 ## Retrieve a list of [`TransactionObject`][lunchable.models.transactions.TransactionObject]
 
 ```python
-from __future__ import annotations
+from typing import List
 
 from lunchable import LunchMoney
 from lunchable.models import TransactionObject
 
 lunch = LunchMoney(access_token="xxxxxxx")
-transactions: list[TransactionObject] = lunch.get_transactions(
+transactions: List[TransactionObject] = lunch.get_transactions(
     start_date="2020-01-01",
     end_date="2020-01-31"
 )
@@ -55,10 +55,8 @@ The above code returns a TransactionObject with ID # 1234 (assuming it exists)
 ## Update a transaction with a [`TransactionUpdateObject`][lunchable.models.transactions.TransactionUpdateObject]
 
 ```python
-from __future__ import annotations
-
 from datetime import datetime
-from typing import Any
+from typing import Any, Dict
 
 from lunchable import LunchMoney
 from lunchable.models import TransactionUpdateObject
@@ -66,7 +64,7 @@ from lunchable.models import TransactionUpdateObject
 lunch = LunchMoney(access_token="xxxxxxx")
 transaction_note = f"Updated on {datetime.now()}"
 notes_update = TransactionUpdateObject(notes=transaction_note)
-response: dict[str, Any] = lunch.update_transaction(
+response: Dict[str, Any] = lunch.update_transaction(
     transaction_id=1234,
     transaction=notes_update
 )

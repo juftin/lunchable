@@ -45,13 +45,13 @@ class LunchMoney(
     Examples
     --------
     ```python
-    from __future__ import annotations
+    from typing import List
 
     from lunchable import LunchMoney
     from lunchable.models import TransactionObject
 
     lunch = LunchMoney(access_token="xxxxxxx")
-    transactions: list[TransactionObject] = lunch.get_transactions()
+    transactions: List[TransactionObject] = lunch.get_transactions()
     ```
     """
 

@@ -33,18 +33,16 @@ pip install lunchable
 ### Usage
 
 ```python
-from __future__ import annotations
-
-from typing import Any
+from typing import Any, Dict, List
 
 from lunchable import LunchMoney
 from lunchable.models import TransactionObject
 
 lunch = LunchMoney(access_token="xxxxxxxxxxx")
-transactions: list[TransactionObject] = lunch.get_transactions()
+transactions: List[TransactionObject] = lunch.get_transactions()
 
 first_transaction: TransactionObject = transactions[0]
-transaction_as_dict: dict[str, Any] = first_transaction.model_dump()
+transaction_as_dict: Dict[str, Any] = first_transaction.model_dump()
 ```
 
 ```shell
@@ -57,7 +55,7 @@ lunchable http -X GET https://dev.lunchmoney.app/v1/assets
 
 ### Check out the [**Docs**](https://juftin.com/lunchable/)
 
-### Looking to contribute? See the [Contributing Guide](docs/source/contributing.md)
+### Looking to contribute? See the [Contributing Guide](docs/contributing.md)
 
 ### See the [Changelog](https://github.com/juftin/lunchable/releases)
 
