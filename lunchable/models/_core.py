@@ -125,7 +125,7 @@ class LunchMoneyAPIClient:
         **kwargs: Any,
     ) -> httpx.Response:
         """
-        Make an HTTP Request
+        Make an HTTP request
 
         This is a simple method :class:`.LunchMoney` exposes to make HTTP requests. It
         has the benefit of using an existing `httpx.Client` as well as as out of the box
@@ -158,28 +158,32 @@ class LunchMoneyAPIClient:
         Examples
         --------
         A recent use of this method was to delete a Tag (which isn't available via the
-        Developer API yet) ::
+        Developer API yet)
 
-            import lunchable
+        ```python
+        import lunchable
 
-            lunch = lunchable.LunchMoney()
+        lunch = lunchable.LunchMoney()
 
-            # Get All the Tags
-            all_tags = lunch.get_tags()
-            # Get All The Null Tags (a list of 1 or zero)
-            null_tags = [tag for tag in all_tags if tag.name in [None, ""]]
+        # Get All the Tags
+        all_tags = lunch.get_tags()
+        # Get All The Null Tags (a list of 1 or zero)
+        null_tags = [tag for tag in all_tags if tag.name in [None, ""]]
 
-            # Create a Cookie dictionary from a browser session
-            cookies = {"cookie_keys": "cookie_values"}
+        # Create a Cookie dictionary from a browser session
+        cookies = {"cookie_keys": "cookie_values"}
+        del lunch.session.headers["authorization"]
 
-            for null_tag in null_tags:
-                # use the httpx.client embedded in the class to make a request with cookies
-                response = lunch.request(
-                    method="DELETE",
-                    url=f"https://api.lunchmoney.app/tags/{null_tag.id}",
-                    cookies=cookies)
-                # raise an error for 4XX responses
-                response.raise_for_status()
+        for null_tag in null_tags:
+            # use the httpx.client embedded in the class to make a request with cookies
+            response = lunch.request(
+                method=lunch.Methods.DELETE,
+                url=f"https://api.lunchmoney.app/tags/{null_tag.id}",
+                cookies=cookies
+            )
+            # raise an error for 4XX responses
+            response.raise_for_status()
+        ```
         """
         response = self.session.request(
             method=method,
@@ -206,7 +210,7 @@ class LunchMoneyAPIClient:
         **kwargs: Any,
     ) -> httpx.Response:
         """
-        Make an async HTTP Request
+        Make an async HTTP request
 
         This is a simple method :class:`.LunchMoney` exposes to make HTTP requests. It
         has the benefit of using an existing `httpx.Client` as well as as out of the box
@@ -250,7 +254,7 @@ class LunchMoneyAPIClient:
     @classmethod
     def process_response(cls, response: httpx.Response) -> Any:
         """
-        Process a Lunch Money Response
+        Process a Lunch Money response and raise any errors
 
         This includes 200 responses that are actually errors
 
@@ -289,7 +293,7 @@ class LunchMoneyAPIClient:
         **kwargs: Any,
     ) -> Any:
         """
-        Make an HTTP Request and return its data
+        Make an HTTP request and `process` its response
 
         This method is a wrapper around :meth:`.LunchMoney.request` that
         also processes the response and checks for any errors.
@@ -335,7 +339,7 @@ class LunchMoneyAPIClient:
         **kwargs: Any,
     ) -> Any:
         """
-        Make an async HTTP Request and return its data
+        Make an async HTTP request and `process` its response
 
         This method is a wrapper around :meth:`.LunchMoney.arequest` that
         also processes the response and checks for any errors.

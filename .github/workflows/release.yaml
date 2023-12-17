@@ -24,8 +24,9 @@ jobs:
                 python-version: '3.11'
         -   name: Install Hatch
             run: |
-                python -m pip install --upgrade pip
+                python -m pip install --upgrade pip wheel
                 python -m pip install -q hatch pre-commit
+                python -m pip install -q "${{ github.workspace }}"
                 hatch --version
         -   name: Release
             run: hatch run gen:release
@@ -37,60 +38,30 @@ jobs:
                 GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
 
     github-pages-publish:
+        runs-on: ubuntu-latest
         needs: release
         if: github.ref == 'refs/heads/main' && github.repository_owner == 'juftin'
-        runs-on: ubuntu-latest
+        permissions:
+            contents: write
         steps:
         -   name: Checkout Latest Changes
-            uses: actions/checkout@v3
-            with:
-                path: ${{ github.workspace }}/main
-                ref: ${{ github.ref }}
-                fetch-depth: 0
-        -   name: Create gh-pages if not exists
-            working-directory: ${{ github.workspace }}/main
-            run: |
-                git checkout gh-pages || git checkout -b gh-pages
-                git push --set-upstream origin gh-pages || true
-                git checkout main --
-        -   name: Checkout gh-pages Branch
             uses: actions/checkout@v4
             with:
-                path: ${{ github.workspace }}/github-pages
-                ref: gh-pages
+                ref: ${{ github.ref }}
                 fetch-depth: 0
         -   name: Set up Python Environment
             uses: actions/setup-python@v5
             with:
                 python-version: '3.11'
         -   name: Install Hatch
-            working-directory: ${{ github.workspace }}/main
             run: |
-                python -m pip install --upgrade pip
-                python -m pip install -q hatch
+                python -m pip install --upgrade pip wheel
+                python -m pip install -q hatch pre-commit
+                python -m pip install -q "${{ github.workspace }}"
                 hatch --version
-        -   name: Documentation Generation
-            working-directory: ${{ github.workspace }}/main
+        -   name: Set Up GitHub Actions User
             run: |
-                hatch run docs:build
-        -   name: Setup Git Config
-            run: |
-                git config --global user.name "github-actions[bot]"
-                git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        -   name: Get Commit SHA from main
-            working-directory: ${{ github.workspace }}/main
-            run: |
-                COMMIT_SHA=$(git rev-parse HEAD)
-                PROJECT_VERSION=$(hatch version)
-                echo PROJECT_VERSION=${PROJECT_VERSION} >> $GITHUB_ENV
-                echo "COMMIT_SHA=${COMMIT_SHA}" >> ${GITHUB_ENV}
-        -   name: Commit Changes to gh-pages Branch
-            working-directory: ${{ github.workspace }}/github-pages
-            run: |
-                git rm -rf . || true
-                cp -R ${{ github.workspace }}/main/docs/_build/html/* ${PWD}
-                touch .nojekyll
-                cp ${{ github.workspace }}/main/docs/README.md .
-                git add .
-                git diff-index --quiet HEAD || git commit -m "GitHub Pages - ${{ env.PROJECT_VERSION }} - ${{ env.COMMIT_SHA }}"
-                git push origin gh-pages --force
+                git config user.name "github-actions[bot]"
+                git config user.email "github-actions[bot]@users.noreply.github.com"
+        -   name: Deploy Documentation Changes
+            run: hatch run docs:gh-deploy --force

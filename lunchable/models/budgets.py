@@ -140,7 +140,9 @@ class BudgetsClient(LunchMoneyAPIClient):
         """
         params = BudgetParamsGet(start_date=start_date, end_date=end_date).model_dump()
         response_data = self.make_request(
-            method="GET", url_path=[APIConfig.LUNCHMONEY_BUDGET], params=params
+            method=self.Methods.GET,
+            url_path=[APIConfig.LUNCHMONEY_BUDGET],
+            params=params,
         )
         budget_objects = [BudgetObject.model_validate(item) for item in response_data]
         return budget_objects
@@ -191,7 +193,9 @@ class BudgetsClient(LunchMoneyAPIClient):
             currency=currency,
         ).model_dump(exclude_none=True)
         response_data = self.make_request(
-            method="PUT", url_path=[APIConfig.LUNCHMONEY_BUDGET], payload=body
+            method=self.Methods.PUT,
+            url_path=[APIConfig.LUNCHMONEY_BUDGET],
+            payload=body,
         )
 
         return response_data["category_group"]
@@ -216,6 +220,8 @@ class BudgetsClient(LunchMoneyAPIClient):
             start_date=start_date, category_id=category_id
         ).model_dump()
         response_data = self.make_request(
-            method="DELETE", url_path=[APIConfig.LUNCHMONEY_BUDGET], params=params
+            method=self.Methods.DELETE,
+            url_path=[APIConfig.LUNCHMONEY_BUDGET],
+            params=params,
         )
         return response_data

@@ -159,7 +159,7 @@ class RecurringExpensesClient(LunchMoneyAPIClient):
             start_date=start_date, debit_as_negative=debit_as_negative
         ).model_dump()
         response_data = self.make_request(
-            method="GET",
+            method=self.Methods.GET,
             url_path=[APIConfig.LUNCH_MONEY_RECURRING_EXPENSES],
             params=params,
         )

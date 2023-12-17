@@ -18,9 +18,13 @@ from numpy import datetime64
 from rich import print, table
 from rich.prompt import Confirm
 
-from lunchable import TransactionUpdateObject
 from lunchable._config.logging_config import set_up_logging
-from lunchable.models import CategoriesObject, TransactionObject, UserObject
+from lunchable.models import (
+    CategoriesObject,
+    TransactionObject,
+    TransactionUpdateObject,
+    UserObject,
+)
 from lunchable.plugins.base.pandas_app import LunchablePandasApp
 
 logger = logging.getLogger(__name__)

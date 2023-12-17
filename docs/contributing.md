@@ -2,11 +2,25 @@
 
 ## Environment Setup
 
-1.  Install [hatch](https://github.com/pypa/hatch)
+> TIP: **pipx**
+>
+> This documentaion uses [pipx] to
+> install and manage non-project command line tools like `hatch` and
+> `pre-commit`. If you don't already have `pipx` installed, make sure to
+> see their [documentation](https://pypa.github.io/pipx/installation/).
+> If you prefer not to use `pipx`, you can use `pip` instead.
+
+1.  Install [hatch](https://hatch.pypa.io/latest/)
 
     ```shell
     pipx install hatch
     ```
+
+    > NOTE: **pre-commit**
+    >
+    > Hatch will attempt to set up pre-commit hooks for you using
+    > [pre-commit]. If you don't already,
+    > make sure to install pre-commit as well: `pipx install pre-commit`
 
 2.  Build the Virtual Environment
 
@@ -18,7 +32,7 @@
     They can be located by name with the `env find` command:
 
     ```shell
-    hatch env find default
+    hatch env find test
     ```
 
 4.  Activate the Virtual Environment
@@ -47,6 +61,54 @@ However, hatch also has some extra features which this project takes advantage o
 These features include virtual environment management and the organization of common
 scripts like linting and testing. All the operations in hatch take place in one
 of its managed virtual environments.
+
+Hatch has a variety of environments, to see them simply ask hatch:
+
+```bash exec="on" result="markdown" source="tabbed-left" tabs="hatch CLI|Output"
+hatch env show
+```
+
+That above command will tell you that there are five environments that
+you can use:
+
+-   `default`
+-   `docs`
+-   `gen`
+-   `lint`
+-   `test`
+
+Each of these environments has a set of commands that you can run.
+To see the commands for a specific environment, run:
+
+```bash exec="on" result="markdown" source="tabbed-left" tabs="hatch CLI|Output"
+hatch env show default
+```
+
+Here we can see that the `default` environment has the following commands:
+
+-   `cov`
+-   `test`
+
+The one that we're interested in is `cov`, which will run the tests
+for the project.
+
+```bash
+hatch run cov
+```
+
+Since `cov` is in the default environment, we can run it without
+specifying the environment. However, to run the `serve` command in the
+`docs` environment, we need to specify the environment:
+
+```bash
+hatch run docs:serve
+```
+
+You can see what scripts are available using the `env show` command
+
+```bash exec="on" result="markdown" source="tabbed-left" tabs="hatch CLI|Output"
+hatch env show docs
+```
 
 ## Committing Code
 

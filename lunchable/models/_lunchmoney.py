@@ -38,18 +38,21 @@ class LunchMoney(
     Lunch Money Python Client.
 
     This class facilitates with connections to
-    the `Lunch Money Developer API <https://lunchmoney.dev/>`_. Authenticate
+    the [Lunch Money Developer API](https://lunchmoney.dev/). Authenticate
     with an Access Token. If an access token isn't provided one will attempt to
     be inherited from a `LUNCHMONEY_ACCESS_TOKEN` environment variable.
 
     Examples
     --------
-    ::
+    ```python
+    from __future__ import annotations
 
-        from lunchable import LunchMoney
+    from lunchable import LunchMoney
+    from lunchable.models import TransactionObject
 
-        lunch = LunchMoney(access_token="xxxxxxx")
-        transactions = lunch.get_transactions()
+    lunch = LunchMoney(access_token="xxxxxxx")
+    transactions: list[TransactionObject] = lunch.get_transactions()
+    ```
     """
 
     def __init__(self, access_token: Optional[str] = None):
