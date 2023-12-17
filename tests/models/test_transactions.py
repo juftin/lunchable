@@ -143,3 +143,20 @@ def test_get_uncleared_transactions(lunch_money_obj: LunchMoney) -> None:
     assert len(uncleared_transactions) >= 1
     for transaction in uncleared_transactions:
         assert isinstance(transaction, TransactionObject)
+
+
+@lunchable_cassette
+def test_204_response(lunch_money_obj: LunchMoney) -> None:
+    """
+    Test that a 204 response is handled correctly
+
+    This test includes a hand-edited cassette to simulate a 204 response
+    """
+    test_transaction = TransactionInsertObject(
+        date=datetime.date.today(),
+        payee="Test",
+        notes="Test Transaction Group",
+        amount=3.50,
+    )
+    response = lunch_money_obj.insert_transactions(transactions=test_transaction)
+    assert response == []
