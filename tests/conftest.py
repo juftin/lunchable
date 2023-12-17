@@ -18,6 +18,23 @@ beginning_of_this_month = datetime.datetime.now().replace(day=1)
 module_scope = pytest.fixture(scope="module")
 
 
+@pytest.fixture(autouse=True)
+def set_test_env_vars(monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Set Environment Variables for Testing if they are not already set
+    """
+    testing_env_vars = [
+        "LUNCHMONEY_ACCESS_TOKEN",
+        "PUSHOVER_USER_KEY",
+        "SPLITWISE_API_KEY",
+        "SPLITWISE_CONSUMER_KEY",
+        "SPLITWISE_CONSUMER_SECRET",
+    ]
+    for env_var in testing_env_vars:
+        if not os.getenv(env_var):
+            monkeypatch.setenv(env_var, f"{env_var}_PLACEHOLDER")
+
+
 @pytest.fixture
 def obscure_start_date() -> datetime.datetime:
     """
@@ -147,7 +164,6 @@ vcr = VCR(
     path_transformer=path_transformer,
     record_mode=os.getenv("VCR_RECORD_MODE", "once"),
 )
-
 
 # Decorator Object to Use pyvcr Cassettes on Unit Tests
 # pass `--vcr-record=none` to pytest CI runs to ensure new cassettes are generated
