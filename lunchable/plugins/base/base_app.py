@@ -320,6 +320,8 @@ class BaseLunchableApp(ABC):
         """
         Refresh App data with the latest transactions
 
+        Parameters
+        ----------
         start_date: Optional[Union[datetime.date, datetime.datetime, str]]
             Denotes the beginning of the time period to fetch transactions for. Defaults
             to beginning of current month. Required if end_date exists. Format: YYYY-MM-DD.

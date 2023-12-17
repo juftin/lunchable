@@ -3,17 +3,19 @@
 #
 # [constraints] requirements.txt (SHA256: 1d7f43c7c1ecbc074ece84ddfddf590007473fce44e813c9dca4481292391f67)
 #
-# - sphinx
-# - sphinx-rtd-theme
-# - autodocsumm
-# - myst-parser[linkify]
-# - autoclasstoc
-# - sphinx-copybutton
-# - sphinx_autodoc_defaultargs
-# - sphinxcontrib-apidoc
-# - sphinx-click
-# - sphinx-autodoc-typehints
-# - autodoc_pydantic
+# - markdown-callouts
+# - markdown-exec
+# - mkdocs
+# - mkdocs-autorefs
+# - mkdocs-click
+# - mkdocs-gen-files
+# - mkdocs-literate-nav
+# - mkdocs-material
+# - mkdocs-section-index
+# - mkdocstrings
+# - mkdocstrings-python
+# - pymdown-extensions
+# - griffe-fieldz
 # - click>=8.0.1
 # - httpx
 # - pydantic<3,>=2
@@ -23,8 +25,6 @@
 # - splitwise<3.0.0,>=2.3.0
 #
 
-alabaster==0.7.13
-    # via sphinx
 annotated-types==0.6.0
     # via
     #   -c requirements.txt
@@ -33,14 +33,8 @@ anyio==4.1.0
     # via
     #   -c requirements.txt
     #   httpx
-autoclasstoc==1.6.0
-    # via hatch.envs.docs
-autodoc-pydantic==2.0.1
-    # via hatch.envs.docs
-autodocsumm==0.2.11
-    # via hatch.envs.docs
 babel==2.14.0
-    # via sphinx
+    # via mkdocs-material
 certifi==2023.11.17
     # via
     #   -c requirements.txt
@@ -55,14 +49,23 @@ click==8.1.7
     # via
     #   -c requirements.txt
     #   hatch.envs.docs
-    #   sphinx-click
-docutils==0.20.1
+    #   mkdocs
+    #   mkdocs-click
+    #   mkdocstrings
+colorama==0.4.6
     # via
-    #   autoclasstoc
-    #   myst-parser
-    #   sphinx
-    #   sphinx-click
-    #   sphinx-rtd-theme
+    #   griffe
+    #   mkdocs-material
+fieldz==0.0.2
+    # via griffe-fieldz
+ghp-import==2.1.0
+    # via mkdocs
+griffe==0.38.1
+    # via
+    #   griffe-fieldz
+    #   mkdocstrings-python
+griffe-fieldz==0.1.2
+    # via hatch.envs.docs
 h11==0.14.0
     # via
     #   -c requirements.txt
@@ -81,31 +84,69 @@ idna==3.6
     #   anyio
     #   httpx
     #   requests
-imagesize==1.4.1
-    # via sphinx
 jinja2==3.1.2
     # via
-    #   myst-parser
-    #   sphinx
-linkify-it-py==2.0.2
-    # via myst-parser
+    #   mkdocs
+    #   mkdocs-material
+    #   mkdocstrings
+markdown==3.5.1
+    # via
+    #   markdown-callouts
+    #   mkdocs
+    #   mkdocs-autorefs
+    #   mkdocs-click
+    #   mkdocs-material
+    #   mkdocstrings
+    #   pymdown-extensions
+markdown-callouts==0.3.0
+    # via hatch.envs.docs
+markdown-exec==1.7.0
+    # via hatch.envs.docs
 markdown-it-py==3.0.0
     # via
     #   -c requirements.txt
-    #   mdit-py-plugins
-    #   myst-parser
     #   rich
 markupsafe==2.1.3
-    # via jinja2
-mdit-py-plugins==0.4.0
-    # via myst-parser
+    # via
+    #   jinja2
+    #   mkdocs
+    #   mkdocstrings
 mdurl==0.1.2
     # via
     #   -c requirements.txt
     #   markdown-it-py
-more-itertools==10.1.0
-    # via autoclasstoc
-myst-parser==2.0.0
+mergedeep==1.3.4
+    # via mkdocs
+mkdocs==1.5.3
+    # via
+    #   hatch.envs.docs
+    #   mkdocs-autorefs
+    #   mkdocs-gen-files
+    #   mkdocs-literate-nav
+    #   mkdocs-material
+    #   mkdocs-section-index
+    #   mkdocstrings
+mkdocs-autorefs==0.5.0
+    # via
+    #   hatch.envs.docs
+    #   mkdocstrings
+mkdocs-click==0.8.1
+    # via hatch.envs.docs
+mkdocs-gen-files==0.5.0
+    # via hatch.envs.docs
+mkdocs-literate-nav==0.6.1
+    # via hatch.envs.docs
+mkdocs-material==9.5.2
+    # via hatch.envs.docs
+mkdocs-material-extensions==1.3.1
+    # via mkdocs-material
+mkdocs-section-index==0.3.8
+    # via hatch.envs.docs
+mkdocstrings==0.24.0
+    # via
+    #   hatch.envs.docs
+    #   mkdocstrings-python
+mkdocstrings-python==1.7.5
     # via hatch.envs.docs
 numpy==1.26.2
     # via
@@ -116,48 +157,62 @@ oauthlib==3.2.2
     #   -c requirements.txt
     #   requests-oauthlib
 packaging==23.2
-    # via sphinx
+    # via mkdocs
+paginate==0.5.6
+    # via mkdocs-material
 pandas==2.1.4
     # via
     #   -c requirements.txt
     #   hatch.envs.docs
-pbr==6.0.0
-    # via sphinxcontrib-apidoc
+pathspec==0.12.1
+    # via mkdocs
+platformdirs==4.1.0
+    # via
+    #   mkdocs
+    #   mkdocstrings
 pydantic==2.5.2
     # via
     #   -c requirements.txt
     #   hatch.envs.docs
-    #   autodoc-pydantic
-    #   pydantic-settings
 pydantic-core==2.14.5
     # via
     #   -c requirements.txt
     #   pydantic
-pydantic-settings==2.1.0
-    # via autodoc-pydantic
 pygments==2.17.2
     # via
     #   -c requirements.txt
+    #   mkdocs-material
     #   rich
-    #   sphinx
+pymdown-extensions==10.5
+    # via
+    #   hatch.envs.docs
+    #   markdown-exec
+    #   mkdocs-material
+    #   mkdocstrings
 python-dateutil==2.8.2
     # via
     #   -c requirements.txt
     #   hatch.envs.docs
+    #   ghp-import
     #   pandas
-python-dotenv==1.0.0
-    # via pydantic-settings
 pytz==2023.3.post1
     # via
     #   -c requirements.txt
     #   pandas
 pyyaml==6.0.1
-    # via myst-parser
+    # via
+    #   mkdocs
+    #   pymdown-extensions
+    #   pyyaml-env-tag
+pyyaml-env-tag==0.1
+    # via mkdocs
+regex==2023.10.3
+    # via mkdocs-material
 requests==2.31.0
     # via
     #   -c requirements.txt
+    #   mkdocs-material
     #   requests-oauthlib
-    #   sphinx
     #   splitwise
 requests-oauthlib==1.3.1
     # via
@@ -176,53 +231,6 @@ sniffio==1.3.0
     #   -c requirements.txt
     #   anyio
     #   httpx
-snowballstemmer==2.2.0
-    # via sphinx
-sphinx==7.2.6
-    # via
-    #   hatch.envs.docs
-    #   autoclasstoc
-    #   autodoc-pydantic
-    #   autodocsumm
-    #   myst-parser
-    #   sphinx-autodoc-defaultargs
-    #   sphinx-autodoc-typehints
-    #   sphinx-click
-    #   sphinx-copybutton
-    #   sphinx-rtd-theme
-    #   sphinxcontrib-apidoc
-    #   sphinxcontrib-applehelp
-    #   sphinxcontrib-devhelp
-    #   sphinxcontrib-htmlhelp
-    #   sphinxcontrib-jquery
-    #   sphinxcontrib-qthelp
-    #   sphinxcontrib-serializinghtml
-sphinx-autodoc-defaultargs==0.1.2
-    # via hatch.envs.docs
-sphinx-autodoc-typehints==1.25.2
-    # via hatch.envs.docs
-sphinx-click==5.1.0
-    # via hatch.envs.docs
-sphinx-copybutton==0.5.2
-    # via hatch.envs.docs
-sphinx-rtd-theme==2.0.0
-    # via hatch.envs.docs
-sphinxcontrib-apidoc==0.4.0
-    # via hatch.envs.docs
-sphinxcontrib-applehelp==1.0.7
-    # via sphinx
-sphinxcontrib-devhelp==1.0.5
-    # via sphinx
-sphinxcontrib-htmlhelp==2.0.4
-    # via sphinx
-sphinxcontrib-jquery==4.1
-    # via sphinx-rtd-theme
-sphinxcontrib-jsmath==1.0.1
-    # via sphinx
-sphinxcontrib-qthelp==1.0.6
-    # via sphinx
-sphinxcontrib-serializinghtml==1.1.9
-    # via sphinx
 splitwise==2.5.0
     # via
     #   -c requirements.txt
@@ -230,15 +238,16 @@ splitwise==2.5.0
 typing-extensions==4.9.0
     # via
     #   -c requirements.txt
+    #   fieldz
     #   pydantic
     #   pydantic-core
 tzdata==2023.3
     # via
     #   -c requirements.txt
     #   pandas
-uc-micro-py==1.0.2
-    # via linkify-it-py
 urllib3==2.1.0
     # via
     #   -c requirements.txt
     #   requests
+watchdog==3.0.0
+    # via mkdocs

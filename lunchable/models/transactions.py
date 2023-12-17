@@ -512,13 +512,16 @@ class TransactionsClient(LunchMoneyAPIClient):
 
         Examples
         --------
-        Retrieve a list of :class:`.TransactionObject` ::
+        Retrieve a list of
+        [TransactionObject][lunchable.models.transactions.TransactionObject]
 
-            from lunchable import LunchMoney
+        ```python
+        from lunchable import LunchMoney
 
-            lunch = LunchMoney(access_token="xxxxxxx")
-            transactions = lunch.get_transactions(start_date="2020-01-01",
-                                                  end_date="2020-01-31")
+        lunch = LunchMoney(access_token="xxxxxxx")
+        transactions = lunch.get_transactions(start_date="2020-01-01",
+                                              end_date="2020-01-31")
+        ```
         """
         search_params = _TransactionParamsGet(
             tag_id=tag_id,
@@ -563,15 +566,18 @@ class TransactionsClient(LunchMoneyAPIClient):
 
         Examples
         --------
-        Retrieve a single transaction by its ID ::
+        Retrieve a single transaction by its ID
 
-            from lunchable import LunchMoney
+        ```python
+        from lunchable import LunchMoney
 
-            lunch = LunchMoney(access_token="xxxxxxx")
-            transaction = lunch.get_transaction(transaction_id=1234)
+        lunch = LunchMoney(access_token="xxxxxxx")
+        transaction = lunch.get_transaction(transaction_id=1234)
+        ```
 
-        The above code returns a :class:`.TransactionObject` with ID # 1234 (assuming
-        it exists)
+        The above code returns a
+        [TransactionObject][lunchable.models.transactions.TransactionObject]
+        with ID # 1234 (assuming it exists)
         """
         response_data = self.make_request(
             method=self.Methods.GET,
@@ -630,31 +636,38 @@ class TransactionsClient(LunchMoneyAPIClient):
 
         Examples
         --------
-        Update a transaction with a :class:`.TransactionUpdateObject` ::
+        Update a transaction with a
+        [TransactionUpdateObject][lunchable.models.transactions.TransactionUpdateObject]
 
-            from datetime import datetime
+        ```python
+        from datetime import datetime
 
-            from lunchable import LunchMoney, TransactionUpdateObject
+        from lunchable import LunchMoney, TransactionUpdateObject
 
-            lunch = LunchMoney(access_token="xxxxxxx")
-            transaction_note = f"Updated on {datetime.now()}"
-            notes_update = TransactionUpdateObject(notes=transaction_note)
-            response = lunch.update_transaction(transaction_id=1234,
-                                                transaction=notes_update)
+        lunch = LunchMoney(access_token="xxxxxxx")
+        transaction_note = f"Updated on {datetime.now()}"
+        notes_update = TransactionUpdateObject(notes=transaction_note)
+        response = lunch.update_transaction(transaction_id=1234,
+                                            transaction=notes_update)
+        ```
 
-        Update a :class:`.TransactionObject` with itself ::
+        Update a
+        [TransactionObject][lunchable.models.transactions.TransactionObject]
+        with itself
 
-            from datetime import datetime, timedelta
+        ```python
+        from datetime import datetime, timedelta
 
-            from lunchable import LunchMoney
+        from lunchable import LunchMoney
 
-            lunch = LunchMoney(access_token="xxxxxxx")
-            transaction = lunch.get_transaction(transaction_id=1234)
+        lunch = LunchMoney(access_token="xxxxxxx")
+        transaction = lunch.get_transaction(transaction_id=1234)
 
-            transaction.notes = f"Updated on {datetime.now()}"
-            transaction.date = transaction.date + timedelta(days=1)
-            response = lunch.update_transaction(transaction_id=transaction.id,
-                                                transaction=transaction)
+        transaction.notes = f"Updated on {datetime.now()}"
+        transaction.date = transaction.date + timedelta(days=1)
+        response = lunch.update_transaction(transaction_id=transaction.id,
+                                            transaction=transaction)
+        ```
         """
         payload = _TransactionUpdateParamsPut(
             split=split,
@@ -720,16 +733,19 @@ class TransactionsClient(LunchMoneyAPIClient):
 
         Examples
         --------
-        Create a new transaction with a :class:`.TransactionInsertObject` ::
+        Create a new transaction with a
+        [TransactionInsertObject][lunchable.models.transactions.TransactionInsertObject]
 
-            from lunchable import LunchMoney, TransactionInsertObject
+        ```python
+        from lunchable import LunchMoney, TransactionInsertObject
 
-            lunch = LunchMoney(access_token="xxxxxxx")
+        lunch = LunchMoney(access_token="xxxxxxx")
 
-            new_transaction = TransactionInsertObject(payee="Example Restaurant",
-                                                      amount=120.00,
-                                                      notes="Saturday Dinner")
-            new_transaction_ids = lunch.insert_transactions(transactions=new_transaction)
+        new_transaction = TransactionInsertObject(payee="Example Restaurant",
+                                                  amount=120.00,
+                                                  notes="Saturday Dinner")
+        new_transaction_ids = lunch.insert_transactions(transactions=new_transaction)
+        ```
         """
         insert_objects = []
         if not isinstance(transactions, list):

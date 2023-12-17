@@ -32,7 +32,7 @@ the [Amazon Order History Reporter](https://chrome.google.com/webstore/detail/am
 plugin because it gives us some functionality that Amazon doesn't: exporting Amazon transactions as they're
 grouped on actual credit card transactions.
 
-## Run via the [Lunchable CLI](cli.md#lunchable-cli)
+## Run via the [Lunchable CLI](../cli.md#lunchable-cli)
 
 You can install lunchable with [pip](https://pypi.org/project/lunchable/) or
 [pipx](https://pypa.github.io/pipx/):
@@ -51,18 +51,20 @@ The below command runs the `PrimeLunch` update tool:
 lunchable plugins primelunch run -f ~/Downloads/amazon_order_history.csv
 ```
 
-:::{important}
-The commands on this documentation correspond to running `PrimeLunch` on a
-Mac or Linux Machine. If you are a Windows user take note of the following items:
-
--   Multiline commands in Windows machines use the `^` character instead of `\` to escape new lines
--   On macs, the default CSV file is located at `~/Downloads/amazon_order_history.csv`, on Windows this file
-    is located someplace like `C:\Users\YourUserName\Downloads\amazon_order_history.csv`
--   It's recommended you use the new
-    [Windows Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701)
-    to run `PrimeLunch`
-
-:::
+> IMPORTANT: **Windows Users**
+>
+>    The commands on this documentation correspond to running on a
+>    Mac or Linux Machine. If you are a Windows user take note of the following items:
+>
+>    -   Multiline commands in Windows machines use the `^` character instead of `\` to escape new lines
+>    -   On macs, the default CSV file is located at `~/Downloads/amazon_order_history.csv`, on Windows this file
+>        is located someplace like `C:\Users\YourUserName\Downloads\amazon_order_history.csv`
+>    -   My personal recommendation is to use the
+>        [Windows Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701)
+>        along with
+>        [WSL](https://learn.microsoft.com/en-us/windows/wsl/) (Windows Subsystem for Linux) to
+>        access a Linux shell on your Windows machine. This will allow you to use the commands
+>        as written.
 
 The below command runs the `PrimeLunch` update tool using a date window of fourteen days
 instead of the default seven days (these larger windows are especially useful for finding refunds and recurring
@@ -93,11 +95,13 @@ lunchable plugins primelunch run \
 
 ## Command Line Documentation
 
-```{eval-rst}
-.. click:: lunchable._cli:primelunch
-   :prog: lunchable plugins primelunch
-   :nested: full
-```
+::: mkdocs-click
+    :module: lunchable.plugins.primelunch.primelunch
+    :command: run_primelunch
+    :prog_name: lunchable plugins primelunch run
+    :style: table
+    :list_subcommands: True
+
 
 ## References
 

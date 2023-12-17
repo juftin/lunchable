@@ -1,0 +1,86 @@
+# $schema: https://squidfunk.github.io/mkdocs-material/schema.json
+
+site_name: lunchable
+nav:
+-   Home 🏠: index.md
+-   Usage 📖: usage.md
+-   LunchMoney 🍽️: interacting.md
+-   Plugins 🧩:
+    -   plugins/index.md
+    -   PushLunch 📲: plugins/pushlunch.md
+    -   SplitLunch 🍱: plugins/splitlunch.md
+    -   PrimeLunch 🥪: plugins/primelunch.md
+-   Command Line Interface ⌨️: cli.md
+-   API Documentation 🤖: reference/
+-   Contributing 🤝: contributing.md
+theme:
+    favicon: https://juftin.com/favicon.ico
+    logo: https://raw.githubusercontent.com/juftin/juftin/main/static/juftin.png
+    name: material
+    features:
+    -   navigation.tracking
+    -   content.code.annotate
+    -   content.code.copy
+    -   navigation.indexes
+    palette:
+    -   media: '(prefers-color-scheme: light)'
+        scheme: default
+        accent: purple
+        toggle:
+            icon: material/weather-sunny
+            name: Switch to dark mode
+    -   media: '(prefers-color-scheme: dark)'
+        scheme: slate
+        primary: black
+        toggle:
+            icon: material/weather-night
+            name: Switch to light mode
+repo_url: https://github.com/juftin/lunchable
+repo_name: lunchable
+edit_uri: blob/main/docs/
+site_author: juftin
+remote_branch: gh-pages
+#copyright: Copyright © 2023 Justin Flannery
+extra:
+    generator: false
+markdown_extensions:
+-   toc:
+        permalink: '#'
+-   pymdownx.snippets:
+-   pymdownx.magiclink
+-   attr_list
+-   md_in_html
+-   pymdownx.highlight:
+        anchor_linenums: true
+-   pymdownx.inlinehilite
+-   pymdownx.superfences
+-   markdown.extensions.attr_list
+-   pymdownx.keys
+-   pymdownx.tasklist
+-   pymdownx.tilde
+-   callouts
+-   pymdownx.details
+-   pymdownx.emoji
+-   pymdownx.tabbed:
+        alternate_style: true
+-   mkdocs-click:
+plugins:
+-   search
+-   markdown-exec
+-   section-index
+-   autorefs
+-   mkdocstrings:
+        handlers:
+            python:
+                import:
+                -   https://docs.python.org/3/objects.inv
+                -   https://pandas.pydata.org/docs/objects.inv
+                options:
+                    docstring_style: numpy
+                    extensions:
+                    -   griffe_fieldz
+-   gen-files:
+        scripts:
+        -   docs/gen_pages.py
+-   literate-nav:
+        nav_file: SUMMARY.md
