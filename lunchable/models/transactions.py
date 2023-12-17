@@ -757,7 +757,7 @@ class TransactionsClient(LunchMoneyAPIClient):
             url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
             payload=payload,
         )
-        ids: List[int] = response_data["ids"]
+        ids: List[int] = response_data["ids"] if response_data else []
         return ids
 
     def insert_transaction_group(
