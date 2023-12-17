@@ -110,6 +110,9 @@ detached = false
 extra-dependencies = [
   "griffe-fieldz"
 ]
+features = ["all"]
+pip-compile-constraint = "default"
+template = "docs"
 type = "pip-compile"
 
 [tool.hatch.envs.gen]
