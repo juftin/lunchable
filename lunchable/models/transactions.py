@@ -15,6 +15,12 @@ from lunchable import LunchMoneyError
 from lunchable._config import APIConfig
 from lunchable.models._base import LunchableModel
 from lunchable.models._core import LunchMoneyAPIClient
+from lunchable.models._descriptions import (
+    _TransactionDescriptions,
+    _TransactionInsertDescriptions,
+    _TransactionSplitDescriptions,
+    _TransactionUpdateDescriptions,
+)
 from lunchable.models.tags import TagsObject
 
 logger = logging.getLogger(__name__)
@@ -35,43 +41,6 @@ class TransactionInsertObject(TransactionBaseObject):
     https://lunchmoney.dev/#insert-transactions
     """
 
-    _date_description = """
-    Must be in ISO 8601 format (YYYY-MM-DD).
-    """
-    _amount_description = """
-    Numeric value of amount. i.e. $4.25 should be denoted as 4.25.
-    """
-    _category_id_description = """
-    Unique identifier for associated category_id. Category must be associated with
-    the same account and must not be a category group.
-    """
-    _currency_description = """
-    Three-letter lowercase currency code in ISO 4217 format. The code sent must exist
-    in our database. Defaults to user account's primary currency.
-    """
-    _asset_id_description = """
-    Unique identifier for associated asset (manually-managed account). Asset must be
-    associated with the same account.
-    """
-    _recurring_id = """
-    Unique identifier for associated recurring expense. Recurring expense must be associated
-    with the same account.
-    """
-    _status_description = """
-    Must be either cleared or uncleared. If recurring_id is provided, the status will
-    automatically be set to recurring or recurring_suggested depending on the type of
-    recurring_id. Defaults to uncleared.
-    """
-    _external_id_description = """
-    User-defined external ID for transaction. Max 75 characters. External IDs must be
-    unique within the same asset_id.
-    """
-    _tags_description = """
-    Passing in a number will attempt to match by ID. If no matching tag ID is found, an error
-    will be thrown. Passing in a string will attempt to match by string. If no matching tag
-    name is found, a new tag will be created.
-    """
-
     class StatusEnum(str, Enum):
         """
         Status Options, must be "cleared" or "uncleared"
@@ -80,21 +49,31 @@ class TransactionInsertObject(TransactionBaseObject):
         cleared = "cleared"
         uncleared = "uncleared"
 
-    date: datetime.date = Field(description=_date_description)
-    amount: float = Field(description=_amount_description)
-    category_id: Optional[int] = Field(None, description=_category_id_description)
+    date: datetime.date = Field(description=_TransactionInsertDescriptions.date)
+    amount: float = Field(description=_TransactionInsertDescriptions.amount)
+    category_id: Optional[int] = Field(
+        None, description=_TransactionInsertDescriptions.category_id
+    )
     payee: Optional[str] = Field(None, description="Max 140 characters", max_length=140)
     currency: Optional[str] = Field(
-        None, description=_currency_description, max_length=3
+        None, description=_TransactionInsertDescriptions.currency, max_length=3
     )
-    asset_id: Optional[int] = Field(None, description=_asset_id_description)
-    recurring_id: Optional[int] = Field(None, description=_recurring_id)
+    asset_id: Optional[int] = Field(
+        None, description=_TransactionInsertDescriptions.asset_id
+    )
+    recurring_id: Optional[int] = Field(
+        None, description=_TransactionInsertDescriptions.recurring_id
+    )
     notes: Optional[str] = Field(None, description="Max 350 characters", max_length=350)
-    status: Optional[StatusEnum] = Field(None, description=_status_description)
-    external_id: Optional[str] = Field(
-        None, description=_external_id_description, max_length=75
+    status: Optional[StatusEnum] = Field(
+        None, description=_TransactionInsertDescriptions.status
     )
-    tags: Optional[List[Union[str, int]]] = Field(None, description=_tags_description)
+    external_id: Optional[str] = Field(
+        None, description=_TransactionInsertDescriptions.external_id, max_length=75
+    )
+    tags: Optional[List[Union[str, int]]] = Field(
+        None, description=_TransactionInsertDescriptions.tags
+    )
 
 
 class TransactionUpdateObject(TransactionBaseObject):
@@ -104,49 +83,6 @@ class TransactionUpdateObject(TransactionBaseObject):
     https://lunchmoney.dev/#update-transaction
     """
 
-    _date_description = """
-    Must be in ISO 8601 format (YYYY-MM-DD).
-    """
-    _category_id_description = """
-    Unique identifier for associated category_id. Category must be associated
-    with the same account and must not be a category group.
-    """
-    _amount_description = """
-    You may only update this if this transaction was not created from an automatic
-    import, i.e. if this transaction is not associated with a plaid_account_id
-    """
-    _currency_description = """
-    You may only update this if this transaction was not created from an automatic
-    import, i.e. if this transaction is not associated with a plaid_account_id.
-    Defaults to user account's primary currency.
-    """
-    _asset_id_description = """
-    Unique identifier for associated asset (manually-managed account). Asset must be
-    associated with the same account. You may only update this if this transaction was
-    not created from an automatic import, i.e. if this transaction is not associated
-    with a plaid_account_id
-    """
-    _recurring_id_description = """
-    Unique identifier for associated recurring expense. Recurring expense must
-    be associated with the same account.
-    """
-    _status_description = """
-    Must be either cleared or uncleared. Defaults to uncleared If recurring_id is
-    provided, the status will automatically be set to recurring or recurring_suggested
-    depending on the type of recurring_id. Defaults to uncleared.
-    """
-    _external_id_description = """
-    User-defined external ID for transaction. Max 75 characters. External IDs must be
-    unique within the same asset_id. You may only update this if this transaction was
-    not created from an automatic import, i.e. if this transaction is not associated
-    with a plaid_account_id
-    """
-    _tags_description = """
-    Passing in a number will attempt to match by ID. If no matching tag ID is found,
-    an error will be thrown. Passing in a string will attempt to match by string.
-    If no matching tag name is found, a new tag will be created.
-    """
-
     class StatusEnum(str, Enum):
         """
         Status Options, must be "cleared" or "uncleared"
@@ -155,17 +91,35 @@ class TransactionUpdateObject(TransactionBaseObject):
         cleared = "cleared"
         uncleared = "uncleared"
 
-    date: Optional[datetime.date] = Field(None, description=_date_description)
-    category_id: Optional[int] = Field(None, description=_category_id_description)
+    date: Optional[datetime.date] = Field(
+        None, description=_TransactionUpdateDescriptions.date
+    )
+    category_id: Optional[int] = Field(
+        None, description=_TransactionUpdateDescriptions.category_id
+    )
     payee: Optional[str] = Field(None, description="Max 140 characters", max_length=140)
-    amount: Optional[float] = Field(None, description=_amount_description)
-    currency: Optional[str] = Field(None, description=_currency_description)
-    asset_id: Optional[int] = Field(None, description=_asset_id_description)
-    recurring_id: Optional[int] = Field(None, description=_recurring_id_description)
+    amount: Optional[float] = Field(
+        None, description=_TransactionUpdateDescriptions.amount
+    )
+    currency: Optional[str] = Field(
+        None, description=_TransactionUpdateDescriptions.currency
+    )
+    asset_id: Optional[int] = Field(
+        None, description=_TransactionUpdateDescriptions.asset_id
+    )
+    recurring_id: Optional[int] = Field(
+        None, description=_TransactionUpdateDescriptions.recurring_id
+    )
     notes: Optional[str] = Field(None, description="Max 350 characters", max_length=350)
-    status: Optional[StatusEnum] = Field(None, description=_status_description)
-    external_id: Optional[str] = Field(None, description=_external_id_description)
-    tags: Optional[List[Union[int, str]]] = Field(None, description=_tags_description)
+    status: Optional[StatusEnum] = Field(
+        None, description=_TransactionUpdateDescriptions.status
+    )
+    external_id: Optional[str] = Field(
+        None, description=_TransactionUpdateDescriptions.external_id
+    )
+    tags: Optional[List[Union[int, str]]] = Field(
+        None, description=_TransactionUpdateDescriptions.tags
+    )
 
 
 class TransactionSplitObject(TransactionBaseObject):
@@ -175,23 +129,12 @@ class TransactionSplitObject(TransactionBaseObject):
     https://lunchmoney.dev/#split-object
     """
 
-    _date_description = "Must be in ISO 8601 format (YYYY-MM-DD)."
-    _category_id_description = """
-    Unique identifier for associated category_id. Category must be associated
-    with the same account.
-    """
-    _notes_description = "Transaction Split Notes."
-    _amount_description = """
-    Individual amount of split. Currency will inherit from parent transaction. All
-    amounts must sum up to parent transaction amount.
-    """
-
-    date: datetime.date = Field(description=_date_description)
+    date: datetime.date = Field(description=_TransactionSplitDescriptions.date)
     category_id: Optional[int] = Field(
-        default=None, description=_category_id_description
+        default=None, description=_TransactionSplitDescriptions.category_id
     )
-    notes: Optional[str] = Field(None, description=_notes_description)
-    amount: float = Field(description=_amount_description)
+    notes: Optional[str] = Field(None, description=_TransactionSplitDescriptions.notes)
+    amount: float = Field(description=_TransactionSplitDescriptions.amount)
 
 
 class FullStatusEnum(str, Enum):
@@ -213,111 +156,41 @@ class TransactionObject(TransactionBaseObject):
     https://lunchmoney.dev/#transaction-object
     """
 
-    _amount_description = """
-    Amount of the transaction in numeric format to 4 decimal places
-    """
-    _payee_description = """
-    Name of payee If recurring_id is not null, this field will show the payee
-    of associated recurring expense instead of the original transaction payee
-    """
-    _currency_description = """
-    Three-letter lowercase currency code of the transaction in ISO 4217 format
-    """
-    _notes_description = """
-    User-entered transaction notes If recurring_id is not null, this field will
-    be description of associated recurring expense
-    """
-    _category_description = """
-    Unique identifier of associated category (see Categories)
-    """
-    _asset_id_description = """
-    Unique identifier of associated manually-managed account (see Assets)
-    Note: plaid_account_id and asset_id cannot both exist for a transaction
-    """
-    _plaid_account_id_description = """
-    Unique identifier of associated Plaid account (see Plaid Accounts) Note:
-    plaid_account_id and asset_id cannot both exist for a transaction
-    """
-    _status_description = """
-    One of the following: cleared: User has reviewed the transaction | uncleared:
-    User has not yet reviewed the transaction | recurring: Transaction is linked
-    to a recurring expense | recurring_suggested: Transaction is listed as a
-    suggested transaction for an existing recurring expense | pending: Imported
-    transaction is marked as pending. This should be a temporary state. User intervention
-    is required to change this to recurring.
-    """
-    _parent_id_description = """
-    Exists if this is a split transaction. Denotes the transaction ID of the original
-    transaction. Note that the parent transaction is not returned in this call.
-    """
-    _is_group_description = """
-    True if this transaction represents a group of transactions. If so, amount
-    and currency represent the totalled amount of transactions bearing this
-    transaction's id as their group_id. Amount is calculated based on the
-    user's primary currency.
-    """
-    _group_id_description = """
-    Exists if this transaction is part of a group. Denotes the parent's transaction ID
-    """
-    _external_id_description = """
-    User-defined external ID for any manually-entered or imported transaction.
-    External ID cannot be accessed or changed for Plaid-imported transactions.
-    External ID must be unique by asset_id. Max 75 characters.
-    """
-    _original_name_description = """
-    The transactions original name before any payee name updates. For synced transactions,
-    this is the raw original payee name from your bank.
-    """
-    _type_description = """
-    (for synced investment transactions only) The transaction type as set by
-    Plaid for investment transactions. Possible values include: buy, sell, cash,
-    transfer and more
-    """
-    _subtype_description = """
-    (for synced investment transactions only) The transaction type as set by Plaid
-    for investment transactions. Possible values include: management fee, withdrawal,
-    dividend, deposit and more
-    """
-    _fees_description = """
-    (for synced investment transactions only) The fees as set by Plaid for investment
-    transactions.
-    """
-    _price_description = """
-    (for synced investment transactions only) The price as set by Plaid for investment
-    transactions.
-    """
-    _quantity_description = """
-    (for synced investment transactions only) The quantity as set by Plaid for investment
-    transactions.
-    """
-
     id: int = Field(description="Unique identifier for transaction")
     date: datetime.date = Field(description="Date of transaction in ISO 8601 format")
-    payee: Optional[str] = Field(None, description=_payee_description)
-    amount: float = Field(description=_amount_description)
+    payee: Optional[str] = Field(None, description=_TransactionDescriptions.payee)
+    amount: float = Field(description=_TransactionDescriptions.amount)
     currency: Optional[str] = Field(
-        None, max_length=3, description=_currency_description
+        None, max_length=3, description=_TransactionDescriptions.currency
     )
-    notes: Optional[str] = Field(None, description=_notes_description)
-    category_id: Optional[int] = Field(None, description=_category_description)
-    asset_id: Optional[int] = Field(None, description=_asset_id_description)
+    notes: Optional[str] = Field(None, description=_TransactionDescriptions.notes)
+    category_id: Optional[int] = Field(
+        None, description=_TransactionDescriptions.category_id
+    )
+    asset_id: Optional[int] = Field(None, description=_TransactionDescriptions.asset_id)
     plaid_account_id: Optional[int] = Field(
-        None, description=_plaid_account_id_description
+        None, description=_TransactionDescriptions.plaid_account_id
     )
-    status: Optional[str] = Field(None, description=_status_description)
-    parent_id: Optional[int] = Field(None, description=_parent_id_description)
-    is_group: Optional[bool] = Field(None, description=_is_group_description)
-    group_id: Optional[int] = Field(None, description=_group_id_description)
+    status: Optional[str] = Field(None, description=_TransactionDescriptions.status)
+    parent_id: Optional[int] = Field(
+        None, description=_TransactionDescriptions.parent_id
+    )
+    is_group: Optional[bool] = Field(
+        None, description=_TransactionDescriptions.is_group
+    )
+    group_id: Optional[int] = Field(None, description=_TransactionDescriptions.group_id)
     tags: Optional[List[TagsObject]] = Field(None, description="Array of Tag objects")
     external_id: Optional[str] = Field(
-        None, max_length=75, description=_external_id_description
+        None, max_length=75, description=_TransactionDescriptions.external_id
     )
-    original_name: Optional[str] = Field(None, description=_original_name_description)
-    type: Optional[str] = Field(None, description=_type_description)
-    subtype: Optional[str] = Field(None, description=_subtype_description)
-    fees: Optional[str] = Field(None, description=_fees_description)
-    price: Optional[str] = Field(None, description=_price_description)
-    quantity: Optional[str] = Field(None, description=_quantity_description)
+    original_name: Optional[str] = Field(
+        None, description=_TransactionDescriptions.original_name
+    )
+    type: Optional[str] = Field(None, description=_TransactionDescriptions.type)
+    subtype: Optional[str] = Field(None, description=_TransactionDescriptions.subtype)
+    fees: Optional[str] = Field(None, description=_TransactionDescriptions.fees)
+    price: Optional[str] = Field(None, description=_TransactionDescriptions.price)
+    quantity: Optional[str] = Field(None, description=_TransactionDescriptions.quantity)
 
     def get_update_object(self) -> TransactionUpdateObject:
         """

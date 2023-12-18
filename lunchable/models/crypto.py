@@ -13,6 +13,7 @@ from pydantic import Field
 from lunchable._config import APIConfig
 from lunchable.models._base import LunchableModel
 from lunchable.models._core import LunchMoneyAPIClient
+from lunchable.models._descriptions import _CryptoDescriptions
 
 logger = logging.getLogger(__name__)
 
@@ -24,47 +25,27 @@ class CryptoObject(LunchableModel):
     https://lunchmoney.dev/#crypto-object
     """
 
-    _id_description = (
-        "Unique identifier for a manual crypto account (no ID for synced accounts)"
-    )
-    _zabo_account_id_description = """
-    Unique identifier for a synced crypto account (no ID for manual accounts,
-    multiple currencies may have the same zabo_account_id)
-    """
-    _source_description = """
-    `synced` (this account is synced via a wallet, exchange, etc.) or `manual` (this account
-    balance is managed manually)
-    """
-    _display_name_description = "Display name of the crypto asset (as set by user)"
-    _balance_as_of_description = """
-    Date/time the balance was last updated in ISO 8601 extended format
-    """
-    _status_description = (
-        "The current status of the crypto account. Either active or in error."
-    )
-    _created_at_description = (
-        "Date/time the asset was created in ISO 8601 extended format"
-    )
-
-    id: int = Field(description=_id_description)
+    id: int = Field(description=_CryptoDescriptions.id)
     zabo_account_id: Optional[int] = Field(
-        None, description=_zabo_account_id_description
+        None, description=_CryptoDescriptions.zabo_account_id
     )
-    source: str = Field(description=_source_description)
+    source: str = Field(description=_CryptoDescriptions.source)
     name: str = Field(description="Name of the crypto asset")
-    display_name: Optional[str] = Field(None, description=_display_name_description)
+    display_name: Optional[str] = Field(
+        None, description=_CryptoDescriptions.display_name
+    )
     balance: float = Field(description="Current balance")
     balance_as_of: Optional[datetime.datetime] = Field(
-        None, description=_balance_as_of_description
+        None, description=_CryptoDescriptions.balance_as_of
     )
     currency: Optional[str] = Field(
         None, description="Abbreviation for the cryptocurrency"
     )
-    status: Optional[str] = Field(None, description=_status_description)
+    status: Optional[str] = Field(None, description=_CryptoDescriptions.status)
     institution_name: Optional[str] = Field(
         default=None, description="Name of provider holding the asset"
     )
-    created_at: datetime.datetime = Field(description=_created_at_description)
+    created_at: datetime.datetime = Field(description=_CryptoDescriptions.created_at)
 
 
 class CryptoParamsPut(LunchableModel):
