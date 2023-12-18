@@ -15,6 +15,7 @@ from lunchable._config import APIConfig
 from lunchable.exceptions import LunchMoneyError
 from lunchable.models._base import LunchableModel
 from lunchable.models._core import LunchMoneyAPIClient
+from lunchable.models._descriptions import _CategoriesDescriptions
 
 logger = logging.getLogger(__name__)
 
@@ -49,55 +50,33 @@ class CategoriesObject(LunchableModel):
     https://lunchmoney.dev/#categories-object
     """
 
-    _name_description = "The name of the category. Must be between 1 and 40 characters."
-    _description_description = (
-        "The description of the category. Must not exceed 140 characters."
-    )
-    _is_income_description = (
-        "If true, the transactions in this category will be treated as income."
-    )
-    _exclude_from_budget_description = """
-    If true, the transactions in this category will be excluded from the budget.
-    """
-    _exclude_from_totals_description = """
-    If true, the transactions in this category will be excluded from totals.
-    """
-    _updated_at_description = """
-    The date and time of when the category was last updated (in the ISO 8601 extended format).
-    """
-    _created_at_description = """
-    The date and time of when the category was created (in the ISO 8601 extended format).
-    """
-    _is_group_description = """
-    If true, the category is a group that can be a parent to other categories.
-    """
-    _group_id_description = """
-    The ID of a category group (or null if the category doesn't belong to a category group).
-    """
-    _children_description = (
-        "For category groups, this will populate with the "
-        "categories nested within and include id, name, "
-        "description and created_at fields."
-    )
-
     id: int = Field(description="A unique identifier for the category.")
-    name: str = Field(min_length=1, max_length=40, description=_name_description)
-    description: Optional[str] = Field(
-        None, max_length=140, description=_description_description
+    name: str = Field(
+        min_length=1,
+        max_length=40,
+        description=_CategoriesDescriptions.name,
     )
-    is_income: bool = Field(description=_is_income_description)
-    exclude_from_budget: bool = Field(description=_exclude_from_budget_description)
-    exclude_from_totals: bool = Field(description=_exclude_from_totals_description)
+    description: Optional[str] = Field(
+        None, max_length=140, description=_CategoriesDescriptions.description
+    )
+    is_income: bool = Field(description=_CategoriesDescriptions.is_income)
+    exclude_from_budget: bool = Field(
+        description=_CategoriesDescriptions.exclude_from_budget
+    )
+    exclude_from_totals: bool = Field(
+        description=_CategoriesDescriptions.exclude_from_totals
+    )
     updated_at: Optional[datetime.datetime] = Field(
-        None, description=_updated_at_description
+        None, description=_CategoriesDescriptions.updated_at
     )
     created_at: Optional[datetime.datetime] = Field(
-        None, description=_created_at_description
+        None, description=_CategoriesDescriptions.created_at
     )
-    is_group: bool = Field(description=_is_group_description)
-    group_id: Optional[int] = Field(None, description=_group_id_description)
+    is_group: bool = Field(description=_CategoriesDescriptions.is_group)
+    group_id: Optional[int] = Field(None, description=_CategoriesDescriptions.group_id)
     children: Optional[List[CategoryChild]] = Field(
-        None, description=_children_description
+        None,
+        description=_CategoriesDescriptions.children,
     )
 
 

@@ -13,6 +13,7 @@ from pydantic import Field, field_validator
 from lunchable._config import APIConfig
 from lunchable.models._base import LunchableModel
 from lunchable.models._core import LunchMoneyAPIClient
+from lunchable.models._descriptions import _AssetsDescriptions
 
 logger = logging.getLogger(__name__)
 
@@ -26,50 +27,30 @@ class AssetsObject(LunchableModel):
     https://lunchmoney.dev/#assets-object
     """
 
-    _type_name_description = """
-    Primary type of the asset. Must be one of: [employee compensation, cash, vehicle, loan,
-    cryptocurrency, investment, other, credit, real estate]
-    """
-    _subtype_name_description = """
-    Optional asset subtype. Examples include: [retirement, checking, savings, prepaid credit card]
-    """
-    _balance_description = (
-        "Current balance of the asset in numeric format to 4 decimal places"
-    )
-    _balance_as_of_description = """
-    Date/time the balance was last updated in ISO 8601 extended format
-    """
-    _closed_on_description = "The date this asset was closed (optional)"
-    _currency_description = (
-        "Three-letter lowercase currency code of the balance in ISO 4217 format"
-    )
-    _created_at_description = (
-        "Date/time the asset was created in ISO 8601 extended format"
-    )
-    _exclude_transactions_description = (
-        "If true, this asset will not show up as an "
-        "option for assignment when creating "
-        "transactions manually"
-    )
-
     id: int = Field(description="Unique identifier for asset")
-    type_name: str = Field(description=_type_name_description)
-    subtype_name: Optional[str] = Field(None, description=_subtype_name_description)
+    type_name: str = Field(description=_AssetsDescriptions.type_name)
+    subtype_name: Optional[str] = Field(
+        None, description=_AssetsDescriptions.subtype_name
+    )
     name: str = Field(description="Name of the asset")
     display_name: Optional[str] = Field(
         None, description="Display name of the asset (as set by user)"
     )
-    balance: float = Field(description=_balance_description)
-    balance_as_of: datetime.datetime = Field(description=_balance_as_of_description)
-    closed_on: Optional[datetime.date] = Field(None, description=_closed_on_description)
-    currency: str = Field(description=_currency_description)
+    balance: float = Field(description=_AssetsDescriptions.balance)
+    balance_as_of: datetime.datetime = Field(
+        description=_AssetsDescriptions.balance_as_of
+    )
+    closed_on: Optional[datetime.date] = Field(
+        None, description=_AssetsDescriptions.closed_on
+    )
+    currency: str = Field(description=_AssetsDescriptions.currency)
     institution_name: Optional[str] = Field(
         None, description="Name of institution holding the asset"
     )
     exclude_transactions: bool = Field(
-        default=False, description=_exclude_transactions_description
+        default=False, description=_AssetsDescriptions.exclude_transactions
     )
-    created_at: datetime.datetime = Field(description=_created_at_description)
+    created_at: datetime.datetime = Field(description=_AssetsDescriptions.created_at)
 
 
 class _AssetsParamsPut(LunchableModel):

@@ -13,6 +13,7 @@ from pydantic import Field
 from lunchable._config import APIConfig
 from lunchable.models._base import LunchableModel
 from lunchable.models._core import LunchMoneyAPIClient
+from lunchable.models._descriptions import _BudgetDescriptions
 
 logger = logging.getLogger(__name__)
 
@@ -49,33 +50,12 @@ class BudgetObject(LunchableModel):
     https://lunchmoney.dev/#budget-object
     """
 
-    _category_group_name_description = "Name of the category group, if applicable"
-    _is_income_description = """
-    If true, this category is an income category (category properties
-    are set in the app via the Categories page)
-    """
-    _exclude_from_budget_description = """
-    If true, this category is excluded from budget (category
-    properties are set in the app via the Categories page)
-    """
-    _exclude_from_totals_description = """
-    If true, this category is excluded from totals (category
-    properties are set in the app via the Categories page)
-    """
-    _data_description = """
-    For each month with budget or category spending data, there is a data object with the key
-    set to the month in format YYYY-MM-DD. For properties, see Data object below.
-    """
-    _config_description = """
-    Object representing the category's budget suggestion configuration
-    """
-
     category_name: str = Field(description="Name of the category")
     category_id: Optional[int] = Field(
         None, description="Unique identifier for category"
     )
     category_group_name: Optional[str] = Field(
-        None, description=_category_group_name_description
+        None, description=_BudgetDescriptions.category_group_name
     )
     group_id: Optional[int] = Field(
         None, description="Unique identifier for category group"
@@ -83,11 +63,19 @@ class BudgetObject(LunchableModel):
     is_group: Optional[bool] = Field(
         None, description="If true, this category is a group"
     )
-    is_income: bool = Field(description=_is_income_description)
-    exclude_from_budget: bool = Field(description=_exclude_from_budget_description)
-    exclude_from_totals: bool = Field(description=_exclude_from_totals_description)
-    data: Dict[datetime.date, BudgetDataObject] = Field(description=_data_description)
-    config: Optional[BudgetConfigObject] = Field(None, description=_config_description)
+    is_income: bool = Field(description=_BudgetDescriptions.is_income)
+    exclude_from_budget: bool = Field(
+        description=_BudgetDescriptions.exclude_from_budget
+    )
+    exclude_from_totals: bool = Field(
+        description=_BudgetDescriptions.exclude_from_totals
+    )
+    data: Dict[datetime.date, BudgetDataObject] = Field(
+        description=_BudgetDescriptions.data
+    )
+    config: Optional[BudgetConfigObject] = Field(
+        None, description=_BudgetDescriptions.config
+    )
 
 
 class BudgetParamsGet(LunchableModel):

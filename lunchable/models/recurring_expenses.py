@@ -13,6 +13,7 @@ from pydantic import Field
 from lunchable._config import APIConfig
 from lunchable.models._base import LunchableModel
 from lunchable.models._core import LunchMoneyAPIClient
+from lunchable.models._descriptions import _RecurringExpensesDescriptions
 
 logger = logging.getLogger(__name__)
 
@@ -24,85 +25,42 @@ class RecurringExpensesObject(LunchableModel):
     https://lunchmoney.dev/#recurring-expenses-object
     """
 
-    _id_description = "Unique identifier for recurring expense"
-    _start_date_description = """
-    Denotes when recurring expense starts occurring in ISO 8601 format.
-    If null, then this recurring expense will show up for all time
-    before end_date
-    """
-    _end_date_description = """
-    Denotes when recurring expense stops occurring in ISO 8601 format.
-    If null, then this recurring expense has no set end date and will
-    show up for all months after start_date
-    """
-    _cadence_description = """
-    One of: [monthly, twice a month, once a week, every 3 months, every 4 months,
-    twice a year, yearly]
-    """
-    _amount_description = (
-        "Amount of the recurring expense in numeric format to 4 decimal places"
-    )
-    _currency_description = """
-    Three-letter lowercase currency code for the recurring expense in ISO 4217 format
-    """
-    _description_description = """
-    If any, represents the user-entered description of the recurring expense
-    """
-    _billing_date_description = """
-    Expected billing date for this recurring expense for this month in ISO 8601 format
-    """
-    _type_description = """"
-    This can be one of two values: cleared (The recurring expense has been reviewed
-    by the user), suggested (The recurring expense is suggested by the system;
-    the user has yet to review/clear it)
-    """
-    _original_name_description = """
-    If any, represents the original name of the recurring expense as
-    denoted by the transaction that triggered its creation
-    """
-    _source_description = """
-    This can be one of three values: manual (User created this recurring expense
-    manually from the Recurring Expenses page), transaction (User created this by
-    converting a transaction from the Transactions page), system (Recurring expense
-    was created by the system on transaction import). Some older recurring expenses
-    may not have a source.
-    """
-    _plaid_account_id_description = """
-    If any, denotes the plaid account associated with the creation of this "
-    recurring expense (see Plaid Accounts)"
-    """
-    _asset_id_description = """
-    If any, denotes the manually-managed account (i.e. asset) associated with the
-    creation of this recurring expense (see Assets)
-    """
-    _transaction_id_description = """
-    If any, denotes the unique identifier for the associated transaction matching
-    this recurring expense for the current time period
-    """
-    _category_id_description = """
-    If any, denotes the unique identifier for the associated category to this recurring expense
-    """
-
-    id: int = Field(description=_id_description)
+    id: int = Field(description=_RecurringExpensesDescriptions.id)
     start_date: Optional[datetime.date] = Field(
-        None, description=_start_date_description
+        None, description=_RecurringExpensesDescriptions.start_date
     )
-    end_date: Optional[datetime.date] = Field(None, description=_end_date_description)
-    cadence: str = Field(description=_cadence_description)
+    end_date: Optional[datetime.date] = Field(
+        None, description=_RecurringExpensesDescriptions.end_date
+    )
+    cadence: str = Field(description=_RecurringExpensesDescriptions.cadence)
     payee: str = Field(description="Payee of the recurring expense")
-    amount: float = Field(description=_amount_description)
-    currency: str = Field(max_length=3, description=_currency_description)
-    description: Optional[str] = Field(None, description=_description_description)
-    billing_date: datetime.date = Field(description=_billing_date_description)
-    type: str = Field(description=_type_description)
-    original_name: Optional[str] = Field(None, description=_original_name_description)
-    source: str = Field(description=_source_description)
-    plaid_account_id: Optional[int] = Field(
-        None, description=_plaid_account_id_description
+    amount: float = Field(description=_RecurringExpensesDescriptions.amount)
+    currency: str = Field(
+        max_length=3, description=_RecurringExpensesDescriptions.currency
     )
-    asset_id: Optional[int] = Field(None, description=_asset_id_description)
-    transaction_id: Optional[int] = Field(None, description=_transaction_id_description)
-    category_id: Optional[int] = Field(None, description=_category_id_description)
+    description: Optional[str] = Field(
+        None, description=_RecurringExpensesDescriptions.description
+    )
+    billing_date: datetime.date = Field(
+        description=_RecurringExpensesDescriptions.billing_date
+    )
+    type: str = Field(description=_RecurringExpensesDescriptions.type)
+    original_name: Optional[str] = Field(
+        None, description=_RecurringExpensesDescriptions.original_name
+    )
+    source: str = Field(description=_RecurringExpensesDescriptions.source)
+    plaid_account_id: Optional[int] = Field(
+        None, description=_RecurringExpensesDescriptions.plaid_account_id
+    )
+    asset_id: Optional[int] = Field(
+        None, description=_RecurringExpensesDescriptions.asset_id
+    )
+    transaction_id: Optional[int] = Field(
+        None, description=_RecurringExpensesDescriptions.transaction_id
+    )
+    category_id: Optional[int] = Field(
+        None, description=_RecurringExpensesDescriptions.category_id
+    )
 
 
 class RecurringExpenseParamsGet(LunchableModel):
