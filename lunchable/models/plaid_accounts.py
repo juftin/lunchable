@@ -4,6 +4,8 @@ Lunch Money - Plaid Accounts
 https://lunchmoney.dev/#plaid-accounts
 """
 
+from __future__ import annotations
+
 import datetime
 import logging
 from typing import List, Optional
@@ -16,6 +18,18 @@ from lunchable.models._core import LunchMoneyAPIClient
 from lunchable.models._descriptions import _PlaidAccountDescriptions
 
 logger = logging.getLogger(__name__)
+
+
+class _PlaidFetchRequest(LunchableModel):
+    """
+    Trigger Fetch from Plaid
+
+    https://lunchmoney.dev/#trigger-fetch-from-plaid
+    """
+
+    start_date: Optional[datetime.date] = None
+    end_date: Optional[datetime.date] = None
+    plaid_account_id: Optional[int] = None
 
 
 class PlaidAccountObject(LunchableModel):
@@ -77,3 +91,49 @@ class PlaidAccountsClient(LunchMoneyAPIClient):
         accounts = response_data.get(APIConfig.LUNCHMONEY_PLAID_ACCOUNTS)
         account_objects = [PlaidAccountObject.model_validate(item) for item in accounts]
         return account_objects
+
+    def trigger_fetch_from_plaid(
+        self,
+        start_date: Optional[datetime.date] = None,
+        end_date: Optional[datetime.date] = None,
+        plaid_account_id: Optional[int] = None,
+    ) -> bool:
+        """
+        Trigger Fetch from Plaid
+
+        ** This is an experimental endpoint and parameters and/or response may change. **
+
+        Use this endpoint to trigger a fetch for latest data from Plaid.
+
+        Returns true if there were eligible Plaid accounts to trigger a fetch for. Eligible
+        accounts are those who last_fetch value is over 1 minute ago. (Although the limit
+        is every minute, please use this endpoint sparingly!)
+
+        Note that fetching from Plaid is a background job. This endpoint simply queues up
+        the job. You may track the plaid_last_successful_update, last_fetch and last_import
+        properties to verify the results of the fetch.
+
+        Parameters
+        ----------
+        start_date: Optional[datetime.date]
+            Start date for fetch (ignored if end_date is null)
+        end_date: Optional[datetime.date]
+            End date for fetch (ignored if start_date is null)
+        plaid_account_id: Optional[int]
+            Specific ID of a plaid account to fetch. If left empty,
+            endpoint will trigger a fetch for all eligible accounts
+
+        Returns
+        -------
+        bool
+            Returns true if there were eligible Plaid accounts to trigger a fetch for.
+        """
+        fetch_request = _PlaidFetchRequest(
+            start_date=start_date, end_date=end_date, plaid_account_id=plaid_account_id
+        )
+        response: bool = self.make_request(
+            method=self.Methods.POST,
+            url_path=[APIConfig.LUNCHMONEY_PLAID_ACCOUNTS, "fetch"],
+            data=fetch_request.model_dump(exclude_none=True),
+        )
+        return response

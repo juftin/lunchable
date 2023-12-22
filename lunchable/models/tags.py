@@ -28,6 +28,13 @@ class TagsObject(LunchableModel):
     description: Optional[str] = Field(
         None, description="User-defined description of tag"
     )
+    archived: bool = Field(
+        False,
+        description=(
+            "If true, the tag will not show up when creating or "
+            "updating transactions in the Lunch Money app"
+        ),
+    )
 
 
 class TagsClient(LunchMoneyAPIClient):

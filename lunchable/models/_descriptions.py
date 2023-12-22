@@ -107,6 +107,17 @@ class _CategoriesDescriptions:
     For category groups, this will populate with the categories nested
     within and include id, name, description and created_at fields.
     """
+    archived = """
+    If true, the category is archived and not displayed in relevant
+    areas of the Lunch Money app.
+    """
+    archived_on = """
+    The date and time of when the category was last archived
+    (in the ISO 8601 extended format).
+    """
+    order = """
+    Numerical ordering of categories
+    """
 
 
 class _CryptoDescriptions:
@@ -452,4 +463,8 @@ class _TransactionDescriptions:
     quantity = """
     (for synced investment transactions only) The quantity as set by Plaid for investment
     transactions.
+    """
+    to_base = """
+    The amount converted to the user's primary currency. If the multicurrency
+    feature is not being used, to_base and amount will be the same.
     """

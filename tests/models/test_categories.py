@@ -107,3 +107,24 @@ def test_add_to_category_group(lunch_money_obj: LunchMoney):
     )
     logger.info("Category Group ID # %s was just created: %s", category.id, name)
     assert isinstance(category, CategoriesObject)
+
+
+@lunchable_cassette
+def test_get_categories_nested(lunch_money_obj: LunchMoney):
+    """
+    Get Categories and Assert that they're categories
+    """
+    categories = lunch_money_obj.get_categories(format="nested")
+    categories_with_children = list(filter(lambda x: x.children, categories))
+    assert len(categories_with_children) >= 1
+
+
+@lunchable_cassette
+def test_get_categories_flattened(lunch_money_obj: LunchMoney):
+    """
+    Get Categories and Assert that they're categories
+    """
+    categories = lunch_money_obj.get_categories(format="flattened")
+    assert len(categories) >= 1
+    for category in categories:
+        assert isinstance(category, CategoriesObject)

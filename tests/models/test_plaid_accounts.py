@@ -21,3 +21,12 @@ def test_get_plaid_accounts(lunch_money_obj: LunchMoney):
     for plaid_account in plaid_accounts:
         assert isinstance(plaid_account, PlaidAccountObject)
     logger.info("%s Plaid Accounts returned", len(plaid_accounts))
+
+
+@lunchable_cassette
+def test_trigger_fetch_from_plaid(lunch_money_obj: LunchMoney):
+    """
+    Trigger Plaid Fetch
+    """
+    plaid_fetch_request = lunch_money_obj.trigger_fetch_from_plaid()
+    assert plaid_fetch_request is True
