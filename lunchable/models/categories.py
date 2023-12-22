@@ -4,10 +4,13 @@ Lunch Money - Categories
 https://lunchmoney.dev/#categories
 """
 
+from __future__ import annotations
+
 import datetime
 import json
 import logging
-from typing import List, Optional
+from enum import Enum
+from typing import List, Optional, Union
 
 from pydantic import Field
 
@@ -27,9 +30,11 @@ class ModelCreateCategory(LunchableModel):
 
     name: str
     description: Optional[str] = None
-    is_income: Optional[bool] = False
-    exclude_from_budget: Optional[bool] = False
-    exclude_from_totals: Optional[bool] = False
+    is_income: Optional[bool] = None
+    exclude_from_budget: Optional[bool] = None
+    exclude_from_totals: Optional[bool] = None
+    archived: Optional[bool] = None
+    group_id: Optional[int] = None
 
 
 class CategoryChild(LunchableModel):
@@ -66,6 +71,10 @@ class CategoriesObject(LunchableModel):
     exclude_from_totals: bool = Field(
         description=_CategoriesDescriptions.exclude_from_totals
     )
+    archived: bool = Field(False, description=_CategoriesDescriptions.archived)
+    archived_on: Optional[datetime.datetime] = Field(
+        None, description=_CategoriesDescriptions.archived_on
+    )
     updated_at: Optional[datetime.datetime] = Field(
         None, description=_CategoriesDescriptions.updated_at
     )
@@ -74,7 +83,8 @@ class CategoriesObject(LunchableModel):
     )
     is_group: bool = Field(description=_CategoriesDescriptions.is_group)
     group_id: Optional[int] = Field(None, description=_CategoriesDescriptions.group_id)
-    children: Optional[List[CategoryChild]] = Field(
+    order: Optional[int] = Field(None, description=_CategoriesDescriptions.order)
+    children: Optional[List[Union[CategoriesObject, CategoryChild]]] = Field(
         None,
         description=_CategoriesDescriptions.children,
     )
@@ -90,6 +100,7 @@ class _CategoriesParamsPut(LunchableModel):
     is_income: Optional[bool] = None
     exclude_from_budget: Optional[bool] = None
     exclude_from_totals: Optional[bool] = None
+    archived: Optional[bool] = None
     group_id: Optional[int] = None
 
 
@@ -100,9 +111,9 @@ class _CategoriesParamsPost(LunchableModel):
 
     name: str
     description: Optional[str] = None
-    is_income: Optional[bool] = False
-    exclude_from_budget: Optional[bool] = False
-    exclude_from_totals: Optional[bool] = False
+    is_income: Optional[bool] = None
+    exclude_from_budget: Optional[bool] = None
+    exclude_from_totals: Optional[bool] = None
     category_ids: Optional[List[int]] = None
     new_categories: Optional[List[str]] = None
 
@@ -116,24 +127,55 @@ class _CategoriesAddParamsPost(LunchableModel):
     new_categories: Optional[List[str]] = None
 
 
+class CategoriesFormatEnum(str, Enum):
+    """
+    Format Enum
+    """
+
+    nested: str = "nested"
+    flattened: str = "flattened"
+
+
+class _GetCategoriesParams(LunchableModel):
+    """
+    https://lunchmoney.dev/#get-all-categories
+    """
+
+    format: Optional[CategoriesFormatEnum] = None
+
+
 class CategoriesClient(LunchMoneyAPIClient):
     """
     Lunch Money Categories Interactions
     """
 
-    def get_categories(self) -> List[CategoriesObject]:
+    def get_categories(
+        self, format: str | CategoriesFormatEnum | None = None
+    ) -> List[CategoriesObject]:
         """
         Get Spending categories
 
         Use this endpoint to get a list of all categories associated with the user's account.
         https://lunchmoney.dev/#get-all-categories
 
+        Parameters
+        ----------
+        format: str | CategoriesFormatEnum | None
+            Can either `flattened` or `nested`. If `flattened`, returns a singular
+            array of categories, ordered alphabetically. If `nested`, returns
+            top-level categories (either category groups or categories not part
+            of a category group) in an array. Subcategories are nested within
+            the category group under the property `children`. Defaults to None
+            which will return a `flattened` list of categories.
+
         Returns
         -------
         List[CategoriesObject]
         """
         response_data = self.make_request(
-            method=self.Methods.GET, url_path=APIConfig.LUNCHMONEY_CATEGORIES
+            method=self.Methods.GET,
+            url_path=APIConfig.LUNCHMONEY_CATEGORIES,
+            params=_GetCategoriesParams(format=format).model_dump(exclude_none=True),
         )
         categories = response_data["categories"]
         category_objects = [
@@ -145,9 +187,11 @@ class CategoriesClient(LunchMoneyAPIClient):
         self,
         name: str,
         description: Optional[str] = None,
-        is_income: Optional[bool] = False,
-        exclude_from_budget: Optional[bool] = False,
-        exclude_from_totals: Optional[bool] = False,
+        is_income: Optional[bool] = None,
+        exclude_from_budget: Optional[bool] = None,
+        exclude_from_totals: Optional[bool] = None,
+        archived: Optional[bool] = None,
+        group_id: Optional[int] = None,
     ) -> int:
         """
         Create a Spending Category
@@ -170,6 +214,10 @@ class CategoriesClient(LunchMoneyAPIClient):
         exclude_from_totals: Optional[bool]
             Whether or not transactions in this category should be excluded from
             calculated totals. Defaults to False.
+        archived: Optional[bool]
+            Whether or not category should be archived.
+        group_id: Optional[int]
+            Assigns the newly-created category to an existing category group.
 
         Returns
         -------
@@ -182,6 +230,8 @@ class CategoriesClient(LunchMoneyAPIClient):
             is_income=is_income,
             exclude_from_budget=exclude_from_budget,
             exclude_from_totals=exclude_from_totals,
+            archived=archived,
+            group_id=group_id,
         ).model_dump(exclude_none=True)
         response_data = self.make_request(
             method=self.Methods.POST,
@@ -285,6 +335,7 @@ class CategoriesClient(LunchMoneyAPIClient):
         exclude_from_budget: Optional[bool] = None,
         exclude_from_totals: Optional[bool] = None,
         group_id: Optional[int] = None,
+        archived: Optional[bool] = None,
     ) -> bool:
         """
         Update a single category
@@ -312,6 +363,8 @@ class CategoriesClient(LunchMoneyAPIClient):
             calculated totals. Defaults to False.
         group_id: Optional[int]
             For a category, set the group_id to include it in a category group
+        archived: Optional[bool]
+            Whether or not category should be archived.
 
         Returns
         -------
@@ -324,6 +377,7 @@ class CategoriesClient(LunchMoneyAPIClient):
             exclude_from_budget=exclude_from_budget,
             exclude_from_totals=exclude_from_totals,
             group_id=group_id,
+            archived=archived,
         ).model_dump(exclude_none=True)
         response_data = self.make_request(
             method=self.Methods.PUT,
@@ -336,9 +390,9 @@ class CategoriesClient(LunchMoneyAPIClient):
         self,
         name: str,
         description: Optional[str] = None,
-        is_income: Optional[bool] = False,
-        exclude_from_budget: Optional[bool] = False,
-        exclude_from_totals: Optional[bool] = False,
+        is_income: Optional[bool] = None,
+        exclude_from_budget: Optional[bool] = None,
+        exclude_from_totals: Optional[bool] = None,
         category_ids: Optional[List[int]] = None,
         new_categories: Optional[List[str]] = None,
     ) -> int:

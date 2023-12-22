@@ -191,6 +191,7 @@ class TransactionObject(TransactionBaseObject):
     fees: Optional[str] = Field(None, description=_TransactionDescriptions.fees)
     price: Optional[str] = Field(None, description=_TransactionDescriptions.price)
     quantity: Optional[str] = Field(None, description=_TransactionDescriptions.quantity)
+    to_base: Optional[float] = Field(None, description=_TransactionDescriptions.to_base)
 
     def get_update_object(self) -> TransactionUpdateObject:
         """
@@ -266,11 +267,11 @@ class _TransactionInsertParamsPost(LunchableModel):
     """
 
     transactions: List[TransactionInsertObject]
-    apply_rules: bool = False
-    skip_duplicates: bool = False
-    check_for_recurring: bool = False
-    debit_as_negative: bool = False
-    skip_balance_update: bool = True
+    apply_rules: Optional[bool] = None
+    skip_duplicates: Optional[bool] = None
+    check_for_recurring: Optional[bool] = None
+    debit_as_negative: Optional[bool] = None
+    skip_balance_update: Optional[bool] = None
 
 
 class _TransactionGroupParamsPost(LunchableModel):
@@ -293,8 +294,8 @@ class _TransactionUpdateParamsPut(LunchableModel):
 
     split: Optional[List[TransactionSplitObject]] = None
     transaction: Optional[TransactionUpdateObject] = None
-    debit_as_negative: bool = False
-    skip_balance_update: bool = True
+    debit_as_negative: Optional[bool] = None
+    skip_balance_update: Optional[bool] = None
 
 
 class _TransactionsUnsplitPost(LunchableModel):
@@ -303,7 +304,7 @@ class _TransactionsUnsplitPost(LunchableModel):
     """
 
     parent_ids: List[int]
-    remove_parents: bool = False
+    remove_parents: Optional[bool] = None
 
 
 class TransactionsClient(LunchMoneyAPIClient):
@@ -424,7 +425,9 @@ class TransactionsClient(LunchMoneyAPIClient):
         ]
         return transaction_objects
 
-    def get_transaction(self, transaction_id: int) -> TransactionObject:
+    def get_transaction(
+        self, transaction_id: int, debit_as_negative: Optional[bool] = None
+    ) -> TransactionObject:
         """
         Get a Transaction by ID
 
@@ -432,6 +435,9 @@ class TransactionsClient(LunchMoneyAPIClient):
         ----------
         transaction_id: int
             Lunch Money Transaction ID
+        debit_as_negative: Optional[bool]
+            Pass in true if you'd like expenses to be returned as negative
+            amounts and credits as positive amounts. Defaults to false.
 
         Returns
         -------
@@ -455,6 +461,9 @@ class TransactionsClient(LunchMoneyAPIClient):
         response_data = self.make_request(
             method=self.Methods.GET,
             url_path=[APIConfig.LUNCHMONEY_TRANSACTIONS, transaction_id],
+            params={"debit_as_negative": debit_as_negative}
+            if debit_as_negative is not None
+            else {},
         )
         return TransactionObject.model_validate(response_data)
 
@@ -475,8 +484,8 @@ class TransactionsClient(LunchMoneyAPIClient):
         transaction_id: int,
         transaction: ListOrSingleTransactionUpdateObject = None,
         split: Optional[List[TransactionSplitObject]] = None,
-        debit_as_negative: bool = False,
-        skip_balance_update: bool = True,
+        debit_as_negative: Optional[bool] = None,
+        skip_balance_update: Optional[bool] = None,
     ) -> Dict[str, Any]:
         """
         Update a Transaction
@@ -496,10 +505,10 @@ class TransactionsClient(LunchMoneyAPIClient):
         split: Optional[List[TransactionSplitObject]]
             Defines the split of a transaction. You may not split an already-split
             transaction, recurring transaction, or group transaction.
-        debit_as_negative: bool
+        debit_as_negative: Optional[bool]
             If true, will assume negative amount values denote expenses and
             positive amount values denote credits. Defaults to false.
-        skip_balance_update: bool
+        skip_balance_update: Optional[bool]
             If false, will skip updating balance if an asset_id
             is present for any of the transactions.
 
@@ -563,11 +572,11 @@ class TransactionsClient(LunchMoneyAPIClient):
     def insert_transactions(
         self,
         transactions: ListOrSingleTransactionInsertObject,
-        apply_rules: bool = False,
-        skip_duplicates: bool = True,
-        debit_as_negative: bool = False,
-        check_for_recurring: bool = False,
-        skip_balance_update: bool = True,
+        apply_rules: Optional[bool] = None,
+        skip_duplicates: Optional[bool] = None,
+        debit_as_negative: Optional[bool] = None,
+        check_for_recurring: Optional[bool] = None,
+        skip_balance_update: Optional[bool] = None,
     ) -> List[int]:
         """
         Create One or Many Lunch Money Transactions
@@ -583,20 +592,20 @@ class TransactionsClient(LunchMoneyAPIClient):
         transactions: ListOrSingleTransactionTypeObject
             Transactions to insert. Either a single TransactionInsertObject object or
             a list of them
-        apply_rules: bool
+        apply_rules: Optional[bool]
             If true, will apply account's existing rules to the inserted transactions.
             Defaults to false.
-        skip_duplicates: bool
+        skip_duplicates: Optional[bool]
             If true, the system will automatically dedupe based on transaction date,
             payee and amount. Note that deduping by external_id will occur regardless
             of this flag.
-        check_for_recurring: bool
+        check_for_recurring: Optional[bool]
             if true, will check new transactions for occurrences of new monthly expenses.
             Defaults to false.
-        debit_as_negative: bool
+        debit_as_negative: Optional[bool]
             If true, will assume negative amount values denote expenses and
             positive amount values denote credits. Defaults to false.
-        skip_balance_update: bool
+        skip_balance_update: Optional[bool]
             If false, will skip updating balance if an asset_id
             is present for any of the transactions.
 
@@ -640,7 +649,7 @@ class TransactionsClient(LunchMoneyAPIClient):
             check_for_recurring=check_for_recurring,
             debit_as_negative=debit_as_negative,
             skip_balance_update=skip_balance_update,
-        ).model_dump(exclude_unset=True)
+        ).model_dump(exclude_none=True)
         response_data = self.make_request(
             method=self.Methods.POST,
             url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
@@ -735,7 +744,7 @@ class TransactionsClient(LunchMoneyAPIClient):
         return response_data["transactions"]
 
     def unsplit_transactions(
-        self, parent_ids: List[int], remove_parents: bool = False
+        self, parent_ids: List[int], remove_parents: Optional[bool] = None
     ) -> List[int]:
         """
         Unsplit Transactions
@@ -751,7 +760,7 @@ class TransactionsClient(LunchMoneyAPIClient):
         parent_ids: List[int]
             Array of transaction IDs to unsplit. If one transaction is unsplittable,
             no transaction will be unsplit.
-        remove_parents: bool
+        remove_parents: Optional[bool]
             If true, deletes the original parent transaction as well. Note,
             this is unreversable!
 

@@ -69,7 +69,7 @@ class RecurringExpenseParamsGet(LunchableModel):
     """
 
     start_date: datetime.date
-    debit_as_negative: bool
+    debit_as_negative: Optional[bool] = None
 
 
 class RecurringExpensesClient(LunchMoneyAPIClient):
@@ -80,7 +80,7 @@ class RecurringExpensesClient(LunchMoneyAPIClient):
     def get_recurring_expenses(
         self,
         start_date: Optional[datetime.date] = None,
-        debit_as_negative: bool = False,
+        debit_as_negative: Optional[bool] = None,
     ) -> List[RecurringExpensesObject]:
         """
         Get Recurring Expenses
@@ -115,7 +115,7 @@ class RecurringExpensesClient(LunchMoneyAPIClient):
             start_date = datetime.datetime.now().date().replace(day=1)
         params = RecurringExpenseParamsGet(
             start_date=start_date, debit_as_negative=debit_as_negative
-        ).model_dump()
+        ).model_dump(exclude_none=True)
         response_data = self.make_request(
             method=self.Methods.GET,
             url_path=[APIConfig.LUNCH_MONEY_RECURRING_EXPENSES],

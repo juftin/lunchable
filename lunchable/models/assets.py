@@ -89,7 +89,7 @@ class _AssetsParamsPost(LunchableModel):
     currency: Optional[str] = None
     institution_name: Optional[str] = None
     closed_on: Optional[datetime.date] = None
-    exclude_transactions: bool = False
+    exclude_transactions: Optional[bool] = None
 
     @field_validator("balance", mode="before")
     @classmethod
@@ -193,7 +193,7 @@ class AssetsClient(LunchMoneyAPIClient):
         currency: Optional[str] = None,
         institution_name: Optional[str] = None,
         closed_on: Optional[datetime.date] = None,
-        exclude_transactions: bool = False,
+        exclude_transactions: Optional[bool] = None,
     ) -> AssetsObject:
         """
         Create a single (manually-managed) asset.

@@ -31,6 +31,7 @@ lunch = LunchMoney(access_token="xxxxxxxxxxx")
 | POST      | [insert_into_category_group](#lunchable.LunchMoney.insert_into_category_group) | Add to a Category Group                                                  |
 | POST      | [insert_transaction_group](#lunchable.LunchMoney.insert_transaction_group)     | Create a Transaction Group of Two or More Transactions                   |
 | POST      | [insert_transactions](#lunchable.LunchMoney.insert_transactions)               | Create One or Many Lunch Money Transactions                              |
+| POST      | [trigger_fetch_from_plaid](#lunchable.LunchMoney.trigger_fetch_from_plaid)     | Trigger a Plaid Sync                                                     |
 | POST      | [unsplit_transactions](#lunchable.LunchMoney.unsplit_transactions)             | Unsplit Transactions                                                     |
 | PUT       | [upsert_budget](#lunchable.LunchMoney.upsert_budget)                           | Upsert a Budget for a Category and Date                                  |
 | PUT       | [update_asset](#lunchable.LunchMoney.update_asset)                             | Update a Single Asset                                                    |
