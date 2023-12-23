@@ -6,7 +6,7 @@
     width="400" alt="lunchable">  </a>
 </div>
 
-<p align="center">
+<div style="display: flex; flex-wrap: wrap; justify-content: center; max-width: 500px;">
   <a href="https://github.com/juftin/lunchable"><img src="https://img.shields.io/pypi/v/lunchable?color=blue&label=lunchable" alt="PyPI"></a>
   <a href="https://pypi.python.org/pypi/lunchable/"><img src="https://img.shields.io/pypi/pyversions/lunchable" alt="PyPI - Python Version"></a>
   <a href="https://hub.docker.com/r/juftin/lunchable"><img src="https://img.shields.io/docker/v/juftin/lunchable?color=blue&label=docker&logo=docker" alt="Docker Image Version"></a>
@@ -17,7 +17,7 @@
   <a href="https://github.com/pre-commit/pre-commit"><img src="https://img.shields.io/badge/pre--commit-enabled-lightgreen?logo=pre-commit" alt="pre-commit"></a>
   <a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release"></a>
   <a href="https://gitmoji.dev"><img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg" alt="Gitmoji"></a>
-</p>
+</div>
 
 **lunchable** is a Python Client for the [Lunch Money Developer API](https://lunchmoney.dev). It's
 built on top of [pydantic](https://github.com/pydantic/pydantic) and [httpx](https://github.com/encode/httpx/),
