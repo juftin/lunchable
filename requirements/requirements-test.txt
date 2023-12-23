@@ -3,8 +3,8 @@
 #
 # [constraints] requirements.txt (SHA256: 1d7f43c7c1ecbc074ece84ddfddf590007473fce44e813c9dca4481292391f67)
 #
-# - coverage[toml]>=6.5
 # - pytest
+# - pytest-cov
 # - pytest-mock
 # - vcrpy~=5.1.0
 # - click>=8.0.1
@@ -40,8 +40,8 @@ click==8.1.7
     #   hatch.envs.test
 coverage==7.3.3
     # via
-    #   hatch.envs.test
     #   coverage
+    #   pytest-cov
 h11==0.14.0
     # via
     #   -c requirements.txt
@@ -104,7 +104,10 @@ pygments==2.17.2
 pytest==7.4.3
     # via
     #   hatch.envs.test
+    #   pytest-cov
     #   pytest-mock
+pytest-cov==4.1.0
+    # via hatch.envs.test
 pytest-mock==3.12.0
     # via hatch.envs.test
 python-dateutil==2.8.2

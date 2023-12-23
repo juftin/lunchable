@@ -10,8 +10,9 @@
   <a href="https://github.com/juftin/lunchable"><img src="https://img.shields.io/pypi/v/lunchable?color=blue&label=lunchable" alt="PyPI"></a>
   <a href="https://pypi.python.org/pypi/lunchable/"><img src="https://img.shields.io/pypi/pyversions/lunchable" alt="PyPI - Python Version"></a>
   <a href="https://hub.docker.com/r/juftin/lunchable"><img src="https://img.shields.io/docker/v/juftin/lunchable?color=blue&label=docker&logo=docker" alt="Docker Image Version"></a>
-  <a href="https://github.com/juftin/lunchable/actions/workflows/tests.yaml?query=branch%3Amain"><img src="https://github.com/juftin/lunchable/actions/workflows/tests.yaml/badge.svg?branch=main" alt="Testing Status"></a>
   <a href="https://github.com/juftin/lunchable/blob/main/LICENSE"><img src="https://img.shields.io/github/license/juftin/lunchable?color=blue&label=License" alt="GitHub License"></a>
+  <a href="https://github.com/juftin/lunchable/actions/workflows/tests.yaml?query=branch%3Amain"><img src="https://github.com/juftin/lunchable/actions/workflows/tests.yaml/badge.svg?branch=main" alt="Testing Status"></a>
+  <a href="https://codecov.io/gh/juftin/lunchable"><img src="https://codecov.io/gh/juftin/lunchable/graph/badge.svg?token=2IGD9E5L8K"/></a>
   <a href="https://github.com/pypa/hatch"><img src="https://img.shields.io/badge/%F0%9F%A5%9A-Hatch-4051b5.svg" alt="Hatch project"></a>
   <a href="https://github.com/astral-sh/ruff"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json" alt="Ruff"></a>
   <a href="https://github.com/pre-commit/pre-commit"><img src="https://img.shields.io/badge/pre--commit-enabled-lightgreen?logo=pre-commit" alt="pre-commit"></a>
