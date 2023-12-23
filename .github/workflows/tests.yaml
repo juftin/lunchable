@@ -16,6 +16,7 @@ on:
         -   .github/workflows/tests.yaml
     schedule:
     -   cron: 0 12 1 * *
+    workflow_dispatch:
 jobs:
     test-suite:
         runs-on: ubuntu-latest
