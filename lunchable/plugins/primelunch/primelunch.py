@@ -14,6 +14,8 @@ from typing import Any, Optional, Union
 from rich import print, table
 from rich.prompt import Confirm
 
+from lunchable._version import __application__
+from lunchable.exceptions import LunchMoneyImportError
 from lunchable.models import (
     CategoriesObject,
     TransactionObject,
@@ -28,8 +30,8 @@ try:
 
     from lunchable.plugins.base.pandas_app import LunchablePandasApp
 except ImportError as e:
-    msg = "PrimeLunch requires the `primelunch` extras to be installed: `pipx install lunchable[primelunch]`"
-    raise ImportError(msg) from e
+    msg = f'PrimeLunch requires the `primelunch` extras to be installed: `pip install "{__application__}[primelunch]"`'
+    raise LunchMoneyImportError(msg) from e
 
 logger = logging.getLogger(__name__)
 
