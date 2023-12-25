@@ -11,9 +11,6 @@ import os
 import pathlib
 from typing import Any, Optional, Union
 
-import numpy as np
-import pandas as pd
-from numpy import datetime64
 from rich import print, table
 from rich.prompt import Confirm
 
@@ -23,7 +20,16 @@ from lunchable.models import (
     TransactionUpdateObject,
     UserObject,
 )
-from lunchable.plugins.base.pandas_app import LunchablePandasApp
+
+try:
+    import numpy as np
+    import pandas as pd
+    from numpy import datetime64
+
+    from lunchable.plugins.base.pandas_app import LunchablePandasApp
+except ImportError as e:
+    msg = "PrimeLunch requires the `primelunch` extras to be installed: `pipx install lunchable[primelunch]`"
+    raise ImportError(msg) from e
 
 logger = logging.getLogger(__name__)
 
