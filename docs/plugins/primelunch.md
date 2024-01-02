@@ -96,7 +96,7 @@ lunchable plugins primelunch run \
 ## Command Line Documentation
 
 ::: mkdocs-click
-    :module: lunchable.plugins.primelunch.primelunch
+    :module: lunchable._cli
     :command: run_primelunch
     :prog_name: lunchable plugins primelunch run
     :style: table
