@@ -37,8 +37,8 @@ class AssetsObject(LunchableModel):
         None, description="Display name of the asset (as set by user)"
     )
     balance: float = Field(description=_AssetsDescriptions.balance)
-    balance_as_of: datetime.datetime = Field(
-        description=_AssetsDescriptions.balance_as_of
+    balance_as_of: Optional[datetime.datetime] = Field(
+        None, description=_AssetsDescriptions.balance_as_of
     )
     closed_on: Optional[datetime.date] = Field(
         None, description=_AssetsDescriptions.closed_on
