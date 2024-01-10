@@ -43,6 +43,8 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.repository_owner == 'juftin'
         permissions:
             contents: write
+            pages: write
+            id-token: write
         steps:
         -   name: Checkout Latest Changes
             uses: actions/checkout@v4
