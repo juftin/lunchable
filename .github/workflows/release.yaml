@@ -63,6 +63,8 @@ jobs:
                 python -m pip install -q hatch pre-commit
                 python -m pip install -q "${{ github.workspace }}"
                 hatch --version
+        -   name: Create Virtual Environment
+            run: hatch env create docs
         -   name: Build Site
             run: hatch run docs:build
         -   name: Setup GitHub Pages
