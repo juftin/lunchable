@@ -42,9 +42,11 @@ jobs:
         needs: release
         if: github.ref == 'refs/heads/main' && github.repository_owner == 'juftin'
         permissions:
-            contents: write
             pages: write
             id-token: write
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
         steps:
         -   name: Checkout Latest Changes
             uses: actions/checkout@v4
@@ -61,13 +63,14 @@ jobs:
                 python -m pip install -q hatch pre-commit
                 python -m pip install -q "${{ github.workspace }}"
                 hatch --version
-        -   name: Build Documentation Site
+        -   name: Build Site
             run: hatch run docs:build
-        -   name: Setup Pages
+        -   name: Setup GitHub Pages
             uses: actions/configure-pages@v4
-        -   name: Upload artifact
+        -   name: Upload Artifact
             uses: actions/upload-pages-artifact@v3
             with:
                 path: site/
         -   name: Deploy to GitHub Pages
+            id: deployment
             uses: actions/deploy-pages@v4
