@@ -59,9 +59,13 @@ jobs:
                 python -m pip install -q hatch pre-commit
                 python -m pip install -q "${{ github.workspace }}"
                 hatch --version
-        -   name: Set Up GitHub Actions User
-            run: |
-                git config user.name "github-actions[bot]"
-                git config user.email "github-actions[bot]@users.noreply.github.com"
-        -   name: Deploy Documentation Changes
-            run: hatch run docs:gh-deploy --force
+        -   name: Build Documentation Site
+            run: hatch run docs:build
+        -   name: Setup Pages
+            uses: actions/configure-pages@v4
+        -   name: Upload artifact
+            uses: actions/upload-pages-artifact@v3
+            with:
+                path: site/
+        -   name: Deploy to GitHub Pages
+            uses: actions/deploy-pages@v4
