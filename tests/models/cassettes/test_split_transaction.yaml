@@ -1,44 +1,48 @@
 interactions:
 -   request:
-        body:
+        body: ''
         headers:
-            Accept:
+            accept:
             -   '*/*'
-            Accept-Encoding:
+            accept-encoding:
             -   gzip, deflate
-            Connection:
-            -   keep-alive
-            Content-Type:
-            -   application/json
-            User-Agent:
-            -   python-requests/2.29.0
             authorization:
             -   XXXXXXXXXX
+            connection:
+            -   keep-alive
+            content-type:
+            -   application/json
+            host:
+            -   dev.lunchmoney.app
+            user-agent:
+            -   lunchable/1.1.2
         method: GET
-        uri: https://dev.lunchmoney.app/v1/transactions/546434806
+        uri: https://dev.lunchmoney.app/v1/transactions/179018320
     response:
-        content: '{"id":546434806,"date":"2023-12-12","payee":"Example Restaurant","amount":"120.0000","currency":"usd","to_base":120,"notes":"Saturday Dinner","category_id":null,"recurring_id":null,"asset_id":null,"plaid_account_id":null,"status":"uncleared","is_group":false,"group_id":null,"parent_id":null,"has_children":null,"tags":[],"external_id":null,"original_name":"Example Restaurant","type":null,"subtype":null}'
+        content: '{"id":179018320,"date":"2024-01-12","amount":"84.9000","currency":"usd","to_base":84.9,"payee":"Linkbuzz","category_id":443126,"category_name":"Shopping","category_group_id":680257,"category_group_name":"Sub Shopping","is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"created_at":"2023-03-07T02:08:50.896Z","updated_at":"2024-01-23T23:19:18.953Z","status":"uncleared","is_pending":false,"notes":null,"original_name":"Linkbuzz","recurring_id":null,"recurring_payee":null,"recurring_description":null,"recurring_cadence":null,"recurring_type":null,"recurring_amount":null,"recurring_currency":null,"parent_id":null,"has_children":null,"group_id":null,"is_group":false,"asset_id":49335,"asset_institution_name":null,"asset_name":"Test Account","asset_display_name":null,"asset_status":"active","plaid_account_id":null,"plaid_account_name":null,"plaid_account_mask":null,"institution_name":null,"plaid_account_display_name":null,"plaid_metadata":null,"source":"api","display_name":"Linkbuzz","display_notes":null,"account_display_name":" Test Account","tags":[],"external_id":null}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
             Connection:
             -   keep-alive
-            Content-Length:
-            -   '405'
+            Content-Encoding:
+            -   gzip
             Content-Type:
             -   application/json; charset=utf-8
             Date:
-            -   Fri, 15 Dec 2023 03:20:11 GMT
+            -   Tue, 23 Jan 2024 23:35:23 GMT
             Etag:
-            -   W/"195-EpyZHBeZX6gP2/Db89FUjBHiYrU"
+            -   W/"44e-mfkledHpOThw11jMES6+wQLrz/c"
             Nel:
             -   '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
             Report-To:
-            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1702610411&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=kXFzz6lZ8cTSDiWk3YlUOnt7lsC6SWgxnye%2FRUfUgaM%3D"}]}'
+            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1706052922&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=kSc8x3ilVsl5CAvd6qDPkmalC5Nqzc6dSrt79Sfnqlw%3D"}]}'
             Reporting-Endpoints:
-            -   heroku-nel=https://nel.heroku.com/reports?ts=1702610411&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=kXFzz6lZ8cTSDiWk3YlUOnt7lsC6SWgxnye%2FRUfUgaM%3D
+            -   heroku-nel=https://nel.heroku.com/reports?ts=1706052922&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=kSc8x3ilVsl5CAvd6qDPkmalC5Nqzc6dSrt79Sfnqlw%3D
             Server:
             -   Cowboy
+            Transfer-Encoding:
+            -   chunked
             Vary:
             -   Origin, Accept-Encoding
             Via:
@@ -48,26 +52,28 @@ interactions:
         http_version: HTTP/1.1
         status_code: 200
 -   request:
-        body: '{"split": [{"date": "2023-12-12", "notes": "Saturday Dinner", "amount": 60.0}, {"date": "2023-12-12", "notes": "Saturday Dinner", "amount": 60.0}], "debit_as_negative": false, "skip_balance_update": true}'
+        body: '{"split":[{"date":"2024-01-12","category_id":443126,"amount":42.45},{"date":"2024-01-12","category_id":443126,"amount":42.45}]}'
         headers:
-            Accept:
+            accept:
             -   '*/*'
-            Accept-Encoding:
+            accept-encoding:
             -   gzip, deflate
-            Connection:
-            -   keep-alive
-            Content-Length:
-            -   '204'
-            Content-Type:
-            -   application/json
-            User-Agent:
-            -   python-requests/2.29.0
             authorization:
             -   XXXXXXXXXX
+            connection:
+            -   keep-alive
+            content-length:
+            -   '127'
+            content-type:
+            -   application/json
+            host:
+            -   dev.lunchmoney.app
+            user-agent:
+            -   lunchable/1.1.2
         method: PUT
-        uri: https://dev.lunchmoney.app/v1/transactions/546434806
+        uri: https://dev.lunchmoney.app/v1/transactions/179018320
     response:
-        content: '{"updated":true,"split":[561279455,561279456]}'
+        content: '{"updated":true,"split":[855616911,855616912]}'
         headers:
             Access-Control-Allow-Credentials:
             -   'true'
@@ -78,15 +84,15 @@ interactions:
             Content-Type:
             -   application/json; charset=utf-8
             Date:
-            -   Fri, 15 Dec 2023 03:20:11 GMT
+            -   Tue, 23 Jan 2024 23:35:23 GMT
             Etag:
-            -   W/"2e-LKGEdHJmkqsaAfR24T71TLwHLOA"
+            -   W/"2e-6YReKqNZ92GDgxDo0hopTaOS3gs"
             Nel:
             -   '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
             Report-To:
-            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1702610411&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=kXFzz6lZ8cTSDiWk3YlUOnt7lsC6SWgxnye%2FRUfUgaM%3D"}]}'
+            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1706052923&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=w67Q6pk3jzwGCdAlFiRmvUOwzc5ljrEvqHCRySv8o5o%3D"}]}'
             Reporting-Endpoints:
-            -   heroku-nel=https://nel.heroku.com/reports?ts=1702610411&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=kXFzz6lZ8cTSDiWk3YlUOnt7lsC6SWgxnye%2FRUfUgaM%3D
+            -   heroku-nel=https://nel.heroku.com/reports?ts=1706052923&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=w67Q6pk3jzwGCdAlFiRmvUOwzc5ljrEvqHCRySv8o5o%3D
             Server:
             -   Cowboy
             Vary:

@@ -387,84 +387,189 @@ class _TransactionDescriptions:
     Descriptions for TransactionObject
     """
 
+    id = """
+    Unique identifier for transaction
+    """
+    date = """
+    Date of transaction in ISO 8601 format
+    """
+    payee = """
+    Name of payee. If recurring_id is not null, this field will show the payee
+    of associated recurring expense instead of the original transaction payee
+    """
     amount = """
     Amount of the transaction in numeric format to 4 decimal places
     """
-    payee = """
-    Name of payee If recurring_id is not null, this field will show the payee
-    of associated recurring expense instead of the original transaction payee
-    """
     currency = """
     Three-letter lowercase currency code of the transaction in ISO 4217 format
+    """
+    to_base = """
+    The amount converted to the user's primary currency. If the multicurrency
+    feature is not being used, to_base and amount will be the same.
+    """
+    category_id = """
+    Unique identifier of associated category
+    """
+    category_name = """
+    Name of category associated with transaction
+    """
+    category_group_id = """
+    Unique identifier of associated category group, if any
+    """
+    category_group_name = """
+    Name of category group associated with transaction, if any
+    """
+    is_income = """
+    Based on the associated category's property, denotes if transaction is
+    treated as income
+    """
+    exclude_from_budget = """
+    Based on the associated category's property, denotes if transaction is
+    excluded from budget
+    """
+    exclude_from_totals = """
+    Based on the associated category's property, denotes if transaction is
+    excluded from totals
+    """
+    created_at = """
+    The date and time of when the transaction was created (in the ISO 8601
+    extended format).
+    """
+    updated_at = """
+    The date and time of when the transaction was last updated (in the ISO 8601
+    extended format).
+    """
+    status = """
+    One of the following: <ul>
+        <li>cleared: User has reviewed the transaction</li>
+        <li>uncleared: User has not yet reviewed the transaction</li>
+        <li>recurring: Transaction is linked to a recurring expense</li>
+        <li>recurring_suggested: Transaction is listed as a suggested transaction
+            for an existing recurring expense.</li>
+        <li>pending: Imported transaction is marked as pending. This should be a
+            temporary state.</li>
+    </ul>
+    User intervention is required to change this to recurring.
+    """
+    is_pending = """
+    Denotes if transaction is pending (not posted)
     """
     notes = """
     User-entered transaction notes If recurring_id is not null, this field will
     be description of associated recurring expense
     """
-    category_id = """
-    Unique identifier of associated category (see Categories)
+    original_name = """
+    The transactions original name before any payee name updates. For synced
+    transactions, this is the raw original payee name from your bank.
+    """
+    recurring_id = """
+    Unique identifier of associated recurring item
+    """
+    recurring_payee = """
+    Payee name of associated recurring item
+    """
+    recurring_description = """
+    Description of associated recurring item
+    """
+    recurring_cadence = """
+    Cadence of associated recurring item (one of `once a week`, `every 2 weeks`,
+    `twice a month`, `monthly`, `every 2 months`, `every 3 months`, `every 4 months`,
+    `twice a year`, `yearly`)
+    """
+    recurring_type = """
+    Type of associated recurring (one of `cleared`, `suggested`, `dismissed`)
+    """
+    recurring_amount = """
+    Amount of associated recurring item
+    """
+    recurring_currency = """
+    Currency of associated recurring item
+    """
+    parent_id = """
+    Exists if this is a split transaction. Denotes the transaction ID of the
+    original transaction. Note that the parent transaction is not returned in
+    this call.
+    """
+    has_children = """
+    True if this transaction is a parent transaction and is split into 2 or
+    more other transactions
+    """
+    group_id = """
+    Exists if this transaction is part of a group. Denotes the parent’s
+    transaction ID
+    """
+    is_group = """
+    True if this transaction represents a group of transactions. If so, amount
+    and currency represent the totalled amount of transactions bearing this
+    transaction’s id as their group_id. Amount is calculated based on the
+    user’s primary currency.
     """
     asset_id = """
     Unique identifier of associated manually-managed account (see Assets)
     Note: plaid_account_id and asset_id cannot both exist for a transaction
     """
+    asset_institution_name = """
+    Institution name of associated manually-managed account
+    """
+    asset_name = """
+    Name of associated manually-managed account
+    """
+    asset_display_name = """
+    Display name of associated manually-managed account
+    """
+    asset_status = """
+    Status of associated manually-managed account (one of `active`, `closed`)
+    """
     plaid_account_id = """
     Unique identifier of associated Plaid account (see Plaid Accounts) Note:
     plaid_account_id and asset_id cannot both exist for a transaction
     """
-    status = """
-    One of the following: cleared: User has reviewed the transaction | uncleared:
-    User has not yet reviewed the transaction | recurring: Transaction is linked
-    to a recurring expense | recurring_suggested: Transaction is listed as a
-    suggested transaction for an existing recurring expense | pending: Imported
-    transaction is marked as pending. This should be a temporary state. User intervention
-    is required to change this to recurring.
+    plaid_account_name = """
+    Name of associated Plaid account
     """
-    parent_id = """
-    Exists if this is a split transaction. Denotes the transaction ID of the original
-    transaction. Note that the parent transaction is not returned in this call.
+    plaid_account_mask = """
+    Mask of associated Plaid account
     """
-    is_group = """
-    True if this transaction represents a group of transactions. If so, amount
-    and currency represent the totalled amount of transactions bearing this
-    transaction's id as their group_id. Amount is calculated based on the
-    user's primary currency.
+    institution_name = """
+    Institution name of associated Plaid account
     """
-    group_id = """
-    Exists if this transaction is part of a group. Denotes the parent's transaction ID
+    plaid_account_display_name = """
+    Display name of associated Plaid account
+    """
+    plaid_metadata = """
+    Metadata associated with imported transaction from Plaid
+    """
+    source = """
+    Source of the transaction (one of `api`, `csv`, `manual`,`merge`,`plaid`,
+    `recurring`,`rule`,`user`)
+    """
+    display_name = """
+    Display name for payee for transaction based on whether or not it is
+    linked to a recurring item. If linked, returns `recurring_payee` field.
+    Otherwise, returns the `payee` field.
+    """
+    display_notes = """
+    Display notes for transaction based on whether or not it is linked to a
+    recurring item. If linked, returns `recurring_notes` field. Otherwise,
+    returns the `notes` field.
+    """
+    account_display_name = """
+    Display name for associated account (manual or Plaid). If this is a synced
+    account, returns `plaid_account_display_name` or `asset_display_name`.
+    """
+    tags = """
+    Array of Tag objects
     """
     external_id = """
     User-defined external ID for any manually-entered or imported transaction.
     External ID cannot be accessed or changed for Plaid-imported transactions.
     External ID must be unique by asset_id. Max 75 characters.
     """
-    original_name = """
-    The transactions original name before any payee name updates. For synced transactions,
-    this is the raw original payee name from your bank.
+    children = """
+    Array of Transaction objects. Only exists if this transaction is a parent
+    transaction and is split into 2 or more other transactions. Child transactions
+    do not contain all of the same fields as parent transactions.
     """
-    type = """
-    (for synced investment transactions only) The transaction type as set by
-    Plaid for investment transactions. Possible values include: buy, sell, cash,
-    transfer and more
-    """
-    subtype = """
-    (for synced investment transactions only) The transaction type as set by Plaid
-    for investment transactions. Possible values include: management fee, withdrawal,
-    dividend, deposit and more
-    """
-    fees = """
-    (for synced investment transactions only) The fees as set by Plaid for investment
-    transactions.
-    """
-    price = """
-    (for synced investment transactions only) The price as set by Plaid for investment
-    transactions.
-    """
-    quantity = """
-    (for synced investment transactions only) The quantity as set by Plaid for investment
-    transactions.
-    """
-    to_base = """
-    The amount converted to the user's primary currency. If the multicurrency
-    feature is not being used, to_base and amount will be the same.
+    formatted_date = """
+    Date of transaction in user's preferred format
     """

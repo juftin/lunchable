@@ -2,14 +2,15 @@
 Base Pydantic Object for Containers
 """
 
-
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class LunchableModel(BaseModel):
     """
     Hashable Pydantic Model
     """
+
+    model_config = ConfigDict(extra="allow")
 
     def __hash__(self) -> int:
         """

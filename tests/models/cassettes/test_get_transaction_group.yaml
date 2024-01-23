@@ -1,0 +1,54 @@
+interactions:
+-   request:
+        body: ''
+        headers:
+            accept:
+            -   '*/*'
+            accept-encoding:
+            -   gzip, deflate
+            authorization:
+            -   XXXXXXXXXX
+            connection:
+            -   keep-alive
+            content-type:
+            -   application/json
+            host:
+            -   dev.lunchmoney.app
+            user-agent:
+            -   lunchable/1.1.2
+        method: GET
+        uri: https://dev.lunchmoney.app/v1/transactions/group?transaction_id=856827078
+    response:
+        content: '{"id":856827078,"date":"2024-01-11","amount":"66.45","currency":"usd","to_base":66.45,"payee":"Skinix","category_id":443125,"category_name":"Home","category_group_id":null,"category_group_name":null,"is_income":false,"exclude_from_budget":false,"exclude_from_totals":false,"created_at":"2024-01-24T03:15:39.118Z","updated_at":"2024-01-24T03:15:39.118Z","status":"cleared","is_pending":false,"notes":"Phasellus sit amet erat.","original_name":null,"recurring_id":null,"recurring_payee":null,"recurring_description":null,"recurring_cadence":null,"recurring_type":null,"recurring_amount":null,"recurring_currency":null,"parent_id":null,"has_children":false,"group_id":null,"is_group":true,"asset_id":null,"asset_institution_name":null,"asset_name":null,"asset_display_name":null,"asset_status":null,"plaid_account_id":null,"plaid_account_name":null,"plaid_account_mask":null,"institution_name":null,"plaid_account_display_name":null,"plaid_metadata":null,"source":"user","display_name":"Skinix","display_notes":"Phasellus sit amet erat.","account_display_name":" ","tags":[],"children":[{"id":179018293,"payee":"Skinix","amount":"30.4100","currency":"usd","date":"2024-01-11","formatted_date":"2024-01-11","notes":"Phasellus sit amet erat.","asset_id":49335,"plaid_account_id":null,"to_base":30.41},{"id":179018477,"payee":"Fadeo","amount":"36.0400","currency":"usd","date":"2024-01-10","formatted_date":"2024-01-10","notes":null,"asset_id":49335,"plaid_account_id":null,"to_base":36.04}],"external_id":null}'
+        headers:
+            Access-Control-Allow-Credentials:
+            -   'true'
+            Connection:
+            -   keep-alive
+            Content-Encoding:
+            -   gzip
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Wed, 24 Jan 2024 03:19:25 GMT
+            Etag:
+            -   W/"5e1-0z/UXlyVUxPEmy5ZiLGu3uduZqg"
+            Nel:
+            -   '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
+            Report-To:
+            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1706066365&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=oJiXq5%2FCJrt%2FxFYEl20oSruOMIz%2Fw0LEQqBpC0Z03xc%3D"}]}'
+            Reporting-Endpoints:
+            -   heroku-nel=https://nel.heroku.com/reports?ts=1706066365&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=oJiXq5%2FCJrt%2FxFYEl20oSruOMIz%2Fw0LEQqBpC0Z03xc%3D
+            Server:
+            -   Cowboy
+            Transfer-Encoding:
+            -   chunked
+            Vary:
+            -   Origin, Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Powered-By:
+            -   Express
+        http_version: HTTP/1.1
+        status_code: 200
+version: 1
