@@ -9,6 +9,7 @@ from typing import List
 
 from lunchable import LunchMoney
 from lunchable.models.transactions import (
+    TransactionChildObject,
     TransactionInsertObject,
     TransactionObject,
     TransactionSplitObject,
@@ -105,7 +106,7 @@ def test_split_transaction(lunch_money_obj: LunchMoney):
     """
     Try to split a transaction
     """
-    transaction_to_split = lunch_money_obj.get_transaction(546434806)
+    transaction_to_split = lunch_money_obj.get_transaction(179018320)
     amount_1 = transaction_to_split.amount / 2
     split_object = TransactionSplitObject(
         date=transaction_to_split.date,
@@ -160,3 +161,25 @@ def test_204_response(lunch_money_obj: LunchMoney) -> None:
     )
     response = lunch_money_obj.insert_transactions(transactions=test_transaction)
     assert response == []
+
+
+@lunchable_cassette
+def test_get_transaction_group(lunch_money_obj: LunchMoney) -> None:
+    """
+    Test get_transaction_group
+    """
+    transaction_group = lunch_money_obj.get_transaction_group(transaction_id=856827078)
+    assert isinstance(transaction_group, TransactionObject)
+    assert transaction_group.is_group is True
+    assert isinstance(transaction_group.children[0], TransactionChildObject)
+
+
+@lunchable_cassette
+def test_get_transactions_no_paginate(lunch_money_obj: LunchMoney) -> None:
+    """
+    Test get_transactions with no pagination
+    """
+    transactions = lunch_money_obj.get_transactions(limit=5)
+    assert len(transactions) >= 1
+    for transaction in transactions:
+        assert isinstance(transaction, TransactionObject)

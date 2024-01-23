@@ -9,7 +9,8 @@ import logging
 from enum import Enum
 from typing import Any, Dict, List, Optional, Union
 
-from pydantic import Field
+import pydantic_core
+from pydantic import Field, field_validator
 
 from lunchable import LunchMoneyError
 from lunchable._config import APIConfig
@@ -149,6 +150,27 @@ class FullStatusEnum(str, Enum):
     pending = "pending"
 
 
+class TransactionChildObject(TransactionBaseObject):
+    """
+    Child Transaction Object for Transaction Groups
+    """
+
+    id: int = Field(description=_TransactionDescriptions.id)
+    amount: float = Field(description=_TransactionDescriptions.amount)
+    payee: Optional[str] = Field(None, description=_TransactionDescriptions.payee)
+    date: datetime.date = Field(description=_TransactionDescriptions.date)
+    formatted_date: Optional[str] = Field(
+        None, description=_TransactionDescriptions.formatted_date
+    )
+    notes: Optional[str] = Field(None, description=_TransactionDescriptions.notes)
+    currency: Optional[str] = Field(None, description=_TransactionDescriptions.currency)
+    asset_id: Optional[int] = Field(None, description=_TransactionDescriptions.asset_id)
+    plaid_account_id: Optional[int] = Field(
+        None, description=_TransactionDescriptions.plaid_account_id
+    )
+    to_base: Optional[float] = Field(None, description=_TransactionDescriptions.to_base)
+
+
 class TransactionObject(TransactionBaseObject):
     """
     Universal Lunch Money Transaction Object
@@ -156,42 +178,137 @@ class TransactionObject(TransactionBaseObject):
     https://lunchmoney.dev/#transaction-object
     """
 
-    id: int = Field(description="Unique identifier for transaction")
-    date: datetime.date = Field(description="Date of transaction in ISO 8601 format")
+    id: int = Field(description=_TransactionDescriptions.id)
+    date: datetime.date = Field(description=_TransactionDescriptions.date)
     payee: Optional[str] = Field(None, description=_TransactionDescriptions.payee)
     amount: float = Field(description=_TransactionDescriptions.amount)
     currency: Optional[str] = Field(
         None, max_length=3, description=_TransactionDescriptions.currency
     )
-    notes: Optional[str] = Field(None, description=_TransactionDescriptions.notes)
+    to_base: Optional[float] = Field(None, description=_TransactionDescriptions.to_base)
     category_id: Optional[int] = Field(
         None, description=_TransactionDescriptions.category_id
     )
-    asset_id: Optional[int] = Field(None, description=_TransactionDescriptions.asset_id)
-    plaid_account_id: Optional[int] = Field(
-        None, description=_TransactionDescriptions.plaid_account_id
+    category_name: Optional[str] = Field(
+        None, description=_TransactionDescriptions.category_name
+    )
+    category_group_id: Optional[int] = Field(
+        None, description=_TransactionDescriptions.category_group_id
+    )
+    category_group_name: Optional[str] = Field(
+        None, description=_TransactionDescriptions.category_group_name
+    )
+    is_income: Optional[bool] = Field(
+        None, description=_TransactionDescriptions.is_income
+    )
+    exclude_from_budget: Optional[bool] = Field(
+        None, description=_TransactionDescriptions.exclude_from_budget
+    )
+    exclude_from_totals: Optional[bool] = Field(
+        None, description=_TransactionDescriptions.exclude_from_totals
+    )
+    created_at: datetime.datetime = Field(
+        description=_TransactionDescriptions.created_at
+    )
+    updated_at: datetime.datetime = Field(
+        description=_TransactionDescriptions.updated_at
     )
     status: Optional[str] = Field(None, description=_TransactionDescriptions.status)
+    is_pending: Optional[bool] = Field(
+        None, description=_TransactionDescriptions.is_pending
+    )
+    notes: Optional[str] = Field(None, description=_TransactionDescriptions.notes)
+    original_name: Optional[str] = Field(
+        None, description=_TransactionDescriptions.original_name
+    )
+    recurring_id: Optional[int] = Field(
+        None, description=_TransactionDescriptions.recurring_id
+    )
+    recurring_payee: Optional[str] = Field(
+        None, description=_TransactionDescriptions.recurring_payee
+    )
+    recurring_description: Optional[str] = Field(
+        None, description=_TransactionDescriptions.recurring_description
+    )
+    recurring_cadence: Optional[str] = Field(
+        None, description=_TransactionDescriptions.recurring_cadence
+    )
+    recurring_type: Optional[str] = Field(
+        None, description=_TransactionDescriptions.recurring_type
+    )
+    recurring_amount: Optional[float] = Field(
+        None, description=_TransactionDescriptions.recurring_amount
+    )
+    recurring_currency: Optional[str] = Field(
+        None, description=_TransactionDescriptions.recurring_currency
+    )
     parent_id: Optional[int] = Field(
         None, description=_TransactionDescriptions.parent_id
     )
+    has_children: Optional[bool] = Field(
+        None, description=_TransactionDescriptions.has_children
+    )
+    group_id: Optional[int] = Field(None, description=_TransactionDescriptions.group_id)
     is_group: Optional[bool] = Field(
         None, description=_TransactionDescriptions.is_group
     )
-    group_id: Optional[int] = Field(None, description=_TransactionDescriptions.group_id)
+    asset_id: Optional[int] = Field(None, description=_TransactionDescriptions.asset_id)
+    asset_institution_name: Optional[str] = Field(
+        None, description=_TransactionDescriptions.asset_institution_name
+    )
+    asset_name: Optional[str] = Field(
+        None, description=_TransactionDescriptions.asset_name
+    )
+    asset_display_name: Optional[str] = Field(
+        None, description=_TransactionDescriptions.asset_display_name
+    )
+    asset_status: Optional[str] = Field(
+        None, description=_TransactionDescriptions.asset_status
+    )
+    plaid_account_id: Optional[int] = Field(
+        None, description=_TransactionDescriptions.plaid_account_id
+    )
+    plaid_account_name: Optional[str] = Field(
+        None, description=_TransactionDescriptions.plaid_account_name
+    )
+    plaid_account_mask: Optional[str] = Field(
+        None, description=_TransactionDescriptions.plaid_account_mask
+    )
+    institution_name: Optional[str] = Field(
+        None, description=_TransactionDescriptions.institution_name
+    )
+    plaid_account_display_name: Optional[str] = Field(
+        None, description=_TransactionDescriptions.plaid_account_display_name
+    )
+    plaid_metadata: Optional[Dict[str, Any]] = Field(
+        None, description=_TransactionDescriptions.plaid_metadata
+    )
+    source: Optional[str] = Field(None, description=_TransactionDescriptions.source)
+    display_name: Optional[str] = Field(
+        None, description=_TransactionDescriptions.display_name
+    )
+    display_notes: Optional[str] = Field(
+        None, description=_TransactionDescriptions.display_notes
+    )
+    account_display_name: Optional[str] = Field(
+        None, description=_TransactionDescriptions.account_display_name
+    )
     tags: Optional[List[TagsObject]] = Field(None, description="Array of Tag objects")
     external_id: Optional[str] = Field(
         None, max_length=75, description=_TransactionDescriptions.external_id
     )
-    original_name: Optional[str] = Field(
-        None, description=_TransactionDescriptions.original_name
+    children: Optional[List[TransactionChildObject]] = Field(
+        None, description=_TransactionDescriptions.children
     )
-    type: Optional[str] = Field(None, description=_TransactionDescriptions.type)
-    subtype: Optional[str] = Field(None, description=_TransactionDescriptions.subtype)
-    fees: Optional[str] = Field(None, description=_TransactionDescriptions.fees)
-    price: Optional[str] = Field(None, description=_TransactionDescriptions.price)
-    quantity: Optional[str] = Field(None, description=_TransactionDescriptions.quantity)
-    to_base: Optional[float] = Field(None, description=_TransactionDescriptions.to_base)
+
+    @field_validator("plaid_metadata", mode="before")
+    def to_json(cls, x: Optional[str]) -> Optional[Dict[str, Any]]:
+        """
+        Check a result
+        """
+        if x is None:
+            return None
+        return pydantic_core.from_json(x)
 
     def get_update_object(self) -> TransactionUpdateObject:
         """
@@ -238,6 +355,15 @@ class TransactionObject(TransactionBaseObject):
             tags = [] if self.tags is None else self.tags
             insert_object.tags = [tag.name for tag in tags]
         return insert_object
+
+
+class _TransactionsResponse(LunchableModel):
+    """
+    HTTP Response for Transactions
+    """
+
+    transactions: List[TransactionObject]
+    has_more: bool = False
 
 
 class _TransactionParamsGet(LunchableModel):
@@ -333,11 +459,12 @@ class TransactionsClient(LunchMoneyAPIClient):
         """
         Get Transactions Using Criteria
 
-        Use this to retrieve all transactions between a date range. Returns list of Transaction
-        objects. If no query parameters are set, this will return transactions for the
-        current calendar month. If either start_date or end_date are datetime.datetime objects,
-        they will be reduced to dates. If a string is provided, it will be attempted to be parsed
-        as YYYY-MM-DD format.
+        Use this to retrieve all transactions between a date range (this method handles
+        pagination automatically unless you specify a limit / offset argument). Returns
+        list of Transaction objects. If no query parameters are set, this will return
+        transactions for the current calendar month. If either start_date or end_date are
+        datetime.datetime objects, they will be reduced to dates. If a string is provided,
+        it will be attempted to be parsed as YYYY-MM-DD format.
 
         Parameters
         ----------
@@ -365,12 +492,11 @@ class TransactionsClient(LunchMoneyAPIClient):
             Filter by status (Can be cleared or uncleared. For recurring
             transactions, use recurring)
         offset: Optional[int]
-            Sets the offset for the records returned
+            Sets the offset for the records returned (disables
+            automatic pagination)
         limit: Optional[int]
-            Sets the maximum number of records to return. Note: The server will not
-            respond with any indication that there are more records to be returned.
-            Please check the response length to determine if you should make another
-            call with an offset to fetch more transactions.
+            Sets the maximum number of records to return. Defaults to 1000
+             (disables automatic pagination)
         debit_as_negative: Optional[bool]
             Pass in true if you'd like expenses to be returned as negative amounts and
             credits as positive amounts. Defaults to false.
@@ -414,16 +540,47 @@ class TransactionsClient(LunchMoneyAPIClient):
             pending=pending,
         ).model_dump(exclude_none=True)
         search_params.update(params if params is not None else {})
-        response_data = self.make_request(
+        auto_paginate = all(
+            [
+                offset is None,
+                search_params.get("offset") is None,
+                limit is None,
+                search_params.get("limit") is None,
+            ]
+        )
+        transactions = self._get_transactions(
+            search_params=search_params,
+            paginate=auto_paginate,
+        )
+        return transactions
+
+    def _get_transactions(
+        self,
+        search_params: Dict[str, Any],
+        existing_transactions: Optional[List[TransactionObject]] = None,
+        paginate: bool = True,
+    ) -> List[TransactionObject]:
+        """
+        Paginate Transactions
+        """
+        existing_transactions = existing_transactions or []
+        transaction_response = self.make_request(
             method=self.Methods.GET,
             url_path=APIConfig.LUNCHMONEY_TRANSACTIONS,
             params=search_params,
         )
-        transactions = response_data[APIConfig.LUNCHMONEY_TRANSACTIONS]
-        transaction_objects = [
-            TransactionObject.model_validate(item) for item in transactions
-        ]
-        return transaction_objects
+        transaction_response = _TransactionsResponse.model_validate(
+            transaction_response
+        )
+        existing_transactions.extend(transaction_response.transactions)
+        if transaction_response.has_more and paginate:
+            search_params["offset"] = len(existing_transactions)
+            return self._get_transactions(
+                existing_transactions=existing_transactions,
+                search_params=search_params,
+                paginate=True,
+            )
+        return existing_transactions
 
     def get_transaction(
         self, transaction_id: int, debit_as_negative: Optional[bool] = None
@@ -776,3 +933,28 @@ class TransactionsClient(LunchMoneyAPIClient):
             ).model_dump(exclude_none=True),
         )
         return response_data
+
+    def get_transaction_group(self, transaction_id: int) -> TransactionObject:
+        """
+        Get a Transaction Group
+
+        Parameters
+        ----------
+        transaction_id: int
+            Transaction ID of either the parent or any of the children
+            in the transaction group
+
+        Returns
+        -------
+        TransactionObject
+            The transaction group as a `TransactionObject`
+        """
+        response_data = self.make_request(
+            method=self.Methods.GET,
+            params={"transaction_id": transaction_id},
+            url_path=[
+                APIConfig.LUNCHMONEY_TRANSACTIONS,
+                APIConfig.LUNCHMONEY_TRANSACTION_GROUPS,
+            ],
+        )
+        return TransactionObject.model_validate(response_data)

@@ -88,6 +88,8 @@ def test_transactions() -> List[TransactionObject]:
         "subtype": None,
         "tags": None,
         "type": None,
+        "created_at": "2021-09-19T20:00:00.000Z",
+        "updated_at": "2021-09-19T20:00:00.000Z",
     }
     transaction_dict_2 = {
         "amount": 2.0,
@@ -111,6 +113,8 @@ def test_transactions() -> List[TransactionObject]:
         "subtype": None,
         "tags": None,
         "type": None,
+        "created_at": "2021-09-19T20:00:00.000Z",
+        "updated_at": "2021-09-19T20:00:00.000Z",
     }
     transaction_dict_3 = {
         "amount": 3.0,
@@ -134,6 +138,8 @@ def test_transactions() -> List[TransactionObject]:
         "subtype": None,
         "tags": None,
         "type": None,
+        "created_at": "2021-09-19T20:00:00.000Z",
+        "updated_at": "2021-09-19T20:00:00.000Z",
     }
     transaction_1 = TransactionObject.model_validate(transaction_dict_1)
     transaction_2 = TransactionObject.model_validate(transaction_dict_2)
