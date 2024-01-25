@@ -5,8 +5,10 @@
 # - pytest-cov
 # - pytest-mock
 # - vcrpy~=5.1.0
+# - click-plugins>=1.1.1
 # - click>=8.0.1
 # - httpx
+# - importlib-metadata>=3.6
 # - pydantic<3,>=2
 # - rich>=10.0.0
 # - pandas
@@ -26,6 +28,10 @@ certifi==2023.11.17
 charset-normalizer==3.3.2
     # via requests
 click==8.1.7
+    # via
+    #   hatch.envs.all.py3.11
+    #   click-plugins
+click-plugins==1.1.1
     # via hatch.envs.all.py3.11
 coverage==7.3.3
     # via
@@ -43,6 +49,8 @@ idna==3.6
     #   httpx
     #   requests
     #   yarl
+importlib-metadata==7.0.1
+    # via hatch.envs.all.py3.11
 iniconfig==2.0.0
     # via pytest
 markdown-it-py==3.0.0
@@ -114,3 +122,5 @@ wrapt==1.16.0
     # via vcrpy
 yarl==1.9.4
     # via vcrpy
+zipp==3.17.0
+    # via importlib-metadata

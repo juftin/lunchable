@@ -12,7 +12,7 @@ annotated-types==0.6.0
     # via
     #   -c requirements.txt
     #   pydantic
-mypy==1.7.1
+mypy==1.8.0
     # via hatch.envs.lint
 mypy-extensions==1.0.0
     # via mypy
@@ -24,7 +24,7 @@ pydantic-core==2.14.5
     # via
     #   -c requirements.txt
     #   pydantic
-ruff==0.1.8
+ruff==0.1.14
     # via hatch.envs.lint
 typing-extensions==4.9.0
     # via
