@@ -74,9 +74,8 @@ class PushLunch(LunchableApp):
                 "a `PUSHOVER_USER_KEY` environment variable"
             )
         self._params = {"user": user_key, "token": token}
-        self.get_latest_cache(
-            include=[AssetsObject, PlaidAccountObject, CategoriesObject]
-        )
+        self.refresh_data(models=[AssetsObject, PlaidAccountObject, CategoriesObject])
+
         self.notified_transactions: List[int] = []
 
     def send_notification(
@@ -171,10 +170,10 @@ class PushLunch(LunchableApp):
         if transaction.category_id is None:
             category = "N/A"
         else:
-            category = self.lunch_data.categories[transaction.category_id].name
+            category = self.data.categories[transaction.category_id].name
         account_id = transaction.plaid_account_id or transaction.asset_id
         assert account_id is not None
-        account = self.lunch_data.asset_map[account_id]
+        account = self.data.asset_map[account_id]
         if isinstance(account, AssetsObject):
             account_name = account.display_name or account.name
         else:

@@ -20,7 +20,7 @@ def test_import_splitwise():
     """
     test_case = True
     try:
-        from lunchable.plugins.splitlunch import SplitLunch  # noqa
+        from lunchable.plugins.splitlunch.lunchmoney_splitwise import SplitLunch  # noqa
     except ImportError:
         test_case = False
     finally:
@@ -33,7 +33,7 @@ def test_update_balance():
     """
     Update the Balance
     """
-    from lunchable.plugins.splitlunch import SplitLunch
+    from lunchable.plugins.splitlunch.lunchmoney_splitwise import SplitLunch
 
     lunch = SplitLunch()
     lunch.update_splitwise_balance()

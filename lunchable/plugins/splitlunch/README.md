@@ -22,7 +22,7 @@ pip install lunchable[splitlunch]
 ```
 
 ```python
-from lunchable.plugins.splitlunch import SplitLunch
+from lunchable.plugins.splitlunch.lunchmoney_splitwise import SplitLunch
 
 splitlunch = SplitLunch()
 splitlunch.refresh_splitwise_transactions()

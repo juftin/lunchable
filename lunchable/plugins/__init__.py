@@ -2,10 +2,9 @@
 Optional Plugins for LunchMoney
 """
 
-from .base.base_app import LunchableApp, LunchableModelType, LunchableTransactionsApp
+from lunchable.plugins.app import LunchableApp, LunchableModelType
 
 __all__ = [
-    "LunchableTransactionsApp",
     "LunchableApp",
     "LunchableModelType",
 ]
