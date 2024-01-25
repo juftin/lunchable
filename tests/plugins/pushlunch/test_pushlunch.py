@@ -6,7 +6,7 @@ import logging
 from typing import List
 
 from lunchable.models import TransactionObject
-from lunchable.plugins.pushlunch import PushLunch
+from lunchable.plugins.pushlunch.pushover import PushLunch
 from tests.conftest import lunchable_cassette
 
 logger = logging.getLogger(__name__)

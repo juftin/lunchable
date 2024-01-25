@@ -9,7 +9,7 @@ import html
 import logging
 import os
 import pathlib
-from typing import Any, Optional, Union
+from typing import Any, Iterable, List, Optional, Type, Union
 
 from rich import print, table
 from rich.prompt import Confirm
@@ -18,17 +18,17 @@ from lunchable._version import __application__
 from lunchable.exceptions import LunchMoneyImportError
 from lunchable.models import (
     CategoriesObject,
+    LunchableModel,
     TransactionObject,
     TransactionUpdateObject,
     UserObject,
 )
+from lunchable.plugins import LunchableApp, LunchableModelType
 
 try:
     import numpy as np
     import pandas as pd
     from numpy import datetime64
-
-    from lunchable.plugins.base.pandas_app import LunchablePandasApp
 except ImportError as e:
     msg = f'PrimeLunch requires the `primelunch` extras to be installed: `pip install "{__application__}[primelunch]"`'
     raise LunchMoneyImportError(msg) from e
@@ -36,7 +36,7 @@ except ImportError as e:
 logger = logging.getLogger(__name__)
 
 
-class PrimeLunch(LunchablePandasApp):
+class PrimeLunch(LunchableApp):
     """
     PrimeLunch: Amazon Notes Updater
     """
@@ -50,9 +50,50 @@ class PrimeLunch(LunchablePandasApp):
         """
         Initialize and set internal data
         """
-        super().__init__(cache_time=0, access_token=access_token)
+        super().__init__(access_token=access_token)
         self.file_path = pathlib.Path(file_path)
         self.time_window = time_window
+
+    @staticmethod
+    def models_to_df(models: Iterable[LunchableModel]) -> pd.DataFrame:
+        """
+        Convert Transactions Array to DataFrame
+
+        Parameters
+        ----------
+        models: List[LunchableModel]
+
+        Returns
+        -------
+        pd.DataFrame
+        """
+        if not isinstance(models, list):
+            models = list(models)
+        return pd.DataFrame(
+            [item.model_dump() for item in models],
+            columns=models[0].model_fields.keys(),
+        )
+
+    @staticmethod
+    def df_to_models(
+        df: pd.DataFrame, model_type: Type[LunchableModelType]
+    ) -> List[LunchableModelType]:
+        """
+        Convert DataFrame to Transaction Array
+
+        Parameters
+        ----------
+        df: pd.DataFrame
+        model_type: Type[LunchableModel]
+
+        Returns
+        -------
+        List[LunchableModel]
+        """
+        array_df = df.copy()
+        array_df = array_df.fillna(np.NaN).replace([np.NaN], [None])
+        model_array = array_df.to_dict(orient="records")
+        return [model_type.model_validate(item) for item in model_array]
 
     def amazon_to_df(self) -> pd.DataFrame:
         """
@@ -255,17 +296,17 @@ class PrimeLunch(LunchablePandasApp):
             start_date,
             end_cache_date,
         )
-        self.get_latest_cache(include=[CategoriesObject, UserObject])
+        self.refresh_data(models=[UserObject, CategoriesObject])
         self.refresh_transactions(start_date=start_date, end_date=end_cache_date)
         logger.info(
             'Scanning LunchMoney Budget: "%s"',
-            html.unescape(self.lunch_data.user.budget_name),
+            html.unescape(self.data.user.budget_name),
         )
         logger.info(
             "%s transactions returned from LunchMoney",
-            len(self.lunch_data.transactions),
+            len(self.data.transactions),
         )
-        return self.lunch_data.transactions
+        return self.data.transactions
 
     def print_transaction(
         self, transaction: TransactionObject, former_transaction: TransactionObject
@@ -284,7 +325,7 @@ class PrimeLunch(LunchablePandasApp):
         if former_transaction.category_id is not None:
             transaction_table.add_row(
                 "📊 Category",
-                self.lunch_data.categories[former_transaction.category_id].name,
+                self.data.categories[former_transaction.category_id].name,
             )
         if (
             former_transaction.original_name is not None
@@ -318,7 +359,7 @@ class PrimeLunch(LunchablePandasApp):
         -------
         Optional[Dict[str, Any]]
         """
-        former_transaction = self.lunch_data.transactions[transaction.id]
+        former_transaction = self.data.transactions[transaction.id]
         response = None
         stripped_notes = transaction.notes.strip()  # type: ignore[union-attr]
         acceptable_length = min(349, len(stripped_notes))
@@ -360,7 +401,7 @@ class PrimeLunch(LunchablePandasApp):
         )
         self.cache_transactions(start_date=min_date, end_date=max_date)
         transaction_df = self.models_to_df(
-            models=self.lunch_data.transactions.values(),
+            models=self.data.transactions.values(),
         )
         amazon_transaction_df = self.filter_amazon_transactions(df=transaction_df)
         merged_data = self.merge_transactions(
