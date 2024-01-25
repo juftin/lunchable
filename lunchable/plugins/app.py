@@ -232,10 +232,10 @@ class BaseLunchableApp(ABC):
             msg = f"Model not supported by Lunchable App: {model.__name__}"
             raise NotImplementedError(msg) from e
         fetched_data = fetch_data_function()
-        if isinstance(model, UserObject):
+        if isinstance(fetched_data, UserObject):
             data_mapping = fetched_data
         else:
-            data_mapping = {item.id: item for item in fetched_data}
+            data_mapping = {item.id: item for item in fetched_data}  # type: ignore[assignment]
         setattr(self.data, attr_name, data_mapping)
         return data_mapping
 
