@@ -5,7 +5,7 @@ nav:
 -   Home 🏠: index.md
 -   Usage 📖: usage.md
 -   LunchMoney 🍽️: interacting.md
--   Plugins 🧩:
+-   Apps and Plugins 🧩:
     -   plugins/index.md
     -   PushLunch 📲: plugins/pushlunch.md
     -   SplitLunch 🍱: plugins/splitlunch.md
