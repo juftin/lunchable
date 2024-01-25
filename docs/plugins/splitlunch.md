@@ -103,10 +103,10 @@ docker run \
 ## Run via Python
 
 ```python
-from lunchable.plugins.splitlunch import SplitLunch
+from lunchable.plugins.splitlunch.lunchmoney_splitwise import SplitLunch
 ```
 
-::: lunchable.plugins.splitlunch.SplitLunch
+::: lunchable.plugins.splitlunch.lunchmoney_splitwise.SplitLunch
     handler: python
     options:
         show_bases: false

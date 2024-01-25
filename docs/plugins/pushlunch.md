@@ -43,7 +43,7 @@ docker run --rm \
 from lunchable.plugins.pushlunch import PushLunch
 ```
 
-::: lunchable.plugins.pushlunch.PushLunch
+::: lunchable.plugins.pushlunch.pushover.PushLunch
     handler: python
     options:
         show_bases: false
