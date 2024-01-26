@@ -1,3 +1,0 @@
-"""
-PushLunch lunchable Plugin
-"""

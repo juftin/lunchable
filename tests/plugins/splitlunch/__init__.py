@@ -1,3 +1,0 @@
-"""
-Splitwise Plugin Testing
-"""

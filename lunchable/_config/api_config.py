@@ -55,7 +55,7 @@ class APIConfig:
         str
         """
         if access_token is None:
-            logger.info(
+            logger.debug(
                 "Loading Lunch Money Developer API Access token from environment"
             )
             access_token = getenv(APIConfig._access_token_environment_variable, None)

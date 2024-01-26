@@ -5,11 +5,7 @@ nav:
 -   Home 🏠: index.md
 -   Usage 📖: usage.md
 -   LunchMoney 🍽️: interacting.md
--   Apps and Plugins 🧩:
-    -   plugins/index.md
-    -   PushLunch 📲: plugins/pushlunch.md
-    -   SplitLunch 🍱: plugins/splitlunch.md
-    -   PrimeLunch 🥪: plugins/primelunch.md
+-   Apps and Plugins 🧩: plugins.md
 -   Command Line Interface ⌨️: cli.md
 -   API Documentation 🤖: reference/
 -   Contributing 🤝: contributing.md

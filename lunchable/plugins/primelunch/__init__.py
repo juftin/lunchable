@@ -1,3 +1,0 @@
-"""
-PrimeLunch Plugin
-"""
