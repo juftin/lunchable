@@ -35,29 +35,20 @@ name = "lunchable"
 readme = "README.md"
 requires-python = ">=3.8,<4"
 
-[project.entry-points."lunchable.cli"]
-primelunch = "lunchable.plugins.primelunch.cli:primelunch"
-pushlunch = "lunchable.plugins.pushlunch.cli:pushlunch"
-splitlunch = "lunchable.plugins.splitlunch.cli:splitlunch"
-
 [project.optional-dependencies]
 all = [
-  "pandas",
-  "python-dateutil",
-  "splitwise>=2.3.0,<3.0.0"
+  "lunchable-primelunch",
+  "lunchable-pushlunch",
+  "lunchable-splitlunch"
 ]
 plugins = [
-  "pandas",
-  "python-dateutil",
-  "splitwise>=2.3.0,<3.0.0"
+  "lunchable-primelunch",
+  "lunchable-pushlunch",
+  "lunchable-splitlunch"
 ]
-primelunch = [
-  "pandas"
-]
-splitlunch = [
-  "python-dateutil",
-  "splitwise>=2.3.0,<3.0.0"
-]
+primelunch = ["lunchable-primelunch"]
+pushlunch = ["lunchable-pushlunch"]
+splitlunch = ["lunchable-splitlunch"]
 
 [project.scripts]
 lunchable = "lunchable._cli:cli"

@@ -1,19 +1,21 @@
 # Plugins
 
-To install all the known plugins, and their dependencies, install
+`lunchable` plugins are Python packages outside of the `lunchable` package that
+can be installed into the same environment as `lunchable` to add additional
+functionality to the CLI. To install all the known plugins, and their dependencies, install
 lunchable with the `plugins` extra:
 
 ```shell
 pipx install "lunchable[plugins]"
 ```
 
-lunchable supports CLI plugins with other external packages. See below for what's been built already.
-If you can't find what you're looking for, consider building it yourself and opening a pull-request
-to add it to the list below:
+lunchable supports CLI plugins with other external packages. See below for what's been built
+already. If you can't find what you're looking for, consider building it yourself and
+opening a pull-request to add it to the list:
 
-- [PushLunch](pushlunch.md): Push Notifications via Pushover
-- [SplitLunch](splitlunch.md): Splitwise Integration
-- [PrimeLunch](primelunch.md): Amazon Transaction Updater
+- [PushLunch](https://github.com/juftin/lunchable-pushlunch): Push Notifications via Pushover
+- [SplitLunch](https://github.com/juftin/lunchable-splitlunch): Splitwise Integration
+- [PrimeLunch](https://github.com/juftin/lunchable-primelunch): Amazon Transaction Updater
 
 ## LunchableApp
 
@@ -23,12 +25,12 @@ and more. Notice a few of the main attributes / methods of the `LunchableApp` cl
 
  attribute / method                                                           | description                                                                    | type
 ------------------------------------------------------------------------------|--------------------------------------------------------------------------------|-------------------------------------------------------
- **`lunch`**                                                                  | The `LunchMoney` client                                                        | [LunchMoney](../interacting.md#lunchmoney)
+ **`lunch`**                                                                  | The `LunchMoney` client                                                        | [LunchMoney](interacting.md#lunchmoney)
  **`data`** ¹                                                                 | The `LunchableData` object                                                     | [LunchableData](#lunchable.plugins.app.LunchableData)
  [refresh_data](#lunchable.plugins.LunchableApp.refresh_data)                 | Refresh all data (besides Transactions)                                        | `method`
  [refresh_transactions](#lunchable.plugins.LunchableApp.refresh_transactions) | Refresh transactions, takes same parameters as `LunchMoney.get_transactions()` | `method`
  [refresh](#lunchable.plugins.LunchableApp.refresh) ²                         | Refresh the data for one particular model, takes **kwargs                      | `method`
- [clear_transactions](#lunchable.plugins.LunchableApp.clear_transactions) ³     | Clear all transactions from the internal data                                  | `method`
+ [clear_transactions](#lunchable.plugins.LunchableApp.clear_transactions) ³   | Clear all transactions from the internal data                                  | `method`
 
 > ¹ This attribute contains all of the data that is loaded from LunchMoney. It has attributes
 > for `assets`, `categories`, `plaid_accounts`, `tags`, `transactions`, `crypto` and `user`.
@@ -37,7 +39,7 @@ and more. Notice a few of the main attributes / methods of the `LunchableApp` cl
 
 > ² This method refreshes all of the data for one particular model. For example,
 > `refresh(AssetsObject)` will refresh the assets on the underling `data.assets`
->  attribute and return a `dict[int, AssetsObject]` object.
+> attribute and return a `dict[int, AssetsObject]` object.
 
 > ³ This the same as running `app.data.transactions.clear()`
 

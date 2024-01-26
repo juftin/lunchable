@@ -23,7 +23,7 @@
 **lunchable** is a Python Client for the [Lunch Money Developer API](https://lunchmoney.dev). It's
 built on top of [pydantic](https://github.com/pydantic/pydantic) and [httpx](https://github.com/encode/httpx/),
 it offers an _intuitive_ API, a _simple_ CLI, complete coverage of all endpoints,
-and _plugins_ to other external services.
+and a _plugin_ framework for extending the functionality of the library.
 
 ### Installation
 
@@ -46,10 +46,20 @@ first_transaction: TransactionObject = transactions[0]
 transaction_as_dict: Dict[str, Any] = first_transaction.model_dump()
 ```
 
+### CLI
+
+To use the CLI, you'll need to set the `LUNCHMONEY_ACCESS_TOKEN` environment variable.
+It's recommended to use [pipx](https://github.com/pypa/pipx) to install the CLI -
+use the `lunchable[plugins]` extra to include all the known plugins:
+
+```shell
+pipx install "lunchable[plugins]"
+```
+
 ```shell
 export LUNCHMONEY_ACCESS_TOKEN="xxxxxxxxxxx"
 lunchable transactions get --limit 5
-lunchable http -X GET https://dev.lunchmoney.app/v1/assets
+lunchable http -X GET v1/assets
 ```
 
 <!--skip-->
