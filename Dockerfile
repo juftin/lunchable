@@ -5,14 +5,13 @@ MAINTAINER Justin Flannery "juftin@juftin.com"
 
 RUN apt-get update && apt-get install -y jq && apt-get clean
 
-COPY requirements.txt /tmp/project/requirements.txt
-RUN pip install -r /tmp/project/requirements.txt
-
 COPY README.md /tmp/project/README.md
 COPY pyproject.toml /tmp/project/pyproject.toml
 COPY lunchable /tmp/project/lunchable
+COPY requirements.txt /tmp/project/requirements.txt
 
-RUN pip install /tmp/project && \
+RUN pip install "/tmp/project[plugins]" \
+      --constraint /tmp/project/requirements.txt && \
     rm -rf /tmp/project
 
 SHELL ["/bin/bash", "-c"]
