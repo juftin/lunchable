@@ -308,7 +308,10 @@ class TransactionObject(TransactionBaseObject):
         """
         if x is None:
             return None
-        return pydantic_core.from_json(x)
+        elif isinstance(x, dict):
+            return x
+        else:
+            return pydantic_core.from_json(x)
 
     def get_update_object(self) -> TransactionUpdateObject:
         """
