@@ -14,7 +14,7 @@
 
 annotated-types==0.6.0
     # via pydantic
-anyio==4.1.0
+anyio==4.2.0
     # via httpx
 certifi==2023.11.17
     # via
@@ -39,7 +39,7 @@ h11==0.14.0
     # via httpcore
 httpcore==1.0.2
     # via httpx
-httpx==0.25.2
+httpx==0.26.0
     # via
     #   hatch.envs.default
     #   lunchable
@@ -52,32 +52,27 @@ importlib-metadata==7.0.1
     # via
     #   hatch.envs.default
     #   lunchable
-lunchable==1.2.1
-    # via
-    #   lunchable-primelunch
-    #   lunchable-pushlunch
-    #   lunchable-splitlunch
-lunchable-primelunch==1.0.0
+lunchable-primelunch==1.0.1
     # via hatch.envs.default
 lunchable-pushlunch==1.0.1
     # via hatch.envs.default
-lunchable-splitlunch==1.0.0
+lunchable-splitlunch==1.0.1
     # via hatch.envs.default
 markdown-it-py==3.0.0
     # via rich
 mdurl==0.1.2
     # via markdown-it-py
-numpy==1.26.2
+numpy==1.26.3
     # via pandas
 oauthlib==3.2.2
     # via requests-oauthlib
-pandas==2.1.4
+pandas==2.2.0
     # via lunchable-primelunch
-pydantic==2.5.2
+pydantic==2.6.0
     # via
     #   hatch.envs.default
     #   lunchable
-pydantic-core==2.14.5
+pydantic-core==2.16.1
     # via pydantic
 pygments==2.17.2
     # via rich
@@ -85,7 +80,7 @@ python-dateutil==2.8.2
     # via
     #   lunchable-splitlunch
     #   pandas
-pytz==2023.3.post1
+pytz==2023.4
     # via pandas
 requests==2.31.0
     # via
@@ -111,9 +106,12 @@ typing-extensions==4.9.0
     # via
     #   pydantic
     #   pydantic-core
-tzdata==2023.3
+tzdata==2023.4
     # via pandas
 urllib3==2.1.0
     # via requests
 zipp==3.17.0
     # via importlib-metadata
+
+# The following packages are considered to be unsafe in a requirements file:
+# lunchable
