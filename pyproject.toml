@@ -115,6 +115,10 @@ extra-dependencies = [
   "griffe-fieldz"
 ]
 features = ["all"]
+pip-compile-args = [
+  "--unsafe-package",
+  "lunchable"
+]
 pip-compile-constraint = "default"
 template = "docs"
 type = "pip-compile"
