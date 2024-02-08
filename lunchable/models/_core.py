@@ -31,7 +31,8 @@ class LunchMoneyClient(Client):
     """
 
     def __init__(self, access_token: str | None = None) -> None:
-        super().__init__()
+        timeout = httpx.Timeout(connect=5, read=30, write=20, pool=5)
+        super().__init__(timeout=timeout)
         api_headers = APIConfig.get_header(access_token=access_token)
         self.headers.update(api_headers)
 
@@ -42,7 +43,8 @@ class LunchMoneyAsyncClient(httpx.AsyncClient):
     """
 
     def __init__(self, access_token: str | None = None) -> None:
-        super().__init__()
+        timeout = httpx.Timeout(connect=5, read=30, write=20, pool=5)
+        super().__init__(timeout=timeout)
         api_headers = APIConfig.get_header(access_token=access_token)
         self.headers.update(api_headers)
 
