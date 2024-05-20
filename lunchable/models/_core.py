@@ -4,7 +4,6 @@ Lunchmoney SDK Core
 
 from __future__ import annotations
 
-import logging
 from functools import cached_property
 from typing import (
     Any,
@@ -21,8 +20,6 @@ from httpx import Client
 
 from lunchable._config import APIConfig
 from lunchable.exceptions import LunchMoneyHTTPError
-
-logger = logging.getLogger(__name__)
 
 
 class LunchMoneyClient(Client):
@@ -268,8 +265,6 @@ class LunchMoneyAPIClient:
         try:
             response.raise_for_status()
         except httpx.HTTPError as he:
-            logger.exception(he)
-            logger.error(response.text)
             raise LunchMoneyHTTPError(response.text) from he
         if response.content:
             returned_data = response.json()
@@ -282,7 +277,6 @@ class LunchMoneyAPIClient:
                 errors = returned_data["error"]
             except KeyError:
                 errors = returned_data["errors"]
-            logger.exception(errors)
             raise LunchMoneyHTTPError(errors)
         return returned_data
 
