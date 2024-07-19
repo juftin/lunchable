@@ -6,6 +6,7 @@ https://lunchmoney.dev/#recurring-expenses
 
 import datetime
 import logging
+import warnings
 from typing import List, Optional
 
 from pydantic import Field
@@ -55,9 +56,6 @@ class RecurringExpensesObject(LunchableModel):
     asset_id: Optional[int] = Field(
         None, description=_RecurringExpensesDescriptions.asset_id
     )
-    transaction_id: Optional[int] = Field(
-        None, description=_RecurringExpensesDescriptions.transaction_id
-    )
     category_id: Optional[int] = Field(
         None, description=_RecurringExpensesDescriptions.category_id
     )
@@ -85,6 +83,9 @@ class RecurringExpensesClient(LunchMoneyAPIClient):
         """
         Get Recurring Expenses
 
+        **DEPRECATED** - Use [LunchMoney.get_recurring_items()][lunchable.LunchMoney.get_recurring_items]
+        instead.
+
         Retrieve a list of recurring expenses to expect for a specified period.
 
         Every month, a different set of recurring expenses is expected. This is because recurring
@@ -111,6 +112,14 @@ class RecurringExpensesClient(LunchMoneyAPIClient):
         -------
         List[RecurringExpensesObject]
         """
+        warnings.warn(
+            message=(
+                "`LunchMoney.get_recurring_expenses` is deprecated, "
+                "use `LunchMoney.get_recurring_items` instead"
+            ),
+            category=DeprecationWarning,
+            stacklevel=2,
+        )
         if start_date is None:
             start_date = datetime.datetime.now().date().replace(day=1)
         params = RecurringExpenseParamsGet(

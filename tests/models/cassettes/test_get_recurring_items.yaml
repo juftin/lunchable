@@ -1,0 +1,54 @@
+interactions:
+-   request:
+        body: ''
+        headers:
+            accept:
+            -   '*/*'
+            accept-encoding:
+            -   gzip, deflate
+            authorization:
+            -   XXXXXXXXXX
+            connection:
+            -   keep-alive
+            content-type:
+            -   application/json
+            host:
+            -   dev.lunchmoney.app
+            user-agent:
+            -   lunchable/1.3.3
+        method: GET
+        uri: https://dev.lunchmoney.app/v1/recurring_items?start_date=2022-11-01
+    response:
+        content: '[{"id":585244,"start_date":"2021-12-01T00:00:00.000Z","end_date":null,"payee":"Test Item","currency":"usd","created_by":12126,"created_at":"2023-12-15T02:38:04.131Z","updated_at":"2023-12-15T02:38:04.131Z","billing_date":"2023-12-01","original_name":null,"description":"Video Streaming","plaid_account_id":null,"asset_id":null,"source":"manual","amount":"100.0000","notes":null,"category_id":443126,"category_group_id":680257,"is_income":false,"exclude_from_totals":false,"cadence":"monthly","granularity":"month","quantity":1,"occurrences":{"2022-11-01":[],"2022-12-01":[],"2023-01-01":[],"2023-02-01":[],"2023-03-01":[],"2023-04-01":[],"2023-05-01":[],"2023-06-01":[],"2023-07-01":[],"2023-08-01":[],"2023-09-01":[],"2023-10-01":[],"2023-11-01":[],"2023-12-01":[],"2024-01-01":[],"2024-02-01":[],"2024-03-01":[],"2024-04-01":[],"2024-05-01":[],"2024-06-01":[],"2024-07-01":[],"2024-08-01":[]},"transactions_within_range":[],"missing_dates_within_range":["2022-11-01","2022-12-01","2023-01-01","2023-02-01","2023-03-01","2023-04-01","2023-05-01","2023-06-01","2023-07-01","2023-08-01","2023-09-01","2023-10-01","2023-11-01","2023-12-01","2024-01-01","2024-02-01","2024-03-01","2024-04-01","2024-05-01","2024-06-01","2024-07-01"],"date":"2024-07-19","to_base":100}]'
+        headers:
+            Access-Control-Allow-Credentials:
+            -   'true'
+            Connection:
+            -   keep-alive
+            Content-Encoding:
+            -   gzip
+            Content-Type:
+            -   application/json; charset=utf-8
+            Date:
+            -   Fri, 19 Jul 2024 03:53:07 GMT
+            Etag:
+            -   W/"4f1-jaQOBXD6F728udtE/T3Pci04HP4"
+            Nel:
+            -   '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
+            Report-To:
+            -   '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1721361187&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=YtEpFVLeE%2BZqjZemsRdPEXAIOqgIB6TUtRVb%2FNYrMoc%3D"}]}'
+            Reporting-Endpoints:
+            -   heroku-nel=https://nel.heroku.com/reports?ts=1721361187&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&s=YtEpFVLeE%2BZqjZemsRdPEXAIOqgIB6TUtRVb%2FNYrMoc%3D
+            Server:
+            -   Cowboy
+            Transfer-Encoding:
+            -   chunked
+            Vary:
+            -   Origin, Accept-Encoding
+            Via:
+            -   1.1 vegur
+            X-Powered-By:
+            -   Express
+        http_version: HTTP/1.1
+        status_code: 200
+version: 1
