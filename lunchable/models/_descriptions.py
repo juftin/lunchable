@@ -273,6 +273,150 @@ class _RecurringExpensesDescriptions:
     """
 
 
+class _SummarizedTransactionDescriptions:
+    """
+    Descriptions for Summarized Transaction
+    """
+
+    id = """
+    Unique identifier for the transaction that matched this recurring item
+    """
+    date = """
+    Date of transaction in ISO 8601 format
+    """
+    amount = """
+    Amount of the transaction in numeric format to 4 decimal places
+    """
+    currency = """
+    Three-letter lowercase currency code of the transaction in ISO 4217 format
+    """
+    payee = """
+    Payee or payer of the recurring item
+    """
+    category_id = """
+    Unique identifier of associated category
+    """
+    recurring_id = """
+    Unique identifier of associated recurring item
+    """
+    to_base = """
+    The amount converted to the user's primary currency. If the multicurrency
+    feature is not being used, to_base and amount will be the same.
+    """
+
+
+class _RecurringItemsDescriptions:
+    """
+    Descriptions for Recurring Items
+    """
+
+    id = """
+    Unique identifier for recurring item
+    """
+    start_date = """
+    Denotes when recurring item starts occurring in ISO 8601 format.
+    If null, then this recurring item will show up for all time before end_date
+    """
+    end_date = """
+    Denotes when recurring item stops occurring in ISO 8601 format.
+    If null, then this recurring item has no set end date and will
+    show up for all months after start_date
+    """
+    payee = """
+    Payee or payer of the recurring item
+    """
+    currency = """
+    Three-letter lowercase currency code for the recurring item in ISO 4217 format
+    """
+    created_by = """
+    The id of the user who created this recurring item.
+    """
+    created_at = """
+    The date and time of when the recurring item was created (in the ISO 8601
+    extended format).
+    """
+    updated_at = """
+    The date and time of when the recurring item was updated (in the ISO 8601 extended format).
+    """
+    billing_date = """
+    Initial date that a transaction associated with this recurring item occured.
+    This date is used in conjunction with values of quantity and granularity to
+    determine the expected dates of recurring transactions in the period.
+    """
+    original_name = """
+    If any, represents the original name of the recurring item as denoted by
+    the transaction that triggered its creation
+    """
+    description = """
+    If any, represents the user-entered description of the recurring item
+    """
+    plaid_account_id = """
+    If any, denotes the plaid account associated with the creation of this
+    recurring item (see Plaid Accounts)
+    """
+    asset_id = """
+    If any, denotes the manually-managed account (i.e. asset) associated
+    with the creation of this recurring item (see Assets)
+    """
+    source = """
+    This can be one of four values:
+    - manual: User created this recurring item manually from the Recurring Items page
+    - transaction: User created this by converting a transaction from the Transactions page
+    - system: Recurring item was created by the system on transaction import
+    - null: Some older recurring items may not have a source.
+    """
+    notes = """
+    If any, the user-entered notes for the recurring item
+    """
+    amount = """
+    Amount of the recurring item in numeric format to 4 decimal places.
+    For recurring items with flexible amounts, this is the average of the
+    specified min and max amounts.
+    """
+    category_id = """
+    If any, denotes the unique identifier for the associated category to this recurring item
+    """
+    category_group_id = """
+    If any, denotes the unique identifier of associated category group
+    """
+    is_income = """
+    Based on the associated category's property, denotes if the recurring transaction
+    is treated as income
+    """
+    exclude_from_totals = """
+    Based on the associated category's property, denotes if the recurring transaction is excluded from totals
+    """
+    granularity = """
+    The unit of time used to define the cadence of the recurring item.
+    One of `weeks`, `months`, `years`
+    """
+    quantity = """
+    The number of granular units between each occurrence
+    """
+    occurrences = """
+    An object which contains dates as keys and lists as values. The dates will
+    include all the dates in the month that a recurring item is expected, as well
+    as the last date in the previous period and the first date in the next period.
+    The value for each key is a list of Summarized Transaction Objects that matched
+    the recurring item for that date (if any)
+    """
+    transactions_within_range = """
+    A list of all the Summarized Transaction Objects for transactions that that
+    have occurred in the query month for the recurring item (if any)
+    """
+    missing_dates_within_range = """
+    A list of date strings when a recurring transaction is expected but has not (yet) occurred.
+    """
+    date = """
+    Denotes the value of the start_date query parameter, or if none was provided, the date when
+    the request was made. This indicates the month used by the system when populating the response.
+    """
+    to_base = """
+    The amount converted to the user's primary currency. If the multicurrency feature is not being
+    used, to_base and amount will be the same.
+    """
+
+
 class _TransactionInsertDescriptions:
     """
     Descriptions for TransactionInsertObject

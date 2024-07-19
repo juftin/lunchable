@@ -18,6 +18,7 @@ from .categories import CategoriesClient
 from .crypto import CryptoClient
 from .plaid_accounts import PlaidAccountsClient
 from .recurring_expenses import RecurringExpensesClient
+from .recurring_items import RecurringItemsClient
 from .tags import TagsClient
 from .transactions import TransactionsClient
 from .user import UserClient
@@ -33,6 +34,7 @@ class LunchMoney(
     TagsClient,
     TransactionsClient,
     UserClient,
+    RecurringItemsClient,
 ):
     """
     Lunch Money Python Client.

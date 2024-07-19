@@ -1,8 +1,11 @@
 """
 Run Tests on the Recurring Expenses Endpoint
 """
+
 import datetime
 import logging
+
+import pytest
 
 from lunchable import LunchMoney
 from lunchable.models.recurring_expenses import RecurringExpensesObject
@@ -18,9 +21,10 @@ def test_get_recurring_expenses(
     """
     Get Recurring Expense and Assert it's a Recurring Expense
     """
-    recurring_expenses = lunch_money_obj.get_recurring_expenses(
-        start_date=obscure_start_date
-    )
+    with pytest.warns(DeprecationWarning):
+        recurring_expenses = lunch_money_obj.get_recurring_expenses(
+            start_date=obscure_start_date
+        )
     assert len(recurring_expenses) >= 1
     for recurring_expense in recurring_expenses:
         assert isinstance(recurring_expense, RecurringExpensesObject)

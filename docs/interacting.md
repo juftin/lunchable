@@ -20,7 +20,7 @@ lunch = LunchMoney(access_token="xxxxxxxxxxx")
 | GET       | [get_category](#lunchable.LunchMoney.get_category)                             | Get single category                                                      |
 | GET       | [get_crypto](#lunchable.LunchMoney.get_crypto)                                 | Get Crypto Assets                                                        |
 | GET       | [get_plaid_accounts](#lunchable.LunchMoney.get_plaid_accounts)                 | Get Plaid Synced Assets                                                  |
-| GET       | [get_recurring_expenses](#lunchable.LunchMoney.get_recurring_expenses)         | Get Recurring Expenses                                                   |
+| GET       | [get_recurring_items](#lunchable.LunchMoney.get_recurring_items)               | Get Recurring Items                                                      |
 | GET       | [get_tags](#lunchable.LunchMoney.get_tags)                                     | Get Spending Tags                                                        |
 | GET       | [get_transaction](#lunchable.LunchMoney.get_transaction)                       | Get a Transaction by ID                                                  |
 | GET       | [get_transactions](#lunchable.LunchMoney.get_transactions)                     | Get Transactions Using Criteria                                          |
