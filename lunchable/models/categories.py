@@ -43,7 +43,7 @@ class CategoryChild(LunchableModel):
     """
 
     id: int
-    name: str = Field(min_length=1, max_length=40)
+    name: str = Field(min_length=1, max_length=100)
     description: Optional[str] = Field(None, max_length=140)
     created_at: Optional[datetime.datetime] = None
 
@@ -58,7 +58,7 @@ class CategoriesObject(LunchableModel):
     id: int = Field(description="A unique identifier for the category.")
     name: str = Field(
         min_length=1,
-        max_length=40,
+        max_length=100,
         description=_CategoriesDescriptions.name,
     )
     description: Optional[str] = Field(
@@ -95,7 +95,7 @@ class _CategoriesParamsPut(LunchableModel):
     https://lunchmoney.dev/#update-category
     """
 
-    name: Optional[str] = Field(None, min_length=1, max_length=40)
+    name: Optional[str] = Field(None, min_length=1, max_length=100)
     description: Optional[str] = Field(None, max_length=140)
     is_income: Optional[bool] = None
     exclude_from_budget: Optional[bool] = None
@@ -202,7 +202,7 @@ class CategoriesClient(LunchMoneyAPIClient):
         Parameters
         ----------
         name: str
-            Name of category. Must be between 1 and 40 characters.
+            Name of category. Must be between 1 and 100 characters.
         description: Optional[str]
             Description of category. Must be less than 140 categories. Defaults to None.
         is_income: Optional[bool]
@@ -349,7 +349,7 @@ class CategoriesClient(LunchMoneyAPIClient):
         category_id : int
             Id of the Lunch Money Category
         name: str
-            Name of category. Must be between 1 and 40 characters.
+            Name of category. Must be between 1 and 100 characters.
         description: Optional[str]
             Description of category. Must be less than 140 categories. Defaults to None.
         is_income: Optional[bool]
@@ -405,7 +405,7 @@ class CategoriesClient(LunchMoneyAPIClient):
         Parameters
         ----------
         name: str
-            Name of category. Must be between 1 and 40 characters.
+            Name of category. Must be between 1 and 100 characters.
         description: Optional[str]
             Description of category. Must be less than 140 categories. Defaults to None.
         is_income: Optional[bool]
