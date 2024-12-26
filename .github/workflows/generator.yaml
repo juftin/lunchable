@@ -11,6 +11,8 @@ on:
 jobs:
     generate:
         runs-on: ubuntu-latest
+        permissions:
+            pull-requests: write
         steps:
         -   name: Checkout Latest Code
             uses: actions/checkout@v4
@@ -29,3 +31,23 @@ jobs:
             run: npm audit signatures
         -   name: Generate OpenAPI Client
             run: npm run generate
+        -   name: Get OpenAPI Spec
+            id: openapi
+            uses: mikefarah/yq@master
+            with:
+                cmd: curl -LsSf "${{ env.OPENAPI_URL }}" | yq --output-format json
+            env:
+                OPENAPI_URL: https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi
+        -   name: Get OpenAPI Spec Version
+            id: version
+            run: |
+                version=$(echo "${{ steps.openapi.outputs.result }}" | jq -r .info.version)
+                echo version=${version} >> ${GITHUB_OUTPUT}
+        -   name: Create Pull Request
+            uses: peter-evans/create-pull-request@v7
+            with:
+                add-paths: clients
+                commit-message: ✨ lunchmoney openapi spec v${{ steps.version.outputs.version }}
+                branch: openapi/v${{ steps.version.outputs.version }}
+                delete-branch: true
+                title: ✨ lunchmoney openapi spec v${{ steps.version.outputs.version }}
