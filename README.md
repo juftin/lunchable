@@ -9,7 +9,7 @@ docker run --rm \
   --volume ${PWD}:/work \
   --workdir /work \
   timbru31/java-node \
-  /bin/bash -c "npm install && npm run generate"
+  /bin/bash -c "npm install && npm run spec && npm run generate"
 ```
 
 ### MacOS
@@ -29,8 +29,9 @@ docker run --rm \
     npm install
     ```
 
-3. Generate Clients
+3. Fetch the Latest Spec and Generate Clients
 
     ```bash
+    npm run spec
     npm run generate
     ```

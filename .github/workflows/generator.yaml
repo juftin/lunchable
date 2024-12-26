@@ -13,6 +13,7 @@ jobs:
         runs-on: ubuntu-latest
         permissions:
             pull-requests: write
+            contents: write
         steps:
         -   name: Checkout Latest Code
             uses: actions/checkout@v4
@@ -29,28 +30,16 @@ jobs:
             run: npm clean-install
         -   name: Verify NPM Signatures
             run: npm audit signatures
-        -   name: Generate OpenAPI Client
-            run: npm run generate
-        -   name: Get OpenAPI YAML
-            id: yaml
+        -   name: Fetch Latest OpenAPI YAML
             run: |
-                spec="$(curl -LsSf ${{ env.OPENAPI_URL }})"
-                echo "${spec}"
-                echo spec="${spec}" >> ${GITHUB_OUTPUT}
-            env:
-                OPENAPI_URL: https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi
+                npm run spec
         -   name: Get OpenAPI JSON
-            id: json
+            id: version
             uses: mikefarah/yq@master
             with:
-                cmd: echo "${{ steps.yaml.outputs.spec }}" | yq --output-format json
-            env:
-                OPENAPI_URL: https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi
-        -   name: Get OpenAPI Spec Version
-            id: version
-            run: |
-                version=$(echo "${{ steps.json.outputs.result }}" | jq -r .info.version)
-                echo version=${version} >> ${GITHUB_OUTPUT}
+                cmd: cat openapi.yaml | yq -r .info.version
+        -   name: Generate OpenAPI Client
+            run: npm run generate
         -   name: Create Pull Request
             uses: peter-evans/create-pull-request@v7
             with:
