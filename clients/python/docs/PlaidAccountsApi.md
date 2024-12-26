@@ -225,7 +225,7 @@ with lunchable.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lunchable.PlaidAccountsApi(api_client)
     start_date = '2013-10-20' # date | Denotes the beginning of the time period to fetch transactions for. If omitted, the most recent transactions will be returned. <br> Required if end_date exists. <br> (optional)
-    end_date = '2013-10-20' # date | Denotes the end of the time period you'd like to get transactions for. Required if start_date exists. (optional)
+    end_date = '2013-10-20' # date | Denotes the end of the time period you'd like to get transactions for. Required if start_date exists.  (optional)
     plaid_account_id = 119807 # int | Specific ID of a plaid account to fetch. If not set the endpoint will trigger a fetch for all eligible accounts. (optional)
 
     try:

@@ -53,7 +53,7 @@ with lunchable.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lunchable.RecurringApi(api_client)
     start_date = '2013-10-20' # date | Denotes the beginning of the range used to populate the `matching` object in the recurring items. If omitted, the current month will be used as the range.<br> Required if end_date exists. (optional)
-    end_date = '2013-10-20' # date | Denotes the end of the the range used to populate the `matching` object in the recurring items.  Required if start_date exists. (optional)
+    end_date = '2013-10-20' # date | Denotes the end of the the range used to populate the `matching` object in the recurring items.  Required if start_date exists.  (optional)
     include_suggested = True # bool |  (optional)
 
     try:
@@ -146,7 +146,7 @@ with lunchable.ApiClient(configuration) as api_client:
     api_instance = lunchable.RecurringApi(api_client)
     id = 994069 # int | ID of the recurring item to retrieve
     start_date = '2013-10-20' # date | Denotes the beginning of the range used to populate the `matching` object in the recurring items. If omitted, the current month will be used as the range.<br> Required if end_date exists. (optional)
-    end_date = '2013-10-20' # date | Denotes the end of the the range used to populate the `matching` object in the recurring items.  Required if start_date exists. (optional)
+    end_date = '2013-10-20' # date | Denotes the end of the the range used to populate the `matching` object in the recurring items.  Required if start_date exists.  (optional)
 
     try:
         # Get a single recurring item

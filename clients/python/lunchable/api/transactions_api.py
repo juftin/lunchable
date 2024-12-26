@@ -3,7 +3,7 @@
 """
 Lunch Money API - v2
 
-This is a version of the Lunch Money API described using the the OpenAPI 3.X specification.  The goal of this project is to validate an \"API Design First\" approach for the Lunch Money API, which should allow us to gather developer feedback prior to implementation in order to develop API endpoints more quickly.  This version of the API will differ from the existing v1 beta version. For more information on the changes please see the [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog)  Some useful links: - [Current v1 Lunch Money API Documentation](https://lunchmoney.dev) - [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog) - [OpenAPI API YAML Specification](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi/) - [Awesome Lunch Money Projects](https://lunchmoney.dev/#awesome-projects)
+This is a version of the Lunch Money API described using the the OpenAPI 3.X specification.    The goal of this project is to validate an \"API Design First\" approach for the Lunch Money API, which should allow us to gather developer feedback prior to implementation in order to develop API endpoints more quickly.  This version of the API will differ from the existing v1 beta version. For more information on the changes please see the  [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog)  Some useful links: - [Current v1 Lunch Money API Documentation](https://lunchmoney.dev) - [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog) - [OpenAPI API YAML Specification](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi/) - [Awesome Lunch Money Projects](https://lunchmoney.dev/#awesome-projects)
 
 The version of the OpenAPI document: 2.7.4
 Contact: devsupport@lunchmoney.app
@@ -315,7 +315,7 @@ class TransactionsApi:
     ) -> TransactionObject:
         """Get a single transaction
 
-        Retrieve details of a specific transaction by its ID.<br><br>  It the requested transaction is the parent of split transactions, the transaction returned in the response will include a `children` property which will contain a list of the split transactions.<br><br>  Similarly, if the requested transaction is transaction group, the transaction returned in the response will include a `children` property which will contain a list of the original transactions that make up the transaction group.
+        Retrieve details of a specific transaction by its ID.<br><br>  It the requested transaction is the parent of split transactions, the transaction  returned in the response will include a `children` property which will contain a list of the  split transactions.<br><br>  Similarly, if the requested transaction is transaction group, the transaction  returned in the response will include a `children` property which will contain a list of the  original transactions that make up the transaction group.
 
         :param id: ID of the transaction to retrieve (required)
         :type id: int
@@ -395,7 +395,7 @@ class TransactionsApi:
     ) -> ApiResponse[TransactionObject]:
         """Get a single transaction
 
-        Retrieve details of a specific transaction by its ID.<br><br>  It the requested transaction is the parent of split transactions, the transaction returned in the response will include a `children` property which will contain a list of the split transactions.<br><br>  Similarly, if the requested transaction is transaction group, the transaction returned in the response will include a `children` property which will contain a list of the original transactions that make up the transaction group.
+        Retrieve details of a specific transaction by its ID.<br><br>  It the requested transaction is the parent of split transactions, the transaction  returned in the response will include a `children` property which will contain a list of the  split transactions.<br><br>  Similarly, if the requested transaction is transaction group, the transaction  returned in the response will include a `children` property which will contain a list of the  original transactions that make up the transaction group.
 
         :param id: ID of the transaction to retrieve (required)
         :type id: int
@@ -475,7 +475,7 @@ class TransactionsApi:
     ) -> RESTResponseType:
         """Get a single transaction
 
-        Retrieve details of a specific transaction by its ID.<br><br>  It the requested transaction is the parent of split transactions, the transaction returned in the response will include a `children` property which will contain a list of the split transactions.<br><br>  Similarly, if the requested transaction is transaction group, the transaction returned in the response will include a `children` property which will contain a list of the original transactions that make up the transaction group.
+        Retrieve details of a specific transaction by its ID.<br><br>  It the requested transaction is the parent of split transactions, the transaction  returned in the response will include a `children` property which will contain a list of the  split transactions.<br><br>  Similarly, if the requested transaction is transaction group, the transaction  returned in the response will include a `children` property which will contain a list of the  original transactions that make up the transaction group.
 
         :param id: ID of the transaction to retrieve (required)
         :type id: int
