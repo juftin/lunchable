@@ -33,7 +33,10 @@ jobs:
             run: npm run generate
         -   name: Get OpenAPI YAML
             id: yaml
-            run: spec="$(curl -LsSf ${{ env.OPENAPI_URL }})" echo spec="${spec}" >> ${GITHUB_OUTPUT}
+            run: |
+                spec="$(curl -LsSf ${{ env.OPENAPI_URL }})"
+                echo "${spec}"
+                echo spec="${spec}" >> ${GITHUB_OUTPUT}
             env:
                 OPENAPI_URL: https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi
         -   name: Get OpenAPI JSON
