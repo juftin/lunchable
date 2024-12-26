@@ -3,7 +3,7 @@
 """
 Lunch Money API - v2
 
-This is a version of the Lunch Money API described using the the OpenAPI 3.X specification.  The goal of this project is to validate an \"API Design First\" approach for the Lunch Money API, which should allow us to gather developer feedback prior to implementation in order to develop API endpoints more quickly.  This version of the API will differ from the existing v1 beta version. For more information on the changes please see the [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog)  Some useful links: - [Current v1 Lunch Money API Documentation](https://lunchmoney.dev) - [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog) - [OpenAPI API YAML Specification](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi/) - [Awesome Lunch Money Projects](https://lunchmoney.dev/#awesome-projects)
+This is a version of the Lunch Money API described using the the OpenAPI 3.X specification.    The goal of this project is to validate an \"API Design First\" approach for the Lunch Money API, which should allow us to gather developer feedback prior to implementation in order to develop API endpoints more quickly.  This version of the API will differ from the existing v1 beta version. For more information on the changes please see the  [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog)  Some useful links: - [Current v1 Lunch Money API Documentation](https://lunchmoney.dev) - [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog) - [OpenAPI API YAML Specification](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi/) - [Awesome Lunch Money Projects](https://lunchmoney.dev/#awesome-projects)
 
 The version of the OpenAPI document: 2.7.4
 Contact: devsupport@lunchmoney.app
@@ -60,7 +60,7 @@ class TransactionObject(BaseModel):
     )
     overrides: Optional[TransactionOverridesObject]
     payee: Annotated[str, Field(min_length=0, strict=True, max_length=140)] = Field(
-        description="Name of payee set by the user, the financial institution, or by a matched recurring item. This will match the value displayed in payee field on the transactions page in the GUI. "
+        description="Name of payee set by the user, the financial institution, or by  a matched recurring item. This will match the value  displayed in payee field on the transactions page in the GUI. "
     )
     category_id: Optional[StrictInt] = Field(
         description="Unique identifier of associated category set by the user or by a matched recurring_item.<br> Category details can be obtained by passing the value of this property to the [Get A Single Category](../operations/getCategoryById) API"
@@ -68,7 +68,7 @@ class TransactionObject(BaseModel):
     notes: Optional[
         Annotated[str, Field(min_length=0, strict=True, max_length=350)]
     ] = Field(
-        description="Any transaction notes set by the user or by a matched recurring item. This will match the value displayed in notes field on the transactions page in the GUI. "
+        description="Any transaction notes set by the user or by  a matched recurring item. This will match the value  displayed in notes field on the transactions page in the GUI. "
     )
     status: StrictStr = Field(
         description="Status of the transaction: - `reviewed`: User has reviewed the transaction, or it was automatically marked as reviewed due to reviewed recurring_item logic - `unreviewed`: User has not reviewed the transaction and it does not match any reviewed recurring_items. - `delete_pending`: The synced account deleted this transaction after it was updated by the user.  Requires manual intervention. - `pending`: Transaction is still pending with the synced institution (not posted). "
@@ -109,7 +109,7 @@ class TransactionObject(BaseModel):
         description="A list of tag_ids for the tags associated with this transaction.  If the transaction has no tags this will be an empty list.<br> Tag details can be obtained by passing the value of this attribute as the `ids` query parameter to the [List Tags](../operations/getTags) API"
     )
     source: Optional[StrictStr] = Field(
-        description='Source of the transaction: - `api`: Transaction was added by a call to the [POST /transactions](../operations/createTransaction) API - `csv`: Transaction was added via a CSV Import - `manual`: Transaction was created via the "Add to Cash" button on the Transactions page - `merge`: Transactions were originally in an account that was merged into another account - `plaid`: Transaction came from a Financial Institution synced via Plaid - `recurring`: Transaction was created from the Recurring page - `rule`: Transaction was created by a rule to split a transaction - `split`: This is a transaction created by splitting another transaction - `user`: This is a legacy value and is replaced by either csv or manual '
+        description='Source of the transaction: - `api`: Transaction was added by a call to the [POST /transactions](../operations/createTransaction) API - `csv`: Transaction was added via a CSV Import - `manual`: Transaction was created via the "Add to Cash" button on the Transactions page - `merge`: Transactions were originally in an account that was merged into another account - `plaid`: Transaction came from a Financial Institution synced via Plaid - `recurring`: Transaction was created from the Recurring page  - `rule`: Transaction was created by a rule to split a transaction - `split`: This is a transaction created by splitting another transaction - `user`: This is a legacy value and is replaced by either csv or manual '
     )
     external_id: Optional[
         Annotated[str, Field(min_length=0, strict=True, max_length=75)]

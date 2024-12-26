@@ -3,7 +3,7 @@
 """
 Lunch Money API - v2
 
-This is a version of the Lunch Money API described using the the OpenAPI 3.X specification.  The goal of this project is to validate an \"API Design First\" approach for the Lunch Money API, which should allow us to gather developer feedback prior to implementation in order to develop API endpoints more quickly.  This version of the API will differ from the existing v1 beta version. For more information on the changes please see the [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog)  Some useful links: - [Current v1 Lunch Money API Documentation](https://lunchmoney.dev) - [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog) - [OpenAPI API YAML Specification](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi/) - [Awesome Lunch Money Projects](https://lunchmoney.dev/#awesome-projects)
+This is a version of the Lunch Money API described using the the OpenAPI 3.X specification.    The goal of this project is to validate an \"API Design First\" approach for the Lunch Money API, which should allow us to gather developer feedback prior to implementation in order to develop API endpoints more quickly.  This version of the API will differ from the existing v1 beta version. For more information on the changes please see the  [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog)  Some useful links: - [Current v1 Lunch Money API Documentation](https://lunchmoney.dev) - [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog) - [OpenAPI API YAML Specification](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi/) - [Awesome Lunch Money Projects](https://lunchmoney.dev/#awesome-projects)
 
 The version of the OpenAPI document: 2.7.4
 Contact: devsupport@lunchmoney.app
@@ -587,7 +587,7 @@ class TransactionsBulkApi:
         end_date: Annotated[
             Optional[date],
             Field(
-                description="Denotes the end of the time period you'd like to get transactions for. Required if start_date exists."
+                description="Denotes the end of the time period you'd like to get transactions for. Required if start_date exists. "
             ),
         ] = None,
         manual_account_id: Annotated[
@@ -605,7 +605,7 @@ class TransactionsBulkApi:
         recurring_id: Annotated[
             Optional[StrictInt],
             Field(
-                description="Filter transactions to those associated with specified Recurring Item ID "
+                description="Filter transactions to those associated with specified Recurring  Item ID "
             ),
         ] = None,
         category_id: Annotated[
@@ -641,7 +641,7 @@ class TransactionsBulkApi:
         include_custom_metadata: Annotated[
             Optional[StrictBool],
             Field(
-                description="Pass in true if you’d like the returned transactions objects to include any custom metadata that was previously added via the API."
+                description="Pass in true if you’d like the returned transactions objects to include any custom  metadata that was previously added via the API."
             ),
         ] = None,
         limit: Annotated[
@@ -680,7 +680,7 @@ class TransactionsBulkApi:
         :type manual_account_id: int
         :param plaid_account_id: Filter transactions to those associated with specified plaid account ID or set this to 0 to omit any transactions from plaid accounts. Setting both this and `manual_account_id` to 0 will return transactions with no account. These are listed as \"Cash Transactions\" in the Lunch Money GUI.
         :type plaid_account_id: int
-        :param recurring_id: Filter transactions to those associated with specified Recurring Item ID
+        :param recurring_id: Filter transactions to those associated with specified Recurring  Item ID
         :type recurring_id: int
         :param category_id: Filter transactions to those associated with the specified category ID. Will also match category groups.
         :type category_id: int
@@ -692,7 +692,7 @@ class TransactionsBulkApi:
         :type tag_id: int
         :param include_pending: Pass in true if you’d like to include imported transactions with a pending status.
         :type include_pending: bool
-        :param include_custom_metadata: Pass in true if you’d like the returned transactions objects to include any custom metadata that was previously added via the API.
+        :param include_custom_metadata: Pass in true if you’d like the returned transactions objects to include any custom  metadata that was previously added via the API.
         :type include_custom_metadata: bool
         :param limit: Sets the maximum number of transactions to return. If more match the filter criteria, the response will include a `has_more` attribute set to `true`.  See [pagination](foo)
         :type limit: int
@@ -768,7 +768,7 @@ class TransactionsBulkApi:
         end_date: Annotated[
             Optional[date],
             Field(
-                description="Denotes the end of the time period you'd like to get transactions for. Required if start_date exists."
+                description="Denotes the end of the time period you'd like to get transactions for. Required if start_date exists. "
             ),
         ] = None,
         manual_account_id: Annotated[
@@ -786,7 +786,7 @@ class TransactionsBulkApi:
         recurring_id: Annotated[
             Optional[StrictInt],
             Field(
-                description="Filter transactions to those associated with specified Recurring Item ID "
+                description="Filter transactions to those associated with specified Recurring  Item ID "
             ),
         ] = None,
         category_id: Annotated[
@@ -822,7 +822,7 @@ class TransactionsBulkApi:
         include_custom_metadata: Annotated[
             Optional[StrictBool],
             Field(
-                description="Pass in true if you’d like the returned transactions objects to include any custom metadata that was previously added via the API."
+                description="Pass in true if you’d like the returned transactions objects to include any custom  metadata that was previously added via the API."
             ),
         ] = None,
         limit: Annotated[
@@ -861,7 +861,7 @@ class TransactionsBulkApi:
         :type manual_account_id: int
         :param plaid_account_id: Filter transactions to those associated with specified plaid account ID or set this to 0 to omit any transactions from plaid accounts. Setting both this and `manual_account_id` to 0 will return transactions with no account. These are listed as \"Cash Transactions\" in the Lunch Money GUI.
         :type plaid_account_id: int
-        :param recurring_id: Filter transactions to those associated with specified Recurring Item ID
+        :param recurring_id: Filter transactions to those associated with specified Recurring  Item ID
         :type recurring_id: int
         :param category_id: Filter transactions to those associated with the specified category ID. Will also match category groups.
         :type category_id: int
@@ -873,7 +873,7 @@ class TransactionsBulkApi:
         :type tag_id: int
         :param include_pending: Pass in true if you’d like to include imported transactions with a pending status.
         :type include_pending: bool
-        :param include_custom_metadata: Pass in true if you’d like the returned transactions objects to include any custom metadata that was previously added via the API.
+        :param include_custom_metadata: Pass in true if you’d like the returned transactions objects to include any custom  metadata that was previously added via the API.
         :type include_custom_metadata: bool
         :param limit: Sets the maximum number of transactions to return. If more match the filter criteria, the response will include a `has_more` attribute set to `true`.  See [pagination](foo)
         :type limit: int
@@ -949,7 +949,7 @@ class TransactionsBulkApi:
         end_date: Annotated[
             Optional[date],
             Field(
-                description="Denotes the end of the time period you'd like to get transactions for. Required if start_date exists."
+                description="Denotes the end of the time period you'd like to get transactions for. Required if start_date exists. "
             ),
         ] = None,
         manual_account_id: Annotated[
@@ -967,7 +967,7 @@ class TransactionsBulkApi:
         recurring_id: Annotated[
             Optional[StrictInt],
             Field(
-                description="Filter transactions to those associated with specified Recurring Item ID "
+                description="Filter transactions to those associated with specified Recurring  Item ID "
             ),
         ] = None,
         category_id: Annotated[
@@ -1003,7 +1003,7 @@ class TransactionsBulkApi:
         include_custom_metadata: Annotated[
             Optional[StrictBool],
             Field(
-                description="Pass in true if you’d like the returned transactions objects to include any custom metadata that was previously added via the API."
+                description="Pass in true if you’d like the returned transactions objects to include any custom  metadata that was previously added via the API."
             ),
         ] = None,
         limit: Annotated[
@@ -1042,7 +1042,7 @@ class TransactionsBulkApi:
         :type manual_account_id: int
         :param plaid_account_id: Filter transactions to those associated with specified plaid account ID or set this to 0 to omit any transactions from plaid accounts. Setting both this and `manual_account_id` to 0 will return transactions with no account. These are listed as \"Cash Transactions\" in the Lunch Money GUI.
         :type plaid_account_id: int
-        :param recurring_id: Filter transactions to those associated with specified Recurring Item ID
+        :param recurring_id: Filter transactions to those associated with specified Recurring  Item ID
         :type recurring_id: int
         :param category_id: Filter transactions to those associated with the specified category ID. Will also match category groups.
         :type category_id: int
@@ -1054,7 +1054,7 @@ class TransactionsBulkApi:
         :type tag_id: int
         :param include_pending: Pass in true if you’d like to include imported transactions with a pending status.
         :type include_pending: bool
-        :param include_custom_metadata: Pass in true if you’d like the returned transactions objects to include any custom metadata that was previously added via the API.
+        :param include_custom_metadata: Pass in true if you’d like the returned transactions objects to include any custom  metadata that was previously added via the API.
         :type include_custom_metadata: bool
         :param limit: Sets the maximum number of transactions to return. If more match the filter criteria, the response will include a `has_more` attribute set to `true`.  See [pagination](foo)
         :type limit: int
