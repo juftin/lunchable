@@ -1,0 +1,16 @@
+{
+    "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+    "spaces": 2,
+    "generator-cli": {
+        "version": "7.10.0",
+        "generators": {
+            "python": {
+                "generatorName": "python",
+                "inputSpec": "https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi",
+                "output": "clients/python",
+                "packageName": "lunchable",
+                "skipValidateSpec": true
+            }
+        }
+    }
+}
