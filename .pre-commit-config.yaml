@@ -34,19 +34,3 @@ repos:
               PULL_REQUEST_TEMPLATE.md|
               .github/semantic_release/release_notes.hbs
             )
-
--   repo: local
-    hooks:
-    -   id: format
-        name: format
-        description: Runs Code Auto-Formatters
-        entry: hatch run lint:fmt
-        language: system
-        pass_filenames: false
-    -   id: lint
-        name: lint
-        description: Runs Code Linters
-        entry: hatch run lint:style
-        language: system
-        pass_filenames: false
-        require_serial: false
