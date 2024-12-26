@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: OpenAPI Client Generator
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+        -   v2
+
+jobs:
+    generate:
+        runs-on: ubuntu-latest
+        steps:
+        -   name: Checkout Latest Code
+            uses: actions/checkout@v4
+        -   name: Setup Node.js
+            uses: actions/setup-node@v4
+            with:
+                node-version: lts/*
+        -   name: Setup Java
+            uses: actions/setup-java@v4
+            with:
+                distribution: temurin
+                java-version: '21'
+        -   name: Install dependencies
+            run: npm clean-install
+        -   name: Verify NPM Signatures
+            run: npm audit signatures
+        -   name: Generate OpenAPI Client
+            run: npm run generate
