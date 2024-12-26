@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: OpenAPI Client Generator
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - v2
+
+jobs:
+    generate:
+        runs-on: ubuntu-latest
+        permissions:
+            pull-requests: write
+            contents: write
+        steps:
+            - name: Checkout Latest Code
+              uses: actions/checkout@v4
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+            - name: Setup Java
+              uses: actions/setup-java@v4
+              with:
+                  distribution: temurin
+                  java-version: "21"
+            - name: Setup Python
+              uses: actions/setup-python@v3
+            - name: Install dependencies
+              run: npm clean-install
+            - name: Verify NPM Signatures
+              run: npm audit signatures
+            - name: Fetch Latest OpenAPI YAML
+              run: |
+                  npm run spec
+            - name: Get OpenAPI Version
+              id: version
+              uses: mikefarah/yq@master
+              with:
+                  cmd: cat openapi.yaml | yq -r .info.version
+            - name: Generate OpenAPI Client
+              run: npm run generate
+            - name: Add All Changes
+              run: git add --all
+            - name: Run Pre-Commit
+              continue-on-error: true
+              uses: pre-commit/action@v3.0.1
+            - name: Create Pull Request
+              uses: peter-evans/create-pull-request@v7
+              with:
+                  add-paths: openapi.yaml,clients
+                  commit-message: ✨ lunchmoney openapi spec v${{ steps.version.outputs.result }}
+                  branch: openapi/v${{ steps.version.outputs.result }}
+                  delete-branch: true
+                  title: ✨ lunchmoney openapi spec v${{ steps.version.outputs.result }}
