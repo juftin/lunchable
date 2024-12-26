@@ -1,0 +1,47 @@
+# PlaidAccountObject
+
+An object containing information about an account synced via Plaid
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**id** | **int** | The unique identifier of this account | 
+**date_linked** | **date** | Date account was first linked in ISO 8601 format | 
+**name** | **str** | Name of the account. This field is set by Plaid and cannot be altered. | 
+**display_name** | **str** | Optional display name for the account set by the user. If not set it will return a concatenated string of institution and account name. | 
+**type** | **str** | Primary type of the account, for example credit, depository, etc. This field is set by Plaid and cannot be altered. | 
+**subtype** | **str** | Optional account subtype. This field is set by Plaid and cannot be altered. | 
+**mask** | **str** | Mask (last 3 to 4 digits of account) of account. This field is set by Plaid and cannot be altered. | 
+**institution_name** | **str** | Name of institution holding the account. This field is set by Plaid and cannot be altered. | 
+**status** | **str** | Denotes the current status of the account within Lunch Money. Must be one of&lt;br&gt; - &#x60;active&#x60;: Account is active and in good state&lt;br&gt; - &#x60;inactive&#x60;: Account marked inactive from user. No transactions fetched or balance update for this account.&lt;br&gt; - &#x60;relink&#x60;: Account needs to be relinked with Plaid.&lt;br&gt; - &#x60;syncing&#x60;: Account is awaiting first import of transactions. &lt;br&gt; - &#x60;not found&#x60;: Account cannot be found with Plaid&lt;br&gt; - &#x60;not supported&#x60;: Account is not supported with Plaid&lt;br&gt; - &#x60;error&#x60;: Account is in error with Plaid.&lt;br&gt; | 
+**allow_transaction_modifications** | **bool** | Is false if the \&quot;Allow Modification To Transactions\&quot; property for this account has been toggled off.  Otherwise it is set to true. | 
+**limit** | **float** | Optional credit limit of the account. This field is set by Plaid and cannot be altered | 
+**balance** | **str** | Current balance of the account in numeric format to 4 decimal places. This field is set by Plaid and cannot be altered. | 
+**currency** | **str** | Three-letter lowercase currency code of the account balance | 
+**balance_last_update** | **datetime** | Date balance was last updated in ISO 8601 extended format. This field is set by Plaid and cannot be altered. | 
+**import_start_date** | **date** | Date of earliest date allowed for importing transactions. Transactions earlier than this date are not imported. | 
+**last_import** | **datetime** | Timestamp in ISO 8601 extended format of the last time Lunch Money imported new data from Plaid for this account. | 
+**last_fetch** | **datetime** | Timestamp in ISO 8601 extended format of the last successful request from Lunch Money for updated data or timestamps from Plaid in ISO 8601 extended format (not necessarily date of last successful import) | 
+**plaid_last_successful_update** | **datetime** | Timestamp in ISO 8601 extended format of the last time Plaid successfully connected with institution for new transaction updates, regardless of whether any new data was available in the update. | 
+
+## Example
+
+```python
+from lunchable.models.plaid_account_object import PlaidAccountObject
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of PlaidAccountObject from a JSON string
+plaid_account_object_instance = PlaidAccountObject.from_json(json)
+# print the JSON string representation of the object
+print(PlaidAccountObject.to_json())
+
+# convert the object into a dict
+plaid_account_object_dict = plaid_account_object_instance.to_dict()
+# create an instance of PlaidAccountObject from a dict
+plaid_account_object_from_dict = PlaidAccountObject.from_dict(plaid_account_object_dict)
+```
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
