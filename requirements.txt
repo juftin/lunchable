@@ -54,7 +54,7 @@ importlib-metadata==7.0.1
     #   lunchable
 lunchable-primelunch==1.0.1
     # via hatch.envs.default
-lunchable-pushlunch==1.0.1
+lunchable-pushlunch==1.1.0
     # via hatch.envs.default
 lunchable-splitlunch==1.0.1
     # via hatch.envs.default

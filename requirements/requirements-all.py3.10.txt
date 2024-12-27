@@ -40,9 +40,7 @@ click-plugins==1.1.1
     #   hatch.envs.all.py3.10
     #   lunchable
 coverage==7.4.1
-    # via
-    #   coverage
-    #   pytest-cov
+    # via pytest-cov
 exceptiongroup==1.2.0
     # via
     #   anyio
@@ -69,7 +67,7 @@ iniconfig==2.0.0
     # via pytest
 lunchable-primelunch==1.0.1
     # via hatch.envs.all.py3.10
-lunchable-pushlunch==1.0.1
+lunchable-pushlunch==1.1.0
     # via hatch.envs.all.py3.10
 lunchable-splitlunch==1.0.1
     # via hatch.envs.all.py3.10

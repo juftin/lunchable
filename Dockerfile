@@ -1,7 +1,7 @@
 ARG BASE_IMAGE
-FROM ${BASE_IMAGE:-python:3.11-slim}
+FROM ${BASE_IMAGE:-python:3.12-slim}
 
-MAINTAINER Justin Flannery "juftin@juftin.com"
+LABEL org.opencontainers.image.authors="justin.flannery@juftin.com"
 
 RUN apt-get update && apt-get install -y jq && apt-get clean
 
