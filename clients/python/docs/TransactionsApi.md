@@ -2,10 +2,11 @@
 
 All URIs are relative to *https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2*
 
-| Method                                                                      | HTTP request                  | Description              |
-| --------------------------------------------------------------------------- | ----------------------------- | ------------------------ |
-| [**delete_transaction_by_id**](TransactionsApi.md#delete_transaction_by_id) | **DELETE** /transactions/{id} | Delete a transaction     |
-| [**get_transaction_by_id**](TransactionsApi.md#get_transaction_by_id)       | **GET** /transactions/{id}    | Get a single transaction |
+| Method                                                                      | HTTP request                  | Description                    |
+| --------------------------------------------------------------------------- | ----------------------------- | ------------------------------ |
+| [**delete_transaction_by_id**](TransactionsApi.md#delete_transaction_by_id) | **DELETE** /transactions/{id} | Delete a transaction           |
+| [**get_transaction_by_id**](TransactionsApi.md#get_transaction_by_id)       | **GET** /transactions/{id}    | Get a single transaction       |
+| [**update_transaction**](TransactionsApi.md#update_transaction)             | **PUT** /transactions/{id}    | Update an existing transaction |
 
 # **delete_transaction_by_id**
 
@@ -173,6 +174,99 @@ with lunchable.ApiClient(configuration) as api_client:
 | Status code | Description                                                                                            | Response headers |
 | ----------- | ------------------------------------------------------------------------------------------------------ | ---------------- |
 | **200**     | Transaction Object with the requested transaction.                                                     | -                |
+| **400**     | Bad Request                                                                                            | -                |
+| **401**     | Unauthorized. This error occurs when an invalid API token is passed to the request.                    | -                |
+| **404**     | Not Found                                                                                              | -                |
+| **429**     | Too Many Requests. Retry your request after the number of seconds specified in the retry-after header. | -                |
+| **500**     | Internal Server Error. Contact support.                                                                | -                |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **update_transaction**
+
+> TransactionObject update_transaction(id, update_transaction_object, update_balance=update_balance)
+
+Update an existing transaction
+
+Updates an existing transaction. You may submit the response from a `GET /transactions/{id}` as the request body which includes system created properties such as `id`, however only the `category_id`, `payee`, `notes`, `date`, `amount`, `currency`, `status`, `asset_id`, `plaid_account_id`, `recurring_id`, `tag_ids`, `additional_tag_ids`, `external_id`, and `custom_metadata` properties can be updated using this API. It is also possible to provide only the properties to be updated in the request body, as long as the request includes at least one of the properties listed above. For example a request body that contains only an `id` attribute is valid. Transactions that have been previously split or grouped may not be modified by this endpoint.
+
+### Example
+
+-   Api Key Authentication (cookieAuth):
+-   Bearer (JWT) Authentication (bearerSecurity):
+
+```python
+import lunchable
+from lunchable.models.transaction_object import TransactionObject
+from lunchable.models.update_transaction_object import UpdateTransactionObject
+from lunchable.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lunchable.Configuration(
+    host = "https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: cookieAuth
+configuration.api_key['cookieAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['cookieAuth'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): bearerSecurity
+configuration = lunchable.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with lunchable.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lunchable.TransactionsApi(api_client)
+    id = 2112140361 # int | ID of the transaction to update
+    update_transaction_object = {"category_id":315162} # UpdateTransactionObject |
+    update_balance = True # bool | Set this to `false` to skip updating the transaction's associated account balance.  Default behavior is to update balances. (optional)
+
+    try:
+        # Update an existing transaction
+        api_response = api_instance.update_transaction(id, update_transaction_object, update_balance=update_balance)
+        print("The response of TransactionsApi->update_transaction:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling TransactionsApi->update_transaction: %s\n" % e)
+```
+
+### Parameters
+
+| Name                          | Type                                                      | Description                                                                                                                              | Notes      |
+| ----------------------------- | --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| **id**                        | **int**                                                   | ID of the transaction to update                                                                                                          |
+| **update_transaction_object** | [**UpdateTransactionObject**](UpdateTransactionObject.md) |                                                                                                                                          |
+| **update_balance**            | **bool**                                                  | Set this to &#x60;false&#x60; to skip updating the transaction&#39;s associated account balance. Default behavior is to update balances. | [optional] |
+
+### Return type
+
+[**TransactionObject**](TransactionObject.md)
+
+### Authorization
+
+[cookieAuth](../README.md#cookieAuth), [bearerSecurity](../README.md#bearerSecurity)
+
+### HTTP request headers
+
+-   **Content-Type**: application/json
+-   **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                                                                                            | Response headers |
+| ----------- | ------------------------------------------------------------------------------------------------------ | ---------------- |
+| **201**     | Transaction successfully updated                                                                       | -                |
 | **400**     | Bad Request                                                                                            | -                |
 | **401**     | Unauthorized. This error occurs when an invalid API token is passed to the request.                    | -                |
 | **404**     | Not Found                                                                                              | -                |

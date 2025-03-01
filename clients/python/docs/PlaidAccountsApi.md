@@ -182,7 +182,7 @@ with lunchable.ApiClient(configuration) as api_client:
 
 # **trigger_plaid_account_fetch**
 
-> bool trigger_plaid_account_fetch(start_date=start_date, end_date=end_date, plaid_account_id=plaid_account_id)
+> bool trigger_plaid_account_fetch(start_date=start_date, end_date=end_date, id=id)
 
 Trigger Fetch from Plaid
 
@@ -226,11 +226,11 @@ with lunchable.ApiClient(configuration) as api_client:
     api_instance = lunchable.PlaidAccountsApi(api_client)
     start_date = '2013-10-20' # date | Denotes the beginning of the time period to fetch transactions for. If omitted, the most recent transactions will be returned. <br> Required if end_date exists. <br> (optional)
     end_date = '2013-10-20' # date | Denotes the end of the time period you'd like to get transactions for. Required if start_date exists.  (optional)
-    plaid_account_id = 119807 # int | Specific ID of a plaid account to fetch. If not set the endpoint will trigger a fetch for all eligible accounts. (optional)
+    id = 119807 # int | Specific ID of a plaid account to fetch. If not set the endpoint will trigger a fetch for all eligible accounts. (optional)
 
     try:
         # Trigger Fetch from Plaid
-        api_response = api_instance.trigger_plaid_account_fetch(start_date=start_date, end_date=end_date, plaid_account_id=plaid_account_id)
+        api_response = api_instance.trigger_plaid_account_fetch(start_date=start_date, end_date=end_date, id=id)
         print("The response of PlaidAccountsApi->trigger_plaid_account_fetch:\n")
         pprint(api_response)
     except Exception as e:
@@ -239,11 +239,11 @@ with lunchable.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-| Name                 | Type     | Description                                                                                                                                                                       | Notes      |
-| -------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| **start_date**       | **date** | Denotes the beginning of the time period to fetch transactions for. If omitted, the most recent transactions will be returned. &lt;br&gt; Required if end_date exists. &lt;br&gt; | [optional] |
-| **end_date**         | **date** | Denotes the end of the time period you&#39;d like to get transactions for. Required if start_date exists.                                                                         | [optional] |
-| **plaid_account_id** | **int**  | Specific ID of a plaid account to fetch. If not set the endpoint will trigger a fetch for all eligible accounts.                                                                  | [optional] |
+| Name           | Type     | Description                                                                                                                                                                       | Notes      |
+| -------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| **start_date** | **date** | Denotes the beginning of the time period to fetch transactions for. If omitted, the most recent transactions will be returned. &lt;br&gt; Required if end_date exists. &lt;br&gt; | [optional] |
+| **end_date**   | **date** | Denotes the end of the time period you&#39;d like to get transactions for. Required if start_date exists.                                                                         | [optional] |
+| **id**         | **int**  | Specific ID of a plaid account to fetch. If not set the endpoint will trigger a fetch for all eligible accounts.                                                                  | [optional] |
 
 ### Return type
 
