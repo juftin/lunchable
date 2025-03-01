@@ -2,6 +2,7 @@ openapi: 3.0.2
 info:
     title: Lunch Money API - v2
     description: |-
+        ## Overview
         This is a version of the Lunch Money API described using the the OpenAPI 3.X
         specification.
 
@@ -25,7 +26,7 @@ info:
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
-    version: "2.7.4"
+    version: "2.7.6"
 
 servers:
     - url: https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2
@@ -115,6 +116,9 @@ components:
                     description: Primary currency from user's settings
                     allOf:
                         - $ref: "#/components/schemas/currencyEnum"
+                debits_as_negative:
+                    type: boolean
+                    description: Describes how negative amounts in transactions should be interpreted.
                 api_key_label:
                     type: string
                     nullable: true
@@ -126,6 +130,7 @@ components:
                 - account_id
                 - budget_name
                 - primary_currency
+                - debits_as_negative
                 - api_key_label
             type: object
             additionalProperties: false
@@ -232,7 +237,7 @@ components:
         # `children` attribute.  We create this to ensure that no categories
         # are added to a category group if they have children and are a group
         # We also remove the `is_income`, `exclude_from_budget` and `exclude_from_totals`
-        # attributes since these are inherited from the Category Group
+        # properties since these are inherited from the Category Group
         childCategoryObject:
             type: object
             x-internal: true # Don't display in schemas section of docs
@@ -254,6 +259,18 @@ components:
                     nullable: true
                     description: The description of the category or `null` if not set.
                     maxLength: 200
+                is_income:
+                    type: boolean
+                    nullable: false
+                    description: If true, the transactions in this category will be treated as income. Inherited from Category Group.
+                exclude_from_budget:
+                    type: boolean
+                    nullable: false
+                    description: If true, the transactions in this category will be excluded from the budget. Inherited from Category Group.
+                exclude_from_totals:
+                    type: boolean
+                    nullable: false
+                    description: If true, the transactions in this category will be excluded from totals. Inherited from Category Group.
                 updated_at:
                     type: string
                     format: date-time
@@ -296,6 +313,9 @@ components:
                 - id
                 - name
                 - description
+                - is_income
+                - exclude_from_budget
+                - exclude_from_totals
                 - updated_at
                 - created_at
                 - group_id
@@ -377,16 +397,22 @@ components:
                     default: []
                     nullable: false
                     description:
-                        The list of category objects, or category IDs to add to the new category
-                        group. This attribute should only be set if "group_id" is set
+                        The list of existing category objects, or existing category IDs or names of new categories to add to the new category
+                        group. This attribute should only be set if "is_group" is also set
                         to true.<br>
-                        The categories or IDs specified must
-                        all be or belong to existing categories that are not already part of a
-                        category group or are themselves category groups.<br>
-                        It is permissible to provide both full category objects and IDs.
+                        The categories or IDs specified must already exist and not belong to
+                        an existing category group.  Categories that already
+                        belong to another category group will be moved.  If strings are
+                        specified, they will be used as the names of new categories that will
+                        be added to the new category group. The request will fail if any names
+                        are the same as the name of an existing category.<br>
+                        It is permissible to provide both full category objects and IDs as well
+                        as strings for names in the same request.
                     items:
                         oneOf:
                             - type: integer
+                            - type: string
+                              maxLength: 100
                             - $ref: "#/components/schemas/childCategoryObject"
             required:
                 - name
@@ -448,17 +474,24 @@ components:
                         or vice versa.
                 children:
                     type: array
+                    default: []
                     nullable: false
                     description:
-                        If set the list of categories or category IDs to set as children of this
-                        category group. This attribute should only be set if the category is
-                        already a group. <br>
-                        The categories or IDs specified must all be or belong to existing categories that are not
-                        already part of a category group or are themselves category groups.<br>
-                        It is permissible to provide both full category objects and IDs.
+                        The list of existing category objects, or existing category IDs or names of new categories to add to the new category
+                        group. This attribute should only be set if modifying an existing category group.<br>
+                        The categories or IDs specified must already exist and not belong to
+                        an existing category group.  Categories that already
+                        belong to another category group will be moved.  If strings are
+                        specified, they will be used as the names of new categories that will
+                        be added to the new category group. The request will fail if any names
+                        are the same as the name of an existing category.<br>
+                        It is permissible to provide both full category objects and IDs as well
+                        as strings for names in the same request.
                     items:
                         oneOf:
                             - type: integer
+                            - type: string
+                              maxLength: 100
                             - $ref: "#/components/schemas/childCategoryObject"
                 id:
                     type: integer
@@ -472,13 +505,15 @@ components:
                         (in the ISO 8601 extended format).  Ignored if set.
                 updated_at:
                     type: string
-                    nullable: true
+                    format: date-time
+                    nullable: false
                     description:
                         System set date and time of when the category was last updated
                         (in the ISO 8601 extended format). Ignored if set.
                 created_at:
                     type: string
-                    nullable: true
+                    format: date-time
+                    nullable: false
                     description:
                         System set date and time of when the category was created
                         (in the ISO 8601 extended format).  Ignored if set.
@@ -539,15 +574,16 @@ components:
                     description: Date of transaction in ISO 8601 format
                 amount:
                     type: string
-                    description: Amount of the transaction in numeric format to 4 decimal places
+                    description: Amount of the transaction in numeric format to 4 decimal places. By default a negative value indicates a debit transaction, however if the user's `debits_as_negative` property is set to false the opposite is true.
                 currency:
                     description: Three-letter lowercase currency code of the transaction in ISO 4217 format
+                    # $ref: '#/components/schemas/currencyEnum'
                     allOf:
                         - $ref: "#/components/schemas/currencyEnum"
                 to_base:
                     type: number
                     format: double
-                    description: The amount converted to the user's primary currency. If the multi-currency feature is not being used, to_base and amount will be the same.
+                    description: The amount converted to the user's primary currency. If the multi-currency feature is not being used, to_base and amount will be the same. By default a negative value indicates a debit transaction, however if the user's `debits_as_negative` property is set to false the opposite is true.
                 recurring_id:
                     type: integer
                     format: int64
@@ -622,6 +658,7 @@ components:
                         but they can be queried directly by their ID.
                 children:
                     type: array
+                    nullable: false
                     description: Exists only for transactions which are the parent of a
                         split transaction, and contains a list of the associated
                         transactions that it was split into. By default
@@ -677,6 +714,7 @@ components:
                         Transaction" in the Lunch Money GUI.
                 tag_ids:
                     type: array
+                    nullable: false
                     description: A list of tag_ids for the tags associated with this
                         transaction.  If the transaction has no tags this will be an
                         empty list.<br>
@@ -734,7 +772,6 @@ components:
                     description:
                         If requested, the transaction's custom_metadata that was included when
                         the transaction was inserted via the API. This will be a json object, but the schema is variable.
-                        This will only be present for transactions associated with a manual account.
             required:
                 - id
                 - date
@@ -775,7 +812,7 @@ components:
                           format: double
                         - type: string
                           pattern: '^-?\d+(\.\d{1,4})?$'
-                    description: Numeric value of amount. i.e. $4.25 should be denoted as 4.25. Can be a string or a number in double format.
+                    description: Numeric value of amount. i.e. $4.25 should be denoted as 4.25. Can be a string or a number in double format. Regardless of the value of the user's `debits_as_negative` property, transactions with positive amounts are treated as debits. Set the amount to a negative value to insert a credit transaction.
                 currency:
                     description: Three-letter lowercase currency code of the transaction in ISO 4217 format. Must match one of the [supported currencies]().  If not set defaults to the user account's primary currency.
                     allOf:
@@ -831,6 +868,7 @@ components:
                         - unreviewed
                 tag_ids:
                     type: array
+                    nullable: false
                     description: A list of IDs for the tags associated with this
                         transaction.  Each ID must match an existing tag associated with the user's account.
                         If not set, no tags will be associated with the created transaction.
@@ -856,6 +894,284 @@ components:
             required:
                 - date
                 - amount
+
+        # The object that may be submitted to PUT /transactions/:id
+        # System set properties such as id and created_at are tolerated but ignored
+        updateTransactionObject:
+            type: object
+            additionalProperties: false
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                    description: System defined unique identifier of this transaction. Ignored if set.
+                date:
+                    type: string
+                    format: date
+                    description: Date of transaction in ISO 8601 format
+                amount:
+                    oneOf:
+                        - type: number
+                          format: double
+                        - type: string
+                          pattern: '^-?\d+(\.\d{1,4})?$'
+                    description: |
+                        Numeric value of amount. i.e. $4.25 should be denoted as 4.25. Can be a string or a number in double format. Regardless of the value of the user's `debits_as_negative` property, transactions with positive amounts are treated as debits. Set the amount to a negative value to insert a credit transaction.<br>
+                        May not be updated on transactions that belong to a synced account with the "Allow Modifications to Transactions" property disabled.
+                currency:
+                    description:
+                        Three-letter lowercase currency code of the transaction in ISO 4217 format.<br>
+                        May not be updated on transactions that belong to a synced account with the "Allow Modifications to Transactions" property disabled.
+                    allOf:
+                        - $ref: "#/components/schemas/currencyEnum"
+                to_base:
+                    type: number
+                    format: double
+                    description: System defined amount of this transaction in the user's primary currency. Ignored if set.
+                recurring_id:
+                    type: integer
+                    format: int64
+                    nullable: true
+                    description: The unique identifier of the associated
+                        recurring item that this transaction matches.
+                overrides:
+                    description: The system defined properties of a transaction that were overridden due to a recurring rule.  Ignored if set.
+                    allOf:
+                        - $ref: "#/components/schemas/transactionOverridesObject"
+                payee:
+                    type: string
+                    description: |
+                        The new payee for the transaction.
+                    minLength: 0
+                    maxLength: 140
+                category_id:
+                    type: integer
+                    format: int64
+                    nullable: true
+                    description: Unique identifier of the category for this transaction.
+                        Set this to 0 to clear the transaction's category.
+                notes:
+                    type: string
+                    nullable: true
+                    description: |
+                        New notes for the transaction.  Set this to an empty string to clear the existing notes.
+                    minLength: 0
+                    maxLength: 350
+                status:
+                    type: string
+                    description: |
+                        Status of the transaction, may be one of:
+                        - `reviewed`: User has reviewed the transaction, or it was automatically marked as reviewed due to reviewed recurring_item logic
+                        - `unreviewed`: User has not reviewed the transaction and it does not match any reviewed recurring_items.
+                    enum:
+                        - reviewed
+                        - unreviewed
+                is_pending:
+                    type: boolean
+                    description: System defined flag set for pending transactions.  Ignored if set.
+                created_at:
+                    type: string
+                    format: date-time
+                    description: System defined date and time of when the transaction was created. Ignored if set.
+                updated_at:
+                    type: string
+                    format: date-time
+                    description: System defined date and time of when the transaction was last updated. Ignored if set.
+                is_parent:
+                    type: boolean
+                    description:
+                        System defined boolean indicating if this transaction was split.  Ignored if set.
+                        To split or unsplit a transaction use the `/transactions/split` endpoint.
+                children:
+                    type: array
+                    nullable: false
+                    description:
+                        An array of child transactions that exists when a transaction has been split
+                        or if the transaction is a group.  Ignored if set.   Split and Grouped transactions may
+                        not be modified this API.
+                parent_id:
+                    type: integer
+                    format: int64
+                    nullable: true
+                    description:
+                        A transaction ID if this is a split transaction. Ignored if set.
+                        Split transactions may not be modified this API.  Use the `transactions/split` endpoint instead.
+                    items:
+                        type: number
+                is_group:
+                    type: boolean
+                    description:
+                        System defined boolean indicating if this transaction represents a group of
+                        transactions. Ignored if set. Grouped transactions may not be modified with this API.
+                        Use the `transactions/group` endpoint instead.
+                group_id:
+                    type: integer
+                    format: int64
+                    nullable: true
+                    description:
+                        A transaction group ID if this transaction is part of a group.
+                        Ignored if set. Grouped transactions may not be modified with this API.
+                        Use the `transactions/group` endpoint instead.
+                manual_account_id:
+                    type: integer
+                    format: int64
+                    nullable: true
+                    description:
+                        The unique identifier of the manual account associated with
+                        this transaction. Set this to zero to disassociate the transaction with an
+                        account. If set `plaid_account_id` may not also be set to a non
+                        zero value. Moving an existing transaction to to another account
+                        will not work if the transaction belongs to a synced account who's "Allow Modifications to Transactions" property
+                        is not set.
+                plaid_account_id:
+                    type: integer
+                    format: int64
+                    nullable: true
+                    description:
+                        The unique identifier of the plaid account associated with
+                        this transaction.  If set `manual_account_id` may not also be set to a non
+                        zero value.  Moving an existing transaction to to an existing Plaid account
+                        will not work if the account's "Allow Modifications to Transactions" property
+                        is not set.
+                tag_ids:
+                    type: array
+                    nullable: false
+                    description: A list of tag_ids for the tags associated with this
+                        transaction.  If set, this property will overwrite any existing tags.  Use
+                        `additional_tag_ids` to add tags to the existing transaction's tags.  Set this to
+                        an empty array to remove all tags from a transaction. If set `additional_tag_ids` may
+                        not be set.
+                    items:
+                        type: integer
+                        format: int64
+                additional_tag_ids:
+                    type: array
+                    nullable: false
+                    description: A list of tag_ids for the tags associated with this
+                        transaction.  If set, the tags listed in this property be added to any existing
+                        transaction tags. Use `tag_ids` to overwrite or clear transaction tags.
+                        If set `tag_ids` may not be set.
+                    items:
+                        type: integer
+                        format: int64
+                source:
+                    type: string
+                    nullable: true
+                    description: |
+                        System defined original source of the transaction.  Ignored if set.
+                    enum:
+                        - api
+                        - csv
+                        - manual
+                        - merge
+                        - plaid
+                        - recurring
+                        - rule
+                        - split
+                        - user
+                external_id:
+                    type: string
+                    nullable: true
+                    description:
+                        A user-defined external ID for the transaction. The update will fail
+                        if the transaction does not also have a `manual_account_id` or if there is already
+                        an existing transaction with the same `manual_account_id`/`external_id` combination.
+                    minLength: 0
+                    maxLength: 75
+                plaid_metadata:
+                    type: object
+                    description: System set metadata from a Plaid account sync.  Ignored if set.
+                custom_metadata:
+                    type: object
+                    description: User defined JSON data that can be set or cleared via the API.
+
+        # The object that describes the properties to be updated in a bulk PUT /transactions request
+        bulkUpdateTransactionsObject:
+            type: object
+            additionalProperties: false
+            properties:
+                date:
+                    type: string
+                    format: date
+                    description: New date for all transactions in ISO 8601 format
+                payee:
+                    type: string
+                    description: |
+                        New payee for all transactions.
+                    minLength: 0
+                    maxLength: 140
+                category_id:
+                    type: integer
+                    format: int64
+                    nullable: true
+                    description:
+                        Unique identifier of the new category to assign to all transactions.
+                        Set this to 0 to un-categorize all transactions.
+                notes:
+                    type: string
+                    nullable: true
+                    description: |
+                        A new notes for all transactions. Set this to an empty string to remove all existing notes.
+                    minLength: 0
+                    maxLength: 350
+                currency:
+                    description:
+                        Three-letter lowercase currency code in ISO 4217 format for all transactions.<br>
+                        This cannot be set if any of the transactions belong to a synced account whose "Allow Modifications to Transactions" property is not set.
+                    allOf:
+                        - $ref: "#/components/schemas/currencyEnum"
+                manual_account_id:
+                    type: integer
+                    format: int64
+                    nullable: true
+                    description:
+                        The unique identifier of the manual account to associate all
+                        transactions with.  Should not be set if `plaid_account_id` is also be set, unless
+                        both properties are set to 0 in which case the transactions will have no account
+                        and be displayed as "Cash Transactions".<br>
+                        This cannot be set if any of the transactions belong to a synced account whose "Allow Modifications to Transactions" property is not set.
+                plaid_account_id:
+                    type: integer
+                    format: int64
+                    nullable: true
+                    description:
+                        The unique identifier of the plaid synced account to associate all
+                        transactions with.  Should not be set if `manual_account_id` is also be set, unless
+                        both properties are set to 0 in which case the transactions will have no account
+                        and be displayed as "Cash Transactions". <br>
+                        This cannot be set if any of the transactions belong to a synced account whose "Allow Modifications to Transactions" property is not set.
+                        Similarly existing transactions cannot be moved to to an existing Plaid account
+                        without this property.
+                tag_ids:
+                    type: array
+                    nullable: false
+                    description: A list of tag_ids for tags to associated with all
+                        transactions.  If set, this property will overwrite any existing tags.  Use
+                        `additional_tag_ids` to add tags to the existing transactions' tags.  Set this to
+                        an empty array to remove all tags from a transaction. If set `additional_tag_ids` may
+                        not be set.
+                    items:
+                        type: integer
+                        format: int64
+                additional_tag_ids:
+                    type: array
+                    nullable: false
+                    description: A list of tag_ids for the tags associated with this
+                        transaction.  If set, the tags listed in this property be added to any existing
+                        transaction tags. Use `tag_ids` to overwrite or clear transaction tags.
+                        If set `tag_ids` may not be set.
+                    items:
+                        type: integer
+                        format: int64
+                status:
+                    type: string
+                    description: |
+                        Updated status for all of the transactions, may be one of:
+                        - `reviewed`: User has reviewed the transaction
+                        - `unreviewed`: User has not reviewed the transaction
+                    enum:
+                        - reviewed
+                        - unreviewed
 
         splitTransactionObject:
             type: object
@@ -946,9 +1262,17 @@ components:
                     description: Optional display name for the account set by the user
                 balance:
                     type: string
-                    pattern: "^-?\\d+(\\.\\d{0,4})?$"
+                    pattern: '^-?\d+(\.\d{1,4})?$'
                     description: Current balance of the account in numeric format to
                         4 decimal places.
+                currency:
+                    type: string
+                    minLength: 3
+                    maxLength: 3
+                    description: Three-letter lowercase currency code of the account balance
+                to_base:
+                    type: number
+                    description: The balance converted to the user's primary currency
                 balance_as_of:
                     type: string
                     format: date-time
@@ -958,11 +1282,6 @@ components:
                     format: date
                     nullable: true
                     description: The date this account was closed. Will be null if the account has not been marked as closed
-                currency:
-                    type: string
-                    minLength: 3
-                    maxLength: 3
-                    description: Three-letter lowercase currency code of the account balance
                 institution_name:
                     type: string
                     nullable: true
@@ -977,6 +1296,7 @@ components:
                     description: An optional external_id that may be set or updated via the API
                 exclude_from_transactions:
                     type: boolean
+                    default: false
                     description: If true, this account will not show up as an option for
                         assignment when creating transactions manually
                 created_at:
@@ -987,21 +1307,22 @@ components:
                     type: string
                     format: date-time
                     description: Date/time the account was created in ISO 8601 extended format
-                    required:
-                        - id
-                        - name
-                        - type
-                        - subtype
-                        - display_name
-                        - balance
-                        - balance_as_of
-                        - closed_on
-                        - currency
-                        - institution_name\
-                        - external_id
-                        - exclude_from_transactions
-                        - created_at
-                        - updated_at
+            required:
+                - id
+                - name
+                - type
+                - subtype
+                - display_name
+                - balance
+                - currency
+                - to_base
+                - balance_as_of
+                - closed_on
+                - institution_name
+                - external_id
+                - exclude_from_transactions
+                - created_at
+                - updated_at
 
         # The request object for POST /manual_accounts
         # Prevent user from submitting any system created fields in a POST request
@@ -1032,9 +1353,13 @@ components:
                     description: Display name of the account as set by user.
                     example: Savings
                 balance:
-                    type: string
+                    oneOf:
+                        - type: number
+                          format: double
+                        - type: string
+                          pattern: '^-?\d+(\.\d{1,4})?$'
                     example: "195.50"
-                    description: Numeric value of the current balance of the account as a string. Do not include any special characters aside from a decimal point.
+                    description: Numeric value of the current balance, up to four decimal places, of the account as a number or string. Do not include any special characters aside from a decimal point.
                 balance_as_of:
                     type: string
                     format: date
@@ -1107,10 +1432,13 @@ components:
                     nullable: true
                     description: If set, an optional display name for the account.
                 balance:
-                    type: string
-                    description:
-                        If set, the new balance of the account.  This is a string in numeric format to
-                        4 decimal places.
+                    oneOf:
+                        - type: number
+                          format: double
+                        - type: string
+                          pattern: '^-?\d+(\.\d{1,4})?$'
+                    example: "195.50"
+                    description: Numeric value of the current balance, up to four decimal places, of the account as a number or string. Do not include any special characters aside from a decimal point.
                 balance_as_of:
                     type: string
                     format: date-time
@@ -1223,6 +1551,9 @@ components:
                     minLength: 3
                     maxLength: 3
                     description: Three-letter lowercase currency code of the account balance
+                to_base:
+                    type: number
+                    description: The balance converted to the user's primary currency
                 balance_last_update:
                     type: string
                     format: date-time
@@ -1260,6 +1591,7 @@ components:
                 - limit
                 - balance
                 - currency
+                - to_base
                 - balance_last_update
                 - import_start_date
                 - last_import
@@ -1620,6 +1952,7 @@ components:
                 - real estate
                 - vehicle
         # Define the allowed types for the 3 letter currency codes
+        # CSpell: disable
         currencyEnum:
             type: string
             description: |
@@ -1949,6 +2282,7 @@ components:
                 - zar
                 - zmw
                 - zwl
+        # CSpell: enable
 
     responses:
         # errors
@@ -2480,20 +2814,20 @@ paths:
 
 
                 You may submit the response from a `GET /categories/{id}` as the
-                request body which includes system created attributes such as `id`
+                request body which includes system created properties such as `id`
                 or `created_at`, however only the `name`, `description`, `is_income`,
                 `exclude_from_budget`, `exclude_from_totals`, `archived`, `group_id`, `order`
                 and `children` can be updated using this API.
 
 
-                It is also possible to provide only the attribute(s) to be
+                It is also possible to provide only the properties to be
                 updated in the request body, as long as the request includes at least
-                one of the attributes listed above. For example a request body that
-                contains only a `name` attribute is valid.
+                one of the properties listed above. For example a request body that
+                contains only a `name` property is valid.
 
                 It is not possible to use this API to convert a category to a category
                 group, or a vice versa, so while submitting a request body with the
-                `is_group` attribute is tolerated, it will result in an error response if
+                `is_group` property is tolerated, it will result in an error response if
                 the value is changed.
 
 
@@ -2534,11 +2868,11 @@ paths:
                         schema:
                             $ref: "#/components/schemas/updateCategoryRequestObject"
                         examples:
-                            Update some category attributes:
+                            Update some category properties:
                                 value:
                                     name: Updated Category Name
                                     description: Updated description of the category
-                            Update same attributes with full object:
+                            Update same properties with full object:
                                 value:
                                     id: 83
                                     name: Updated Category Name
@@ -2623,7 +2957,7 @@ paths:
                             example:
                                 message: "Invalid Request Body"
                                 errors:
-                                    - errMsg: "Cannot modify the 'group_id' attribute of an existing category or category group"
+                                    - errMsg: "Cannot modify the 'group_id' property of an existing category or category group"
                 "401":
                     $ref: "#/components/responses/unauthorizedToken"
                 "404":
@@ -2965,16 +3299,16 @@ paths:
 
 
                 You may submit the response from a `GET /manual_accounts/{id}` as the
-                request body which includes system created attributes such as `id`
+                request body which includes system created properties such as `id`
                 or `created_at`, however only the `name`, `type`, `subtype`,
                 `display_name`, `balance`, `balance_as_of`, `closed_on`, `currency`,
                 `institution_name`, `external_id`, and `exclude_from_transactions` can be updated using this API.
 
 
-                It is also possible to provide only the attribute(s) to be
+                It is also possible to provide only the properties to be
                 updated in the request body, as long as the request includes at least
-                one of the attributes listed above. For example a request body that
-                contains only a `name` attribute is valid.
+                one of the properties listed above. For example a request body that
+                contains only a `name` property is valid.
             operationId: updateManualAccount
             parameters:
                 - name: id
@@ -3337,7 +3671,7 @@ paths:
                   description: >-
                       Denotes the end of the time period you'd like to get transactions
                       for. Required if start_date exists.
-                - name: plaid_account_id
+                - name: id
                   in: query
                   description: Specific ID of a plaid account to fetch. If not set the endpoint will trigger a fetch for all eligible accounts.
                   schema:
@@ -3807,7 +4141,8 @@ paths:
                             properties:
                                 transactions:
                                     type: array
-                                    maxLength: 500
+                                    minItems: 1
+                                    maxItems: 500
                                     description: List of transactions to insert.
                                     items:
                                         $ref: "#/components/schemas/insertTransactionObject"
@@ -3824,7 +4159,7 @@ paths:
                                         If set to true, the system will flag new transactions that have the same
                                         `date`, `payee`, `amount`, and `manual_account_id`, as a duplicate.   Not that deduplication based
                                         on `external_id` and `manual_account_id` will always occur regardless of how this property is set.
-                                # debit_as_negative:
+                                # debits_as_negative:
                                 #   type: boolean
                                 #   default: false
                                 #   description: If set to true, negative amount values will be interpreted as expenses and positive amount values will be interpreted as credits.
@@ -4123,6 +4458,318 @@ paths:
                     $ref: "#/components/responses/rateLimited"
                 "500":
                     $ref: "#/components/responses/serverError"
+        put:
+            tags:
+                - transactions (bulk)
+            summary: Update multiple transactions
+            description: Use this endpoint to modify properties of several transactions in a single request.
+            operationId: updateTransactions
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            additionalProperties: false
+                            properties:
+                                ids:
+                                    type: array
+                                    minItems: 1
+                                    maxItems: 500
+                                    description: List of transaction IDs to update.
+                                    items:
+                                        type: integer
+                                properties_to_update:
+                                    $ref: "#/components/schemas/bulkUpdateTransactionsObject"
+                            required:
+                                - ids
+                                - properties_to_update
+                        #todo update examples
+                        # examples:
+                        #   categorized cash transaction:
+                        #     value:
+                        #       transactions:
+                        #         - date: "2024-12-01"
+                        #           amount: "42.89"
+                        #           payee: Food Town
+                        #           category_id: 315163
+                        #           status: reviewed
+                        #   bare minimum new transaction:
+                        #     value:
+                        #       transactions:
+                        #         - date: "2024-11-01"
+                        #           amount: "99.9900"
+                        #   two new cash transactions:
+                        #     value:
+                        #       transactions:
+                        #         - date: "2024-11-01"
+                        #           amount: "15.00"
+                        #           payee: "Lunch with James"
+                        #           notes: "Cash Transaction"
+                        #           category_id: 315163
+                        #         - date: "2024-11-01"
+                        #           amount: "-9.99"
+                        #           payee: me
+                        #           notes: Interest from Investment Account Cash
+                        #           status: unreviewed
+                        #   with external_id and custom_metadata:
+                        #     value:
+                        #       transactions:
+                        #         - date: "2024-12-01"
+                        #           amount: "19.99"
+                        #           payee: "Test Payee 3"
+                        #           manual_account_id: 219807
+                        #           external_id: "A658214"
+                        #           notes: "API Test created Transaction"
+                        #           custom_metadata:
+                        #             note: "API Test Added Custom MetaData"
+                        #             testNumber: 42
+                        #             testBool: false
+                        #             testArray:
+                        #               - 1
+                        #               - "foo"
+                        #               - false
+                        #               - 42.42
+                        #             testObject:
+                        #               foo: "bar"
+            responses:
+                "200":
+                    description: Transactions successfully updated
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    transactions:
+                                        items:
+                                            $ref: "#/components/schemas/transactionObject"
+                                        type: array
+                                required:
+                                    - transactions
+                            #todo update examples
+                            examples:
+                                categorized cash transaction:
+                                    value:
+                                        transactions:
+                                            - id: 123456789
+                                              date: "2024-12-01"
+                                              amount: "42.89"
+                                              currency: "usd"
+                                              to_base: 42.89
+                                              recurring_id: null
+                                              overrides: {}
+                                              payee: "Food Town"
+                                              category_id: 315163
+                                              notes: null
+                                              status: "reviewed"
+                                              is_pending: false
+                                              created_at: "2024-12-18T04:05:58.072Z"
+                                              updated_at: "2024-12-18T04:05:58.072Z"
+                                              parent_id: null
+                                              is_group: false
+                                              group_id: null
+                                              manual_account_id: null
+                                              plaid_account_id: null
+                                              tag_ids: []
+                                              source: "api"
+                                              external_id: null
+                                              custom_metadata: {}
+                                bare minimum request:
+                                    value:
+                                        transactions:
+                                            - id: 123456789
+                                              date: "2024-11-01"
+                                              amount: "99.99"
+                                              currency: "usd"
+                                              to_base: 99.99
+                                              recurring_id: null
+                                              overrides: {}
+                                              payee: null
+                                              category_id: null
+                                              notes: null
+                                              status: "unreviewed"
+                                              is_pending: false
+                                              created_at: "2024-11-20T16:09:11.544Z"
+                                              updated_at: "2024-11-20T16:09:11.544Z"
+                                              parent_id: null
+                                              is_group: false
+                                              group_id: null
+                                              manual_account_id: null
+                                              plaid_account_id: null
+                                              tag_ids: []
+                                              source: "api"
+                                              external_id: null
+                                              custom_metadata: {}
+                                two new cash transactions:
+                                    value:
+                                        transactions:
+                                            - id: 123456789
+                                              date: "2024-11-01"
+                                              amount: "15.00"
+                                              currency: "usd"
+                                              to_base: 15
+                                              recurring_id: null
+                                              overrides: {}
+                                              payee: "Lunch with James"
+                                              category_id: null
+                                              notes: "Cash Transaction"
+                                              status: "unreviewed"
+                                              is_pending: false
+                                              created_at: "2024-11-20T16:10:23.395Z"
+                                              updated_at: "2024-11-20T16:10:23.395Z"
+                                              parent_id: null
+                                              is_group: false
+                                              group_id: null
+                                              manual_account_id: null
+                                              plaid_account_id: null
+                                              tag_ids: []
+                                              source: "api"
+                                              external_id: null
+                                              custom_metadata: {}
+                                            - id: 123456790
+                                              date: "2024-11-01"
+                                              amount: "-9.99"
+                                              currency: "usd"
+                                              to_base: -9.99
+                                              recurring_id: null
+                                              overrides: {}
+                                              payee: "me"
+                                              category_id: null
+                                              notes: "Interest from Investment Account Cash"
+                                              status: "unreviewed"
+                                              is_pending: false
+                                              created_at: "2024-11-20T16:10:23.395Z"
+                                              updated_at: "2024-11-20T16:10:23.395Z"
+                                              parent_id: null
+                                              is_group: false
+                                              group_id: null
+                                              manual_account_id: null
+                                              plaid_account_id: null
+                                              tag_ids: []
+                                              source: "api"
+                                              external_id: null
+                                              custom_metadata: {}
+                                with external_id and custom_metadata:
+                                    value:
+                                        transactions:
+                                            - id: 123456789
+                                              date: "2024-12-01"
+                                              amount: "19.99"
+                                              currency: "usd"
+                                              to_base: 19.99
+                                              recurring_id: null
+                                              overrides: {}
+                                              payee: "Test Payee 3"
+                                              category_id: null
+                                              notes: "API Test created Transaction"
+                                              status: "unreviewed"
+                                              is_pending: false
+                                              created_at: "2024-11-20T16:15:19.475Z"
+                                              updated_at: "2024-11-20T16:15:19.475Z"
+                                              parent_id: null
+                                              is_group: false
+                                              group_id: null
+                                              manual_account_id: 219807
+                                              plaid_account_id: null
+                                              tag_ids: []
+                                              source: "api"
+                                              external_id: "A658214"
+                                              custom_metadata:
+                                                  note: "API Test Added Custom MetaData"
+                                                  testNumber: 42
+                                                  testBool: false
+                                                  testArray:
+                                                      - 1
+                                                      - "foo"
+                                                      - false
+                                                      - 42.42
+                                                  testObject:
+                                                      foo: "bar"
+                                duplicate_external_ids_ignored:
+                                    value:
+                                        transactions:
+                                            - id: 123456789
+                                              date: "2024-11-01"
+                                              amount: "-9.99"
+                                              currency: "usd"
+                                              to_base: -9.99
+                                              recurring_id: null
+                                              overrides: {}
+                                              payee: "Test Payee 2"
+                                              category_id: null
+                                              notes: "API Test created Transaction"
+                                              status: "unreviewed"
+                                              is_pending: false
+                                              created_at: "2024-11-20T16:24:20.028Z"
+                                              updated_at: "2024-11-20T16:24:20.028Z"
+                                              parent_id: null
+                                              is_group: false
+                                              group_id: null
+                                              manual_account_id: null
+                                              plaid_account_id: null
+                                              tag_ids: []
+                                              source: "api"
+                                              external_id: null
+                                              custom_metadata: {}
+                                        skipped_existing_external_ids:
+                                            - request_transaction_index: 0
+                                              external_id: "12345"
+                                              manual_account_id: 219807
+                                              existing_transaction_id: 2112150651
+                                            - request_transaction_index: 2
+                                              external_id: "67890"
+                                              manual_account_id: 219909
+                                              existing_transaction_id: 2112150723
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/errorResponseObject"
+                            #todo update examples
+                            examples:
+                                invalid ids in id list:
+                                    value:
+                                        message: "Invalid Request Body"
+                                        errors:
+                                            - errMsg: "Transaction 0 manual account ID does not belong to your account. ID: 899999999999999"
+                                              transaction_index: 0
+                                              error: "Invalid Manual Account ID"
+                                              invalid_property: "manual_account_id"
+                                              category_id: 899999999999999
+                                            - errMsg: "Transaction 1 manual account ID does not belong to your account. ID: 999999999999999"
+                                              transaction_index: 1
+                                              error: "Invalid Manual Account ID"
+                                              invalid_property: "manual_account_id"
+                                              category_id: 999999999999999
+                                            - errMsg: "Transaction 2 recurring ID does not belong to your account. ID: 899999999999999"
+                                              transaction_index: 2
+                                              error: "Invalid Recurring ID"
+                                              invalid_property: "recurring_id"
+                                              category_id: 899999999999999
+                                duplicate external_ids within request:
+                                    value:
+                                        message: "Invalid Request Body"
+                                        errors:
+                                            - errMsg: "Duplicate External IDs found in the request body"
+                                              error: "Duplicate External ID"
+                                              transaction_property: "external_id"
+                                              external_id: "12345"
+                                              transaction_indices:
+                                                  - 0
+                                                  - 1
+                                            - errMsg: "Duplicate External IDs found in the request body"
+                                              error: "Duplicate External ID"
+                                              transaction_property: "external_id"
+                                              external_id: "54321"
+                                              transaction_indices:
+                                                  - 2
+                                                  - 3
+                "401":
+                    $ref: "#/components/responses/unauthorizedToken"
+                "429":
+                    $ref: "#/components/responses/rateLimited"
+                "500":
+                    $ref: "#/components/responses/serverError"
         delete:
             tags:
                 - transactions (bulk)
@@ -4148,7 +4795,8 @@ paths:
                                 ids:
                                     type: array
                                     description: Array of existing Transaction IDs to delete
-                                    maxLength: 500
+                                    minItems: 1
+                                    maxItems: 500
                                     items:
                                         type: number
                                         format: int64
@@ -4343,6 +4991,153 @@ paths:
                     $ref: "#/components/responses/rateLimited"
                 "500":
                     $ref: "#/components/responses/serverError"
+        put:
+            tags:
+                - transactions
+            summary: Update an existing transaction
+            description: Updates an existing transaction.
+
+
+                You may submit the response from a `GET /transactions/{id}` as the
+                request body which includes system created properties such as `id`,
+                however only the `category_id`, `payee`, `notes`, `date`, `amount`,
+                `currency`, `status`, `asset_id`, `plaid_account_id`, `recurring_id`,
+                `tag_ids`, `additional_tag_ids`, `external_id`, and `custom_metadata`
+                properties can be updated using this API.
+
+
+                It is also possible to provide only the properties to be
+                updated in the request body, as long as the request includes at least
+                one of the properties listed above. For example a request body that
+                contains only an `id` attribute is valid.
+
+
+                Transactions that have been previously split or grouped may not be
+                modified by this endpoint.
+            operationId: updateTransaction
+            parameters:
+                - name: id
+                  in: path
+                  description: ID of the transaction to update
+                  required: true
+                  schema:
+                      type: integer
+                  examples:
+                      # TODO Update examples
+                      basic transaction:
+                          summary: Basic transaction by id request
+                          value: 2112140361
+                      id not found:
+                          summary: Example of an id that doesn't exist
+                          value: 9999999999999
+                - name: update_balance
+                  in: query
+                  description: Set this to `false` to skip updating the transaction's
+                      associated account balance.  Default behavior is to update balances.
+                  required: false
+                  schema:
+                      type: boolean
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/updateTransactionObject"
+                        examples:
+                            # TODO Add More Examples
+                            update categories simple:
+                                value:
+                                    category_id: 315162
+                            update transaction category with previous get response:
+                                value:
+                                    id: 2112140361
+                                    date: "2024-12-09"
+                                    amount: "300.00"
+                                    currency: "usd"
+                                    to_base: 300
+                                    recurring_id: null
+                                    overrides: null
+                                    payee: "Best Buy"
+                                    category_id: 315162
+                                    notes: "Electronics"
+                                    status: "reviewed"
+                                    is_pending: false
+                                    created_at: "2024-12-09T17:00:06.192Z"
+                                    updated_at: "2024-12-09T17:00:06.733Z"
+                                    is_parent: false
+                                    parent_id: null
+                                    is_group: false
+                                    group_id: null
+                                    manual_account_id: null
+                                    plaid_account_id: 119810
+                                    tag_ids: []
+                                    source: "plaid"
+                                    external_id: null
+            responses:
+                "201":
+                    description: Transaction successfully updated
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/transactionObject"
+                            examples:
+                                # TODO Update Examples
+                                transaction with updated category:
+                                    value:
+                                        id: 2112140361
+                                        date: "2024-12-09"
+                                        amount: "300.00"
+                                        currency: "usd"
+                                        to_base: 300
+                                        recurring_id: null
+                                        overrides: null
+                                        payee: "Best Buy"
+                                        category_id: 315162
+                                        notes: "Electronics"
+                                        status: "reviewed"
+                                        is_pending: false
+                                        created_at: "2024-12-09T17:00:06.192Z"
+                                        updated_at: "2024-12-09T17:00:06.733Z"
+                                        is_parent: false
+                                        parent_id: null
+                                        is_group: false
+                                        group_id: null
+                                        manual_account_id: null
+                                        plaid_account_id: 119810
+                                        tag_ids: []
+                                        source: "plaid"
+                                        external_id: null
+                "400":
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/errorResponseObject"
+                            example:
+                                message: "Request Validation Failure"
+                                errors:
+                                    - errMsg: "must be integer"
+                                      instancePath: "/path/id"
+                                      schemaPath: "#/properties/path/properties/id/type"
+                                      keyword: "type"
+                                      params:
+                                          type: "integer"
+                "401":
+                    $ref: "#/components/responses/unauthorizedToken"
+                "404":
+                    description: Not Found
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/errorResponseObject"
+                            example:
+                                message: Not Found
+                                errors:
+                                    - errMsg: There is no transaction with the id:'543210'`
+                "429":
+                    $ref: "#/components/responses/rateLimited"
+                "500":
+                    $ref: "#/components/responses/serverError"
         delete:
             tags:
                 - transactions
@@ -4420,7 +5215,8 @@ paths:
                             properties:
                                 ids:
                                     type: array
-                                    maxLength: 500
+                                    minItems: 2
+                                    maxItems: 500
                                     description:
                                         List of existing transaction IDs to group. Split and recurring transactions may not be grouped.
                                         Transactions that are already grouped must be ungrouped before being regrouped.
@@ -4688,7 +5484,8 @@ paths:
                             properties:
                                 child_transactions:
                                     type: array
-                                    maxLength: 500
+                                    minItems: 2
+                                    maxItems: 500
                                     description:
                                         List of child transactions to create. The sum of the `amounts` must match the
                                         split transaction amount.
@@ -5076,14 +5873,14 @@ paths:
 
 
                 You may submit the response from a `GET /tags/{id}` as the
-                request body which includes system created attributes such as `id`,
+                request body which includes system created properties such as `id`,
                 however only the `name`, `description`, and `archived`, can be
                 updated using this API.
 
 
-                It is also possible to provide only the attribute(s) to be
+                It is also possible to provide only the properties to be
                 updated in the request body, as long as the request includes at least
-                one of the attributes listed above. For example a request body that
+                one of the properties listed above. For example a request body that
                 contains only a `name` attribute is valid.
             operationId: updateTag
             parameters:
