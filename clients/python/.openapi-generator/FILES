@@ -4,9 +4,11 @@
 .travis.yml
 README.md
 docs/AccountTypeEnum.md
+docs/BulkUpdateTransactionsObject.md
 docs/CategoriesApi.md
 docs/CategoryObject.md
 docs/CreateCategoryRequestObjectChildrenInner.md
+docs/CreateManualAccountRequestObjectBalance.md
 docs/CreateNewTransactions201Response.md
 docs/CreateNewTransactionsRequest.md
 docs/CurrencyEnum.md
@@ -43,6 +45,10 @@ docs/TransactionsApi.md
 docs/TransactionsBulkApi.md
 docs/TransactionsGroupApi.md
 docs/TransactionsSplitApi.md
+docs/UpdateTransactionObject.md
+docs/UpdateTransactionObjectAmount.md
+docs/UpdateTransactions200Response.md
+docs/UpdateTransactionsRequest.md
 docs/UserObject.md
 git_push.sh
 lunchable/__init__.py
@@ -63,8 +69,10 @@ lunchable/configuration.py
 lunchable/exceptions.py
 lunchable/models/__init__.py
 lunchable/models/account_type_enum.py
+lunchable/models/bulk_update_transactions_object.py
 lunchable/models/category_object.py
 lunchable/models/create_category_request_object_children_inner.py
+lunchable/models/create_manual_account_request_object_balance.py
 lunchable/models/create_new_transactions201_response.py
 lunchable/models/create_new_transactions_request.py
 lunchable/models/currency_enum.py
@@ -92,6 +100,10 @@ lunchable/models/split_transaction_object_amount.py
 lunchable/models/split_transaction_request.py
 lunchable/models/tag_object.py
 lunchable/models/transaction_object.py
+lunchable/models/update_transaction_object.py
+lunchable/models/update_transaction_object_amount.py
+lunchable/models/update_transactions200_response.py
+lunchable/models/update_transactions_request.py
 lunchable/models/user_object.py
 lunchable/py.typed
 lunchable/rest.py
@@ -101,4 +113,10 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
+test/test_bulk_update_transactions_object.py
+test/test_create_manual_account_request_object_balance.py
+test/test_update_transaction_object.py
+test/test_update_transaction_object_amount.py
+test/test_update_transactions200_response.py
+test/test_update_transactions_request.py
 tox.ini

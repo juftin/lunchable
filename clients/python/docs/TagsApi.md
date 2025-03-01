@@ -363,7 +363,7 @@ with lunchable.ApiClient(configuration) as api_client:
 
 Update an existing tag
 
-Updates an existing tag. You may submit the response from a `GET /tags/{id}` as the request body which includes system created attributes such as `id`, however only the `name`, `description`, and `archived`, can be updated using this API. It is also possible to provide only the attribute(s) to be updated in the request body, as long as the request includes at least one of the attributes listed above. For example a request body that contains only a `name` attribute is valid.
+Updates an existing tag. You may submit the response from a `GET /tags/{id}` as the request body which includes system created properties such as `id`, however only the `name`, `description`, and `archived`, can be updated using this API. It is also possible to provide only the properties to be updated in the request body, as long as the request includes at least one of the properties listed above. For example a request body that contains only a `name` attribute is valid.
 
 ### Example
 

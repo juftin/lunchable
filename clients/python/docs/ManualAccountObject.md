@@ -4,22 +4,23 @@ An object containing information about a manual account
 
 ## Properties
 
-| Name                          | Type                                      | Description                                                                                                  | Notes      |
-| ----------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------ | ---------- |
-| **id**                        | **int**                                   | The unique identifier of this account                                                                        | [optional] |
-| **name**                      | **str**                                   | Name of the account                                                                                          | [optional] |
-| **type**                      | [**AccountTypeEnum**](AccountTypeEnum.md) | Primary type of the account                                                                                  | [optional] |
-| **subtype**                   | **str**                                   | Optional account subtype. Examples include&lt;br&gt; - retirement - checking - savings - prepaid credit card | [optional] |
-| **display_name**              | **str**                                   | Optional display name for the account set by the user                                                        | [optional] |
-| **balance**                   | **str**                                   | Current balance of the account in numeric format to 4 decimal places.                                        | [optional] |
-| **balance_as_of**             | **datetime**                              | Date balance was last updated in ISO 8601 extended format                                                    | [optional] |
-| **closed_on**                 | **date**                                  | The date this account was closed. Will be null if the account has not been marked as closed                  | [optional] |
-| **currency**                  | **str**                                   | Three-letter lowercase currency code of the account balance                                                  | [optional] |
-| **institution_name**          | **str**                                   | Name of institution holding the account                                                                      | [optional] |
-| **external_id**               | **str**                                   | An optional external_id that may be set or updated via the API                                               | [optional] |
-| **exclude_from_transactions** | **bool**                                  | If true, this account will not show up as an option for assignment when creating transactions manually       | [optional] |
-| **created_at**                | **datetime**                              | Date/time the account was created in ISO 8601 extended format                                                | [optional] |
-| **updated_at**                | **datetime**                              | Date/time the account was created in ISO 8601 extended format                                                | [optional] |
+| Name                          | Type                                      | Description                                                                                                  | Notes              |
+| ----------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------ | ------------------ |
+| **id**                        | **int**                                   | The unique identifier of this account                                                                        |
+| **name**                      | **str**                                   | Name of the account                                                                                          |
+| **type**                      | [**AccountTypeEnum**](AccountTypeEnum.md) | Primary type of the account                                                                                  |
+| **subtype**                   | **str**                                   | Optional account subtype. Examples include&lt;br&gt; - retirement - checking - savings - prepaid credit card |
+| **display_name**              | **str**                                   | Optional display name for the account set by the user                                                        |
+| **balance**                   | **str**                                   | Current balance of the account in numeric format to 4 decimal places.                                        |
+| **currency**                  | **str**                                   | Three-letter lowercase currency code of the account balance                                                  |
+| **to_base**                   | **float**                                 | The balance converted to the user&#39;s primary currency                                                     |
+| **balance_as_of**             | **datetime**                              | Date balance was last updated in ISO 8601 extended format                                                    |
+| **closed_on**                 | **date**                                  | The date this account was closed. Will be null if the account has not been marked as closed                  |
+| **institution_name**          | **str**                                   | Name of institution holding the account                                                                      |
+| **external_id**               | **str**                                   | An optional external_id that may be set or updated via the API                                               |
+| **exclude_from_transactions** | **bool**                                  | If true, this account will not show up as an option for assignment when creating transactions manually       | [default to False] |
+| **created_at**                | **datetime**                              | Date/time the account was created in ISO 8601 extended format                                                |
+| **updated_at**                | **datetime**                              | Date/time the account was created in ISO 8601 extended format                                                |
 
 ## Example
 
