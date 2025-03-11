@@ -113,10 +113,4 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
-test/test_bulk_update_transactions_object.py
-test/test_create_manual_account_request_object_balance.py
-test/test_update_transaction_object.py
-test/test_update_transaction_object_amount.py
-test/test_update_transactions200_response.py
-test/test_update_transactions_request.py
 tox.ini
