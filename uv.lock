@@ -395,6 +395,7 @@ wheels = [
 
 [[package]]
 name = "lunchable"
+version = "1.4.2"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
