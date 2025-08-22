@@ -2,7 +2,9 @@
 lunchable Version file
 """
 
-__author__ = "Justin Flannery"
-__email__ = "juftin@juftin.com"
-__application__ = "lunchable"
-__version__ = "1.4.2"
+from importlib.metadata import version
+
+__author__: str = "Justin Flannery"
+__email__: str = "justin.flannery@juftin.com"
+__application__: str = "lunchable"
+__version__: str = version(__application__)

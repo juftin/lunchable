@@ -11,7 +11,6 @@ classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -29,7 +28,7 @@ dependencies = [
   "click-plugins>=1.1.1"
 ]
 description = "A simple Python SDK around the Lunch Money Developer API"
-dynamic = ["version"]
+version = "1.4.2"
 keywords = ["lunchmoney", "python", "pydantic", "api-client"]
 license = "MIT"
 name = "lunchable"
@@ -54,6 +53,14 @@ splitlunch = ["lunchable-splitlunch"]
 [project.scripts]
 lunchable = "lunchable._cli:cli"
 
+[project.urls]
+Changelog = "https://github.com/juftin/lunchable/releases"
+Discussions = "https://github.com/juftin/lunchable/discussions"
+Docker = "https://hub.docker.com/r/juftin/lunchable"
+Documentation = "https://github.com/juftin/lunchable#readme"
+Issues = "https://github.com/juftin/lunchable/issues"
+Source = "https://github.com/juftin/lunchable"
+
 [dependency-groups]
 dev = [
   # Testing
@@ -63,31 +70,23 @@ dev = [
   "vcrpy~=5.1.0",
   # Linting
   "mypy>=1.6.1",
-  "ruff~=0.1.7",
+  "ruff~=0.1.7"
 ]
 docs = [
-    "markdown-callouts",
-    "markdown-exec",
-    "mkdocs",
-    "mkdocs-autorefs",
-    "mkdocs-click",
-    "mkdocs-gen-files",
-    "mkdocs-literate-nav",
-    "mkdocs-material",
-    "mkdocs-section-index",
-    "mkdocstrings",
-    "mkdocstrings-python",
-    "pymdown-extensions",
-    "griffe-fieldz",
+  "markdown-callouts",
+  "markdown-exec",
+  "mkdocs",
+  "mkdocs-autorefs",
+  "mkdocs-click",
+  "mkdocs-gen-files",
+  "mkdocs-literate-nav",
+  "mkdocs-material",
+  "mkdocs-section-index",
+  "mkdocstrings",
+  "mkdocstrings-python",
+  "pymdown-extensions",
+  "griffe-fieldz"
 ]
-
-[project.urls]
-Changelog = "https://github.com/juftin/lunchable/releases"
-Discussions = "https://github.com/juftin/lunchable/discussions"
-Docker = "https://hub.docker.com/r/juftin/lunchable"
-Documentation = "https://github.com/juftin/lunchable#readme"
-Issues = "https://github.com/juftin/lunchable/issues"
-Source = "https://github.com/juftin/lunchable"
 
 [tool.coverage.paths]
 lunchable = ["lunchable", "*/lunchable/lunchable"]
@@ -107,112 +106,6 @@ omit = [
 ]
 parallel = true
 source_pkgs = ["lunchable", "tests"]
-
-[tool.hatch.env]
-requires = ["hatch-pip-compile", "hatch-mkdocs"]
-
-[tool.hatch.env.collectors.mkdocs.docs]
-path = "mkdocs.yaml"
-
-[tool.hatch.envs.all]
-pip-compile-constraint = ""
-template = "test"
-
-[[tool.hatch.envs.all.matrix]]
-python = ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
-
-[tool.hatch.envs.default]
-features = ["all"]
-pip-compile-args = [
-  "--unsafe-package",
-  "lunchable"
-]
-pip-compile-constraint = "default"
-post-install-commands = [
-  "- pre-commit install"
-]
-type = "pip-compile"
-
-[tool.hatch.envs.default.scripts]
-cov = "hatch run test:cov {args:}"
-test = "hatch run test:test {args:}"
-
-[tool.hatch.envs.docs]
-detached = false
-extra-dependencies = [
-  "griffe-fieldz"
-]
-features = ["all"]
-pip-compile-args = [
-  "--unsafe-package",
-  "lunchable"
-]
-pip-compile-constraint = "default"
-template = "docs"
-type = "pip-compile"
-
-[tool.hatch.envs.gen]
-detached = true
-
-[tool.hatch.envs.gen.scripts]
-release = [
-  "npm install --prefix .github/semantic_release/",
-  "npx --prefix .github/semantic_release/ semantic-release {args:}"
-]
-
-[tool.hatch.envs.lint]
-dependencies = [
-  "mypy>=1.6.1",
-  "ruff~=0.1.7",
-  "pydantic"
-]
-detached = true
-pip-compile-constraint = "default"
-type = "pip-compile"
-
-[tool.hatch.envs.lint.scripts]
-all = [
-  "style",
-  "typing"
-]
-fmt = [
-  "ruff format {args:.}",
-  "ruff --fix {args:.}",
-  "style"
-]
-precommit = [
-  "pre-commit run --all-files"
-]
-style = [
-  "ruff {args:.}",
-  "ruff format --check --diff {args:.}"
-]
-typing = [
-  """
-  mypy \
-    --install-types \
-    --ignore-missing-imports \
-    --follow-imports=skip \
-    --strict-optional \
-    --non-interactive \
-    {args:lunchable/}
-  """
-]
-
-[tool.hatch.envs.test]
-dependencies = [
-  "pytest",
-  "pytest-cov",
-  "pytest-mock",
-  "vcrpy~=5.1.0"
-]
-
-[tool.hatch.envs.test.scripts]
-cov = "pytest --cov --cov-config=pyproject.toml --cov-report term-missing {args:tests}"
-test = "pytest {args:tests}"
-
-[tool.hatch.version]
-path = "lunchable/_version.py"
 
 [tool.mypy]
 check_untyped_defs = true
