@@ -34,7 +34,7 @@ keywords = ["lunchmoney", "python", "pydantic", "api-client"]
 license = "MIT"
 name = "lunchable"
 readme = "README.md"
-requires-python = ">=3.8,<4"
+requires-python = ">=3.9,<4"
 
 [project.optional-dependencies]
 all = [
@@ -53,6 +53,33 @@ splitlunch = ["lunchable-splitlunch"]
 
 [project.scripts]
 lunchable = "lunchable._cli:cli"
+
+[dependency-groups]
+dev = [
+  # Testing
+  "pytest",
+  "pytest-cov",
+  "pytest-mock",
+  "vcrpy~=5.1.0",
+  # Linting
+  "mypy>=1.6.1",
+  "ruff~=0.1.7",
+]
+docs = [
+    "markdown-callouts",
+    "markdown-exec",
+    "mkdocs",
+    "mkdocs-autorefs",
+    "mkdocs-click",
+    "mkdocs-gen-files",
+    "mkdocs-literate-nav",
+    "mkdocs-material",
+    "mkdocs-section-index",
+    "mkdocstrings",
+    "mkdocstrings-python",
+    "pymdown-extensions",
+    "griffe-fieldz",
+]
 
 [project.urls]
 Changelog = "https://github.com/juftin/lunchable/releases"
