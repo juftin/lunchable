@@ -175,7 +175,7 @@ class CategoriesClient(LunchMoneyAPIClient):
         response_data = self.make_request(
             method=self.Methods.GET,
             url_path=APIConfig.LUNCHMONEY_CATEGORIES,
-            params=_GetCategoriesParams(format=format).model_dump(exclude_none=True),
+            params=_GetCategoriesParams(format=format).model_dump(exclude_none=True),  # type: ignore[arg-type]
         )
         categories = response_data["categories"]
         category_objects = [
