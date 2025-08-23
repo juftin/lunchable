@@ -12,7 +12,7 @@
   <a href="https://hub.docker.com/r/juftin/lunchable"><img src="https://img.shields.io/docker/v/juftin/lunchable?color=blue&label=docker&logo=docker" alt="Docker Image Version"></a>
   <a href="https://github.com/conda-forge/lunchable-feedstock"><img src="https://img.shields.io/conda/v/conda-forge/lunchable?label=conda-forge" alt="Conda Version"></a>
   <a href="https://github.com/juftin/lunchable/blob/main/LICENSE"><img src="https://img.shields.io/github/license/juftin/lunchable?color=blue&label=License" alt="GitHub License"></a>
-  <a href="https://github.com/juftin/lunchable/actions/workflows/tests.yaml?query=branch%3Amain"><img src="https://github.com/juftin/lunchable/actions/workflows/tests.yaml/badge.svg?branch=main" alt="Testing Status"></a>
+  <a href="https://github.com/juftin/lunchable/actions/workflows/test.yaml?query=branch%3Amain"><img src="https://github.com/juftin/lunchable/actions/workflows/test.yaml/badge.svg?branch=main" alt="Testing Status"></a>
   <a href="https://github.com/go-task/task"><img src="https://img.shields.io/badge/task---?message=task&logo=task&color=teal&labelColor=grey" alt="task"></a>
   <a href="https://github.com/astral-sh/uv"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json" alt="uv"></a>
   <a href="https://github.com/pre-commit/pre-commit"><img src="https://img.shields.io/badge/pre--commit-enabled-lightgreen?logo=pre-commit" alt="pre-commit"></a>
