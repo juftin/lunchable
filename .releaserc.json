@@ -19,7 +19,7 @@
         [
             "@semantic-release/exec",
             {
-                "prepareCmd": "hatch version ${nextRelease.version} && hatch build"
+                "prepareCmd": "uv version ${nextRelease.version} && uv build"
             }
         ],
         [
