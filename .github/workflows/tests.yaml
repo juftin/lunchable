@@ -3,20 +3,20 @@ name: Tests
 on:
     push:
         branches:
-        -   main
+            - main
         paths:
-        -   lunchable/**
-        -   pyproject.toml
-        -   .github/workflows/tests.yaml
+            - lunchable/**
+            - pyproject.toml
+            - uv.lock
+            - .github/workflows/tests.yaml
     pull_request:
-        branches: ['**']
         paths:
-        -   lunchable/**
-        -   pyproject.toml
-        -   .github/workflows/tests.yaml
+            - lunchable/**
+            - pyproject.toml
+            - uv.lock
+            - .github/workflows/tests.yaml
     schedule:
-    -   cron: 0 12 1 * *
-    workflow_dispatch:
+        - cron: 0 12 1 * *
 jobs:
     test-suite:
         runs-on: ubuntu-latest
@@ -24,38 +24,25 @@ jobs:
             fail-fast: true
             matrix:
                 include:
-                -   {name: Python 3.13, python: '3.13'}
-                -   {name: Python 3.12, python: '3.12'}
-                -   {name: Python 3.11, python: '3.11'}
-                -   {name: Python 3.10, python: '3.10'}
-                -   {name: Python 3.9, python: '3.9'}
-                -   {name: Python 3.8, python: '3.8'}
-        concurrency:
-            group: ${{ github.workflow }}-${{ matrix.python }}-${{ github.ref }}
-            cancel-in-progress: true
+                    - { name: Python 3.13, python: "3.13" }
+                    - { name: Python 3.12, python: "3.12" }
+                    - { name: Python 3.11, python: "3.11" }
+                    - { name: Python 3.10, python: "3.10" }
+                    - { name: Python 3.9, python: "3.9" }
+        permissions:
+            contents: read
+            id-token: write
+            pull-requests: write
         steps:
-        -   name: Set up Github Workspace
-            uses: actions/checkout@v4
-            with:
-                fetch-depth: 0
-        -   name: Set up Python Environment ${{ matrix.python }}
-            uses: actions/setup-python@v5
-            with:
-                python-version: ${{ matrix.python }}
-        -   name: Install Hatch
-            run: |
-                python -m pip install -q --upgrade pip wheel
-                python -m pip install -q hatch pre-commit
-                hatch --version
-        -   name: Test Suite
-            run: |
-                echo "::add-matcher::.github/workflows/matchers/python.json"
-                hatch run +py=${{ matrix.python }} all:cov --cov-report=xml tests
-                echo "::remove-matcher owner=python::"
-            env:
-                VCR_RECORD_MODE: none
-        -   name: Upload coverage reports to Codecov
-            if: matrix.python == '3.11'
-            uses: codecov/codecov-action@v3
-            env:
-                CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+            - name: test
+              uses: juftin/actions/taskfile@v1
+              with:
+                  checkout: true
+                  setup-uv: true
+                  task: test
+                  install: true
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  annotations-pytest: ${{ matrix.python == '3.12' && true || false }}
+                  pytest-coverage: ${{ matrix.python == '3.12' && true || false }}
+              env:
+                  UV_PYTHON: ${{ matrix.python }}
