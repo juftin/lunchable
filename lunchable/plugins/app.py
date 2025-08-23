@@ -150,13 +150,13 @@ class BaseLunchableApp(ABC):
         Mapping of Lunchable Objects to their Data Collecting Info
         """
         return {
-            PlaidAccountObject: ("plaid_accounts", self.lunch.get_plaid_accounts),
-            TransactionObject: ("transactions", self.lunch.get_transactions),
-            CategoriesObject: ("categories", self.lunch.get_categories),
-            AssetsObject: ("assets", self.lunch.get_assets),
-            TagsObject: ("tags", self.lunch.get_tags),
+            PlaidAccountObject: ("plaid_accounts", self.lunch.get_plaid_accounts),  # type: ignore[dict-item]
+            TransactionObject: ("transactions", self.lunch.get_transactions),  # type: ignore[dict-item]
+            CategoriesObject: ("categories", self.lunch.get_categories),  # type: ignore[dict-item]
+            AssetsObject: ("assets", self.lunch.get_assets),  # type: ignore[dict-item]
+            TagsObject: ("tags", self.lunch.get_tags),  # type: ignore[dict-item]
             UserObject: ("user", self.lunch.get_user),
-            CryptoObject: ("crypto", self.lunch.get_crypto),
+            CryptoObject: ("crypto", self.lunch.get_crypto),  # type: ignore[dict-item]
         }
 
     def __init__(self, access_token: str | None = None):
@@ -184,7 +184,7 @@ class BaseLunchableApp(ABC):
         """
 
     @overload
-    def refresh(self, model: Type[UserObject], **kwargs: Any) -> UserObject:
+    def refresh(self, model: Type[UserObject], **kwargs: Any) -> UserObject:  # type: ignore[overload-overlap]
         ...
 
     @overload
@@ -193,9 +193,7 @@ class BaseLunchableApp(ABC):
     ) -> Dict[int, LunchableModelType]:
         ...
 
-    def refresh(
-        self, model: Type[LunchableModel], **kwargs: Any
-    ) -> LunchableModel | Dict[int, LunchableModel]:
+    def refresh(self, model: Type[LunchableModel], **kwargs: Any) -> Any:
         """
         Refresh a Lunchable Model
 
@@ -235,7 +233,7 @@ class BaseLunchableApp(ABC):
         if isinstance(fetched_data, UserObject):
             data_mapping = fetched_data
         else:
-            data_mapping = {item.id: item for item in fetched_data}  # type: ignore[assignment]
+            data_mapping = {item.id: item for item in fetched_data}  # type: ignore[assignment, union-attr]
         setattr(self.data, attr_name, data_mapping)
         return data_mapping
 

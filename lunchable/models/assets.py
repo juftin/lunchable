@@ -233,7 +233,7 @@ class AssetsClient(LunchMoneyAPIClient):
         payload = _AssetsParamsPost(
             type_name=type_name,
             subtype_name=subtype_name,
-            name=name,
+            name=name,  # type: ignore[arg-type]
             display_name=display_name,
             balance=balance,
             balance_as_of=balance_as_of,

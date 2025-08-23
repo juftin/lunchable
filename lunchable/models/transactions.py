@@ -534,11 +534,11 @@ class TransactionsClient(LunchMoneyAPIClient):
             asset_id=asset_id,
             group_id=group_id,
             is_group=is_group,
-            status=status,
+            status=status,  # type: ignore[arg-type]
             offset=offset,
             limit=limit,
-            start_date=start_date,
-            end_date=end_date,
+            start_date=start_date,  # type: ignore[arg-type]
+            end_date=end_date,  # type: ignore[arg-type]
             debit_as_negative=debit_as_negative,
             pending=pending,
         ).model_dump(exclude_none=True)
