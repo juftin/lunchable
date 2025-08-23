@@ -80,13 +80,13 @@ tasks:
         requires:
             vars: [SOURCE_CODE]
     #######################################
-    build:python:
+    dist:
         desc: Build the Project Artifacts
         cmds:
             - cmd: rm -rf {{.ROOT_DIR}}/dist
             - cmd: uv build
     #######################################
-    build:docker:
+    docker:
         desc: Build Docker Image
         cmd: |
             docker buildx build \
@@ -106,13 +106,13 @@ tasks:
     build:
         desc: Build the Project Artifacts
         cmds:
-            - task: build:python
-            - task: build:docker
+            - task: dist
+            - task: docker
     #######################################
     publish:
         desc: Publish the Project Artifacts
         cmds:
-            - task: build:docker
+            - task: docker
               vars:
                   CLI_ARGS: --push
         requires:
@@ -138,7 +138,7 @@ tasks:
                   --rm -it \
                   {{.DOCKER_REPO}}:{{.DOCKER_TAG_PREFIX}}{{.RELEASE_VERSION}} \
                   {{.CLI_ARGS}}
-        deps: ["build:docker"]
+        deps: ["docker"]
         vars:
             RELEASE_VERSION:
                 ref: .RELEASE_VERSION | default "local"

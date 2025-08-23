@@ -17,6 +17,6 @@ jobs:
               with:
                   checkout: true
                   setup-uv: true
-                  task: build:docker
+                  task: docker
                   buildx: true
                   github-token: ${{ secrets.GITHUB_TOKEN }}
