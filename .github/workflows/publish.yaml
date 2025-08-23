@@ -21,7 +21,7 @@ jobs:
               with:
                   checkout: true
                   setup-uv: true
-                  task: build:python
+                  task: dist
                   github-token: ${{ secrets.GITHUB_TOKEN }}
             - name: pypi
               uses: pypa/gh-action-pypi-publish@release/v1
