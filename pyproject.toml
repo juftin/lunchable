@@ -131,6 +131,15 @@ init_typed = true
 warn_required_dynamic_aliases = true
 warn_untyped_fields = true
 
+[tool.pytest.ini_options]
+addopts = [
+  "-v",
+  "--cov=lunchable",
+  "--cov-report=term-missing",
+  "--cov-report=xml:coverage.xml",
+  "--junitxml=pytest.xml"
+]
+
 [tool.ruff]
 ignore = [
   "E501",  # line too long, handled by black
