@@ -18,7 +18,7 @@ on:
     schedule:
         - cron: 0 12 1 * *
 jobs:
-    test-suite:
+    test:
         runs-on: ubuntu-latest
         strategy:
             fail-fast: true
