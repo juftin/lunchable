@@ -28,7 +28,7 @@ dependencies = [
   "click-plugins>=1.1.1"
 ]
 description = "A simple Python SDK around the Lunch Money Developer API"
-version = "1.4.2"
+version = "1.4.3"
 keywords = ["lunchmoney", "python", "pydantic", "api-client"]
 license = "MIT"
 name = "lunchable"
