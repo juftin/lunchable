@@ -2,10 +2,10 @@
 
 ## Properties
 
-| Name        | Type             | Description           | Notes |
-| ----------- | ---------------- | --------------------- | ----- |
-| **message** | **str**          | overall error message |
-| **errors**  | **List[object]** |                       |
+| Name        | Type                                                                          | Description           | Notes |
+| ----------- | ----------------------------------------------------------------------------- | --------------------- | ----- |
+| **message** | **str**                                                                       | overall error message |
+| **errors**  | [**List[ErrorResponseObjectErrorsInner]**](ErrorResponseObjectErrorsInner.md) |                       |
 
 ## Example
 

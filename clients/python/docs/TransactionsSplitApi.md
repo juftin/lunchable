@@ -9,7 +9,7 @@ All URIs are relative to *https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com
 
 # **split_transaction**
 
-> GroupTransactions201Response split_transaction(id, split_transaction_request)
+> TransactionObject split_transaction(id, split_transaction_request)
 
 Split a transaction
 
@@ -22,8 +22,8 @@ Splits an existing transaction into a set of smaller child transactions.<br><br>
 
 ```python
 import lunchable
-from lunchable.models.group_transactions201_response import GroupTransactions201Response
 from lunchable.models.split_transaction_request import SplitTransactionRequest
+from lunchable.models.transaction_object import TransactionObject
 from lunchable.rest import ApiException
 from pprint import pprint
 
@@ -74,7 +74,7 @@ with lunchable.ApiClient(configuration) as api_client:
 
 ### Return type
 
-[**GroupTransactions201Response**](GroupTransactions201Response.md)
+[**TransactionObject**](TransactionObject.md)
 
 ### Authorization
 

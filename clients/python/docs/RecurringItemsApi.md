@@ -1,11 +1,11 @@
-# lunchable.RecurringApi
+# lunchable.RecurringItemsApi
 
 All URIs are relative to *https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2*
 
-| Method                                                         | HTTP request            | Description                 |
-| -------------------------------------------------------------- | ----------------------- | --------------------------- |
-| [**get_all_recurring**](RecurringApi.md#get_all_recurring)     | **GET** /recurring      | Get a all recurring items   |
-| [**get_recurring_by_id**](RecurringApi.md#get_recurring_by_id) | **GET** /recurring/{id} | Get a single recurring item |
+| Method                                                              | HTTP request                  | Description                 |
+| ------------------------------------------------------------------- | ----------------------------- | --------------------------- |
+| [**get_all_recurring**](RecurringItemsApi.md#get_all_recurring)     | **GET** /recurring_items      | Get a all recurring items   |
+| [**get_recurring_by_id**](RecurringItemsApi.md#get_recurring_by_id) | **GET** /recurring_items/{id} | Get a single recurring item |
 
 # **get_all_recurring**
 
@@ -51,18 +51,18 @@ configuration = lunchable.Configuration(
 # Enter a context with an instance of the API client
 with lunchable.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = lunchable.RecurringApi(api_client)
+    api_instance = lunchable.RecurringItemsApi(api_client)
     start_date = '2013-10-20' # date | Denotes the beginning of the range used to populate the `matching` object in the recurring items. If omitted, the current month will be used as the range.<br> Required if end_date exists. (optional)
-    end_date = '2013-10-20' # date | Denotes the end of the the range used to populate the `matching` object in the recurring items.  Required if start_date exists.  (optional)
+    end_date = '2013-10-20' # date | Denotes the end of the the range used to populate the `matching` object in the recurring items. Required if start_date exists.  (optional)
     include_suggested = True # bool |  (optional)
 
     try:
         # Get a all recurring items
         api_response = api_instance.get_all_recurring(start_date=start_date, end_date=end_date, include_suggested=include_suggested)
-        print("The response of RecurringApi->get_all_recurring:\n")
+        print("The response of RecurringItemsApi->get_all_recurring:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling RecurringApi->get_all_recurring: %s\n" % e)
+        print("Exception when calling RecurringItemsApi->get_all_recurring: %s\n" % e)
 ```
 
 ### Parameters
@@ -92,8 +92,8 @@ with lunchable.ApiClient(configuration) as api_client:
 | ----------- | ------------------------------------------------------------------------------------------------------ | ---------------- |
 | **200**     | A list of recurring items                                                                              | -                |
 | **400**     | Bad Request                                                                                            | -                |
-| **404**     | Not Found                                                                                              | -                |
 | **401**     | Unauthorized. This error occurs when an invalid API token is passed to the request.                    | -                |
+| **404**     | Not Found                                                                                              | -                |
 | **429**     | Too Many Requests. Retry your request after the number of seconds specified in the retry-after header. | -                |
 | **500**     | Internal Server Error. Contact support.                                                                | -                |
 
@@ -143,18 +143,18 @@ configuration = lunchable.Configuration(
 # Enter a context with an instance of the API client
 with lunchable.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = lunchable.RecurringApi(api_client)
+    api_instance = lunchable.RecurringItemsApi(api_client)
     id = 994069 # int | ID of the recurring item to retrieve
     start_date = '2013-10-20' # date | Denotes the beginning of the range used to populate the `matching` object in the recurring items. If omitted, the current month will be used as the range.<br> Required if end_date exists. (optional)
-    end_date = '2013-10-20' # date | Denotes the end of the the range used to populate the `matching` object in the recurring items.  Required if start_date exists.  (optional)
+    end_date = '2013-10-20' # date | Denotes the end of the the range used to populate the `matching` object in the recurring items. Required if start_date exists.  (optional)
 
     try:
         # Get a single recurring item
         api_response = api_instance.get_recurring_by_id(id, start_date=start_date, end_date=end_date)
-        print("The response of RecurringApi->get_recurring_by_id:\n")
+        print("The response of RecurringItemsApi->get_recurring_by_id:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling RecurringApi->get_recurring_by_id: %s\n" % e)
+        print("Exception when calling RecurringItemsApi->get_recurring_by_id: %s\n" % e)
 ```
 
 ### Parameters
@@ -184,8 +184,8 @@ with lunchable.ApiClient(configuration) as api_client:
 | ----------- | ------------------------------------------------------------------------------------------------------ | ---------------- |
 | **200**     | Tag Object with the requested Tag ID                                                                   | -                |
 | **400**     | Bad Request                                                                                            | -                |
-| **404**     | Not Found                                                                                              | -                |
 | **401**     | Unauthorized. This error occurs when an invalid API token is passed to the request.                    | -                |
+| **404**     | Not Found                                                                                              | -                |
 | **429**     | Too Many Requests. Retry your request after the number of seconds specified in the retry-after header. | -                |
 | **500**     | Internal Server Error. Contact support.                                                                | -                |
 

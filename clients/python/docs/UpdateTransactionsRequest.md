@@ -2,10 +2,9 @@
 
 ## Properties
 
-| Name                     | Type                                                                | Description                        | Notes |
-| ------------------------ | ------------------------------------------------------------------- | ---------------------------------- | ----- |
-| **ids**                  | **List[int]**                                                       | List of transaction IDs to update. |
-| **properties_to_update** | [**BulkUpdateTransactionsObject**](BulkUpdateTransactionsObject.md) |                                    |
+| Name             | Type                                                                                                  | Description                                                                                                                      | Notes |
+| ---------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **transactions** | [**List[UpdateTransactionsRequestTransactionsInner]**](UpdateTransactionsRequestTransactionsInner.md) | List of transactions to update. Each transaction must have an &#x60;id&#x60; property and at least one other property to update. |
 
 ## Example
 

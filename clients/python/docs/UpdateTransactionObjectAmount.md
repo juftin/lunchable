@@ -1,6 +1,6 @@
 # UpdateTransactionObjectAmount
 
-Numeric value of amount. i.e. $4.25 should be denoted as 4.25. Can be a string or a number in double format. Regardless of the value of the user's `debits_as_negative` property, transactions with positive amounts are treated as debits. Set the amount to a negative value to insert a credit transaction.<br> May not be updated on transactions that belong to a synced account with the \"Allow Modifications to Transactions\" property disabled.
+Numeric value of amount without currency symbol. i.e. $4.25 should be denoted as 4.25. May be a string or a number in double format. Regardless of the value of the user's `debits_as_negative` property, transactions with positive amounts are treated as debits. Set the amount to a negative value to insert a credit transaction.<br><br> May not be updated on transactions that belong to a synced account with the \"Allow Modifications to Transactions\" property disabled.
 
 ## Properties
 

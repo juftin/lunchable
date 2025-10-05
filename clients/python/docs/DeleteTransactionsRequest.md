@@ -2,9 +2,9 @@
 
 ## Properties
 
-| Name    | Type            | Description                                 | Notes |
-| ------- | --------------- | ------------------------------------------- | ----- |
-| **ids** | **List[float]** | Array of existing Transaction IDs to delete |
+| Name    | Type          | Description                                 | Notes |
+| ------- | ------------- | ------------------------------------------- | ----- |
+| **ids** | **List[int]** | Array of existing Transaction IDs to delete |
 
 ## Example
 

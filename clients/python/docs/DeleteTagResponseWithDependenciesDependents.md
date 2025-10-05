@@ -2,10 +2,10 @@
 
 ## Properties
 
-| Name             | Type      | Description                              | Notes |
-| ---------------- | --------- | ---------------------------------------- | ----- |
-| **tag_rules**    | **float** | The number of rules depending on the tag |
-| **transactions** | **float** | The number of transactions with the tag  |
+| Name             | Type    | Description                              | Notes |
+| ---------------- | ------- | ---------------------------------------- | ----- |
+| **rules**        | **int** | The number of rules depending on the tag |
+| **transactions** | **int** | The number of transactions with the tag  |
 
 ## Example
 

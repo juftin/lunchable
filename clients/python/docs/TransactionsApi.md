@@ -94,11 +94,11 @@ void (empty response body)
 
 # **get_transaction_by_id**
 
-> TransactionObject get_transaction_by_id(id, include_metadata=include_metadata)
+> TransactionObject get_transaction_by_id(id)
 
 Get a single transaction
 
-Retrieve details of a specific transaction by its ID.<br><br> It the requested transaction is the parent of split transactions, the transaction returned in the response will include a `children` property which will contain a list of the split transactions.<br><br> Similarly, if the requested transaction is transaction group, the transaction returned in the response will include a `children` property which will contain a list of the original transactions that make up the transaction group.
+Retrieves the details of a specific transaction by its ID, including the following properties which are not returned by default in the response to a `GET /transactions` request:<br> - `plaid_metadata` will either be `null` or contain the metadata for transactions associated with an account that is synced via plaid. - `custom_metadata` will either be `null` or contain any custom_metadata added to transactions that were inserted or updated via the API. - `files` will be a list of objects that describe any attachments to the transaction. If `is_group` is true in the returned transaction, the object will also include the `children` property which will contain a list of the original transactions that make up the transaction group.<br> If `is_parent` is true in the returned transaction, the object will also include the `children` property which will contain a list of the split transactions.
 
 ### Example
 
@@ -137,12 +137,11 @@ configuration = lunchable.Configuration(
 with lunchable.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lunchable.TransactionsApi(api_client)
-    id = 2112140359 # int | ID of the transaction to retrieve
-    include_metadata = False # bool | Set to true to have the metadata objects associated with this transaction returned as part of the result. A `plaid_metatdata` object will always exist for transactions associated with an account that is synced via plaid. A `custom_metadata` object may exist for transactions that were inserted or updated via the API. (optional) (default to False)
+    id = 2112150654 # int | ID of the transaction to retrieve
 
     try:
         # Get a single transaction
-        api_response = api_instance.get_transaction_by_id(id, include_metadata=include_metadata)
+        api_response = api_instance.get_transaction_by_id(id)
         print("The response of TransactionsApi->get_transaction_by_id:\n")
         pprint(api_response)
     except Exception as e:
@@ -151,10 +150,9 @@ with lunchable.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                       | Notes                         |
-| -------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| **id**               | **int**  | ID of the transaction to retrieve                                                                                                                                                                                                                                                                                                                 |
-| **include_metadata** | **bool** | Set to true to have the metadata objects associated with this transaction returned as part of the result. A &#x60;plaid_metatdata&#x60; object will always exist for transactions associated with an account that is synced via plaid. A &#x60;custom_metadata&#x60; object may exist for transactions that were inserted or updated via the API. | [optional] [default to False] |
+| Name   | Type    | Description                       | Notes |
+| ------ | ------- | --------------------------------- | ----- |
+| **id** | **int** | ID of the transaction to retrieve |
 
 ### Return type
 
@@ -188,7 +186,7 @@ with lunchable.ApiClient(configuration) as api_client:
 
 Update an existing transaction
 
-Updates an existing transaction. You may submit the response from a `GET /transactions/{id}` as the request body which includes system created properties such as `id`, however only the `category_id`, `payee`, `notes`, `date`, `amount`, `currency`, `status`, `asset_id`, `plaid_account_id`, `recurring_id`, `tag_ids`, `additional_tag_ids`, `external_id`, and `custom_metadata` properties can be updated using this API. It is also possible to provide only the properties to be updated in the request body, as long as the request includes at least one of the properties listed above. For example a request body that contains only an `id` attribute is valid. Transactions that have been previously split or grouped may not be modified by this endpoint.
+Modifies the properties of an existing transaction.<br><br> You may submit the response from a `GET /transactions/{id}` as the request body, however only certain properties can be updated using this API. The following system set properties are accepted in the request body but their values will be ignored: `id`, `to_base`, `is_pending`, `created_at`, `updated_at`, `source`, and `plaid_metadata`.<br><br> Transactions that have been previously split or grouped may not be modified by this endpoint. Therefore the `is_parent`, `parent_id`, `is_group`, `group_id`, and `children` properties are also ignored when provided in the request body.<br><br> It is also possible to provide only the properties to be updated in the request body, as long as the request includes at least one of the properties that is not listed above. For example a request body that contains only an `category_id` attribute is valid.
 
 ### Example
 
@@ -230,7 +228,7 @@ with lunchable.ApiClient(configuration) as api_client:
     api_instance = lunchable.TransactionsApi(api_client)
     id = 2112140361 # int | ID of the transaction to update
     update_transaction_object = {"category_id":315162} # UpdateTransactionObject |
-    update_balance = True # bool | Set this to `false` to skip updating the transaction's associated account balance.  Default behavior is to update balances. (optional)
+    update_balance = True # bool | Set this to `false` to skip updating the transaction's associated account balance. Default behavior is to update balances. (optional)
 
     try:
         # Update an existing transaction

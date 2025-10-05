@@ -177,9 +177,9 @@ void (empty response body)
 | Status code | Description                                                                                            | Response headers |
 | ----------- | ------------------------------------------------------------------------------------------------------ | ---------------- |
 | **204**     | No Content                                                                                             | -                |
-| **422**     | Unprocessable Entity                                                                                   | -                |
 | **401**     | Unauthorized. This error occurs when an invalid API token is passed to the request.                    | -                |
 | **404**     | Not Found                                                                                              | -                |
+| **422**     | Unprocessable Entity                                                                                   | -                |
 | **429**     | Too Many Requests. Retry your request after the number of seconds specified in the retry-after header. | -                |
 | **500**     | Internal Server Error. Contact support.                                                                | -                |
 
@@ -350,8 +350,8 @@ with lunchable.ApiClient(configuration) as api_client:
 | ----------- | ------------------------------------------------------------------------------------------------------ | ---------------- |
 | **200**     | Tag Object with the requested Tag ID                                                                   | -                |
 | **400**     | Bad Request                                                                                            | -                |
-| **404**     | Not Found                                                                                              | -                |
 | **401**     | Unauthorized. This error occurs when an invalid API token is passed to the request.                    | -                |
+| **404**     | Not Found                                                                                              | -                |
 | **429**     | Too Many Requests. Retry your request after the number of seconds specified in the retry-after header. | -                |
 | **500**     | Internal Server Error. Contact support.                                                                | -                |
 
@@ -363,7 +363,7 @@ with lunchable.ApiClient(configuration) as api_client:
 
 Update an existing tag
 
-Updates an existing tag. You may submit the response from a `GET /tags/{id}` as the request body which includes system created properties such as `id`, however only the `name`, `description`, and `archived`, can be updated using this API. It is also possible to provide only the properties to be updated in the request body, as long as the request includes at least one of the properties listed above. For example a request body that contains only a `name` attribute is valid.
+Updates an existing tag.<br><br> You may submit the response from a `GET /tags/{id}` as the request body, however only certain properties can be updated using this API. The following system set properties are accepted in the request body but their values will be ignored: `id`, `updated_at`, `created_at`, and `archived_at`.<br><br> It is also possible to provide only the properties to be updated in the request body, as long as the request includes at least one of the properties that is not listed above. For example a request body that contains only a `name` attribute is valid.
 
 ### Example
 
@@ -404,7 +404,7 @@ with lunchable.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lunchable.TagsApi(api_client)
     id = 94319 # int | ID of the tag to update
-    update_tag_request_object = {"name":"Updated Tag Name","description":"Updated description of the category"} # UpdateTagRequestObject |
+    update_tag_request_object = {"name":"Updated Tag Name"} # UpdateTagRequestObject |
 
     try:
         # Update an existing tag

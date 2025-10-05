@@ -2,14 +2,14 @@
 
 ## Properties
 
-| Name               | Type      | Description                                                     | Notes |
-| ------------------ | --------- | --------------------------------------------------------------- | ----- |
-| **budget**         | **float** | The number of budgets depending on the category                 |
-| **category_rules** | **float** | The number of category rules depending on the category          |
-| **transactions**   | **float** | The number of transactions depending on the category            |
-| **children**       | **float** | The number of child categories in the category group            |
-| **recurring**      | **float** | The number of recurring transactions depending on the category  |
-| **plaid_cats**     | **float** | The number of auto created categories based on Plaid categories |
+| Name               | Type    | Description                                                     | Notes |
+| ------------------ | ------- | --------------------------------------------------------------- | ----- |
+| **budget**         | **int** | The number of budgets depending on the category                 |
+| **category_rules** | **int** | The number of category rules depending on the category          |
+| **transactions**   | **int** | The number of transactions depending on the category            |
+| **children**       | **int** | The number of child categories in the category group            |
+| **recurring**      | **int** | The number of recurring transactions depending on the category  |
+| **plaid_cats**     | **int** | The number of auto created categories based on Plaid categories |
 
 ## Example
 

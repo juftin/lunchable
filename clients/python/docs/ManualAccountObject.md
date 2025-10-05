@@ -14,7 +14,7 @@ An object containing information about a manual account
 | **balance**                   | **str**                                   | Current balance of the account in numeric format to 4 decimal places.                                        |
 | **currency**                  | **str**                                   | Three-letter lowercase currency code of the account balance                                                  |
 | **to_base**                   | **float**                                 | The balance converted to the user&#39;s primary currency                                                     |
-| **balance_as_of**             | **datetime**                              | Date balance was last updated in ISO 8601 extended format                                                    |
+| **balance_as_of**             | **datetime**                              | Date balance was last updated in ISO 8601 extended format, can be in date or date-time format                |
 | **closed_on**                 | **date**                                  | The date this account was closed. Will be null if the account has not been marked as closed                  |
 | **institution_name**          | **str**                                   | Name of institution holding the account                                                                      |
 | **external_id**               | **str**                                   | An optional external_id that may be set or updated via the API                                               |
