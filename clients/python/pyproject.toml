@@ -2,6 +2,27 @@
 build-backend = "setuptools.build_meta"
 requires = ["setuptools"]
 
+[project]
+authors = [
+  {name = "OpenAPI Generator Community", email = "devsupport@lunchmoney.app"}
+]
+dependencies = [
+  "urllib3 (>=2.1.0,<3.0.0)",
+  "python-dateutil (>=2.8.2)",
+  "pydantic (>=2)",
+  "typing-extensions (>=4.7.1)"
+]
+description = "Lunch Money API - v2"
+keywords = ["OpenAPI", "OpenAPI-Generator", "Lunch Money API - v2"]
+license = {text = "Apache 2.0"}
+name = "lunchable"
+readme = "README.md"
+requires-python = ">=3.9"
+version = "1.0.0"
+
+[project.urls]
+Repository = "https://github.com/GIT_USER_ID/GIT_REPO_ID"
+
 [tool.mypy]
 # # Strongly recommend enabling this one as soon as you can
 check_untyped_defs = true
@@ -41,24 +62,9 @@ warn_return_any = true
 warn_unused_ignores = true
 
 [tool.poetry]
-authors = ["OpenAPI Generator Community <devsupport@lunchmoney.app>"]
-description = "Lunch Money API - v2"
-include = ["lunchable/py.typed"]
-keywords = ["OpenAPI", "OpenAPI-Generator", "Lunch Money API - v2"]
-license = "Apache 2.0"
-name = "lunchable"
-readme = "README.md"
-repository = "https://github.com/GIT_USER_ID/GIT_REPO_ID"
-version = "1.0.0"
+requires-poetry = ">=2.0"
 
-[tool.poetry.dependencies]
-pydantic = ">= 2"
-python = "^3.8"
-python-dateutil = ">= 2.8.2"
-typing-extensions = ">= 4.7.1"
-urllib3 = ">= 1.25.3 < 3.0.0"
-
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 flake8 = ">= 4.0.0"
 mypy = ">= 1.5"
 pytest = ">= 7.2.1"

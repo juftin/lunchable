@@ -15,7 +15,11 @@ All URIs are relative to *https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com
 
 Insert one or more transactions.
 
-Use this endpoint to add transactions to a budget. The request body for this endpoint must include a list of transactions with at least one transaction and not more than 500 transactions to insert. The successful request to this endpoint will return a [response body](v2#model/inserttransactionsresponseobject) will include two arrays:<br> - `transactions`: A list of transactions that were successfully inserted.<br> - `skipped_duplicates`: A list of transactions that were duplicates of existing transactions and were not inserted.
+Use this endpoint to add transactions to a budget.
+
+The request body for this endpoint must include a list of transactions with at least one transaction and not more than 500 transactions to insert.
+
+The successful request to this endpoint will return a [response body](v2#model/inserttransactionsresponseobject) will include two arrays:<br> - `transactions`: A list of transactions that were successfully inserted.<br> - `skipped_duplicates`: A list of transactions that were duplicates of existing transactions and were not inserted.
 
 ### Example
 
@@ -103,7 +107,9 @@ with lunchable.ApiClient(configuration) as api_client:
 
 Bulk delete existing transactions
 
-Deletes the transaction with the IDs specified in the request body.<br> If any of the specified transactions are a split transaction or a split parent, or if any are a grouped transactions or part of a transaction group, the request will fail with a suggestion on how to unsplit or ungroup the transaction(s) prior to deletion. This will also fail if any of the specified transaction IDs do not exist.<br> Otherwise, the specified transactions are deleted. This action is not reversible!
+Deletes the transaction with the IDs specified in the request body.<br>
+If any of the specified transactions are a split transaction or a split parent, or if any are a grouped transactions or part of a transaction group, the request will fail with a suggestion on how to unsplit or ungroup the transaction(s) prior to deletion. This will also fail if any of the specified transaction IDs do not exist.<br>
+Otherwise, the specified transactions are deleted. This action is not reversible!
 
 ### Example
 
@@ -306,7 +312,11 @@ with lunchable.ApiClient(configuration) as api_client:
 
 Update multiple transactions
 
-Modifies the properties of multiple existing transactions in a single request.<br><br> You may submit complete transaction objects from the response returned by a `GET /transactions` in the request body for each transaction, however only certain properties can be updated using this API. The following system set properties are accepted in the request body, but their values will be ignored: `id`, `to_base`, `is_pending`, `created_at`, `updated_at`, `source`, and `plaid_metadata`.<br><br> Transactions that have been previously split or grouped may not be modified by this endpoint. Therefore the `is_parent`, `parent_id`, `is_group`, `group_id`, and `children` properties are also ignored when provided in the request body.<br><br> Each transaction in the array **must** include an `id` property to identify which transaction to update, along with at least one other property to be updated. For example, a transaction object that contains only an `id` and `category_id` property is valid.<br><br> The request can include between 1 and 500 transactions to update in a single call.
+Modifies the properties of multiple existing transactions in a single request.<br><br>
+You may submit complete transaction objects from the response returned by a `GET /transactions` in the request body for each transaction, however only certain properties can be updated using this API. The following system set properties are accepted in the request body, but their values will be ignored: `id`, `to_base`, `is_pending`, `created_at`, `updated_at`, `source`, and `plaid_metadata`.<br><br>
+Transactions that have been previously split or grouped may not be modified by this endpoint. Therefore the `is_parent`, `parent_id`, `is_group`, `group_id`, and `children` properties are also ignored when provided in the request body.<br><br>
+Each transaction in the array **must** include an `id` property to identify which transaction to update, along with at least one other property to be updated. For example, a transaction object that contains only an `id` and `category_id` property is valid.<br><br>
+The request can include between 1 and 500 transactions to update in a single call.
 
 ### Example
 

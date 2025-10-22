@@ -186,7 +186,9 @@ with lunchable.ApiClient(configuration) as api_client:
 
 Trigger Fetch from Plaid
 
-Use this endpoint to trigger a fetch for latest data from Plaid.<br><br> Eligible accounts are those who last_fetch value is over 1 minute ago. (Although the limit is every minute, please use this endpoint sparingly!) Successive calls to this endpoint under a minute after the first will return a 425 TOO EARLY response.<br><br> Successful calls will return a 202 ACCEPTED response. Note that fetching from Plaid is a background job. This endpoint simply queues up the job. You may track the `plaid_last_successful_update`, `last_fetch` and `last_import` properties to verify the results of the fetch. The `last fetch` property is updated when Plaid accepts a request to fetch data. The `plaid_last_successful_update`is updated when it successfully contacts the associated financial institution. The `last_import` field is updated only when new transactions have been imported.
+Use this endpoint to trigger a fetch for latest data from Plaid.<br><br>
+Eligible accounts are those who last_fetch value is over 1 minute ago. (Although the limit is every minute, please use this endpoint sparingly!) Successive calls to this endpoint under a minute after the first will return a 425 TOO EARLY response.<br><br>
+Successful calls will return a 202 ACCEPTED response. Note that fetching from Plaid is a background job. This endpoint simply queues up the job. You may track the `plaid_last_successful_update`, `last_fetch` and `last_import` properties to verify the results of the fetch. The `last fetch` property is updated when Plaid accepts a request to fetch data. The `plaid_last_successful_update`is updated when it successfully contacts the associated financial institution. The `last_import` field is updated only when new transactions have been imported.
 
 ### Example
 

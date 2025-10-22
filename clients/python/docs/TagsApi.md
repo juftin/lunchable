@@ -104,7 +104,8 @@ with lunchable.ApiClient(configuration) as api_client:
 
 Delete a tag
 
-Deletes the tag with the ID specified on the path.<br> If transaction or rules exist with the tag a dependents object is returned and the tag is not deleted. This behavior can be overridden by setting the `force` param to `true`.
+Deletes the tag with the ID specified on the path.<br>
+If transaction or rules exist with the tag a dependents object is returned and the tag is not deleted. This behavior can be overridden by setting the `force` param to `true`.
 
 ### Example
 
@@ -363,7 +364,9 @@ with lunchable.ApiClient(configuration) as api_client:
 
 Update an existing tag
 
-Updates an existing tag.<br><br> You may submit the response from a `GET /tags/{id}` as the request body, however only certain properties can be updated using this API. The following system set properties are accepted in the request body but their values will be ignored: `id`, `updated_at`, `created_at`, and `archived_at`.<br><br> It is also possible to provide only the properties to be updated in the request body, as long as the request includes at least one of the properties that is not listed above. For example a request body that contains only a `name` attribute is valid.
+Updates an existing tag.<br><br>
+You may submit the response from a `GET /tags/{id}` as the request body, however only certain properties can be updated using this API. The following system set properties are accepted in the request body but their values will be ignored: `id`, `updated_at`, `created_at`, and `archived_at`.<br><br>
+It is also possible to provide only the properties to be updated in the request body, as long as the request includes at least one of the properties that is not listed above. For example a request body that contains only a `name` attribute is valid.
 
 ### Example
 
