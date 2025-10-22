@@ -39,6 +39,8 @@ jobs:
               uses: mikefarah/yq@master
               with:
                   cmd: cat openapi.yaml | yq -r .info.version
+            - name: Delete Existing Clients
+              run: rm -rf clients/
             - name: Generate OpenAPI Client
               run: npm run generate
             - name: Add All Changes
