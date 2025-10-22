@@ -9,7 +9,7 @@ All URIs are relative to *https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com
 
 # **group_transactions**
 
-> GroupTransactions201Response group_transactions(group_transactions_request)
+> TransactionObject group_transactions(group_transactions_request)
 
 Create a transaction group
 
@@ -22,8 +22,8 @@ Specify a set of existing transaction IDs to group together as a single grouped 
 
 ```python
 import lunchable
-from lunchable.models.group_transactions201_response import GroupTransactions201Response
 from lunchable.models.group_transactions_request import GroupTransactionsRequest
+from lunchable.models.transaction_object import TransactionObject
 from lunchable.rest import ApiException
 from pprint import pprint
 
@@ -72,7 +72,7 @@ with lunchable.ApiClient(configuration) as api_client:
 
 ### Return type
 
-[**GroupTransactions201Response**](GroupTransactions201Response.md)
+[**TransactionObject**](TransactionObject.md)
 
 ### Authorization
 

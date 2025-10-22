@@ -16,7 +16,7 @@ All URIs are relative to *https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com
 
 Create a manual account
 
-Create a new manually-managed account.
+Create a new manually-managed account.<br><br>
 
 ### Example
 

@@ -54,7 +54,7 @@ with lunchable.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lunchable.TransactionsFilesApi(api_client)
     transaction_id = 2112150655 # int |
-    file = None # bytearray | The file to attach.  Supported file types: - image/jpeg - image/png - application/pdf - image/heic - image/heif  Maximum file size: 10MB
+    file = None # bytearray | The file to attach via multipart form encoding.  File size may not exceed 10MB.
     notes = 'notes_example' # str | Optional notes about the file (optional)
 
     try:
@@ -68,11 +68,11 @@ with lunchable.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-| Name               | Type          | Description                                                                                                                            | Notes      |
-| ------------------ | ------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| **transaction_id** | **int**       |                                                                                                                                        |
-| **file**           | **bytearray** | The file to attach. Supported file types: - image/jpeg - image/png - application/pdf - image/heic - image/heif Maximum file size: 10MB |
-| **notes**          | **str**       | Optional notes about the file                                                                                                          | [optional] |
+| Name               | Type          | Description                                                                    | Notes      |
+| ------------------ | ------------- | ------------------------------------------------------------------------------ | ---------- |
+| **transaction_id** | **int**       |                                                                                |
+| **file**           | **bytearray** | The file to attach via multipart form encoding. File size may not exceed 10MB. |
+| **notes**          | **str**       | Optional notes about the file                                                  | [optional] |
 
 ### Return type
 

@@ -183,7 +183,6 @@ All URIs are relative to *https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com
 -   [GetAllTransactions200Response](docs/GetAllTransactions200Response.md)
 -   [GetBudgetSummary200Response](docs/GetBudgetSummary200Response.md)
 -   [GetTransactionAttachmentUrl200Response](docs/GetTransactionAttachmentUrl200Response.md)
--   [GroupTransactions201Response](docs/GroupTransactions201Response.md)
 -   [GroupTransactionsRequest](docs/GroupTransactionsRequest.md)
 -   [InsertTransactionObjectAmount](docs/InsertTransactionObjectAmount.md)
 -   [InsertTransactionsResponseObject](docs/InsertTransactionsResponseObject.md)

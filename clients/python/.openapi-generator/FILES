@@ -25,7 +25,6 @@ docs/GetAllTags200Response.md
 docs/GetAllTransactions200Response.md
 docs/GetBudgetSummary200Response.md
 docs/GetTransactionAttachmentUrl200Response.md
-docs/GroupTransactions201Response.md
 docs/GroupTransactionsRequest.md
 docs/InsertTransactionObjectAmount.md
 docs/InsertTransactionsResponseObject.md
@@ -98,7 +97,6 @@ lunchable/models/get_all_tags200_response.py
 lunchable/models/get_all_transactions200_response.py
 lunchable/models/get_budget_summary200_response.py
 lunchable/models/get_transaction_attachment_url200_response.py
-lunchable/models/group_transactions201_response.py
 lunchable/models/group_transactions_request.py
 lunchable/models/insert_transaction_object_amount.py
 lunchable/models/insert_transactions_response_object.py
@@ -149,7 +147,6 @@ test/test_get_all_tags200_response.py
 test/test_get_all_transactions200_response.py
 test/test_get_budget_summary200_response.py
 test/test_get_transaction_attachment_url200_response.py
-test/test_group_transactions201_response.py
 test/test_group_transactions_request.py
 test/test_insert_transaction_object_amount.py
 test/test_insert_transactions_response_object.py
