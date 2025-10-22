@@ -3,7 +3,7 @@
 """
 Lunch Money API - v2
 
-## Overview This is a version of the Lunch Money API described using the the OpenAPI 3.X specification.  The goal of this project is to validate an \"API Design First\" approach for the Lunch Money API, which should allow us to gather developer feedback prior to implementation in order to develop API endpoints more quickly.  This version of the API will differ from the existing v1 beta version. For more information on the changes please see the [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog)  Some useful links: - [Current v1 Lunch Money API Documentation](https://lunchmoney.dev) - [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog) - [OpenAPI API YAML Specification](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi/) - [Awesome Lunch Money Projects](https://lunchmoney.dev/#awesome-projects)
+## Overview This is a version of the Lunch Money API described using the the OpenAPI 3.X specification.   The goal of this project is to validate an \"API Design First\" approach for the Lunch Money API, which should allow us to gather developer feedback prior to implementation in order to develop API endpoints more quickly.  This version of the API will differ from the existing v1 beta version. For more information on the changes please see the  [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog)  Some useful links: - [Current v1 Lunch Money API Documentation](https://lunchmoney.dev) - [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog) - [OpenAPI API YAML Specification](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi/) - [Awesome Lunch Money Projects](https://lunchmoney.dev/#awesome-projects)
 
 The version of the OpenAPI document: 2.8.0
 Contact: devsupport@lunchmoney.app
@@ -62,7 +62,7 @@ class ManualAccountsApi:
     ) -> ManualAccountObject:
         """Create a manual account
 
-        Create a new manually-managed account.
+        Create a new manually-managed account.<br><br>
 
         :param create_manual_account_request_object: (required)
         :type create_manual_account_request_object: CreateManualAccountRequestObject
@@ -130,7 +130,7 @@ class ManualAccountsApi:
     ) -> ApiResponse[ManualAccountObject]:
         """Create a manual account
 
-        Create a new manually-managed account.
+        Create a new manually-managed account.<br><br>
 
         :param create_manual_account_request_object: (required)
         :type create_manual_account_request_object: CreateManualAccountRequestObject
@@ -198,7 +198,7 @@ class ManualAccountsApi:
     ) -> RESTResponseType:
         """Create a manual account
 
-        Create a new manually-managed account.
+        Create a new manually-managed account.<br><br>
 
         :param create_manual_account_request_object: (required)
         :type create_manual_account_request_object: CreateManualAccountRequestObject

@@ -3,7 +3,7 @@
 """
 Lunch Money API - v2
 
-## Overview This is a version of the Lunch Money API described using the the OpenAPI 3.X specification.  The goal of this project is to validate an \"API Design First\" approach for the Lunch Money API, which should allow us to gather developer feedback prior to implementation in order to develop API endpoints more quickly.  This version of the API will differ from the existing v1 beta version. For more information on the changes please see the [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog)  Some useful links: - [Current v1 Lunch Money API Documentation](https://lunchmoney.dev) - [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog) - [OpenAPI API YAML Specification](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi/) - [Awesome Lunch Money Projects](https://lunchmoney.dev/#awesome-projects)
+## Overview This is a version of the Lunch Money API described using the the OpenAPI 3.X specification.   The goal of this project is to validate an \"API Design First\" approach for the Lunch Money API, which should allow us to gather developer feedback prior to implementation in order to develop API endpoints more quickly.  This version of the API will differ from the existing v1 beta version. For more information on the changes please see the  [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog)  Some useful links: - [Current v1 Lunch Money API Documentation](https://lunchmoney.dev) - [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog) - [OpenAPI API YAML Specification](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi/) - [Awesome Lunch Money Projects](https://lunchmoney.dev/#awesome-projects)
 
 The version of the OpenAPI document: 2.8.0
 Contact: devsupport@lunchmoney.app
@@ -46,7 +46,7 @@ class TransactionsFilesApi:
         file: Annotated[
             Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]],
             Field(
-                description="The file to attach.  Supported file types: - image/jpeg - image/png - application/pdf - image/heic - image/heif  Maximum file size: 10MB "
+                description="The file to attach via multipart form encoding.  File size may not exceed 10MB. "
             ),
         ],
         notes: Annotated[
@@ -70,7 +70,7 @@ class TransactionsFilesApi:
 
         :param transaction_id: (required)
         :type transaction_id: int
-        :param file: The file to attach.  Supported file types: - image/jpeg - image/png - application/pdf - image/heic - image/heif  Maximum file size: 10MB  (required)
+        :param file: The file to attach via multipart form encoding.  File size may not exceed 10MB.  (required)
         :type file: bytearray
         :param notes: Optional notes about the file
         :type notes: str
@@ -128,7 +128,7 @@ class TransactionsFilesApi:
         file: Annotated[
             Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]],
             Field(
-                description="The file to attach.  Supported file types: - image/jpeg - image/png - application/pdf - image/heic - image/heif  Maximum file size: 10MB "
+                description="The file to attach via multipart form encoding.  File size may not exceed 10MB. "
             ),
         ],
         notes: Annotated[
@@ -152,7 +152,7 @@ class TransactionsFilesApi:
 
         :param transaction_id: (required)
         :type transaction_id: int
-        :param file: The file to attach.  Supported file types: - image/jpeg - image/png - application/pdf - image/heic - image/heif  Maximum file size: 10MB  (required)
+        :param file: The file to attach via multipart form encoding.  File size may not exceed 10MB.  (required)
         :type file: bytearray
         :param notes: Optional notes about the file
         :type notes: str
@@ -210,7 +210,7 @@ class TransactionsFilesApi:
         file: Annotated[
             Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]],
             Field(
-                description="The file to attach.  Supported file types: - image/jpeg - image/png - application/pdf - image/heic - image/heif  Maximum file size: 10MB "
+                description="The file to attach via multipart form encoding.  File size may not exceed 10MB. "
             ),
         ],
         notes: Annotated[
@@ -234,7 +234,7 @@ class TransactionsFilesApi:
 
         :param transaction_id: (required)
         :type transaction_id: int
-        :param file: The file to attach.  Supported file types: - image/jpeg - image/png - application/pdf - image/heic - image/heif  Maximum file size: 10MB  (required)
+        :param file: The file to attach via multipart form encoding.  File size may not exceed 10MB.  (required)
         :type file: bytearray
         :param notes: Optional notes about the file
         :type notes: str

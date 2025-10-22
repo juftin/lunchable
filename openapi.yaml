@@ -103,7 +103,7 @@ components:
                     description: User's email
                 id:
                     type: integer
-                    format: int64
+                    format: int32
                     description: Unique identifier for user
                 account_id:
                     type: integer
@@ -144,7 +144,7 @@ components:
             properties:
                 id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: false
                     description: A system defined unique identifier for the category.
                 name:
@@ -261,7 +261,7 @@ components:
             properties:
                 id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: false
                     description: A system defined unique identifier for the category.
                 name:
@@ -634,7 +634,7 @@ components:
                         the opposite is true.
                 recurring_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         The unique identifier of the associated recurring item that this
@@ -649,7 +649,7 @@ components:
                     maxLength: 140
                 category_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         Unique identifier of associated category set by the user or by a
@@ -658,7 +658,7 @@ components:
                         Category](../operations/getCategoryById) API
                 plaid_account_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         The unique identifier of the plaid account associated with this
@@ -668,7 +668,7 @@ components:
                         Money GUI.
                 manual_account_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         The unique identifier of the manual account associated with this
@@ -700,7 +700,7 @@ components:
                         API
                     items:
                         type: integer
-                        format: int64
+                        format: int32
                 notes:
                     type: string
                     nullable: true
@@ -851,7 +851,7 @@ components:
 
                         - `rule`: Transaction was created by a rule to split a transaction
 
-                        - `split`: This is a transaction created by splitting another
+                        - `split`: Transaction was created by splitting another
                         transaction
 
                         - `user`: This is a legacy value and is replaced by either csv or
@@ -929,7 +929,7 @@ components:
                         the opposite is true.
                 recurring_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         The unique identifier of the associated recurring item that this
@@ -944,7 +944,7 @@ components:
                     maxLength: 140
                 category_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         Unique identifier of associated category set by the user or by a
@@ -1042,7 +1042,7 @@ components:
                         transaction where the `is_group` attribute is true
                 manual_account_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         The unique identifier of the manual account associated with this
@@ -1052,7 +1052,7 @@ components:
                         Money GUI.
                 plaid_account_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         The unique identifier of the plaid account associated with this
@@ -1071,7 +1071,7 @@ components:
                         API
                     items:
                         type: integer
-                        format: int64
+                        format: int32
                 source:
                     type: string
                     nullable: true
@@ -1205,7 +1205,7 @@ components:
                     maxLength: 140
                 category_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         The ID of the category associated with the transactions. If set,
@@ -1222,7 +1222,7 @@ components:
                     maxLength: 350
                 manual_account_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         The Unique identifier for the associated manually managed account.
@@ -1234,7 +1234,7 @@ components:
                         transaction.
                 plaid_account_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         The Unique identifier for the associated plaid synced account. If
@@ -1248,7 +1248,7 @@ components:
                         by default), or the insert will fail.
                 recurring_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         Unique identifier for associated recurring item. Recurring
@@ -1270,7 +1270,7 @@ components:
                         not set, no tags will be associated with the created transaction.
                     items:
                         type: integer
-                        format: int64
+                        format: int32
                 external_id:
                     type: string
                     nullable: true
@@ -1334,7 +1334,7 @@ components:
                         - $ref: "#/components/schemas/currencyEnum"
                 recurring_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         The unique identifier of the associated recurring item that this
@@ -1347,7 +1347,7 @@ components:
                     maxLength: 140
                 category_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         Unique identifier of the category for this transaction. Set this to
@@ -1362,7 +1362,7 @@ components:
                     maxLength: 350
                 manual_account_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         The unique identifier of the manual account associated with this
@@ -1373,7 +1373,7 @@ components:
                         "Allow Modifications to Transactions" property is not set.
                 plaid_account_id:
                     type: integer
-                    format: int64
+                    format: int32
                     nullable: true
                     description:
                         The unique identifier of the plaid account associated with this
@@ -1392,7 +1392,7 @@ components:
                         set `additional_tag_ids` may not be set.
                     items:
                         type: integer
-                        format: int64
+                        format: int32
                 additional_tag_ids:
                     type: array
                     nullable: false
@@ -1403,7 +1403,7 @@ components:
                         tags. If set `tag_ids` may not be set.
                     items:
                         type: integer
-                        format: int64
+                        format: int32
                 external_id:
                     type: string
                     nullable: true
@@ -1536,7 +1536,7 @@ components:
                         parent if not defined.
                 category_id:
                     type: integer
-                    format: int64
+                    format: int32
                     description:
                         Unique identifier for associated category_id. Category must already
                         exist for the account. Will inherit category from the parent if not
@@ -1621,7 +1621,7 @@ components:
             properties:
                 id:
                     type: integer
-                    format: int64
+                    format: int32
                     description: The unique identifier of the attachment
                 uploaded_by:
                     type: integer
@@ -1653,7 +1653,7 @@ components:
             properties:
                 id:
                     type: integer
-                    format: int64
+                    format: int32
                     description: The unique identifier of this account
                 name:
                     type: string
@@ -1766,7 +1766,8 @@ components:
                     example: prepaid credit card
                 display_name:
                     type: string
-                    description: Display name of the account as set by user.
+                    description: Display name of the account as set by user.<br>
+                        This must be unique for the user.  If not set, it will be derived from the `institution_name` (if any) concatenated with the `name`.
                     example: Savings
                 balance:
                     oneOf:
@@ -1829,7 +1830,7 @@ components:
             properties:
                 id:
                     type: integer
-                    format: int64
+                    format: int32
                     description: System defined unique identifier of this account. Ignored if set.
                 name:
                     type: string
@@ -1850,7 +1851,8 @@ components:
                 display_name:
                     type: string
                     nullable: true
-                    description: If set, an optional display name for the account.
+                    description: If set, an optional display name for the account.<br>
+                        This must be unique for the user.  If not set, it will be derived from the `institution_name` (if any) concatenated with the `name`.
                 balance:
                     oneOf:
                         - type: number
@@ -1920,7 +1922,7 @@ components:
             properties:
                 id:
                     type: integer
-                    format: int64
+                    format: int32
                     description: The unique identifier of this account
                 date_linked:
                     type: string
@@ -2068,7 +2070,7 @@ components:
             properties:
                 id:
                     type: integer
-                    format: int64
+                    format: int32
                     description: Unique identifier for the tag.
                 name:
                     type: string
@@ -2168,7 +2170,7 @@ components:
                     description: If set will indicate if this category is archived.
                 id:
                     type: integer
-                    format: int64
+                    format: int32
                     description: System defined unique identifier for the category. Ignored if set.
                 updated_at:
                     type: string
@@ -2218,6 +2220,7 @@ components:
             properties:
                 id:
                     type: integer
+                    format: int32
                     description: The unique identifier of this recurring item
                 description:
                     type: string
@@ -3994,6 +3997,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int32
                   examples:
                       category:
                           summary: Example of a category's id
@@ -4126,6 +4130,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int32
                   examples:
                       category:
                           summary: Example of a category's id
@@ -4276,6 +4281,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int32
                   examples:
                       delete category:
                           summary: Simple category delete
@@ -4419,7 +4425,7 @@ paths:
             tags:
                 - manual_accounts
             summary: Create a manual account
-            description: Create a new manually-managed account.
+            description: Create a new manually-managed account.<br><br>
             operationId: createManualAccount
             requestBody:
                 required: true
@@ -4447,6 +4453,20 @@ paths:
                                     currency: usd
                                     institution_name: Bank of America
                                     exclude_from_transactions: false
+                            display_name not unique:
+                                summary: Explicit display_name not unique
+                                value:
+                                    name: API created card
+                                    type: credit
+                                    display_name: WeBank Euro Travel Card
+                                    balance: "1004.8000"
+                            implicit display_name not unique:
+                                summary: Derived display_name not unique
+                                value:
+                                    name: Individual Brokerage
+                                    type: investment
+                                    institution_name: Fidelity
+                                    balance: "41211.8000"
             responses:
                 "201":
                     description: Successfully created manual account
@@ -4495,15 +4515,34 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/errorResponseObject"
-                            example:
-                                message: Request Validation Failure
-                                errors:
-                                    - errMsg: must have required property 'name'
-                                      instancePath: /requestBody
-                                      schemaPath: "#/properties/requestBody/required"
-                                      keyword: required
-                                      params:
-                                          missingProperty: name
+                            examples:
+                                missing required properties:
+                                    value:
+                                        message: Request Validation Failure
+                                        errors:
+                                            - errMsg: "Missing required property 'name' in request body."
+                                            - errMsg: "Missing required property 'type' in request body."
+                                            - errMsg: "Missing required property 'balance' in request body."
+                                explicit display_name not unique:
+                                    value:
+                                        message: Request Validation Failure
+                                        errors:
+                                            - errMsg: "A manual account with the same display_name: 'WeBank Travel Card' already exists."
+                                              existing_manual_account_id: 219909
+                                              requested_display_name: "WeBank Travel Card"
+                                              existing_display_name: "WeBank Travel Card"
+                                              existing_name: "Euro Travel Card"
+                                              requested_name: "API created card"
+                                implicit display_name not unique:
+                                    value:
+                                        message: Request Validation Failure
+                                        errors:
+                                            - errMsg: "A manual account with the same implicit display_name derived from name: 'Individual Brokerage' and institution_name: 'Fidelity' already exists."
+                                              existing_manual_account_id: 219807
+                                              requested_name: Individual Brokerage
+                                              existing_name: Individual Brokerage
+                                              requested_institution_name: Fidelity
+                                              existing_institution_name: Fidelity
                 "401":
                     $ref: "#/components/responses/unauthorizedToken"
                 "429":
@@ -4524,6 +4563,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int32
                   examples:
                       basic manual account:
                           summary: Basic manual account by id request
@@ -4560,15 +4600,12 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/errorResponseObject"
-                            example:
-                                message: Request Validation Failure
-                                errors:
-                                    - errMsg: must be integer
-                                      instancePath: /path/id
-                                      schemaPath: "#/properties/path/properties/ids/items/type"
-                                      keyword: type
-                                      params:
-                                          type: integer
+                            examples:
+                                invalid account id type:
+                                    value:
+                                        message: Invalid Path Parameters
+                                        errors:
+                                            - errMsg: "Invalid value type for path parameter: 'id'. Expected 'number', received 'string'."
                 "401":
                     $ref: "#/components/responses/unauthorizedToken"
                 "404":
@@ -4608,6 +4645,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int32
                   examples:
                       category:
                           summary: Example of a manual account's id
@@ -4695,14 +4733,26 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/errorResponseObject"
-                            example:
-                                message: Invalid Request Body
-                                errors:
-                                    - errMsg:
-                                          "A request to update a manual account must include at least one of the
-                                          following properties: name, type, subtype, display_name,
-                                          balance, balance_as_of, closed_on, currency,
-                                          institution_name, exclude_from_transactions"
+                            examples:
+                                missing required properties:
+                                    value:
+                                        message: Invalid Request Body
+                                        errors:
+                                            - errMsg:
+                                                  "A request to update a manual account must include at least one of the
+                                                  following properties: name, type, subtype, display_name,
+                                                  balance, balance_as_of, closed_on, currency,
+                                                  institution_name, exclude_from_transactions"
+                                duplicate display_name:
+                                    value:
+                                        message: Request Validation Failure
+                                        errors:
+                                            - errMsg: "A manual account with the same display_name: 'WeBank Travel Card' already exists."
+                                              existing_manual_account_id: 219909
+                                              requested_display_name: "WeBank Travel Card"
+                                              existing_display_name: "WeBank Travel Card"
+                                              existing_name: "Euro Travel Card"
+                                              requested_name: "API created card"
                 "401":
                     $ref: "#/components/responses/unauthorizedToken"
                 "404":
@@ -4735,6 +4785,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int32
                   examples:
                       delete manual account:
                           summary: Account ID to delete
@@ -4876,6 +4927,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int32
                   examples:
                       basic manual account:
                           summary: Basic plaid account by id request
@@ -4988,6 +5040,7 @@ paths:
                       will trigger a fetch for all eligible accounts.
                   schema:
                       type: integer
+                      format: int32
                   examples:
                       basic manual account:
                           summary: Basic manual account by id request
@@ -5076,7 +5129,7 @@ paths:
                   in: query
                   schema:
                       type: integer
-                      format: int64
+                      format: int32
                   description:
                       Filter transactions to those associated with specified manual
                       account ID or set this to 0 to omit any transactions from manual
@@ -5092,7 +5145,7 @@ paths:
                   in: query
                   schema:
                       type: integer
-                      format: int64
+                      format: int32
                   description:
                       Filter transactions to those associated with specified plaid
                       account ID or set this to 0 to omit any transactions from plaid
@@ -5108,7 +5161,7 @@ paths:
                   in: query
                   schema:
                       type: integer
-                      format: int64
+                      format: int32
                   description: >
                       Filter transactions to those associated with specified
                       Recurring  Item ID
@@ -5121,7 +5174,7 @@ paths:
                   in: query
                   schema:
                       type: integer
-                      format: int64
+                      format: int32
                   description:
                       Filter transactions to those associated with the specified category
                       ID. Will also match category groups.  Set this to 0 to return only
@@ -5163,7 +5216,7 @@ paths:
                   in: query
                   schema:
                       type: integer
-                      format: int64
+                      format: int32
                   description:
                       Filter transactions to those that have a tag with the specified Tag
                       ID
@@ -6431,6 +6484,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int64
                   examples:
                       basic transaction:
                           summary: Basic transaction by id request
@@ -6669,6 +6723,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int64
                   examples:
                       basic transaction:
                           summary: Basic transaction by id request
@@ -6803,6 +6858,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int64
                   examples:
                       delete transaction:
                           summary: Simple transaction delete
@@ -6886,6 +6942,7 @@ paths:
                                         already grouped must be ungrouped before being regrouped.
                                     items:
                                         type: integer
+                                        format: int64
                                 date:
                                     type: string
                                     format: date
@@ -6949,82 +7006,77 @@ paths:
                     content:
                         application/json:
                             schema:
-                                properties:
-                                    transactions:
-                                        items:
-                                            $ref: "#/components/schemas/transactionObject"
-                                        type: array
+                                $ref: "#/components/schemas/transactionObject"
                             examples:
                                 group inherits category:
                                     value:
-                                        transactions:
-                                            - id: 123456789
-                                              date: "2024-12-10"
-                                              amount: "375.0000"
+                                        id: 123456789
+                                        date: "2024-12-10"
+                                        amount: "375.0000"
+                                        currency: usd
+                                        to_base: 375
+                                        recurring_id: null
+                                        payee: Home Entertainment Transactions
+                                        category_id: 315628
+                                        notes: null
+                                        status: reviewed
+                                        is_pending: false
+                                        created_at: "2024-12-18T14:45:03.366Z"
+                                        updated_at: "2024-12-18T14:45:03.366Z"
+                                        parent_id: null
+                                        is_group: true
+                                        group_id: null
+                                        manual_account_id: null
+                                        plaid_account_id: null
+                                        tag_ids: []
+                                        source: api
+                                        external_id: null
+                                        custom_metadata: null
+                                        children:
+                                            - id: 2112140365
+                                              date: "2024-11-10"
+                                              amount: "75.00"
                                               currency: usd
-                                              to_base: 375
+                                              to_base: 75
                                               recurring_id: null
-                                              payee: Home Entertainment Transactions
+                                              payee: Target
                                               category_id: 315628
-                                              notes: null
+                                              notes: Household items
                                               status: reviewed
                                               is_pending: false
-                                              created_at: "2024-12-18T14:45:03.366Z"
-                                              updated_at: "2024-12-18T14:45:03.366Z"
+                                              created_at: "2024-11-10T17:00:06.192Z"
+                                              updated_at: "2024-11-10T17:00:06.733Z"
+                                              is_parent: false
                                               parent_id: null
-                                              is_group: true
-                                              group_id: null
+                                              is_group: false
+                                              group_id: 123456789
                                               manual_account_id: null
-                                              plaid_account_id: null
+                                              plaid_account_id: 119809
                                               tag_ids: []
-                                              source: api
+                                              source: plaid
                                               external_id: null
-                                              custom_metadata: null
-                                              children:
-                                                  - id: 2112140365
-                                                    date: "2024-11-10"
-                                                    amount: "75.00"
-                                                    currency: usd
-                                                    to_base: 75
-                                                    recurring_id: null
-                                                    payee: Target
-                                                    category_id: 315628
-                                                    notes: Household items
-                                                    status: reviewed
-                                                    is_pending: false
-                                                    created_at: "2024-11-10T17:00:06.192Z"
-                                                    updated_at: "2024-11-10T17:00:06.733Z"
-                                                    is_parent: false
-                                                    parent_id: null
-                                                    is_group: false
-                                                    group_id: 123456789
-                                                    manual_account_id: null
-                                                    plaid_account_id: 119809
-                                                    tag_ids: []
-                                                    source: plaid
-                                                    external_id: null
-                                                  - id: 2112140361
-                                                    date: "2024-11-09"
-                                                    amount: "300.00"
-                                                    currency: usd
-                                                    to_base: 300
-                                                    recurring_id: null
-                                                    payee: Best Buy
-                                                    category_id: 315628
-                                                    notes: Electronics
-                                                    status: reviewed
-                                                    is_pending: false
-                                                    created_at: "2024-11-09T17:00:06.192Z"
-                                                    updated_at: "2024-11-09T17:00:06.733Z"
-                                                    is_parent: false
-                                                    parent_id: null
-                                                    is_group: false
-                                                    group_id: 123456789
-                                                    manual_account_id: null
-                                                    plaid_account_id: 119810
-                                                    tag_ids: []
-                                                    source: plaid
-                                                    external_id: null
+                                            - id: 2112140361
+                                              date: "2024-11-09"
+                                              amount: "300.00"
+                                              currency: usd
+                                              to_base: 300
+                                              recurring_id: null
+                                              payee: Best Buy
+                                              category_id: 315628
+                                              notes: Electronics
+                                              status: reviewed
+                                              is_pending: false
+                                              created_at: "2024-11-09T17:00:06.192Z"
+                                              updated_at: "2024-11-09T17:00:06.733Z"
+                                              is_parent: false
+                                              parent_id: null
+                                              is_group: false
+                                              group_id: 123456789
+                                              manual_account_id: null
+                                              plaid_account_id: 119810
+                                              tag_ids: []
+                                              source: plaid
+                                              external_id: null
                 "400":
                     description: Bad Request
                     content:
@@ -7078,6 +7130,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int64
                   examples:
                       delete transaction group:
                           summary: Simple transaction group delete
@@ -7130,6 +7183,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int64
                   examples:
                       spit transaction:
                           summary: Basic transaction by id request
@@ -7304,6 +7358,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int64
                   examples:
                       unsplit a transaction:
                           value: 2112140459
@@ -7349,6 +7404,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int64
                       description: The ID of the transaction to attach the file to
                   examples:
                       attach file to transaction:
@@ -7370,16 +7426,7 @@ paths:
                                     type: string
                                     format: binary
                                     description: |
-                                        The file to attach.
-
-                                        Supported file types:
-                                        - image/jpeg
-                                        - image/png
-                                        - application/pdf
-                                        - image/heic
-                                        - image/heif
-
-                                        Maximum file size: 10MB
+                                        The file to attach via multipart form encoding.  File size may not exceed 10MB.
                                 notes:
                                     type: string
                                     description: Optional notes about the file
@@ -7436,6 +7483,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int32
                       description: The ID of the file attachment to download
                   examples:
                       existing file attachment id:
@@ -7490,6 +7538,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int32
                       description: The ID of the file attachment to delete
                   examples:
                       existing file attachment id:
@@ -7655,6 +7704,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int32
                   examples:
                       tag:
                           summary: Example of a tags's id
@@ -7731,6 +7781,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int32
                   examples:
                       tag:
                           summary: Example of a tags's id
@@ -7827,6 +7878,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int32
                   examples:
                       delete tag:
                           summary: Simple tag delete
@@ -8030,6 +8082,7 @@ paths:
                   required: true
                   schema:
                       type: integer
+                      format: int32
                   examples:
                       tag:
                           summary: Example of a recurring ID

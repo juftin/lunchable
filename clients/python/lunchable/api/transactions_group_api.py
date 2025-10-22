@@ -3,7 +3,7 @@
 """
 Lunch Money API - v2
 
-## Overview This is a version of the Lunch Money API described using the the OpenAPI 3.X specification.  The goal of this project is to validate an \"API Design First\" approach for the Lunch Money API, which should allow us to gather developer feedback prior to implementation in order to develop API endpoints more quickly.  This version of the API will differ from the existing v1 beta version. For more information on the changes please see the [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog)  Some useful links: - [Current v1 Lunch Money API Documentation](https://lunchmoney.dev) - [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog) - [OpenAPI API YAML Specification](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi/) - [Awesome Lunch Money Projects](https://lunchmoney.dev/#awesome-projects)
+## Overview This is a version of the Lunch Money API described using the the OpenAPI 3.X specification.   The goal of this project is to validate an \"API Design First\" approach for the Lunch Money API, which should allow us to gather developer feedback prior to implementation in order to develop API endpoints more quickly.  This version of the API will differ from the existing v1 beta version. For more information on the changes please see the  [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog)  Some useful links: - [Current v1 Lunch Money API Documentation](https://lunchmoney.dev) - [v2 API Changelog](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/changelog) - [OpenAPI API YAML Specification](https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com/v2/openapi/) - [Awesome Lunch Money Projects](https://lunchmoney.dev/#awesome-projects)
 
 The version of the OpenAPI document: 2.8.0
 Contact: devsupport@lunchmoney.app
@@ -16,8 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from lunchable.models.group_transactions201_response import GroupTransactions201Response
 from lunchable.models.group_transactions_request import GroupTransactionsRequest
+from lunchable.models.transaction_object import TransactionObject
 
 from lunchable.api_client import ApiClient, RequestSerialized
 from lunchable.api_response import ApiResponse
@@ -51,10 +51,10 @@ class TransactionsGroupApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GroupTransactions201Response:
+    ) -> TransactionObject:
         """Create a transaction group
 
-        Specify a set of existing transaction IDs to group together as a single grouped transaction. The new transaction will have an amount equal to the sum of the grouped transaction amounts. If the grouped transactions have different currencies, the new group transaction will be set in the user's default currency.<br><br> After a transaction has been grouped the original transactions are no longer shown on the transactions page or returned by a `GET /transactions` request. The newly created grouped transaction is returned instead.  To see the details of the original transactions that were used to create a transaction group, use the `GET /transactions/{id}` endpoint, passing the ID of the grouped transaction. The grouped transactions will be included in the `children` property of the transaction returned in the response
+        Specify a set of existing transaction IDs to group together as a single grouped transaction.  The new transaction will have an amount equal to the sum of the grouped transaction amounts. If the  grouped transactions have different currencies, the new group transaction will be set in the user's default currency.<br><br>  After a transaction has been grouped the original transactions are no longer shown on the  transactions page or returned by a `GET /transactions` request. The newly created grouped  transaction is returned instead.  To see the details of the original transactions that were used to create a transaction group, use the `GET /transactions/{id}` endpoint, passing the ID of the grouped transaction. The grouped transactions will be included in the `children` property of the transaction returned in the response
 
         :param group_transactions_request: (required)
         :type group_transactions_request: GroupTransactionsRequest
@@ -89,7 +89,7 @@ class TransactionsGroupApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "201": "GroupTransactions201Response",
+            "201": "TransactionObject",
             "400": "ErrorResponseObject",
             "401": "ErrorResponseObject",
             "429": "ErrorResponseObject",
@@ -119,10 +119,10 @@ class TransactionsGroupApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GroupTransactions201Response]:
+    ) -> ApiResponse[TransactionObject]:
         """Create a transaction group
 
-        Specify a set of existing transaction IDs to group together as a single grouped transaction. The new transaction will have an amount equal to the sum of the grouped transaction amounts. If the grouped transactions have different currencies, the new group transaction will be set in the user's default currency.<br><br> After a transaction has been grouped the original transactions are no longer shown on the transactions page or returned by a `GET /transactions` request. The newly created grouped transaction is returned instead.  To see the details of the original transactions that were used to create a transaction group, use the `GET /transactions/{id}` endpoint, passing the ID of the grouped transaction. The grouped transactions will be included in the `children` property of the transaction returned in the response
+        Specify a set of existing transaction IDs to group together as a single grouped transaction.  The new transaction will have an amount equal to the sum of the grouped transaction amounts. If the  grouped transactions have different currencies, the new group transaction will be set in the user's default currency.<br><br>  After a transaction has been grouped the original transactions are no longer shown on the  transactions page or returned by a `GET /transactions` request. The newly created grouped  transaction is returned instead.  To see the details of the original transactions that were used to create a transaction group, use the `GET /transactions/{id}` endpoint, passing the ID of the grouped transaction. The grouped transactions will be included in the `children` property of the transaction returned in the response
 
         :param group_transactions_request: (required)
         :type group_transactions_request: GroupTransactionsRequest
@@ -157,7 +157,7 @@ class TransactionsGroupApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "201": "GroupTransactions201Response",
+            "201": "TransactionObject",
             "400": "ErrorResponseObject",
             "401": "ErrorResponseObject",
             "429": "ErrorResponseObject",
@@ -190,7 +190,7 @@ class TransactionsGroupApi:
     ) -> RESTResponseType:
         """Create a transaction group
 
-        Specify a set of existing transaction IDs to group together as a single grouped transaction. The new transaction will have an amount equal to the sum of the grouped transaction amounts. If the grouped transactions have different currencies, the new group transaction will be set in the user's default currency.<br><br> After a transaction has been grouped the original transactions are no longer shown on the transactions page or returned by a `GET /transactions` request. The newly created grouped transaction is returned instead.  To see the details of the original transactions that were used to create a transaction group, use the `GET /transactions/{id}` endpoint, passing the ID of the grouped transaction. The grouped transactions will be included in the `children` property of the transaction returned in the response
+        Specify a set of existing transaction IDs to group together as a single grouped transaction.  The new transaction will have an amount equal to the sum of the grouped transaction amounts. If the  grouped transactions have different currencies, the new group transaction will be set in the user's default currency.<br><br>  After a transaction has been grouped the original transactions are no longer shown on the  transactions page or returned by a `GET /transactions` request. The newly created grouped  transaction is returned instead.  To see the details of the original transactions that were used to create a transaction group, use the `GET /transactions/{id}` endpoint, passing the ID of the grouped transaction. The grouped transactions will be included in the `children` property of the transaction returned in the response
 
         :param group_transactions_request: (required)
         :type group_transactions_request: GroupTransactionsRequest
@@ -225,7 +225,7 @@ class TransactionsGroupApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "201": "GroupTransactions201Response",
+            "201": "TransactionObject",
             "400": "ErrorResponseObject",
             "401": "ErrorResponseObject",
             "429": "ErrorResponseObject",
