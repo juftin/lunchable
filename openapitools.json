@@ -9,6 +9,8 @@
                 "inputSpec": "openapi.yaml",
                 "output": "clients/python",
                 "packageName": "lunchable",
+                "gitRepoId": "lunchable",
+                "gitUserId": "juftin",
                 "openapi-normalizer": {
                     "REMOVE_X_INTERNAL": true
                 }
