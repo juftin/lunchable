@@ -13,17 +13,18 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List, Optional, Set
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing_extensions import Self
+
 from lunchable.models.delete_tag_response_with_dependencies_dependents import (
     DeleteTagResponseWithDependenciesDependents,
 )
-from typing import Optional, Set
-from typing_extensions import Self
 
 
 class DeleteTagResponseWithDependencies(BaseModel):

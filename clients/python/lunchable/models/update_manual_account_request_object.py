@@ -13,21 +13,21 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
-
 from datetime import date, datetime
+from typing import Any, ClassVar, Dict, List, Optional, Set
+
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
+from typing_extensions import Annotated, Self
+
 from lunchable.models.account_type_enum import AccountTypeEnum
 from lunchable.models.create_manual_account_request_object_balance import (
     CreateManualAccountRequestObjectBalance,
 )
 from lunchable.models.currency_enum import CurrencyEnum
-from typing import Set
-from typing_extensions import Self
 
 
 class UpdateManualAccountRequestObject(BaseModel):

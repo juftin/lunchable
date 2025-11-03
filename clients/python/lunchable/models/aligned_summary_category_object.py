@@ -13,18 +13,19 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List, Optional, Set
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
-from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Self
+
 from lunchable.models.aligned_category_totals_object import AlignedCategoryTotalsObject
 from lunchable.models.summary_category_occurrence_object import (
     SummaryCategoryOccurrenceObject,
 )
-from typing import Set
-from typing_extensions import Self
 
 
 class AlignedSummaryCategoryObject(BaseModel):

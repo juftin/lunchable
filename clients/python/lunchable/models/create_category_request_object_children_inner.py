@@ -13,8 +13,11 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
+
 import json
 import pprint
+from typing import Any, Dict, Optional, Set, Union
+
 from pydantic import (
     BaseModel,
     ConfigDict,
@@ -23,11 +26,9 @@ from pydantic import (
     ValidationError,
     field_validator,
 )
-from typing import Any, Optional
-from typing_extensions import Annotated
+from typing_extensions import Annotated, Self
+
 from lunchable.models.category_object import CategoryObject
-from typing import Union, Set, Dict
-from typing_extensions import Self
 
 CREATECATEGORYREQUESTOBJECTCHILDRENINNER_ONE_OF_SCHEMAS = [
     "CategoryObject",
