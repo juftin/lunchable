@@ -32,6 +32,8 @@ jobs:
                   java-version: "21"
             - name: setup-python
               uses: actions/setup-python@v6
+              with:
+                  python-version: "3.13"
             - name: npm-install
               run: npm clean-install
             - name: audit-signatures
