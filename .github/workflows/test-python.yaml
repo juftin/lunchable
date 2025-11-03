@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: test
+on:
+    push:
+        branches: [v2]
+    pull_request:
+        branches: [v2]
+permissions:
+    contents: read
+jobs:
+    generate:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: setup-uv
+              uses: astral-sh/setup-uv@v7
+              with:
+                  python-version: ${{ matrix.python-version }}
+            - name: install
+              working-directory: clients/python
+              run: uv pip install -r ./requirements.txt -r ./test-requirements.txt
+            - name: test
+              working-directory: clients/python
+              run: uv run pytest -v --cov=lunchable --cov-report=term-missing

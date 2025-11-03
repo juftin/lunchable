@@ -7,6 +7,8 @@ on:
     push:
         branches:
             - v2
+    schedule:
+        - cron: "0 12 * * 5"
 
 jobs:
     generate:
@@ -15,45 +17,47 @@ jobs:
             pull-requests: write
             contents: write
         steps:
-            - name: Checkout Latest Code
+            - name: checkout
               uses: actions/checkout@v4
-            - name: Setup Node.js
+              with:
+                  ref: v2
+            - name: setup-node
               uses: actions/setup-node@v4
               with:
                   node-version: lts/*
-            - name: Setup Java
+            - name: setup-java
               uses: actions/setup-java@v4
               with:
                   distribution: temurin
                   java-version: "21"
-            - name: Setup Python
-              uses: actions/setup-python@v3
-            - name: Install dependencies
+            - name: setup-python
+              uses: actions/setup-python@v6
+            - name: npm-install
               run: npm clean-install
-            - name: Verify NPM Signatures
+            - name: audit-signatures
               run: npm audit signatures
-            - name: Fetch Latest OpenAPI YAML
+            - name: generate-spec
               run: npm run spec
-            - name: Get OpenAPI Version
+            - name: openapi-version
               id: version
               uses: mikefarah/yq@master
               with:
                   cmd: cat openapi.yaml | yq -r .info.version
-            - name: Delete Existing Clients
+            - name: delete-clients
               run: rm -rf clients/
-            - name: Generate OpenAPI Client
+            - name: generate
               run: npm run generate
-            - name: Add All Changes
+            - name: git-add
               run: git add --all
-            - name: Run Pre-Commit
+            - name: pre-commit
               continue-on-error: true
               uses: pre-commit/action@v3.0.1
-            - name: Create Pull Request
+            - name: pull-request
               uses: peter-evans/create-pull-request@v7
               with:
                   add-paths: openapi.yaml,clients
-                  commit-message: ✨ lunchmoney openapi spec v${{ steps.version.outputs.result }}
-                  branch: openapi/v${{ steps.version.outputs.result }}
+                  commit-message: ✨ lunchmoney openapi spec v${{ steps.version.outputs.result }} - ${{ github.run_id }}
+                  branch: openapi/v${{ steps.version.outputs.result }}/${{ github.run_id }}
                   delete-branch: true
                   title: ✨ lunchmoney openapi spec v${{ steps.version.outputs.result }}
                   body: "## ✨ LunchMoney Developer API v${{ steps.version.outputs.result }}"
