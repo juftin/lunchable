@@ -44,7 +44,7 @@ class TestCreateManualAccountRequestObject(unittest.TestCase):
                 display_name = 'Savings',
                 balance = 195.50,
                 balance_as_of = '2024-09-15',
-                closed_on = 'Mon Sep 30 18:00:00 MDT 2024',
+                closed_on = 'Tue Oct 01 00:00:00 UTC 2024',
                 currency = 'aed',
                 institution_name = 'Bank of the West',
                 external_id = '',
