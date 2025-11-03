@@ -1,0 +1,77 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: "3"
+
+tasks:
+    #######################################
+    # Core Tasks
+    #######################################
+    default:
+        desc: Install Project, List Tasks
+        cmds:
+            - task --list-all
+    #######################################
+    install:
+        desc: Install Project + Dev Dependencies
+        cmds:
+            - task: pre-commit-install
+    #######################################
+    generate:
+        desc: Install Project + Dev Dependencies
+        cmds:
+            - npm clean-install
+            - npm audit signatures
+            - npm run spec
+            - rm -rf clients/
+            - npm run generate
+            - task: python:generate
+            - uv tool run pre-commit run --all-files || true
+            - uv tool run pre-commit run --all-files
+        env:
+            PYTHON_POST_PROCESS_FILE: "{{ .ROOT_DIR }}/post-process.sh"
+    #######################################
+    test:
+        desc: Run Tests
+        cmds:
+            - task: python:install
+            - task: python:test
+    #######################################
+    # Python Client Tasks
+    #######################################
+    python:install:
+        internal: true
+        dir: clients/python
+        cmd: uv sync
+        env:
+            UV_LOCKED: 1
+    python:test:
+        internal: true
+        dir: clients/python
+        cmd: uv run pytest -v --cov=lunchable --cov-report=term-missing
+        env:
+            UV_LOCKED: 1
+    python:lock:
+        internal: true
+        dir: clients/python
+        cmds:
+            - uv add --dev -r test-requirements.txt
+            - uv lock
+        env:
+            UV_LOCKED: 0
+    python:generate:
+        internal: true
+        cmds:
+            - task: python:lock
+    #######################################
+    # Internal Tasks
+    #######################################
+    pre-commit-install:
+        internal: true
+        cmds:
+            - cmd: |
+                  if [ "{{.CI | default 0}}" = "0" ]; then
+                      uv tool run --isolated pre-commit install --install-hooks
+                  fi
+              silent: true
+        status:
+            - test ! -f {{.ROOT_DIR}}/.pre-commit-config.yaml

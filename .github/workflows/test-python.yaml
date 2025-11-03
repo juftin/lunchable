@@ -5,7 +5,6 @@ on:
     push:
         branches: [v2]
     pull_request:
-        branches: [v2]
 permissions:
     contents: read
 jobs:
@@ -16,17 +15,16 @@ jobs:
                 python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
         steps:
             - name: checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
             - name: setup-uv
-              uses: astral-sh/setup-uv@v7
+              uses: astral-sh/setup-uv@85856786d1ce8acfbcc2f13a5f3fbd6b938f9f41 # v7.1.2
               with:
                   python-version: ${{ matrix.python-version }}
-            - name: virtualenv
-              working-directory: clients/python
-              run: uv venv
+            - name: setup-task
+              uses: arduino/setup-task@b91d5d2c96a56797b48ac1e0e89220bf64044611 # v2.0.0
+              with:
+                  repo-token: ${{ secrets.GITHUB_TOKEN }}
             - name: install
-              working-directory: clients/python
-              run: uv pip install -r ./requirements.txt -r ./test-requirements.txt
+              run: task install
             - name: test
-              working-directory: clients/python
-              run: uv run pytest -v --cov=lunchable --cov-report=term-missing
+              run: task test

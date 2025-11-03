@@ -1,0 +1,2 @@
+[lint.per-file-ignores]
+"clients/python/lunchable/models/get_budget_summary200_response.py" = ["F841"]
