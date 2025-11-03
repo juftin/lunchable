@@ -2,12 +2,11 @@
 
 ## Properties
 
-| Name              | Type                                                                            | Description                                                            | Notes      |
-| ----------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------- |
-| **totals**        | [**SummaryTotalsObject**](SummaryTotalsObject.md)                               |                                                                        | [optional] |
-| **aligned**       | **bool**                                                                        | true if start_date and end_date are aligned with budget period setting |
-| **rollover_pool** | [**SummaryRolloverPoolObject**](SummaryRolloverPoolObject.md)                   |                                                                        | [optional] |
-| **categories**    | [**List[NonAlignedSummaryCategoryObject]**](NonAlignedSummaryCategoryObject.md) |                                                                        |
+| Name           | Type                                                                            | Description                                                            | Notes      |
+| -------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------- |
+| **totals**     | [**SummaryTotalsObject**](SummaryTotalsObject.md)                               |                                                                        | [optional] |
+| **aligned**    | **bool**                                                                        | true if start_date and end_date are aligned with budget period setting |
+| **categories** | [**List[NonAlignedSummaryCategoryObject]**](NonAlignedSummaryCategoryObject.md) |                                                                        |
 
 ## Example
 

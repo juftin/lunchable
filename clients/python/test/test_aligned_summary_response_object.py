@@ -54,16 +54,6 @@ class TestAlignedSummaryResponseObject(unittest.TestCase):
                         uncategorized_count = 56,
                         uncategorized_recurring = 1.337, ), ),
                 aligned = True,
-                rollover_pool = lunchable.models.summary_rollover_pool_object.summaryRolloverPoolObject(
-                    budgeted_to_base = 1.337,
-                    all_adjustments = [
-                        lunchable.models.summary_rollover_pool_adjustment_object.summaryRolloverPoolAdjustmentObject(
-                            current = True,
-                            date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
-                            amount = '',
-                            currency = null,
-                            to_base = 1.337, )
-                        ], ),
                 categories = [
                     lunchable.models.aligned_summary_category_object.alignedSummaryCategoryObject(
                         category_id = 56,

@@ -13,7 +13,8 @@ All URIs are relative to *https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com
 
 Split a transaction
 
-Splits an existing transaction into a set of smaller child transactions.<br><br> After a transaction has been split the original transaction is no longer shown on the transactions page or returned by a `GET /transactions` request. The newly created child transactions are returned instead. To see the details of the original parent transaction after it has been split use the `GET /transactions/{id}` endpoint, passing the value of the `parent_id` of one of the children.
+Splits an existing transaction into a set of smaller child transactions.<br><br> After a transaction has been split the original transaction is no longer shown on the transactions page or returned by a `GET /transactions` request. The newly created child transactions are returned instead.
+To see the details of the original parent transaction after it has been split use the `GET /transactions/{id}` endpoint, passing the value of the `parent_id` of one of the children.
 
 ### Example
 
@@ -103,7 +104,8 @@ with lunchable.ApiClient(configuration) as api_client:
 
 Unsplit a previously split transactions
 
-Deletes the split children of a previously split transactions and restores the parent transactions to the normal unsplit state.<br><br> Use the value of the `parent_id`property of a split transaction to specify the parent ID.
+Deletes the split children of a previously split transactions and restores the parent transactions to the normal unsplit state.<br><br>
+Use the value of the `parent_id`property of a split transaction to specify the parent ID.
 
 ### Example
 

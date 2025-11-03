@@ -360,7 +360,9 @@ with lunchable.ApiClient(configuration) as api_client:
 
 Update an existing manual account
 
-Modifies the properties of an existing manual account.<br><br> You may submit the response from a `GET /manual_accounts/{id}` as the request body, however only certain properties can be updated using this API. The following system set properties are accepted in the request body but their values will be ignored: `id`, `created_at`, and `updated_at`.<br><br> It is also possible to provide only the properties to be updated in the request body, as long as the request includes at least one of the properties that is not listed above. For example a request body that contains only a `name` property is valid.<br><br>
+Modifies the properties of an existing manual account.<br><br>
+You may submit the response from a `GET /manual_accounts/{id}` as the request body, however only certain properties can be updated using this API. The following system set properties are accepted in the request body but their values will be ignored: `id`, `created_at`, and `updated_at`.<br><br>
+It is also possible to provide only the properties to be updated in the request body, as long as the request includes at least one of the properties that is not listed above. For example a request body that contains only a `name` property is valid.<br><br>
 
 ### Example
 

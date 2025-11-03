@@ -32,14 +32,8 @@ class AlignedSummaryResponseObject(BaseModel):
     aligned: StrictBool = Field(
         description="true if start_date and end_date are aligned with budget period setting"
     )
-    rollover_pool: Optional[SummaryRolloverPoolObject] = None
     categories: List[AlignedSummaryCategoryObject]
-    __properties: ClassVar[List[str]] = [
-        "totals",
-        "aligned",
-        "rollover_pool",
-        "categories",
-    ]
+    __properties: ClassVar[List[str]] = ["totals", "aligned", "categories"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -81,9 +75,6 @@ class AlignedSummaryResponseObject(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of totals
         if self.totals:
             _dict["totals"] = self.totals.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of rollover_pool
-        if self.rollover_pool:
-            _dict["rollover_pool"] = self.rollover_pool.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in categories (list)
         _items = []
         if self.categories:
@@ -108,11 +99,6 @@ class AlignedSummaryResponseObject(BaseModel):
                 if obj.get("totals") is not None
                 else None,
                 "aligned": obj.get("aligned"),
-                "rollover_pool": SummaryRolloverPoolObject.from_dict(
-                    obj["rollover_pool"]
-                )
-                if obj.get("rollover_pool") is not None
-                else None,
                 "categories": [
                     AlignedSummaryCategoryObject.from_dict(_item)
                     for _item in obj["categories"]

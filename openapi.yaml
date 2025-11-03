@@ -1,5 +1,4 @@
 openapi: 3.0.2
-
 info:
     title: Lunch Money API - v2
     description: |-
@@ -379,6 +378,7 @@ components:
                     nullable: true
                     default: null
                     description: The description of the category. Must not exceed 200 characters.
+                    minLength: 0 # Allow empty strings
                     maxLength: 200
                 is_income:
                     type: boolean
@@ -468,6 +468,7 @@ components:
                     description:
                         If set the new description of the category. Must not exceed 200
                         characters.
+                    minLength: 0 # Allow empty strings
                     maxLength: 200
                 is_income:
                     type: boolean
@@ -719,7 +720,6 @@ components:
                     #   reviewed: User has reviewed the transaction, or it was automatically marked as reviewed due to reviewed recurring_item logic
                     #   unreviewed: User has not reviewed the transaction and it does not match any reviewed recurring_items.
                     #   delete_pending: The synced account deleted this transaction after it was updated by the user. Requires manual intervention.
-                    #   pending: Transaction is still pending with the synced institution (not posted).
                     description: >
                         Status of the transaction:
 
@@ -728,18 +728,16 @@ components:
                         logic
 
                         - `unreviewed`: User has not reviewed the transaction and it does
-                        not match any reviewed recurring_items.
+                        not match any reviewed recurring_items. Note that any transactions
+                        where `is_pending` is true will be returned with a status of unreviewed.
 
                         - `delete_pending`: The synced account deleted this transaction
                         after it was updated by the user. Requires manual intervention.
 
-                        - `pending`: Transaction is still pending with the synced
-                        institution (not posted).
                     enum:
                         - reviewed
                         - unreviewed
                         - delete_pending
-                        - pending
                 is_pending:
                     type: boolean
                     description:
@@ -967,9 +965,8 @@ components:
                         Status of the transaction.  Will be one of the following values:
                     x-enumDescriptions:
                         reviewed: User has reviewed the transaction, or it was automatically marked as reviewed due to reviewed recurring item logic
-                        unreviewed: User has not reviewed the transaction and it does not match any reviewed recurring_items.
+                        unreviewed: User has not reviewed the transaction and it does not match any reviewed recurring_items. Note that any transactions where `is_pending` is true will be returned with a status of unreviewed.
                         delete_pending: The synced account deleted this transaction after it was updated by the user. Requires manual intervention.
-                        pending: Transaction is still pending with the synced institution (not posted).
                     # description: >
                     #   Status of the transaction:
 
@@ -983,13 +980,10 @@ components:
                     #   - `delete_pending`: The synced account deleted this transaction
                     #   after it was updated by the user. Requires manual intervention.
 
-                    #   - `pending`: Transaction is still pending with the synced
-                    #   institution (not posted).
                     enum:
                         - reviewed
                         - unreviewed
                         - delete_pending
-                        - pending
                 is_pending:
                     type: boolean
                     description:
@@ -1671,6 +1665,8 @@ components:
                     description:
                         Optional account subtype. Examples include<br> - retirement -
                         checking - savings - prepaid credit card
+                    minLength: 1
+                    maxLength: 100
                 display_name:
                     type: string
                     nullable: true
@@ -1710,6 +1706,11 @@ components:
                     minLength: 0
                     maxLength: 75
                     description: An optional external_id that may be set or updated via the API
+                custom_metadata:
+                    type: object
+                    nullable: true
+                    description: User defined JSON data that can be set or cleared via the API.
+                    additionalProperties: true
                 exclude_from_transactions:
                     type: boolean
                     default: false
@@ -1763,7 +1764,7 @@ components:
                         If set an optional account subtype. Examples include<br> -
                         retirement - checking - savings - prepaid credit card
                     minLength: 1
-                    maxLength: 75
+                    maxLength: 100
                     example: prepaid credit card
                 display_name:
                     type: string
@@ -1812,6 +1813,14 @@ components:
                     minLength: 0
                     maxLength: 75
                     description: An optional external_id that may be set or updated via the API
+                custom_metadata:
+                    type: object
+                    nullable: true
+                    description:
+                        An optional JSON object that includes additional data related to
+                        this account. This must be a valid JSON object and, when
+                        stringified, must not exceed 4096 characters.
+                    additionalProperties: true
                 exclude_from_transactions:
                     type: boolean
                     description:
@@ -1848,7 +1857,7 @@ components:
                         If set an optional account subtype. Examples include<br> -
                         retirement - checking - savings - prepaid credit card
                     minLength: 1
-                    maxLength: 75
+                    maxLength: 100
                 display_name:
                     type: string
                     nullable: true
@@ -1897,6 +1906,14 @@ components:
                     minLength: 0
                     maxLength: 75
                     description: An optional external_id that may be set or updated via the API
+                custom_metadata:
+                    type: object
+                    nullable: true
+                    description:
+                        An optional JSON object that includes additional data related to
+                        this account. This must be a valid JSON object and, when
+                        stringified, must not exceed 4096 characters.
+                    additionalProperties: true
                 exclude_from_transactions:
                     type: boolean
                     description:
@@ -2806,8 +2823,6 @@ components:
                     type: boolean
                     enum: [true]
                     description: "true if start_date and end_date are aligned with budget period setting"
-                rollover_pool:
-                    $ref: "#/components/schemas/summaryRolloverPoolObject"
                 categories:
                     type: array
                     items:
@@ -2827,8 +2842,6 @@ components:
                     type: boolean
                     enum: [false]
                     description: "true if start_date and end_date are aligned with budget period setting"
-                rollover_pool:
-                    $ref: "#/components/schemas/summaryRolloverPoolObject"
                 categories:
                     type: array
                     items:
@@ -2862,7 +2875,6 @@ components:
                 recurring_remaining:
                     description: Total amount, in the user's default currency, of expected recurring activity that has not yet occurred.
                     type: number
-                    nullable: true
                 uncategorized:
                     description: Total amount, in the user's default currency, of non recurring activity coming from un-categorized transactions.
                     type: number
@@ -2891,7 +2903,6 @@ components:
             required:
                 - category_id
                 - totals
-                - occurrences
 
         nonAlignedSummaryCategoryObject:
             type: object
@@ -3012,11 +3023,9 @@ components:
                 recurring_remaining:
                     description: "Total expected recurring activity, in the user's default currency, that has not yet occurred for the category within the given date range."
                     type: number
-                    nullable: true
                 recurring_expected:
                     description: "Total expected recurring activity for the category within the given date range."
                     type: number
-                    nullable: true
             required:
                 - other_activity
                 - recurring_activity
@@ -3044,11 +3053,9 @@ components:
                 recurring_remaining:
                     description: "Total expected recurring activity, in the user's default currency, that has not yet occurred for the category within the given date range."
                     type: number
-                    nullable: true
                 recurring_expected:
                     description: "Total expected recurring activity for the category within the given date range."
                     type: number
-                    nullable: true
             required:
                 - other_activity
                 - recurring_activity
@@ -3299,7 +3306,7 @@ paths:
                       default: false
                 - in: query
                   name: include_occurrences
-                  description: Enable to include details for individual budget periods for each category.
+                  description: Enable to include an `occurrences` array for each category in an aligned response. Each array will include an object for each budget period that falls within the specified date range which includes details on the activity for the budget period.
                   required: false
                   schema:
                       type: boolean
@@ -3307,15 +3314,6 @@ paths:
                 - in: query
                   name: include_totals
                   description: "Enable to include a top-level `totals` section that summarizes the inflow and outflow across all transactions for the specified date range."
-                  required: false
-                  schema:
-                      type: boolean
-                      default: false
-                - in: query
-                  name: include_rollover_pool
-                  description:
-                      "Enable to include a top-level `rollover_pool` section that summarizes the current rollover pool balance and all previous adjustments.<br>
-                      This works only if the `start_date` and `end_date` are aligned with one or more budget periods."
                   required: false
                   schema:
                       type: boolean
@@ -5185,6 +5183,14 @@ paths:
                           value: 83
                       food category group:
                           value: 84
+                - name: tag_id
+                  in: query
+                  schema:
+                      type: integer
+                      format: int32
+                  description:
+                      Filter transactions to those that have a tag with the specified Tag
+                      ID
                 - name: is_group
                   in: query
                   schema:
@@ -5198,7 +5204,6 @@ paths:
                           - reviewed
                           - unreviewed
                           - delete_pending
-                          - pending
                   description:
                       "Filter transactions to those with the specified status:<br> -
                       `reviewed`: Only user reviewed transactions or those that were
@@ -5206,30 +5211,36 @@ paths:
                       logic<br> - `unreviewed`: Only transactions that need to be
                       reviewed<br> - `delete_pending`: Only transactions that require
                       manual intervention because the plaid account deleted this
-                      transaction after it was updated by the user. <br> - `pending`: Only
-                      pending transactions from synced accounts. "
+                      transaction after it was updated by the user."
                   examples:
                       needs review:
                           value: unreviewed
                       needs deletion:
                           value: delete_pending
-                - name: tag_id
+                - name: is_pending
                   in: query
                   schema:
-                      type: integer
-                      format: int32
-                  description:
-                      Filter transactions to those that have a tag with the specified Tag
-                      ID
+                      type: boolean
+                  description: >
+                      Filter transactions by pending status. Set to `true` to return only pending transactions,
+                      or `false` to return only non-pending transactions. When this parameter is set, it takes
+                      precedence over `include_pending`. Note: Pending transactions always have a status of
+                      `unreviewed`, so when setting this parameter to `true`, either omit the `status` parameter
+                      or set it to `unreviewed`.
+                  examples:
+                      only pending:
+                          value: true
+                      exclude pending:
+                          value: false
                 - name: include_pending
                   in: query
                   schema:
                       type: boolean
                       default: false
-                  description:
-                      Set to true if you'd like to include imported transactions with a
-                      pending status. This query param is ignored if the `status` query
-                      param is also set.
+                  description: >
+                      By default, pending transactions are excluded from results. Set to `true` to include
+                      imported transactions with a pending status in the results. This query param is ignored
+                      if the `is_pending` query param is also set.
                 - name: include_metadata
                   in: query
                   schema:

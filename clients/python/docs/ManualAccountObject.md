@@ -18,6 +18,7 @@ An object containing information about a manual account
 | **closed_on**                 | **date**                                  | The date this account was closed. Will be null if the account has not been marked as closed                  |
 | **institution_name**          | **str**                                   | Name of institution holding the account                                                                      |
 | **external_id**               | **str**                                   | An optional external_id that may be set or updated via the API                                               |
+| **custom_metadata**           | **Dict[str, object]**                     | User defined JSON data that can be set or cleared via the API.                                               | [optional]         |
 | **exclude_from_transactions** | **bool**                                  | If true, this account will not show up as an option for assignment when creating transactions manually       | [default to False] |
 | **created_at**                | **datetime**                              | Date/time the account was created in ISO 8601 extended format                                                |
 | **updated_at**                | **datetime**                              | Date/time the account was created in ISO 8601 extended format                                                |
