@@ -43,7 +43,7 @@ class TestGetAllManualAccounts200Response(unittest.TestCase):
                         id = 56,
                         name = '0',
                         type = null,
-                        subtype = '',
+                        subtype = '0',
                         display_name = '',
                         balance = '-80728',
                         currency = '012',
@@ -52,6 +52,7 @@ class TestGetAllManualAccounts200Response(unittest.TestCase):
                         closed_on = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
                         institution_name = '0',
                         external_id = '',
+                        custom_metadata = { },
                         exclude_from_transactions = True,
                         created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                         updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )

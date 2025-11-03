@@ -45,7 +45,9 @@ class ManualAccountObject(BaseModel):
         description="Name of the account"
     )
     type: AccountTypeEnum = Field(description="Primary type of the account")
-    subtype: Optional[StrictStr] = Field(
+    subtype: Optional[
+        Annotated[str, Field(min_length=1, strict=True, max_length=100)]
+    ] = Field(
         description="Optional account subtype. Examples include<br> - retirement - checking - savings - prepaid credit card"
     )
     display_name: Optional[StrictStr] = Field(
@@ -74,6 +76,10 @@ class ManualAccountObject(BaseModel):
     ] = Field(
         description="An optional external_id that may be set or updated via the API"
     )
+    custom_metadata: Optional[Dict[str, Any]] = Field(
+        default=None,
+        description="User defined JSON data that can be set or cleared via the API.",
+    )
     exclude_from_transactions: StrictBool = Field(
         description="If true, this account will not show up as an option for assignment when creating transactions manually"
     )
@@ -96,6 +102,7 @@ class ManualAccountObject(BaseModel):
         "closed_on",
         "institution_name",
         "external_id",
+        "custom_metadata",
         "exclude_from_transactions",
         "created_at",
         "updated_at",
@@ -175,6 +182,11 @@ class ManualAccountObject(BaseModel):
         if self.external_id is None and "external_id" in self.model_fields_set:
             _dict["external_id"] = None
 
+        # set to None if custom_metadata (nullable) is None
+        # and model_fields_set contains the field
+        if self.custom_metadata is None and "custom_metadata" in self.model_fields_set:
+            _dict["custom_metadata"] = None
+
         return _dict
 
     @classmethod
@@ -200,6 +212,7 @@ class ManualAccountObject(BaseModel):
                 "closed_on": obj.get("closed_on"),
                 "institution_name": obj.get("institution_name"),
                 "external_id": obj.get("external_id"),
+                "custom_metadata": obj.get("custom_metadata"),
                 "exclude_from_transactions": obj.get("exclude_from_transactions")
                 if obj.get("exclude_from_transactions") is not None
                 else False,

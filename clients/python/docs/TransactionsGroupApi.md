@@ -13,7 +13,17 @@ All URIs are relative to *https://lm-v2-api-mock-data-f24357049a1b.herokuapp.com
 
 Create a transaction group
 
-Specify a set of existing transaction IDs to group together as a single grouped transaction. The new transaction will have an amount equal to the sum of the grouped transaction amounts. If the grouped transactions have different currencies, the new group transaction will be set in the user's default currency.<br><br> After a transaction has been grouped the original transactions are no longer shown on the transactions page or returned by a `GET /transactions` request. The newly created grouped transaction is returned instead. To see the details of the original transactions that were used to create a transaction group, use the `GET /transactions/{id}` endpoint, passing the ID of the grouped transaction. The grouped transactions will be included in the `children` property of the transaction returned in the response
+Specify a set of existing transaction IDs to group together as a single grouped transaction.
+The new transaction will have an amount equal to the sum of the grouped transaction amounts. If the
+grouped transactions have different currencies, the new group transaction will be set in the user's
+default currency.<br><br>
+After a transaction has been grouped the original transactions are no longer shown on the
+transactions page or returned by a `GET /transactions` request. The newly created grouped
+transaction is returned instead.
+
+To see the details of the original transactions that were used to create a transaction group, use the
+`GET /transactions/{id}` endpoint, passing the ID of the grouped transaction. The grouped transactions will
+be included in the `children` property of the transaction returned in the response
 
 ### Example
 
@@ -101,7 +111,8 @@ with lunchable.ApiClient(configuration) as api_client:
 
 Delete a transaction group
 
-Deletes the transaction group with the ID specified on the path.<br> The transactions within the group are not removed and will subsequently be treated as \"normal\" ungrouped transactions.
+Deletes the transaction group with the ID specified on the path.<br>
+The transactions within the group are not removed and will subsequently be treated as "normal" ungrouped transactions.
 
 ### Example
 

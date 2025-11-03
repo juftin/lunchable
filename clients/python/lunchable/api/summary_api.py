@@ -61,19 +61,13 @@ class SummaryApi:
         include_occurrences: Annotated[
             Optional[StrictBool],
             Field(
-                description="Enable to include details for individual budget periods for each category."
+                description="Enable to include an `occurrences` array for each category in an aligned response. Each array will include an object for each budget period that falls within the specified date range which includes details on the activity for the budget period."
             ),
         ] = None,
         include_totals: Annotated[
             Optional[StrictBool],
             Field(
                 description="Enable to include a top-level `totals` section that summarizes the inflow and outflow across all transactions for the specified date range."
-            ),
-        ] = None,
-        include_rollover_pool: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Enable to include a top-level `rollover_pool` section that summarizes the current rollover pool balance and all previous adjustments.<br> This works only if the `start_date` and `end_date` are aligned with one or more budget periods."
             ),
         ] = None,
         _request_timeout: Union[
@@ -98,12 +92,10 @@ class SummaryApi:
         :type end_date: date
         :param include_exclude_from_budgets: Enable to include categories that have the 'Exclude from Budgets' flag set in the returned `categories` array.
         :type include_exclude_from_budgets: bool
-        :param include_occurrences: Enable to include details for individual budget periods for each category.
+        :param include_occurrences: Enable to include an `occurrences` array for each category in an aligned response. Each array will include an object for each budget period that falls within the specified date range which includes details on the activity for the budget period.
         :type include_occurrences: bool
         :param include_totals: Enable to include a top-level `totals` section that summarizes the inflow and outflow across all transactions for the specified date range.
         :type include_totals: bool
-        :param include_rollover_pool: Enable to include a top-level `rollover_pool` section that summarizes the current rollover pool balance and all previous adjustments.<br> This works only if the `start_date` and `end_date` are aligned with one or more budget periods.
-        :type include_rollover_pool: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -132,7 +124,6 @@ class SummaryApi:
             include_exclude_from_budgets=include_exclude_from_budgets,
             include_occurrences=include_occurrences,
             include_totals=include_totals,
-            include_rollover_pool=include_rollover_pool,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -178,19 +169,13 @@ class SummaryApi:
         include_occurrences: Annotated[
             Optional[StrictBool],
             Field(
-                description="Enable to include details for individual budget periods for each category."
+                description="Enable to include an `occurrences` array for each category in an aligned response. Each array will include an object for each budget period that falls within the specified date range which includes details on the activity for the budget period."
             ),
         ] = None,
         include_totals: Annotated[
             Optional[StrictBool],
             Field(
                 description="Enable to include a top-level `totals` section that summarizes the inflow and outflow across all transactions for the specified date range."
-            ),
-        ] = None,
-        include_rollover_pool: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Enable to include a top-level `rollover_pool` section that summarizes the current rollover pool balance and all previous adjustments.<br> This works only if the `start_date` and `end_date` are aligned with one or more budget periods."
             ),
         ] = None,
         _request_timeout: Union[
@@ -215,12 +200,10 @@ class SummaryApi:
         :type end_date: date
         :param include_exclude_from_budgets: Enable to include categories that have the 'Exclude from Budgets' flag set in the returned `categories` array.
         :type include_exclude_from_budgets: bool
-        :param include_occurrences: Enable to include details for individual budget periods for each category.
+        :param include_occurrences: Enable to include an `occurrences` array for each category in an aligned response. Each array will include an object for each budget period that falls within the specified date range which includes details on the activity for the budget period.
         :type include_occurrences: bool
         :param include_totals: Enable to include a top-level `totals` section that summarizes the inflow and outflow across all transactions for the specified date range.
         :type include_totals: bool
-        :param include_rollover_pool: Enable to include a top-level `rollover_pool` section that summarizes the current rollover pool balance and all previous adjustments.<br> This works only if the `start_date` and `end_date` are aligned with one or more budget periods.
-        :type include_rollover_pool: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -249,7 +232,6 @@ class SummaryApi:
             include_exclude_from_budgets=include_exclude_from_budgets,
             include_occurrences=include_occurrences,
             include_totals=include_totals,
-            include_rollover_pool=include_rollover_pool,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -295,19 +277,13 @@ class SummaryApi:
         include_occurrences: Annotated[
             Optional[StrictBool],
             Field(
-                description="Enable to include details for individual budget periods for each category."
+                description="Enable to include an `occurrences` array for each category in an aligned response. Each array will include an object for each budget period that falls within the specified date range which includes details on the activity for the budget period."
             ),
         ] = None,
         include_totals: Annotated[
             Optional[StrictBool],
             Field(
                 description="Enable to include a top-level `totals` section that summarizes the inflow and outflow across all transactions for the specified date range."
-            ),
-        ] = None,
-        include_rollover_pool: Annotated[
-            Optional[StrictBool],
-            Field(
-                description="Enable to include a top-level `rollover_pool` section that summarizes the current rollover pool balance and all previous adjustments.<br> This works only if the `start_date` and `end_date` are aligned with one or more budget periods."
             ),
         ] = None,
         _request_timeout: Union[
@@ -332,12 +308,10 @@ class SummaryApi:
         :type end_date: date
         :param include_exclude_from_budgets: Enable to include categories that have the 'Exclude from Budgets' flag set in the returned `categories` array.
         :type include_exclude_from_budgets: bool
-        :param include_occurrences: Enable to include details for individual budget periods for each category.
+        :param include_occurrences: Enable to include an `occurrences` array for each category in an aligned response. Each array will include an object for each budget period that falls within the specified date range which includes details on the activity for the budget period.
         :type include_occurrences: bool
         :param include_totals: Enable to include a top-level `totals` section that summarizes the inflow and outflow across all transactions for the specified date range.
         :type include_totals: bool
-        :param include_rollover_pool: Enable to include a top-level `rollover_pool` section that summarizes the current rollover pool balance and all previous adjustments.<br> This works only if the `start_date` and `end_date` are aligned with one or more budget periods.
-        :type include_rollover_pool: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -366,7 +340,6 @@ class SummaryApi:
             include_exclude_from_budgets=include_exclude_from_budgets,
             include_occurrences=include_occurrences,
             include_totals=include_totals,
-            include_rollover_pool=include_rollover_pool,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -391,7 +364,6 @@ class SummaryApi:
         include_exclude_from_budgets,
         include_occurrences,
         include_totals,
-        include_rollover_pool,
         _request_auth,
         _content_type,
         _headers,
@@ -444,9 +416,6 @@ class SummaryApi:
 
         if include_totals is not None:
             _query_params.append(("include_totals", include_totals))
-
-        if include_rollover_pool is not None:
-            _query_params.append(("include_rollover_pool", include_rollover_pool))
 
         # process the header parameters
         # process the form parameters

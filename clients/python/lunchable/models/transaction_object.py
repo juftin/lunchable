@@ -85,7 +85,7 @@ class TransactionObject(BaseModel):
         description="Any transaction notes set by the user or by  a matched recurring item. This will match the value  displayed in notes field on the transactions page in the GUI. "
     )
     status: StrictStr = Field(
-        description="Status of the transaction: - `reviewed`: User has reviewed the transaction, or it was automatically marked as reviewed due to reviewed recurring_item logic - `unreviewed`: User has not reviewed the transaction and it does not match any reviewed recurring_items. - `delete_pending`: The synced account deleted this transaction after it was updated by the user. Requires manual intervention. - `pending`: Transaction is still pending with the synced institution (not posted). "
+        description="Status of the transaction: - `reviewed`: User has reviewed the transaction, or it was automatically marked as reviewed due to reviewed recurring_item logic - `unreviewed`: User has not reviewed the transaction and it does not match any reviewed recurring_items. Note that any transactions  where `is_pending` is true will be returned with a status of unreviewed. - `delete_pending`: The synced account deleted this transaction after it was updated by the user. Requires manual intervention. "
     )
     is_pending: StrictBool = Field(
         description="Denotes if the transaction is pending (not posted). Applies only to transactions in synced accounts and will always be false for transactions associated with manual accounts."
@@ -160,9 +160,9 @@ class TransactionObject(BaseModel):
     @field_validator("status")
     def status_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(["reviewed", "unreviewed", "delete_pending", "pending"]):
+        if value not in set(["reviewed", "unreviewed", "delete_pending"]):
             raise ValueError(
-                "must be one of enum values ('reviewed', 'unreviewed', 'delete_pending', 'pending')"
+                "must be one of enum values ('reviewed', 'unreviewed', 'delete_pending')"
             )
         return value
 

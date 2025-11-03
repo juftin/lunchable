@@ -618,6 +618,12 @@ class TransactionsBulkApi:
                 description="Filter transactions to those associated with the specified category ID. Will also match category groups.  Set this to 0 to return only un-categorized transactions"
             ),
         ] = None,
+        tag_id: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Filter transactions to those that have a tag with the specified Tag ID"
+            ),
+        ] = None,
         is_group: Annotated[
             Optional[StrictBool],
             Field(
@@ -627,19 +633,19 @@ class TransactionsBulkApi:
         status: Annotated[
             Optional[StrictStr],
             Field(
-                description="Filter transactions to those with the specified status:<br> - `reviewed`: Only user reviewed transactions or those that were automatically marked as reviewed due to reviewed recurring_item logic<br> - `unreviewed`: Only transactions that need to be reviewed<br> - `delete_pending`: Only transactions that require manual intervention because the plaid account deleted this transaction after it was updated by the user. <br> - `pending`: Only pending transactions from synced accounts. "
+                description="Filter transactions to those with the specified status:<br> - `reviewed`: Only user reviewed transactions or those that were automatically marked as reviewed due to reviewed recurring_item logic<br> - `unreviewed`: Only transactions that need to be reviewed<br> - `delete_pending`: Only transactions that require manual intervention because the plaid account deleted this transaction after it was updated by the user."
             ),
         ] = None,
-        tag_id: Annotated[
-            Optional[StrictInt],
+        is_pending: Annotated[
+            Optional[StrictBool],
             Field(
-                description="Filter transactions to those that have a tag with the specified Tag ID"
+                description="Filter transactions by pending status. Set to `true` to return only pending transactions, or `false` to return only non-pending transactions. When this parameter is set, it takes precedence over `include_pending`. Note: Pending transactions always have a status of `unreviewed`, so when setting this parameter to `true`, either omit the `status` parameter or set it to `unreviewed`. "
             ),
         ] = None,
         include_pending: Annotated[
             Optional[StrictBool],
             Field(
-                description="Set to true if you'd like to include imported transactions with a pending status. This query param is ignored if the `status` query param is also set."
+                description="By default, pending transactions are excluded from results. Set to `true` to include imported transactions with a pending status in the results. This query param is ignored if the `is_pending` query param is also set. "
             ),
         ] = None,
         include_metadata: Annotated[
@@ -706,13 +712,15 @@ class TransactionsBulkApi:
         :type recurring_id: int
         :param category_id: Filter transactions to those associated with the specified category ID. Will also match category groups.  Set this to 0 to return only un-categorized transactions
         :type category_id: int
-        :param is_group: Filter by group (returns only transaction groups if set to true)
-        :type is_group: bool
-        :param status: Filter transactions to those with the specified status:<br> - `reviewed`: Only user reviewed transactions or those that were automatically marked as reviewed due to reviewed recurring_item logic<br> - `unreviewed`: Only transactions that need to be reviewed<br> - `delete_pending`: Only transactions that require manual intervention because the plaid account deleted this transaction after it was updated by the user. <br> - `pending`: Only pending transactions from synced accounts.
-        :type status: str
         :param tag_id: Filter transactions to those that have a tag with the specified Tag ID
         :type tag_id: int
-        :param include_pending: Set to true if you'd like to include imported transactions with a pending status. This query param is ignored if the `status` query param is also set.
+        :param is_group: Filter by group (returns only transaction groups if set to true)
+        :type is_group: bool
+        :param status: Filter transactions to those with the specified status:<br> - `reviewed`: Only user reviewed transactions or those that were automatically marked as reviewed due to reviewed recurring_item logic<br> - `unreviewed`: Only transactions that need to be reviewed<br> - `delete_pending`: Only transactions that require manual intervention because the plaid account deleted this transaction after it was updated by the user.
+        :type status: str
+        :param is_pending: Filter transactions by pending status. Set to `true` to return only pending transactions, or `false` to return only non-pending transactions. When this parameter is set, it takes precedence over `include_pending`. Note: Pending transactions always have a status of `unreviewed`, so when setting this parameter to `true`, either omit the `status` parameter or set it to `unreviewed`.
+        :type is_pending: bool
+        :param include_pending: By default, pending transactions are excluded from results. Set to `true` to include imported transactions with a pending status in the results. This query param is ignored if the `is_pending` query param is also set.
         :type include_pending: bool
         :param include_metadata: By default, custom and plaid metadata are not included in the response.  Set to true if you'd like the returned transactions objects to include any  metadata associated with the transactions.
         :type include_metadata: bool
@@ -755,9 +763,10 @@ class TransactionsBulkApi:
             plaid_account_id=plaid_account_id,
             recurring_id=recurring_id,
             category_id=category_id,
+            tag_id=tag_id,
             is_group=is_group,
             status=status,
-            tag_id=tag_id,
+            is_pending=is_pending,
             include_pending=include_pending,
             include_metadata=include_metadata,
             include_split_parents=include_split_parents,
@@ -826,6 +835,12 @@ class TransactionsBulkApi:
                 description="Filter transactions to those associated with the specified category ID. Will also match category groups.  Set this to 0 to return only un-categorized transactions"
             ),
         ] = None,
+        tag_id: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Filter transactions to those that have a tag with the specified Tag ID"
+            ),
+        ] = None,
         is_group: Annotated[
             Optional[StrictBool],
             Field(
@@ -835,19 +850,19 @@ class TransactionsBulkApi:
         status: Annotated[
             Optional[StrictStr],
             Field(
-                description="Filter transactions to those with the specified status:<br> - `reviewed`: Only user reviewed transactions or those that were automatically marked as reviewed due to reviewed recurring_item logic<br> - `unreviewed`: Only transactions that need to be reviewed<br> - `delete_pending`: Only transactions that require manual intervention because the plaid account deleted this transaction after it was updated by the user. <br> - `pending`: Only pending transactions from synced accounts. "
+                description="Filter transactions to those with the specified status:<br> - `reviewed`: Only user reviewed transactions or those that were automatically marked as reviewed due to reviewed recurring_item logic<br> - `unreviewed`: Only transactions that need to be reviewed<br> - `delete_pending`: Only transactions that require manual intervention because the plaid account deleted this transaction after it was updated by the user."
             ),
         ] = None,
-        tag_id: Annotated[
-            Optional[StrictInt],
+        is_pending: Annotated[
+            Optional[StrictBool],
             Field(
-                description="Filter transactions to those that have a tag with the specified Tag ID"
+                description="Filter transactions by pending status. Set to `true` to return only pending transactions, or `false` to return only non-pending transactions. When this parameter is set, it takes precedence over `include_pending`. Note: Pending transactions always have a status of `unreviewed`, so when setting this parameter to `true`, either omit the `status` parameter or set it to `unreviewed`. "
             ),
         ] = None,
         include_pending: Annotated[
             Optional[StrictBool],
             Field(
-                description="Set to true if you'd like to include imported transactions with a pending status. This query param is ignored if the `status` query param is also set."
+                description="By default, pending transactions are excluded from results. Set to `true` to include imported transactions with a pending status in the results. This query param is ignored if the `is_pending` query param is also set. "
             ),
         ] = None,
         include_metadata: Annotated[
@@ -914,13 +929,15 @@ class TransactionsBulkApi:
         :type recurring_id: int
         :param category_id: Filter transactions to those associated with the specified category ID. Will also match category groups.  Set this to 0 to return only un-categorized transactions
         :type category_id: int
-        :param is_group: Filter by group (returns only transaction groups if set to true)
-        :type is_group: bool
-        :param status: Filter transactions to those with the specified status:<br> - `reviewed`: Only user reviewed transactions or those that were automatically marked as reviewed due to reviewed recurring_item logic<br> - `unreviewed`: Only transactions that need to be reviewed<br> - `delete_pending`: Only transactions that require manual intervention because the plaid account deleted this transaction after it was updated by the user. <br> - `pending`: Only pending transactions from synced accounts.
-        :type status: str
         :param tag_id: Filter transactions to those that have a tag with the specified Tag ID
         :type tag_id: int
-        :param include_pending: Set to true if you'd like to include imported transactions with a pending status. This query param is ignored if the `status` query param is also set.
+        :param is_group: Filter by group (returns only transaction groups if set to true)
+        :type is_group: bool
+        :param status: Filter transactions to those with the specified status:<br> - `reviewed`: Only user reviewed transactions or those that were automatically marked as reviewed due to reviewed recurring_item logic<br> - `unreviewed`: Only transactions that need to be reviewed<br> - `delete_pending`: Only transactions that require manual intervention because the plaid account deleted this transaction after it was updated by the user.
+        :type status: str
+        :param is_pending: Filter transactions by pending status. Set to `true` to return only pending transactions, or `false` to return only non-pending transactions. When this parameter is set, it takes precedence over `include_pending`. Note: Pending transactions always have a status of `unreviewed`, so when setting this parameter to `true`, either omit the `status` parameter or set it to `unreviewed`.
+        :type is_pending: bool
+        :param include_pending: By default, pending transactions are excluded from results. Set to `true` to include imported transactions with a pending status in the results. This query param is ignored if the `is_pending` query param is also set.
         :type include_pending: bool
         :param include_metadata: By default, custom and plaid metadata are not included in the response.  Set to true if you'd like the returned transactions objects to include any  metadata associated with the transactions.
         :type include_metadata: bool
@@ -963,9 +980,10 @@ class TransactionsBulkApi:
             plaid_account_id=plaid_account_id,
             recurring_id=recurring_id,
             category_id=category_id,
+            tag_id=tag_id,
             is_group=is_group,
             status=status,
-            tag_id=tag_id,
+            is_pending=is_pending,
             include_pending=include_pending,
             include_metadata=include_metadata,
             include_split_parents=include_split_parents,
@@ -1034,6 +1052,12 @@ class TransactionsBulkApi:
                 description="Filter transactions to those associated with the specified category ID. Will also match category groups.  Set this to 0 to return only un-categorized transactions"
             ),
         ] = None,
+        tag_id: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Filter transactions to those that have a tag with the specified Tag ID"
+            ),
+        ] = None,
         is_group: Annotated[
             Optional[StrictBool],
             Field(
@@ -1043,19 +1067,19 @@ class TransactionsBulkApi:
         status: Annotated[
             Optional[StrictStr],
             Field(
-                description="Filter transactions to those with the specified status:<br> - `reviewed`: Only user reviewed transactions or those that were automatically marked as reviewed due to reviewed recurring_item logic<br> - `unreviewed`: Only transactions that need to be reviewed<br> - `delete_pending`: Only transactions that require manual intervention because the plaid account deleted this transaction after it was updated by the user. <br> - `pending`: Only pending transactions from synced accounts. "
+                description="Filter transactions to those with the specified status:<br> - `reviewed`: Only user reviewed transactions or those that were automatically marked as reviewed due to reviewed recurring_item logic<br> - `unreviewed`: Only transactions that need to be reviewed<br> - `delete_pending`: Only transactions that require manual intervention because the plaid account deleted this transaction after it was updated by the user."
             ),
         ] = None,
-        tag_id: Annotated[
-            Optional[StrictInt],
+        is_pending: Annotated[
+            Optional[StrictBool],
             Field(
-                description="Filter transactions to those that have a tag with the specified Tag ID"
+                description="Filter transactions by pending status. Set to `true` to return only pending transactions, or `false` to return only non-pending transactions. When this parameter is set, it takes precedence over `include_pending`. Note: Pending transactions always have a status of `unreviewed`, so when setting this parameter to `true`, either omit the `status` parameter or set it to `unreviewed`. "
             ),
         ] = None,
         include_pending: Annotated[
             Optional[StrictBool],
             Field(
-                description="Set to true if you'd like to include imported transactions with a pending status. This query param is ignored if the `status` query param is also set."
+                description="By default, pending transactions are excluded from results. Set to `true` to include imported transactions with a pending status in the results. This query param is ignored if the `is_pending` query param is also set. "
             ),
         ] = None,
         include_metadata: Annotated[
@@ -1122,13 +1146,15 @@ class TransactionsBulkApi:
         :type recurring_id: int
         :param category_id: Filter transactions to those associated with the specified category ID. Will also match category groups.  Set this to 0 to return only un-categorized transactions
         :type category_id: int
-        :param is_group: Filter by group (returns only transaction groups if set to true)
-        :type is_group: bool
-        :param status: Filter transactions to those with the specified status:<br> - `reviewed`: Only user reviewed transactions or those that were automatically marked as reviewed due to reviewed recurring_item logic<br> - `unreviewed`: Only transactions that need to be reviewed<br> - `delete_pending`: Only transactions that require manual intervention because the plaid account deleted this transaction after it was updated by the user. <br> - `pending`: Only pending transactions from synced accounts.
-        :type status: str
         :param tag_id: Filter transactions to those that have a tag with the specified Tag ID
         :type tag_id: int
-        :param include_pending: Set to true if you'd like to include imported transactions with a pending status. This query param is ignored if the `status` query param is also set.
+        :param is_group: Filter by group (returns only transaction groups if set to true)
+        :type is_group: bool
+        :param status: Filter transactions to those with the specified status:<br> - `reviewed`: Only user reviewed transactions or those that were automatically marked as reviewed due to reviewed recurring_item logic<br> - `unreviewed`: Only transactions that need to be reviewed<br> - `delete_pending`: Only transactions that require manual intervention because the plaid account deleted this transaction after it was updated by the user.
+        :type status: str
+        :param is_pending: Filter transactions by pending status. Set to `true` to return only pending transactions, or `false` to return only non-pending transactions. When this parameter is set, it takes precedence over `include_pending`. Note: Pending transactions always have a status of `unreviewed`, so when setting this parameter to `true`, either omit the `status` parameter or set it to `unreviewed`.
+        :type is_pending: bool
+        :param include_pending: By default, pending transactions are excluded from results. Set to `true` to include imported transactions with a pending status in the results. This query param is ignored if the `is_pending` query param is also set.
         :type include_pending: bool
         :param include_metadata: By default, custom and plaid metadata are not included in the response.  Set to true if you'd like the returned transactions objects to include any  metadata associated with the transactions.
         :type include_metadata: bool
@@ -1171,9 +1197,10 @@ class TransactionsBulkApi:
             plaid_account_id=plaid_account_id,
             recurring_id=recurring_id,
             category_id=category_id,
+            tag_id=tag_id,
             is_group=is_group,
             status=status,
-            tag_id=tag_id,
+            is_pending=is_pending,
             include_pending=include_pending,
             include_metadata=include_metadata,
             include_split_parents=include_split_parents,
@@ -1207,9 +1234,10 @@ class TransactionsBulkApi:
         plaid_account_id,
         recurring_id,
         category_id,
+        tag_id,
         is_group,
         status,
-        tag_id,
+        is_pending,
         include_pending,
         include_metadata,
         include_split_parents,
@@ -1271,14 +1299,17 @@ class TransactionsBulkApi:
         if category_id is not None:
             _query_params.append(("category_id", category_id))
 
+        if tag_id is not None:
+            _query_params.append(("tag_id", tag_id))
+
         if is_group is not None:
             _query_params.append(("is_group", is_group))
 
         if status is not None:
             _query_params.append(("status", status))
 
-        if tag_id is not None:
-            _query_params.append(("tag_id", tag_id))
+        if is_pending is not None:
+            _query_params.append(("is_pending", is_pending))
 
         if include_pending is not None:
             _query_params.append(("include_pending", include_pending))
