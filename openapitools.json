@@ -9,7 +9,10 @@
                 "inputSpec": "openapi.yaml",
                 "output": "clients/python",
                 "packageName": "lunchable",
-                "skipValidateSpec": true
+                "skipValidateSpec": true,
+                "openapi-normalizer": {
+                    "REMOVE_X_INTERNAL": true
+                }
             }
         }
     }
