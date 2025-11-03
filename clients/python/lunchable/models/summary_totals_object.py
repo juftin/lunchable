@@ -17,27 +17,23 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
-from lunchable.models.non_aligned_summary_category_object import (
-    NonAlignedSummaryCategoryObject,
+from lunchable.models.summary_totals_breakdown_object import (
+    SummaryTotalsBreakdownObject,
 )
-from lunchable.models.summary_totals_object import SummaryTotalsObject
 from typing import Set
 from typing_extensions import Self
 
 
-class NonAlignedSummaryResponseObject(BaseModel):
+class SummaryTotalsObject(BaseModel):
     """
-    NonAlignedSummaryResponseObject
+    Total inflow and outflow for the given date range.  This object is returned when the query parameter `include_totals` is set to `true`.
     """  # noqa: E501
 
-    totals: Optional[SummaryTotalsObject] = None
-    aligned: StrictBool = Field(
-        description="true if start_date and end_date are aligned with budget period setting"
-    )
-    categories: List[NonAlignedSummaryCategoryObject]
-    __properties: ClassVar[List[str]] = ["totals", "aligned", "categories"]
+    inflow: Optional[SummaryTotalsBreakdownObject] = None
+    outflow: Optional[SummaryTotalsBreakdownObject] = None
+    __properties: ClassVar[List[str]] = ["inflow", "outflow"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -56,7 +52,7 @@ class NonAlignedSummaryResponseObject(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of NonAlignedSummaryResponseObject from a JSON string"""
+        """Create an instance of SummaryTotalsObject from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,21 +72,17 @@ class NonAlignedSummaryResponseObject(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of totals
-        if self.totals:
-            _dict["totals"] = self.totals.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in categories (list)
-        _items = []
-        if self.categories:
-            for _item_categories in self.categories:
-                if _item_categories:
-                    _items.append(_item_categories.to_dict())
-            _dict["categories"] = _items
+        # override the default output from pydantic by calling `to_dict()` of inflow
+        if self.inflow:
+            _dict["inflow"] = self.inflow.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of outflow
+        if self.outflow:
+            _dict["outflow"] = self.outflow.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of NonAlignedSummaryResponseObject from a dict"""
+        """Create an instance of SummaryTotalsObject from a dict"""
         if obj is None:
             return None
 
@@ -99,15 +91,11 @@ class NonAlignedSummaryResponseObject(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "totals": SummaryTotalsObject.from_dict(obj["totals"])
-                if obj.get("totals") is not None
+                "inflow": SummaryTotalsBreakdownObject.from_dict(obj["inflow"])
+                if obj.get("inflow") is not None
                 else None,
-                "aligned": obj.get("aligned"),
-                "categories": [
-                    NonAlignedSummaryCategoryObject.from_dict(_item)
-                    for _item in obj["categories"]
-                ]
-                if obj.get("categories") is not None
+                "outflow": SummaryTotalsBreakdownObject.from_dict(obj["outflow"])
+                if obj.get("outflow") is not None
                 else None,
             }
         )

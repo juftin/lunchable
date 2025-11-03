@@ -17,27 +17,33 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool
-from typing import Any, ClassVar, Dict, List, Optional
-from lunchable.models.non_aligned_summary_category_object import (
-    NonAlignedSummaryCategoryObject,
-)
-from lunchable.models.summary_totals_object import SummaryTotalsObject
-from typing import Set
+from datetime import date
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Union
+from lunchable.models.currency_enum import CurrencyEnum
+from typing import Optional, Set
 from typing_extensions import Self
 
 
-class NonAlignedSummaryResponseObject(BaseModel):
+class SummaryRecurringTransactionObject(BaseModel):
     """
-    NonAlignedSummaryResponseObject
+    A single transaction associated with a recurring item. I don't think we will expose this in the summary since it's gettable by querying the recurring_id
     """  # noqa: E501
 
-    totals: Optional[SummaryTotalsObject] = None
-    aligned: StrictBool = Field(
-        description="true if start_date and end_date are aligned with budget period setting"
-    )
-    categories: List[NonAlignedSummaryCategoryObject]
-    __properties: ClassVar[List[str]] = ["totals", "aligned", "categories"]
+    var_date: date = Field(alias="date")
+    category_id: StrictInt
+    payee: StrictStr
+    to_base: Union[StrictFloat, StrictInt]
+    amount: StrictStr
+    currency: CurrencyEnum
+    __properties: ClassVar[List[str]] = [
+        "date",
+        "category_id",
+        "payee",
+        "to_base",
+        "amount",
+        "currency",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -56,7 +62,7 @@ class NonAlignedSummaryResponseObject(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of NonAlignedSummaryResponseObject from a JSON string"""
+        """Create an instance of SummaryRecurringTransactionObject from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,21 +82,11 @@ class NonAlignedSummaryResponseObject(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of totals
-        if self.totals:
-            _dict["totals"] = self.totals.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in categories (list)
-        _items = []
-        if self.categories:
-            for _item_categories in self.categories:
-                if _item_categories:
-                    _items.append(_item_categories.to_dict())
-            _dict["categories"] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of NonAlignedSummaryResponseObject from a dict"""
+        """Create an instance of SummaryRecurringTransactionObject from a dict"""
         if obj is None:
             return None
 
@@ -99,16 +95,12 @@ class NonAlignedSummaryResponseObject(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "totals": SummaryTotalsObject.from_dict(obj["totals"])
-                if obj.get("totals") is not None
-                else None,
-                "aligned": obj.get("aligned"),
-                "categories": [
-                    NonAlignedSummaryCategoryObject.from_dict(_item)
-                    for _item in obj["categories"]
-                ]
-                if obj.get("categories") is not None
-                else None,
+                "date": obj.get("date"),
+                "category_id": obj.get("category_id"),
+                "payee": obj.get("payee"),
+                "to_base": obj.get("to_base"),
+                "amount": obj.get("amount"),
+                "currency": obj.get("currency"),
             }
         )
         return _obj

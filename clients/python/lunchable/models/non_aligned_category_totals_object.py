@@ -17,27 +17,35 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool
-from typing import Any, ClassVar, Dict, List, Optional
-from lunchable.models.non_aligned_summary_category_object import (
-    NonAlignedSummaryCategoryObject,
-)
-from lunchable.models.summary_totals_object import SummaryTotalsObject
-from typing import Set
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
+from typing import Any, ClassVar, Dict, List, Union
+from typing import Optional, Set
 from typing_extensions import Self
 
 
-class NonAlignedSummaryResponseObject(BaseModel):
+class NonAlignedCategoryTotalsObject(BaseModel):
     """
-    NonAlignedSummaryResponseObject
+    Total activity for the given category within the given date range which is not aligned with budget period setting.
     """  # noqa: E501
 
-    totals: Optional[SummaryTotalsObject] = None
-    aligned: StrictBool = Field(
-        description="true if start_date and end_date are aligned with budget period setting"
+    other_activity: Union[StrictFloat, StrictInt] = Field(
+        description="Total non recurring activity, in the user's default currency, for the category within the given date range.<br> The total activity for the category is the sum of this and the recurring_activity."
     )
-    categories: List[NonAlignedSummaryCategoryObject]
-    __properties: ClassVar[List[str]] = ["totals", "aligned", "categories"]
+    recurring_activity: Union[StrictFloat, StrictInt] = Field(
+        description="Total recurring activity, in the user's default currency, for the category within the given date range.<br> The total activity for the category is the sum of this and the other_activity."
+    )
+    recurring_remaining: Union[StrictFloat, StrictInt] = Field(
+        description="Total expected recurring activity, in the user's default currency, that has not yet occurred for the category within the given date range."
+    )
+    recurring_expected: Union[StrictFloat, StrictInt] = Field(
+        description="Total expected recurring activity for the category within the given date range."
+    )
+    __properties: ClassVar[List[str]] = [
+        "other_activity",
+        "recurring_activity",
+        "recurring_remaining",
+        "recurring_expected",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -56,7 +64,7 @@ class NonAlignedSummaryResponseObject(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of NonAlignedSummaryResponseObject from a JSON string"""
+        """Create an instance of NonAlignedCategoryTotalsObject from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,21 +84,11 @@ class NonAlignedSummaryResponseObject(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of totals
-        if self.totals:
-            _dict["totals"] = self.totals.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in categories (list)
-        _items = []
-        if self.categories:
-            for _item_categories in self.categories:
-                if _item_categories:
-                    _items.append(_item_categories.to_dict())
-            _dict["categories"] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of NonAlignedSummaryResponseObject from a dict"""
+        """Create an instance of NonAlignedCategoryTotalsObject from a dict"""
         if obj is None:
             return None
 
@@ -99,16 +97,10 @@ class NonAlignedSummaryResponseObject(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "totals": SummaryTotalsObject.from_dict(obj["totals"])
-                if obj.get("totals") is not None
-                else None,
-                "aligned": obj.get("aligned"),
-                "categories": [
-                    NonAlignedSummaryCategoryObject.from_dict(_item)
-                    for _item in obj["categories"]
-                ]
-                if obj.get("categories") is not None
-                else None,
+                "other_activity": obj.get("other_activity"),
+                "recurring_activity": obj.get("recurring_activity"),
+                "recurring_remaining": obj.get("recurring_remaining"),
+                "recurring_expected": obj.get("recurring_expected"),
             }
         )
         return _obj

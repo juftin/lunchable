@@ -30,16 +30,15 @@ from pydantic import (
 )
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
-from lunchable.models.child_transaction_object import ChildTransactionObject
 from lunchable.models.currency_enum import CurrencyEnum
 from lunchable.models.transaction_attachment_object import TransactionAttachmentObject
 from typing import Set
 from typing_extensions import Self
 
 
-class TransactionObject(BaseModel):
+class ChildTransactionObject(BaseModel):
     """
-    TransactionObject
+    ChildTransactionObject
     """  # noqa: E501
 
     id: StrictInt = Field(
@@ -52,7 +51,7 @@ class TransactionObject(BaseModel):
         description="Amount of the transaction in numeric format to 4 decimal places. By default a negative value indicates a debit transaction, however if the user's `debits_as_negative` property is set to false the opposite is true."
     )
     currency: CurrencyEnum = Field(
-        description="Three-letter lowercase currency code of the transaction in ISO 4217 format."
+        description="Three-letter lowercase currency code of the transaction in ISO 4217 format"
     )
     to_base: Union[StrictFloat, StrictInt] = Field(
         description="The amount converted to the user's primary currency. If the multi-currency feature is not being used, to_base and amount will be the same. By default a negative value indicates a debit transaction, however if the user's `debits_as_negative` property is set to false the opposite is true."
@@ -64,21 +63,7 @@ class TransactionObject(BaseModel):
         description="Name of payee set by the user, the financial institution, or by  a matched recurring item. This will match the value  displayed in payee field on the transactions page in the GUI. "
     )
     category_id: Optional[StrictInt] = Field(
-        description="Unique identifier of associated category set by the user or by a matched recurring_item.<br> Category details can be obtained by passing the value of this property to the [Get A Single Category](../operations/getCategoryById) API"
-    )
-    plaid_account_id: Optional[StrictInt] = Field(
-        description='The unique identifier of the plaid account associated with this transaction. This will always be null if this transaction is associated with a manual account or if this transaction has no associated account and appears as a "Cash Transaction" in the Lunch Money GUI.'
-    )
-    manual_account_id: Optional[StrictInt] = Field(
-        description='The unique identifier of the manual account associated with this transaction. This will always be null if this transaction is associated with a synced account or if this transaction has no associated account and appears as a "Cash Transaction" in the Lunch Money GUI.'
-    )
-    external_id: Optional[
-        Annotated[str, Field(min_length=0, strict=True, max_length=75)]
-    ] = Field(
-        description="A user-defined external ID for any transaction that was added via csv import, `POST /transactions` API call, or manually added via the Lunch Money GUI. No external ID exists for transactions associated with synced accounts, and they cannot be added. For transactions associated with manual accounts, the external ID must be unique as attempts to add a subsequent transaction with the same external_id and manual_account_id will be flagged as duplicates and fail."
-    )
-    tag_ids: List[StrictInt] = Field(
-        description="A list of tag_ids for the tags associated with this transaction. If the transaction has no tags this will be an empty list.<br> Tag details can be obtained by passing the value of this attribute as the `ids` query parameter to the [List Tags](../operations/getTags) API"
+        description="Unique identifier of associated category set by the user or by a matched recurring item.<br> Category details can be obtained by passing the value of this property to the [Get A Single Category](../operations/getCategoryById) API"
     )
     notes: Optional[
         Annotated[str, Field(min_length=0, strict=True, max_length=350)]
@@ -86,7 +71,7 @@ class TransactionObject(BaseModel):
         description="Any transaction notes set by the user or by  a matched recurring item. This will match the value  displayed in notes field on the transactions page in the GUI. "
     )
     status: StrictStr = Field(
-        description="Status of the transaction: - `reviewed`: User has reviewed the transaction, or it was automatically marked as reviewed due to reviewed recurring_item logic - `unreviewed`: User has not reviewed the transaction and it does not match any reviewed recurring_items. Note that any transactions  where `is_pending` is true will be returned with a status of unreviewed. - `delete_pending`: The synced account deleted this transaction after it was updated by the user. Requires manual intervention. "
+        description="Status of the transaction.  Will be one of the following values: "
     )
     is_pending: StrictBool = Field(
         description="Denotes if the transaction is pending (not posted). Applies only to transactions in synced accounts and will always be false for transactions associated with manual accounts."
@@ -110,24 +95,34 @@ class TransactionObject(BaseModel):
     group_id: Optional[StrictInt] = Field(
         description="Is set if this transaction is part of a group. Denotes the ID of the grouped transaction this is now included in. By default the transactions that were grouped are not returned in a call to `GET /transactions` but they can be queried directly by calling the `GET /transactions/group/{id}`, where the id passed is associated with a transaction where the `is_group` attribute is true"
     )
-    children: Optional[List[ChildTransactionObject]] = Field(
-        default=None,
-        description="Exists only for transactions which are the parent of a split transaction or for transaction groups. It will not exist in the response unless the `include_children` query parameter is set to true.<br> For parents of split transactions it contains a list of the associated transactions that it was split into. For transaction groups it contains the transactions that were grouped together. Examine the `is_parent` and `is_group` properties to determine which of these it is.",
+    manual_account_id: Optional[StrictInt] = Field(
+        description='The unique identifier of the manual account associated with this transaction. This will always be null if this transaction is associated with a synced account or if this transaction has no associated account and appears as a "Cash Transaction" in the Lunch Money GUI.'
+    )
+    plaid_account_id: Optional[StrictInt] = Field(
+        description='The unique identifier of the plaid account associated with this transaction. This will always be null if this transaction is associated with a manual account or if this transaction has no associated account and appears as a "Cash Transaction" in the Lunch Money GUI.'
+    )
+    tag_ids: List[StrictInt] = Field(
+        description="A list of tag_ids for the tags associated with this transaction. If the transaction has no tags this will be an empty list.<br> Tag details can be obtained by passing the value of this attribute as the `ids` query parameter to the [List Tags](../operations/getTags) API"
+    )
+    source: Optional[StrictStr] = Field(
+        description='Source of the transaction: - `api`: Transaction was added by a call to the [POST /transactions](../operations/createTransaction) API - `csv`: Transaction was added via a CSV Import - `manual`: Transaction was created via the "Add to Cash" button on the Transactions page - `merge`: Transactions were originally in an account that was merged into another account - `plaid`: Transaction came from a Financial Institution synced via Plaid - `recurring`: Transaction was created from the Recurring page  - `rule`: Transaction was created by a rule to split a transaction - `split`: This is a transaction created by splitting another transaction - `user`: This is a legacy value and is replaced by either csv or manual '
+    )
+    external_id: Optional[
+        Annotated[str, Field(min_length=0, strict=True, max_length=75)]
+    ] = Field(
+        description="A user-defined external ID for any transaction that was added via csv import, `POST /transactions` API call, or manually added via the Lunch Money GUI. No external ID exists for transactions associated with synced accounts, and they cannot be added. For transactions associated with manual accounts, the external ID must be unique as attempts to add a subsequent transaction with the same external_id and manual_account_id will be flagged as duplicates and fail."
     )
     plaid_metadata: Optional[Dict[str, Any]] = Field(
         default=None,
-        description="If requested, the transaction's plaid_metadata that came when this transaction was obtained. This will be a json object, but the schema is variable. This is only present when the `include_metadata` query parameter is set to true.",
+        description="If requested, the transaction's plaid_metadata that came when this transaction was obtained. This will be a json object, but the schema is variable. This will only be present for transactions associated with a plaid account.",
     )
     custom_metadata: Optional[Dict[str, Any]] = Field(
         default=None,
-        description="If requested, the transaction's custom_metadata that was included when the transaction was inserted via the API. This will be a json object, but the schema is variable. This is only present when the `include_metadata` query parameter is set to true.",
+        description="If requested, the transaction's custom_metadata that was included when the transaction was inserted via the API. This will be a json object, but the schema is variable.",
     )
     files: Optional[List[TransactionAttachmentObject]] = Field(
         default=None,
-        description="A list of objects that describe any attachments to the Transactions. This is only present when the `include_files` query parameter is set to true.",
-    )
-    source: Optional[StrictStr] = Field(
-        description='Source of the transaction: - `api`: Transaction was added by a call to the [POST /transactions](../operations/createTransaction) API - `csv`: Transaction was added via a CSV Import - `manual`: Transaction was created via the "Add to Cash" button on the Transactions page - `merge`: Transactions were originally in an account that was merged into another account - `plaid`: Transaction came from a Financial Institution synced via Plaid - `recurring`: Transaction was created from the Recurring page  - `rule`: Transaction was created by a rule to split a transaction - `split`: Transaction was created by splitting another transaction - `user`: This is a legacy value and is replaced by either csv or manual '
+        description="A list of objects that describe any attachments to the transaction",
     )
     __properties: ClassVar[List[str]] = [
         "id",
@@ -138,10 +133,6 @@ class TransactionObject(BaseModel):
         "recurring_id",
         "payee",
         "category_id",
-        "plaid_account_id",
-        "manual_account_id",
-        "external_id",
-        "tag_ids",
         "notes",
         "status",
         "is_pending",
@@ -151,11 +142,14 @@ class TransactionObject(BaseModel):
         "parent_id",
         "is_group",
         "group_id",
-        "children",
+        "manual_account_id",
+        "plaid_account_id",
+        "tag_ids",
+        "source",
+        "external_id",
         "plaid_metadata",
         "custom_metadata",
         "files",
-        "source",
     ]
 
     @field_validator("status")
@@ -208,7 +202,7 @@ class TransactionObject(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of TransactionObject from a JSON string"""
+        """Create an instance of ChildTransactionObject from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -228,13 +222,6 @@ class TransactionObject(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in children (list)
-        _items = []
-        if self.children:
-            for _item_children in self.children:
-                if _item_children:
-                    _items.append(_item_children.to_dict())
-            _dict["children"] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in files (list)
         _items = []
         if self.files:
@@ -252,27 +239,6 @@ class TransactionObject(BaseModel):
         if self.category_id is None and "category_id" in self.model_fields_set:
             _dict["category_id"] = None
 
-        # set to None if plaid_account_id (nullable) is None
-        # and model_fields_set contains the field
-        if (
-            self.plaid_account_id is None
-            and "plaid_account_id" in self.model_fields_set
-        ):
-            _dict["plaid_account_id"] = None
-
-        # set to None if manual_account_id (nullable) is None
-        # and model_fields_set contains the field
-        if (
-            self.manual_account_id is None
-            and "manual_account_id" in self.model_fields_set
-        ):
-            _dict["manual_account_id"] = None
-
-        # set to None if external_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.external_id is None and "external_id" in self.model_fields_set:
-            _dict["external_id"] = None
-
         # set to None if notes (nullable) is None
         # and model_fields_set contains the field
         if self.notes is None and "notes" in self.model_fields_set:
@@ -288,6 +254,32 @@ class TransactionObject(BaseModel):
         if self.group_id is None and "group_id" in self.model_fields_set:
             _dict["group_id"] = None
 
+        # set to None if manual_account_id (nullable) is None
+        # and model_fields_set contains the field
+        if (
+            self.manual_account_id is None
+            and "manual_account_id" in self.model_fields_set
+        ):
+            _dict["manual_account_id"] = None
+
+        # set to None if plaid_account_id (nullable) is None
+        # and model_fields_set contains the field
+        if (
+            self.plaid_account_id is None
+            and "plaid_account_id" in self.model_fields_set
+        ):
+            _dict["plaid_account_id"] = None
+
+        # set to None if source (nullable) is None
+        # and model_fields_set contains the field
+        if self.source is None and "source" in self.model_fields_set:
+            _dict["source"] = None
+
+        # set to None if external_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.external_id is None and "external_id" in self.model_fields_set:
+            _dict["external_id"] = None
+
         # set to None if plaid_metadata (nullable) is None
         # and model_fields_set contains the field
         if self.plaid_metadata is None and "plaid_metadata" in self.model_fields_set:
@@ -298,16 +290,11 @@ class TransactionObject(BaseModel):
         if self.custom_metadata is None and "custom_metadata" in self.model_fields_set:
             _dict["custom_metadata"] = None
 
-        # set to None if source (nullable) is None
-        # and model_fields_set contains the field
-        if self.source is None and "source" in self.model_fields_set:
-            _dict["source"] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of TransactionObject from a dict"""
+        """Create an instance of ChildTransactionObject from a dict"""
         if obj is None:
             return None
 
@@ -324,10 +311,6 @@ class TransactionObject(BaseModel):
                 "recurring_id": obj.get("recurring_id"),
                 "payee": obj.get("payee"),
                 "category_id": obj.get("category_id"),
-                "plaid_account_id": obj.get("plaid_account_id"),
-                "manual_account_id": obj.get("manual_account_id"),
-                "external_id": obj.get("external_id"),
-                "tag_ids": obj.get("tag_ids"),
                 "notes": obj.get("notes"),
                 "status": obj.get("status"),
                 "is_pending": obj.get("is_pending"),
@@ -337,11 +320,11 @@ class TransactionObject(BaseModel):
                 "parent_id": obj.get("parent_id"),
                 "is_group": obj.get("is_group"),
                 "group_id": obj.get("group_id"),
-                "children": [
-                    ChildTransactionObject.from_dict(_item) for _item in obj["children"]
-                ]
-                if obj.get("children") is not None
-                else None,
+                "manual_account_id": obj.get("manual_account_id"),
+                "plaid_account_id": obj.get("plaid_account_id"),
+                "tag_ids": obj.get("tag_ids"),
+                "source": obj.get("source"),
+                "external_id": obj.get("external_id"),
                 "plaid_metadata": obj.get("plaid_metadata"),
                 "custom_metadata": obj.get("custom_metadata"),
                 "files": [
@@ -350,7 +333,6 @@ class TransactionObject(BaseModel):
                 ]
                 if obj.get("files") is not None
                 else None,
-                "source": obj.get("source"),
             }
         )
         return _obj
