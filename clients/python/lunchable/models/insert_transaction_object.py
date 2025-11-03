@@ -13,20 +13,20 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
-
 from datetime import date
+from typing import Any, ClassVar, Dict, List, Optional, Set
+
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
+from typing_extensions import Annotated, Self
+
 from lunchable.models.currency_enum import CurrencyEnum
 from lunchable.models.insert_transaction_object_amount import (
     InsertTransactionObjectAmount,
 )
-from typing import Set
-from typing_extensions import Self
 
 
 class InsertTransactionObject(BaseModel):

@@ -13,18 +13,19 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
-
 from datetime import date
+from typing import Any, ClassVar, Dict, List, Optional, Set
+
 from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Self
+
 from lunchable.models.recurring_object_matches_found_transactions_inner import (
     RecurringObjectMatchesFoundTransactionsInner,
 )
-from typing import Set
-from typing_extensions import Self
 
 
 class RecurringObjectMatches(BaseModel):

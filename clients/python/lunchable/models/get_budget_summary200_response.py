@@ -13,18 +13,25 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
+
 import json
 import pprint
-from pydantic import BaseModel, ConfigDict, ValidationError, field_validator
-from typing import Any, Optional
+from typing import Any, Dict, Optional, Set, Union
+
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    ValidationError,
+    field_validator,
+)
+from typing_extensions import Self
+
 from lunchable.models.aligned_summary_response_object import (
     AlignedSummaryResponseObject,
 )
 from lunchable.models.non_aligned_summary_response_object import (
     NonAlignedSummaryResponseObject,
 )
-from typing import Union, Set, Dict
-from typing_extensions import Self
 
 GETBUDGETSUMMARY200RESPONSE_ONE_OF_SCHEMAS = [
     "AlignedSummaryResponseObject",

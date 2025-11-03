@@ -13,8 +13,11 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
+
 import json
 import pprint
+from typing import Any, Dict, Optional, Set, Union
+
 from pydantic import (
     BaseModel,
     ConfigDict,
@@ -24,10 +27,7 @@ from pydantic import (
     ValidationError,
     field_validator,
 )
-from typing import Any, Optional, Union
-from typing_extensions import Annotated
-from typing import Set, Dict
-from typing_extensions import Self
+from typing_extensions import Annotated, Self
 
 UPDATETRANSACTIONOBJECTAMOUNT_ONE_OF_SCHEMAS = ["float", "str"]
 
