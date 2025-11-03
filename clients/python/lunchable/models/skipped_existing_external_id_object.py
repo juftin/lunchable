@@ -17,27 +17,51 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from lunchable.models.non_aligned_summary_category_object import (
-    NonAlignedSummaryCategoryObject,
-)
-from lunchable.models.summary_totals_object import SummaryTotalsObject
+from lunchable.models.insert_transaction_object import InsertTransactionObject
 from typing import Set
 from typing_extensions import Self
 
 
-class NonAlignedSummaryResponseObject(BaseModel):
+class SkippedExistingExternalIdObject(BaseModel):
     """
-    NonAlignedSummaryResponseObject
+    The object returned when a new transaction has an external_id that already exists
     """  # noqa: E501
 
-    totals: Optional[SummaryTotalsObject] = None
-    aligned: StrictBool = Field(
-        description="true if start_date and end_date are aligned with budget period setting"
+    reason: Optional[StrictStr] = Field(
+        default=None,
+        description="The reason the transaction was skipped, may be one of: - `duplicate_external_id`: The transaction has the same `manual_account_id` and `external_id` as an existing transaction - `duplicate_payee_amount_date`: The `skip_duplicates` request body property was set to `true` and the transaction has the same `amount`, `payee`, and `date` as an existing transaction associated with the same account. ",
     )
-    categories: List[NonAlignedSummaryCategoryObject]
-    __properties: ClassVar[List[str]] = ["totals", "aligned", "categories"]
+    request_transactions_index: Optional[StrictInt] = Field(
+        default=None,
+        description="The index of the transaction in the request body's transactions array that was skipped.",
+    )
+    existing_transaction_id: Optional[StrictInt] = Field(
+        default=None,
+        description="The id of the existing transactions that the requested transaction duplicates.",
+    )
+    request_transaction: Optional[InsertTransactionObject] = Field(
+        default=None, description="The requested transaction that was skipped."
+    )
+    __properties: ClassVar[List[str]] = [
+        "reason",
+        "request_transactions_index",
+        "existing_transaction_id",
+        "request_transaction",
+    ]
+
+    @field_validator("reason")
+    def reason_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(["duplicate_external_id", "duplicate_payee_amount_date"]):
+            raise ValueError(
+                "must be one of enum values ('duplicate_external_id', 'duplicate_payee_amount_date')"
+            )
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -56,7 +80,7 @@ class NonAlignedSummaryResponseObject(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of NonAlignedSummaryResponseObject from a JSON string"""
+        """Create an instance of SkippedExistingExternalIdObject from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,21 +100,14 @@ class NonAlignedSummaryResponseObject(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of totals
-        if self.totals:
-            _dict["totals"] = self.totals.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in categories (list)
-        _items = []
-        if self.categories:
-            for _item_categories in self.categories:
-                if _item_categories:
-                    _items.append(_item_categories.to_dict())
-            _dict["categories"] = _items
+        # override the default output from pydantic by calling `to_dict()` of request_transaction
+        if self.request_transaction:
+            _dict["request_transaction"] = self.request_transaction.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of NonAlignedSummaryResponseObject from a dict"""
+        """Create an instance of SkippedExistingExternalIdObject from a dict"""
         if obj is None:
             return None
 
@@ -99,15 +116,13 @@ class NonAlignedSummaryResponseObject(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "totals": SummaryTotalsObject.from_dict(obj["totals"])
-                if obj.get("totals") is not None
-                else None,
-                "aligned": obj.get("aligned"),
-                "categories": [
-                    NonAlignedSummaryCategoryObject.from_dict(_item)
-                    for _item in obj["categories"]
-                ]
-                if obj.get("categories") is not None
+                "reason": obj.get("reason"),
+                "request_transactions_index": obj.get("request_transactions_index"),
+                "existing_transaction_id": obj.get("existing_transaction_id"),
+                "request_transaction": InsertTransactionObject.from_dict(
+                    obj["request_transaction"]
+                )
+                if obj.get("request_transaction") is not None
                 else None,
             }
         )

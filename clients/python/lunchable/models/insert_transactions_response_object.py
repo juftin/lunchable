@@ -19,6 +19,9 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
+from lunchable.models.skipped_existing_external_id_object import (
+    SkippedExistingExternalIdObject,
+)
 from lunchable.models.transaction_object import TransactionObject
 from typing import Optional, Set
 from typing_extensions import Self

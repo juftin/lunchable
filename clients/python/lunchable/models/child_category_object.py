@@ -21,14 +21,13 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from lunchable.models.child_category_object import ChildCategoryObject
 from typing import Set
 from typing_extensions import Self
 
 
-class CategoryObject(BaseModel):
+class ChildCategoryObject(BaseModel):
     """
-    CategoryObject
+    ChildCategoryObject
     """  # noqa: E501
 
     id: StrictInt = Field(
@@ -41,13 +40,13 @@ class CategoryObject(BaseModel):
         description="The description of the category or `null` if not set."
     )
     is_income: StrictBool = Field(
-        description="If true, the transactions in this category will be treated as income."
+        description="If true, the transactions in this category will be treated as income. Inherited from Category Group."
     )
     exclude_from_budget: StrictBool = Field(
-        description="If true, the transactions in this category will be excluded from the budget."
+        description="If true, the transactions in this category will be excluded from the budget. Inherited from Category Group."
     )
     exclude_from_totals: StrictBool = Field(
-        description="If true, the transactions in this category will be excluded from totals."
+        description="If true, the transactions in this category will be excluded from totals. Inherited from Category Group."
     )
     updated_at: datetime = Field(
         description="The date and time of when the category was last updated (in the ISO 8601 extended format)."
@@ -59,11 +58,7 @@ class CategoryObject(BaseModel):
         description="The ID of the category group this category belongs to or `null` if the category doesn't belong to a group, or is itself a category group."
     )
     is_group: StrictBool = Field(
-        description="If true, the category is a group that can be a parent to other categories."
-    )
-    children: Optional[List[ChildCategoryObject]] = Field(
-        default=None,
-        description="For category groups, this will populate with details about the categories that belong to this group. The objects in this array are similar to Category Objects but do not include the `is_income`, `exclude_from_budget`, and `exclude_from_totals` properties as these are inherited from the Category Group. In addition the `is_group` property will always be `false``, and there will be no `children` attribute.",
+        description="Will always be false for a category that is part of category group."
     )
     archived: StrictBool = Field(
         description="If true, the category is archived and not displayed in relevant areas of the Lunch Money app."
@@ -72,7 +67,7 @@ class CategoryObject(BaseModel):
         description="The date and time of when the category was last archived (in the ISO 8601 extended format)."
     )
     order: Optional[StrictInt] = Field(
-        description="An index specifying the position in which the category is displayed on the categories page in the Lunch Money GUI. For categories within a category group the order index is relative to the other categories within the group.<br> This value for this property will be `null` for categories created via the API until they are modified on the Categories page in the Lunch Money GUI.<br> This property cannot be set or updated via the API."
+        description="An index specifying the position in which the category is displayed on the categories page in the Lunch Money GUI. For categories within a category group the order index is relative to the other categories within the group.<br> This property cannot be set or updated via the API."
     )
     __properties: ClassVar[List[str]] = [
         "id",
@@ -85,7 +80,6 @@ class CategoryObject(BaseModel):
         "created_at",
         "group_id",
         "is_group",
-        "children",
         "archived",
         "archived_at",
         "order",
@@ -108,7 +102,7 @@ class CategoryObject(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CategoryObject from a JSON string"""
+        """Create an instance of ChildCategoryObject from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -128,13 +122,6 @@ class CategoryObject(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in children (list)
-        _items = []
-        if self.children:
-            for _item_children in self.children:
-                if _item_children:
-                    _items.append(_item_children.to_dict())
-            _dict["children"] = _items
         # set to None if description (nullable) is None
         # and model_fields_set contains the field
         if self.description is None and "description" in self.model_fields_set:
@@ -159,7 +146,7 @@ class CategoryObject(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CategoryObject from a dict"""
+        """Create an instance of ChildCategoryObject from a dict"""
         if obj is None:
             return None
 
@@ -178,11 +165,6 @@ class CategoryObject(BaseModel):
                 "created_at": obj.get("created_at"),
                 "group_id": obj.get("group_id"),
                 "is_group": obj.get("is_group"),
-                "children": [
-                    ChildCategoryObject.from_dict(_item) for _item in obj["children"]
-                ]
-                if obj.get("children") is not None
-                else None,
                 "archived": obj.get("archived"),
                 "archived_at": obj.get("archived_at"),
                 "order": obj.get("order"),

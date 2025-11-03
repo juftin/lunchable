@@ -17,27 +17,27 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool
-from typing import Any, ClassVar, Dict, List, Optional
-from lunchable.models.non_aligned_summary_category_object import (
-    NonAlignedSummaryCategoryObject,
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
+from typing import Any, ClassVar, Dict, List, Union
+from lunchable.models.summary_rollover_pool_adjustment_object import (
+    SummaryRolloverPoolAdjustmentObject,
 )
-from lunchable.models.summary_totals_object import SummaryTotalsObject
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 
-class NonAlignedSummaryResponseObject(BaseModel):
+class SummaryRolloverPoolObject(BaseModel):
     """
-    NonAlignedSummaryResponseObject
+    Summary of the current rollover pool balance and all previous adjustments.<br> Only present if the `include_rollover_pool` query parameter is set to `true`.
     """  # noqa: E501
 
-    totals: Optional[SummaryTotalsObject] = None
-    aligned: StrictBool = Field(
-        description="true if start_date and end_date are aligned with budget period setting"
+    budgeted_to_base: Union[StrictFloat, StrictInt] = Field(
+        description="Amount of funds, in the user's default currency, currently available to rollover."
     )
-    categories: List[NonAlignedSummaryCategoryObject]
-    __properties: ClassVar[List[str]] = ["totals", "aligned", "categories"]
+    all_adjustments: List[SummaryRolloverPoolAdjustmentObject] = Field(
+        description="List of previous adjustments to the rollover pool."
+    )
+    __properties: ClassVar[List[str]] = ["budgeted_to_base", "all_adjustments"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -56,7 +56,7 @@ class NonAlignedSummaryResponseObject(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of NonAlignedSummaryResponseObject from a JSON string"""
+        """Create an instance of SummaryRolloverPoolObject from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,21 +76,18 @@ class NonAlignedSummaryResponseObject(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of totals
-        if self.totals:
-            _dict["totals"] = self.totals.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in categories (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in all_adjustments (list)
         _items = []
-        if self.categories:
-            for _item_categories in self.categories:
-                if _item_categories:
-                    _items.append(_item_categories.to_dict())
-            _dict["categories"] = _items
+        if self.all_adjustments:
+            for _item_all_adjustments in self.all_adjustments:
+                if _item_all_adjustments:
+                    _items.append(_item_all_adjustments.to_dict())
+            _dict["all_adjustments"] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of NonAlignedSummaryResponseObject from a dict"""
+        """Create an instance of SummaryRolloverPoolObject from a dict"""
         if obj is None:
             return None
 
@@ -99,15 +96,12 @@ class NonAlignedSummaryResponseObject(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "totals": SummaryTotalsObject.from_dict(obj["totals"])
-                if obj.get("totals") is not None
-                else None,
-                "aligned": obj.get("aligned"),
-                "categories": [
-                    NonAlignedSummaryCategoryObject.from_dict(_item)
-                    for _item in obj["categories"]
+                "budgeted_to_base": obj.get("budgeted_to_base"),
+                "all_adjustments": [
+                    SummaryRolloverPoolAdjustmentObject.from_dict(_item)
+                    for _item in obj["all_adjustments"]
                 ]
-                if obj.get("categories") is not None
+                if obj.get("all_adjustments") is not None
                 else None,
             }
         )

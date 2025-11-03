@@ -18,76 +18,94 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from lunchable.models.child_category_object import ChildCategoryObject
+from lunchable.models.create_category_request_object_children_inner import (
+    CreateCategoryRequestObjectChildrenInner,
+)
 from typing import Set
 from typing_extensions import Self
 
 
-class CategoryObject(BaseModel):
+class UpdateCategoryRequestObject(BaseModel):
     """
-    CategoryObject
+    UpdateCategoryRequestObject
     """  # noqa: E501
 
-    id: StrictInt = Field(
-        description="A system defined unique identifier for the category."
+    name: Optional[Annotated[str, Field(min_length=1, strict=True, max_length=100)]] = (
+        Field(
+            default=None,
+            description="If set the new name of the category. Must be between 1 and 100 characters.",
+        )
     )
-    name: Annotated[str, Field(min_length=1, strict=True, max_length=100)] = Field(
-        description="The name of the category."
+    description: Optional[
+        Annotated[str, Field(min_length=0, strict=True, max_length=200)]
+    ] = Field(
+        default=None,
+        description="If set the new description of the category. Must not exceed 200 characters.",
     )
-    description: Optional[Annotated[str, Field(strict=True, max_length=200)]] = Field(
-        description="The description of the category or `null` if not set."
+    is_income: Optional[StrictBool] = Field(
+        default=None,
+        description="If set will indicate if this category will be treated as income.",
     )
-    is_income: StrictBool = Field(
-        description="If true, the transactions in this category will be treated as income."
+    exclude_from_budget: Optional[StrictBool] = Field(
+        default=None,
+        description="If set will indicate if this category will be excluded from budgets.",
     )
-    exclude_from_budget: StrictBool = Field(
-        description="If true, the transactions in this category will be excluded from the budget."
+    exclude_from_totals: Optional[StrictBool] = Field(
+        default=None,
+        description="If set will indicate if this category will be excluded from totals.",
     )
-    exclude_from_totals: StrictBool = Field(
-        description="If true, the transactions in this category will be excluded from totals."
-    )
-    updated_at: datetime = Field(
-        description="The date and time of when the category was last updated (in the ISO 8601 extended format)."
-    )
-    created_at: datetime = Field(
-        description="The date and time of when the category was created (in the ISO 8601 extended format)."
+    archived: Optional[StrictBool] = Field(
+        default=None, description="If set will indicate if this category is archived."
     )
     group_id: Optional[StrictInt] = Field(
-        description="The ID of the category group this category belongs to or `null` if the category doesn't belong to a group, or is itself a category group."
-    )
-    is_group: StrictBool = Field(
-        description="If true, the category is a group that can be a parent to other categories."
-    )
-    children: Optional[List[ChildCategoryObject]] = Field(
         default=None,
-        description="For category groups, this will populate with details about the categories that belong to this group. The objects in this array are similar to Category Objects but do not include the `is_income`, `exclude_from_budget`, and `exclude_from_totals` properties as these are inherited from the Category Group. In addition the `is_group` property will always be `false``, and there will be no `children` attribute.",
+        description="If set to the ID of an existing category group, and this category is not itself a category group, this category will be a child of the specified group.",
     )
-    archived: StrictBool = Field(
-        description="If true, the category is archived and not displayed in relevant areas of the Lunch Money app."
+    is_group: Optional[StrictBool] = Field(
+        default=False,
+        description="If set, this attribute may not be set to a value that is different than the current status of the category or category group. In other words, this API may not be used to convert a category to a category group or vice versa.",
     )
-    archived_at: Optional[datetime] = Field(
-        description="The date and time of when the category was last archived (in the ISO 8601 extended format)."
+    children: Optional[List[CreateCategoryRequestObjectChildrenInner]] = Field(
+        default=None,
+        description="The list of existing category objects, or existing category IDs or names of new categories to add to the new category group. This attribute should only be set if modifying an existing category group.<br> The categories or IDs specified must already exist and not belong to an existing category group. Categories that already belong to another category group will be moved. If strings are specified, they will be used as the names of new categories that will be added to the new category group. The request will fail if any names are the same as the name of an existing category.<br> It is permissible to provide both full category objects and IDs as well as strings for names in the same request.",
+    )
+    id: Optional[StrictInt] = Field(
+        default=None,
+        description="System defined unique identifier for the category. Ignored if set.",
+    )
+    archived_at: Optional[StrictStr] = Field(
+        default=None,
+        description="System set date and time of when the category was last archived (in the ISO 8601 extended format). Ignored if set.",
+    )
+    updated_at: Optional[datetime] = Field(
+        default=None,
+        description="System set date and time of when the category was last updated (in the ISO 8601 extended format). Ignored if set.",
+    )
+    created_at: Optional[datetime] = Field(
+        default=None,
+        description="System set date and time of when the category was created (in the ISO 8601 extended format). Ignored if set. (in the ISO 8601 extended format). Ignored if set.",
     )
     order: Optional[StrictInt] = Field(
-        description="An index specifying the position in which the category is displayed on the categories page in the Lunch Money GUI. For categories within a category group the order index is relative to the other categories within the group.<br> This value for this property will be `null` for categories created via the API until they are modified on the Categories page in the Lunch Money GUI.<br> This property cannot be set or updated via the API."
+        default=None,
+        description="System or GUI set index specifying the position in which the category is displayed on the categories page in the Lunch Money GUI. Ignored if set.",
     )
     __properties: ClassVar[List[str]] = [
-        "id",
         "name",
         "description",
         "is_income",
         "exclude_from_budget",
         "exclude_from_totals",
-        "updated_at",
-        "created_at",
+        "archived",
         "group_id",
         "is_group",
         "children",
-        "archived",
+        "id",
         "archived_at",
+        "updated_at",
+        "created_at",
         "order",
     ]
 
@@ -108,7 +126,7 @@ class CategoryObject(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CategoryObject from a JSON string"""
+        """Create an instance of UpdateCategoryRequestObject from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -145,6 +163,11 @@ class CategoryObject(BaseModel):
         if self.group_id is None and "group_id" in self.model_fields_set:
             _dict["group_id"] = None
 
+        # set to None if is_group (nullable) is None
+        # and model_fields_set contains the field
+        if self.is_group is None and "is_group" in self.model_fields_set:
+            _dict["is_group"] = None
+
         # set to None if archived_at (nullable) is None
         # and model_fields_set contains the field
         if self.archived_at is None and "archived_at" in self.model_fields_set:
@@ -159,7 +182,7 @@ class CategoryObject(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CategoryObject from a dict"""
+        """Create an instance of UpdateCategoryRequestObject from a dict"""
         if obj is None:
             return None
 
@@ -168,23 +191,26 @@ class CategoryObject(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "id": obj.get("id"),
                 "name": obj.get("name"),
                 "description": obj.get("description"),
                 "is_income": obj.get("is_income"),
                 "exclude_from_budget": obj.get("exclude_from_budget"),
                 "exclude_from_totals": obj.get("exclude_from_totals"),
-                "updated_at": obj.get("updated_at"),
-                "created_at": obj.get("created_at"),
+                "archived": obj.get("archived"),
                 "group_id": obj.get("group_id"),
-                "is_group": obj.get("is_group"),
+                "is_group": obj.get("is_group")
+                if obj.get("is_group") is not None
+                else False,
                 "children": [
-                    ChildCategoryObject.from_dict(_item) for _item in obj["children"]
+                    CreateCategoryRequestObjectChildrenInner.from_dict(_item)
+                    for _item in obj["children"]
                 ]
                 if obj.get("children") is not None
                 else None,
-                "archived": obj.get("archived"),
+                "id": obj.get("id"),
                 "archived_at": obj.get("archived_at"),
+                "updated_at": obj.get("updated_at"),
+                "created_at": obj.get("created_at"),
                 "order": obj.get("order"),
             }
         )

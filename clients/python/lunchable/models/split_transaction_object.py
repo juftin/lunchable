@@ -17,27 +17,48 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool
+from datetime import date
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from lunchable.models.non_aligned_summary_category_object import (
-    NonAlignedSummaryCategoryObject,
+from typing_extensions import Annotated
+from lunchable.models.split_transaction_object_amount import (
+    SplitTransactionObjectAmount,
 )
-from lunchable.models.summary_totals_object import SummaryTotalsObject
 from typing import Set
 from typing_extensions import Self
 
 
-class NonAlignedSummaryResponseObject(BaseModel):
+class SplitTransactionObject(BaseModel):
     """
-    NonAlignedSummaryResponseObject
+    The object representing a split transaction
     """  # noqa: E501
 
-    totals: Optional[SummaryTotalsObject] = None
-    aligned: StrictBool = Field(
-        description="true if start_date and end_date are aligned with budget period setting"
+    amount: SplitTransactionObjectAmount
+    payee: Optional[
+        Annotated[str, Field(min_length=0, strict=True, max_length=140)]
+    ] = Field(
+        default=None,
+        description="The payee for the child transaction. Will inherit the original payee from the parent if not defined.",
     )
-    categories: List[NonAlignedSummaryCategoryObject]
-    __properties: ClassVar[List[str]] = ["totals", "aligned", "categories"]
+    var_date: Optional[date] = Field(
+        default=None,
+        description="Must be in ISO 8601 format (YYYY-MM-DD). Will inherit from the parent if not defined.",
+        alias="date",
+    )
+    category_id: Optional[StrictInt] = Field(
+        default=None,
+        description="Unique identifier for associated category_id. Category must already exist for the account. Will inherit category from the parent if not defined.",
+    )
+    notes: Optional[Annotated[str, Field(strict=True, max_length=350)]] = Field(
+        default=None, description="Will inherit notes from parent if not defined."
+    )
+    __properties: ClassVar[List[str]] = [
+        "amount",
+        "payee",
+        "date",
+        "category_id",
+        "notes",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -56,7 +77,7 @@ class NonAlignedSummaryResponseObject(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of NonAlignedSummaryResponseObject from a JSON string"""
+        """Create an instance of SplitTransactionObject from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,21 +97,14 @@ class NonAlignedSummaryResponseObject(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of totals
-        if self.totals:
-            _dict["totals"] = self.totals.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in categories (list)
-        _items = []
-        if self.categories:
-            for _item_categories in self.categories:
-                if _item_categories:
-                    _items.append(_item_categories.to_dict())
-            _dict["categories"] = _items
+        # override the default output from pydantic by calling `to_dict()` of amount
+        if self.amount:
+            _dict["amount"] = self.amount.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of NonAlignedSummaryResponseObject from a dict"""
+        """Create an instance of SplitTransactionObject from a dict"""
         if obj is None:
             return None
 
@@ -99,16 +113,13 @@ class NonAlignedSummaryResponseObject(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "totals": SummaryTotalsObject.from_dict(obj["totals"])
-                if obj.get("totals") is not None
+                "amount": SplitTransactionObjectAmount.from_dict(obj["amount"])
+                if obj.get("amount") is not None
                 else None,
-                "aligned": obj.get("aligned"),
-                "categories": [
-                    NonAlignedSummaryCategoryObject.from_dict(_item)
-                    for _item in obj["categories"]
-                ]
-                if obj.get("categories") is not None
-                else None,
+                "payee": obj.get("payee"),
+                "date": obj.get("date"),
+                "category_id": obj.get("category_id"),
+                "notes": obj.get("notes"),
             }
         )
         return _obj

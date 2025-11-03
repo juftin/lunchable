@@ -40,13 +40,22 @@ __all__ = [
     "ApiAttributeError",
     "ApiException",
     "AccountTypeEnum",
+    "AlignedCategoryTotalsObject",
+    "AlignedSummaryCategoryObject",
     "AlignedSummaryResponseObject",
     "CategoryObject",
+    "ChildCategoryObject",
+    "ChildTransactionObject",
+    "CreateCategoryRequestObject",
     "CreateCategoryRequestObjectChildrenInner",
+    "CreateManualAccountRequestObject",
     "CreateManualAccountRequestObjectBalance",
     "CreateNewTransactionsRequest",
+    "CreateTagRequestObject",
     "CurrencyEnum",
+    "DeleteCategoryResponseWithDependencies",
     "DeleteCategoryResponseWithDependenciesDependents",
+    "DeleteTagResponseWithDependencies",
     "DeleteTagResponseWithDependenciesDependents",
     "DeleteTransactionsRequest",
     "ErrorResponseObject",
@@ -60,9 +69,12 @@ __all__ = [
     "GetBudgetSummary200Response",
     "GetTransactionAttachmentUrl200Response",
     "GroupTransactionsRequest",
+    "InsertTransactionObject",
     "InsertTransactionObjectAmount",
     "InsertTransactionsResponseObject",
     "ManualAccountObject",
+    "NonAlignedCategoryTotalsObject",
+    "NonAlignedSummaryCategoryObject",
     "NonAlignedSummaryResponseObject",
     "PlaidAccountObject",
     "RecurringObject",
@@ -70,11 +82,23 @@ __all__ = [
     "RecurringObjectMatchesFoundTransactionsInner",
     "RecurringObjectOverrides",
     "RecurringObjectTransactionCriteria",
+    "SkippedExistingExternalIdObject",
+    "SplitTransactionObject",
     "SplitTransactionObjectAmount",
     "SplitTransactionRequest",
+    "SummaryCategoryOccurrenceObject",
+    "SummaryRecurringTransactionObject",
+    "SummaryRolloverPoolAdjustmentObject",
+    "SummaryRolloverPoolObject",
+    "SummaryTotalsBreakdownObject",
+    "SummaryTotalsObject",
     "TagObject",
     "TransactionAttachmentObject",
     "TransactionObject",
+    "UpdateCategoryRequestObject",
+    "UpdateManualAccountRequestObject",
+    "UpdateTagRequestObject",
+    "UpdateTransactionObject",
     "UpdateTransactionObjectAmount",
     "UpdateTransactions200Response",
     "UpdateTransactionsRequest",
@@ -117,12 +141,30 @@ from lunchable.exceptions import ApiException as ApiException
 
 # import models into sdk package
 from lunchable.models.account_type_enum import AccountTypeEnum as AccountTypeEnum
+from lunchable.models.aligned_category_totals_object import (
+    AlignedCategoryTotalsObject as AlignedCategoryTotalsObject,
+)
+from lunchable.models.aligned_summary_category_object import (
+    AlignedSummaryCategoryObject as AlignedSummaryCategoryObject,
+)
 from lunchable.models.aligned_summary_response_object import (
     AlignedSummaryResponseObject as AlignedSummaryResponseObject,
 )
 from lunchable.models.category_object import CategoryObject as CategoryObject
+from lunchable.models.child_category_object import (
+    ChildCategoryObject as ChildCategoryObject,
+)
+from lunchable.models.child_transaction_object import (
+    ChildTransactionObject as ChildTransactionObject,
+)
+from lunchable.models.create_category_request_object import (
+    CreateCategoryRequestObject as CreateCategoryRequestObject,
+)
 from lunchable.models.create_category_request_object_children_inner import (
     CreateCategoryRequestObjectChildrenInner as CreateCategoryRequestObjectChildrenInner,
+)
+from lunchable.models.create_manual_account_request_object import (
+    CreateManualAccountRequestObject as CreateManualAccountRequestObject,
 )
 from lunchable.models.create_manual_account_request_object_balance import (
     CreateManualAccountRequestObjectBalance as CreateManualAccountRequestObjectBalance,
@@ -130,9 +172,18 @@ from lunchable.models.create_manual_account_request_object_balance import (
 from lunchable.models.create_new_transactions_request import (
     CreateNewTransactionsRequest as CreateNewTransactionsRequest,
 )
+from lunchable.models.create_tag_request_object import (
+    CreateTagRequestObject as CreateTagRequestObject,
+)
 from lunchable.models.currency_enum import CurrencyEnum as CurrencyEnum
+from lunchable.models.delete_category_response_with_dependencies import (
+    DeleteCategoryResponseWithDependencies as DeleteCategoryResponseWithDependencies,
+)
 from lunchable.models.delete_category_response_with_dependencies_dependents import (
     DeleteCategoryResponseWithDependenciesDependents as DeleteCategoryResponseWithDependenciesDependents,
+)
+from lunchable.models.delete_tag_response_with_dependencies import (
+    DeleteTagResponseWithDependencies as DeleteTagResponseWithDependencies,
 )
 from lunchable.models.delete_tag_response_with_dependencies_dependents import (
     DeleteTagResponseWithDependenciesDependents as DeleteTagResponseWithDependenciesDependents,
@@ -173,6 +224,9 @@ from lunchable.models.get_transaction_attachment_url200_response import (
 from lunchable.models.group_transactions_request import (
     GroupTransactionsRequest as GroupTransactionsRequest,
 )
+from lunchable.models.insert_transaction_object import (
+    InsertTransactionObject as InsertTransactionObject,
+)
 from lunchable.models.insert_transaction_object_amount import (
     InsertTransactionObjectAmount as InsertTransactionObjectAmount,
 )
@@ -181,6 +235,12 @@ from lunchable.models.insert_transactions_response_object import (
 )
 from lunchable.models.manual_account_object import (
     ManualAccountObject as ManualAccountObject,
+)
+from lunchable.models.non_aligned_category_totals_object import (
+    NonAlignedCategoryTotalsObject as NonAlignedCategoryTotalsObject,
+)
+from lunchable.models.non_aligned_summary_category_object import (
+    NonAlignedSummaryCategoryObject as NonAlignedSummaryCategoryObject,
 )
 from lunchable.models.non_aligned_summary_response_object import (
     NonAlignedSummaryResponseObject as NonAlignedSummaryResponseObject,
@@ -201,17 +261,53 @@ from lunchable.models.recurring_object_overrides import (
 from lunchable.models.recurring_object_transaction_criteria import (
     RecurringObjectTransactionCriteria as RecurringObjectTransactionCriteria,
 )
+from lunchable.models.skipped_existing_external_id_object import (
+    SkippedExistingExternalIdObject as SkippedExistingExternalIdObject,
+)
+from lunchable.models.split_transaction_object import (
+    SplitTransactionObject as SplitTransactionObject,
+)
 from lunchable.models.split_transaction_object_amount import (
     SplitTransactionObjectAmount as SplitTransactionObjectAmount,
 )
 from lunchable.models.split_transaction_request import (
     SplitTransactionRequest as SplitTransactionRequest,
 )
+from lunchable.models.summary_category_occurrence_object import (
+    SummaryCategoryOccurrenceObject as SummaryCategoryOccurrenceObject,
+)
+from lunchable.models.summary_recurring_transaction_object import (
+    SummaryRecurringTransactionObject as SummaryRecurringTransactionObject,
+)
+from lunchable.models.summary_rollover_pool_adjustment_object import (
+    SummaryRolloverPoolAdjustmentObject as SummaryRolloverPoolAdjustmentObject,
+)
+from lunchable.models.summary_rollover_pool_object import (
+    SummaryRolloverPoolObject as SummaryRolloverPoolObject,
+)
+from lunchable.models.summary_totals_breakdown_object import (
+    SummaryTotalsBreakdownObject as SummaryTotalsBreakdownObject,
+)
+from lunchable.models.summary_totals_object import (
+    SummaryTotalsObject as SummaryTotalsObject,
+)
 from lunchable.models.tag_object import TagObject as TagObject
 from lunchable.models.transaction_attachment_object import (
     TransactionAttachmentObject as TransactionAttachmentObject,
 )
 from lunchable.models.transaction_object import TransactionObject as TransactionObject
+from lunchable.models.update_category_request_object import (
+    UpdateCategoryRequestObject as UpdateCategoryRequestObject,
+)
+from lunchable.models.update_manual_account_request_object import (
+    UpdateManualAccountRequestObject as UpdateManualAccountRequestObject,
+)
+from lunchable.models.update_tag_request_object import (
+    UpdateTagRequestObject as UpdateTagRequestObject,
+)
+from lunchable.models.update_transaction_object import (
+    UpdateTransactionObject as UpdateTransactionObject,
+)
 from lunchable.models.update_transaction_object_amount import (
     UpdateTransactionObjectAmount as UpdateTransactionObjectAmount,
 )

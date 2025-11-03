@@ -19,6 +19,10 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from typing import Any, ClassVar, Dict, List, Optional
+from lunchable.models.aligned_summary_category_object import (
+    AlignedSummaryCategoryObject,
+)
+from lunchable.models.summary_totals_object import SummaryTotalsObject
 from typing import Set
 from typing_extensions import Self
 
