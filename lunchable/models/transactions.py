@@ -6,6 +6,7 @@ https://lunchmoney.dev/#transactions
 
 import datetime
 import logging
+import math
 from enum import Enum
 from typing import Any, Dict, List, Optional, Union
 
@@ -300,6 +301,21 @@ class TransactionObject(TransactionBaseObject):
     children: Optional[List[TransactionChildObject]] = Field(
         None, description=_TransactionDescriptions.children
     )
+
+    @field_validator(
+        "category_name",
+        "recurring_payee",
+        "recurring_cadence",
+        "recurring_type",
+        "recurring_currency",
+        "recurring_description",
+        mode="before",
+    )
+    def coerce_nan_to_none(cls, v: Any) -> Optional[str]:
+        """Coerce NaN float values to None for optional string fields."""
+        if isinstance(v, float) and math.isnan(v):
+            return None
+        return v
 
     @field_validator("plaid_metadata", mode="before")
     def to_json(cls, x: Optional[str]) -> Optional[Dict[str, Any]]:
