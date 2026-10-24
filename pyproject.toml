@@ -11,11 +11,11 @@ classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy"
 ]
@@ -33,7 +33,7 @@ keywords = ["lunchmoney", "python", "pydantic", "api-client"]
 license = "MIT"
 name = "lunchable"
 readme = "README.md"
-requires-python = ">=3.9,<4"
+requires-python = ">=3.11,<4"
 
 [project.optional-dependencies]
 all = [
